@@ -1,6 +1,6 @@
+import 'package:app_tiendita/src/modelos/producto.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_card.dart';
-import 'package:app_tiendita/src/widgets/store_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class StoreItemsPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class StoreItemsPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 16),
+                //margin: EdgeInsets.only(bottom: 16),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: rosadoClaro,
@@ -74,14 +74,21 @@ class StoreItemsPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: GridView.count(
-                  childAspectRatio: 9/15,
-                  shrinkWrap: true,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 15,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  crossAxisCount: 2,
-                  children: _getStoreProducts(10) //_getStoreItems(10),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                  child: GridView.builder(
+                    itemCount: products.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: kDefaultPaddin,
+                      mainAxisSpacing: kDefaultPaddin,
+                      childAspectRatio: 3 / 5,
+                    ),
+                    itemBuilder: (context, index) {
+                      return ProductItemCard();
+                    },
+                  ),
                 ),
               ),
             ],
@@ -90,89 +97,4 @@ class StoreItemsPage extends StatelessWidget {
       ),
     );
   }
-
-  List<Widget> _getStoreItems(int cantidad) {
-    List<Widget> listaDeStoreItems = List();
-    for (int i = 0; i < cantidad; i++) {
-      final Widget itemCard = StoreItemCard(
-        name: 'Bandas Élasticas',
-        deliveryNow: 'Entrega Inmediata',
-        price: 50,
-        image: 'assets/images/spotify.png',
-      );
-      listaDeStoreItems.add(itemCard);
-    }
-    return listaDeStoreItems;
-  }
-
-  List<Widget> _getStoreProducts(int cantidad) {
-    List<Widget> listaDeStoreItems = List();
-    for (int i = 0; i < cantidad; i++) {
-      final Widget itemCard = ProductItemCard();
-      listaDeStoreItems.add(itemCard);
-    }
-    return listaDeStoreItems;
-  }
 }
-
-//AppBar(
-//flexibleSpace: Text('hello'),
-//title: Text('Store Name here'),
-//actions: <Widget>[
-//Image(
-//image: AssetImage('assets/images/spotify.png'),
-//)
-//],
-//shape: RoundedRectangleBorder(
-//borderRadius: BorderRadius.only(
-//bottomLeft: Radius.circular(40),
-//bottomRight: Radius.circular(40),
-//),
-//),
-//backgroundColor: rosadoClaro,
-//bottom: PreferredSize(
-//child: SizedBox(),
-//preferredSize: Size(0, 50),
-//),
-//),
-
-//Container(
-//decoration: BoxDecoration(
-//color: rosadoClaro,
-//borderRadius: BorderRadius.only(
-//bottomLeft: Radius.circular(40),
-//bottomRight: Radius.circular(40),
-//),
-//),
-//child: ListTile(
-//leading: IconButton(
-//enableFeedback: true,
-//icon: Icon(Icons.keyboard_arrow_left),
-//onPressed: () {},
-//),
-//title: Column(
-//crossAxisAlignment: CrossAxisAlignment.start,
-//children: <Widget>[
-//Text(
-//'My Loop Bands',
-//style: storeTitleCardStyle,
-//),
-//Text(
-//'@myloopbans',
-//style: storeDetailsCardStyle,
-//),
-//Text(
-//'Seguidores: 3,200',
-//style: storeDetailsCardStyle,
-//),
-//],
-//),
-//trailing: Container(
-//height: 100,
-//width: 100,
-//child: Image(
-//image: AssetImage('assets/images/spotify.png'),
-//),
-//),
-//),
-//),
