@@ -7,6 +7,8 @@ Color azulClaro = Color(0xFF81d4fa);
 Color mostaza = Color(0xFFFAC36A);
 Color grizItem = Color(0xFFF3F6FB);
 Color azulOptions = Color(0xFF0B46C5);
+Color grizSubtitulo = Color(0xFF919BAC);
+
 
 Color rojoSpring = Color(0xFFfe4a49);
 Color celesteSpring = Color(0xFF2ab7ca);
@@ -70,7 +72,7 @@ TextStyle storeItemTitleStyle = new TextStyle(
 
 TextStyle storeItemSubTitleStyle = new TextStyle(
   fontFamily: 'Nunito',
-  color: azulOscuro,
+  color: grizSubtitulo,
   fontWeight: FontWeight.normal,
   fontSize: 12,
 );
@@ -80,6 +82,14 @@ TextStyle storeItemPriceStyle = new TextStyle(
   color: azulOscuro,
   fontWeight: FontWeight.bold,
   fontSize: 16,
+);
+
+
+TextStyle storeItemCartButtonTextStyle = new TextStyle(
+  fontFamily: 'Nunito',
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 13,
 );
 
 const kDefaultPaddin = 20.0;

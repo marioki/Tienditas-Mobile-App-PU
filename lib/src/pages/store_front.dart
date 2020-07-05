@@ -14,14 +14,14 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          //padding: EdgeInsets.all(20),
           children: <Widget>[
             //Lista componentes desde aqui
             //Contenedor del search bar
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               //<<>>
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -39,8 +39,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             ),
             //Contenedor de Categorias
             ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Text('Categorias', style: storeSubtitles),
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              leading: Text('Categorías', style: storeSubtitles),
               trailing: FlatButton(
                 onPressed: () {},
                 child: Text(
@@ -51,18 +51,20 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             ),
             Container(
               //Category List Row Container
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(vertical: 0),
-              height: 155,
+              height: 110,
               child: ListView(
-                  scrollDirection: Axis.horizontal, children: getCategories()),
+                scrollDirection: Axis.horizontal,
+                children: getCategories(),
+              ),
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               margin: EdgeInsets.only(bottom: 10),
               child: Text('Sugerencias para ti', style: storeSubtitles),
             ),
             Expanded(
               child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 shrinkWrap: true,
                 children: getStoreList(),
               ),
@@ -106,6 +108,4 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       ),
     );
   }
-
-
 }

@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/maps/categories_map.dart';
+import 'package:app_tiendita/src/modelos/store_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +22,24 @@ class StoreCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      padding: EdgeInsets.all(0),
       onPressed: () {
         Navigator.pushNamed(
           context,
           'store_items_page',
+          arguments: Store(
+            name: name,
+            handle: handle,
+            followers: followers,
+            category: category,
+            image: image,
+          ),
         );
       },
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin: EdgeInsets.symmetric(
+          vertical: 8,
+        ),
         elevation: 10,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(35),
@@ -68,8 +79,10 @@ class StoreCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(name, style: storeTitleCardStyle),
+                    SizedBox(height: 10),
                     Text(handle, style: storeDetailsCardStyle),
-                    Text(followers.toString(), style: storeDetailsCardStyle),
+                    Text('Seguidores: ' + followers.toString(),
+                        style: storeDetailsCardStyle),
                   ],
                 ),
               )
