@@ -27,7 +27,7 @@ class StoreCardWidget extends StatelessWidget {
         Navigator.pushNamed(
           context,
           'store_items_page',
-          arguments: Store(
+          arguments: Tienda(
             name: name,
             handle: handle,
             followers: followers,

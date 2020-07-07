@@ -1,6 +1,8 @@
+import 'package:app_tiendita/src/modelos/store_model.dart';
+import 'package:app_tiendita/src/providers/tiendas_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/crearCategoryList.dart';
-import 'package:app_tiendita/src/utils/crearListaDeTiendas.dart';
+import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,8 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
+  final tiendasProvider = TiendasProvider();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,7 +34,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   Container(
                     margin: EdgeInsets.only(left: 10),
                     child: Container(
-                      child: Image(height: 35,
+                      child: Image(
+                        height: 35,
                         width: 35,
                         image: AssetImage('assets/images/codigo-qr.png'),
                       ),
@@ -65,17 +70,41 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               child: Text('Sugerencias para ti', style: storeSubtitles),
             ),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                shrinkWrap: true,
-                children: getStoreList(),
-              ),
+              child: getTiendasListViewBuilder(),
             )
           ],
         ),
       ),
     );
   }
+
+//  getTiendas();
+
+//  Widget _swiperTarjetas() {
+//    return FutureBuilder(
+//        future: peliculasProvider.getEnCines(),
+//        builder: (
+//            BuildContext context,
+//            AsyncSnapshot<List> snapshot,
+//            ) {
+//          if (snapshot.hasData) {
+//            return StoreCardWidget(name: snapshot.,);
+//          } else {
+//            return Container(
+//              height: 400,
+//              child: Center(
+//                child: CircularProgressIndicator(),
+//              ),
+//            );
+//          }
+//        });
+//  }
+
+//  ListView(
+//  padding: EdgeInsets.symmetric(horizontal: 24),
+//  shrinkWrap: true,
+//  children: getStoreList(),
+//  ),
 
   Widget _searchInput() {
     return Expanded(
@@ -108,6 +137,44 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           setState(() {});
         },
       ),
+    );
+  }
+
+  Widget getTiendasListViewBuilder() {
+    print('LLamada del metodo');
+    return FutureBuilder(
+      future: tiendasProvider.getAllTiendas(),
+      builder: (
+        BuildContext context,
+        snapshot,
+      ) {
+        if (snapshot.hasData) {
+          print('aloo');
+          print(snapshot.data);
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              Tienda miTienda = snapshot.data[index];
+              return StoreCardWidget(
+                name: miTienda.name,
+                handle: miTienda.handle,
+                followers: miTienda.followers,
+                image: miTienda.image,
+                category: miTienda.category,
+              );
+            },
+          );
+        } else {
+          return Container(
+            height: 400,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }

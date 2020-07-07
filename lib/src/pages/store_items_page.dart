@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class StoreItemsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Store args = ModalRoute.of(context).settings.arguments;
+    final Tienda args = ModalRoute.of(context).settings.arguments;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
 
@@ -54,16 +54,16 @@ class StoreItemsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'My Loop Bands',
+                            args.name,
                             style: storeTitleCardStyle,
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '@myloopbans',
+                            '@${args.handle}',
                             style: storeDetailsCardStyle,
                           ),
                           Text(
-                            'Seguidores: 3,200',
+                            'Seguidores: ${args.followers.toString()}',
                             style: storeDetailsCardStyle,
                           ),
                         ],
