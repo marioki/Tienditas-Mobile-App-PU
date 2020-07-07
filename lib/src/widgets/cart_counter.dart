@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
 class CartCounter extends StatefulWidget {
@@ -7,36 +8,66 @@ class CartCounter extends StatefulWidget {
 
 class _CartCounterState extends State<CartCounter> {
   int numOfItems = 1;
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        buildOutlineButton(
-          icon: Icons.remove,
-          press: () {
-            if (numOfItems > 1) {
-              setState(() {
-                numOfItems--;
-              });
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal:  16),
-          child: Text(
-            // if our item is less  then 10 then  it shows 01 02 like that
-            numOfItems.toString().padLeft(2, "0"),
-            style: Theme.of(context).textTheme.headline6,
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      width: 95,
+      //color: Colors.pinkAccent.shade100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.pinkAccent.shade100,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                setState(() {
+                  if (numOfItems > 1) {
+                    numOfItems--;
+                  }
+                });
+              },
+              child: Icon(
+                Icons.remove,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
           ),
-        ),
-        buildOutlineButton(
-            icon: Icons.add,
-            press: () {
-              setState(() {
-                numOfItems++;
-              });
-            }),
-      ],
+          Expanded(
+            child: Center(
+              child: Text(
+                // if our item is less  then 10 then  it shows 01 02 like that
+                numOfItems.toString(),
+                style: cartItemCounter,
+              ),
+            ),
+          ),
+          Expanded(
+            child: FlatButton(
+
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                setState(() {
+                  numOfItems++;
+                });
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

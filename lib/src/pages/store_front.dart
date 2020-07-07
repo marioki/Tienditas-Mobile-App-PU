@@ -29,9 +29,11 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   _searchInput(),
                   Container(
                     margin: EdgeInsets.only(left: 10),
-                    child: Icon(
-                      Icons.dashboard,
-                      size: 40,
+                    child: Container(
+                      child: Image(height: 35,
+                        width: 35,
+                        image: AssetImage('assets/images/codigo-qr.png'),
+                      ),
                     ),
                   ),
                 ],

@@ -11,24 +11,43 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
       color: rosadoClaro,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text('Mancuernas', style: storeTitleCardStyle,),
-                Text('My Loop Bands', style: storeTitleCardStyle,),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Mancuernas',
+                    style: cartItemTitle,
+                  ),
+                  SizedBox(
+                    height: 11,
+                  ),
+                  Text(
+                    'My Loop Bands',
+                    style: cartItemSubtitle,
+                  ),
+                ],
+              ),
             ),
-            Column(
-              children: <Widget>[
-                Text('\$50',style: storeItemPriceStyle,),
-                CartCounter()
-              ],
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    '\$50',
+                    style: cartItemPrice,
+                  ),
+                  CartCounter()
+                ],
+              ),
             )
           ],
         ),
