@@ -92,5 +92,12 @@ TextStyle storeItemCartButtonTextStyle = new TextStyle(
   fontSize: 13,
 );
 
+TextStyle userCartTotalStyle = new TextStyle(
+  fontFamily: 'Nunito',
+  color: azulOscuro,
+  fontWeight: FontWeight.bold,
+  fontSize: 18,
+);
+
 const kDefaultPaddin = 20.0;
 
