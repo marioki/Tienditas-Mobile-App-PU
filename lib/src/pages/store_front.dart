@@ -66,7 +66,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              margin: EdgeInsets.only(bottom: 10),
+              margin: EdgeInsets.only(bottom: 10,top: 16),
               child: Text('Sugerencias para ti', style: storeSubtitles),
             ),
             Expanded(

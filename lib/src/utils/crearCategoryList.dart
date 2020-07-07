@@ -8,42 +8,42 @@ List<CategoryCard> getCategories() {
     CategoryCard(
       name: 'Tecnologia',
       image: Image(
-        image: AssetImage('assets/images/technology.png'),
+        image: AssetImage('assets/images/tecnologia.png'),
       ),
       color: arcoAzul,
     ),
     CategoryCard(
       name: 'Moda',
       image: Image(
-        image: AssetImage('assets/images/fashion.png'),
+        image: AssetImage('assets/images/Shoes1.png'),
       ),
       color: arcoRojo,
     ),
     CategoryCard(
       name: 'Deportes',
       image: Image(
-        image: AssetImage('assets/images/sports.png'),
+        image: AssetImage('assets/images/Bicicleta_Deporte.png'),
       ),
       color: arcoAmarillo,
     ),
     CategoryCard(
       name: 'Gastronomia',
       image: Image(
-        image: AssetImage('assets/images/food.png'),
+        image: AssetImage('assets/images/Ensalada_Comida.png'),
       ),
       color: arcoVerde,
     ),
     CategoryCard(
       name: 'Salud',
       image: Image(
-        image: AssetImage('assets/images/medical.png'),
+        image: AssetImage('assets/images/Medicina_1.png'),
       ),
       color: arcoLila,
     ),
     CategoryCard(
       name: 'Mascotas',
       image: Image(
-        image: AssetImage('assets/images/pets.ico'),
+        image: AssetImage('assets/images/Perro_Hogar.png'),
       ),
       color: arcoNaranja,
     ),
