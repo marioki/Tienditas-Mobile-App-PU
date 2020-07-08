@@ -1,3 +1,26 @@
+import 'package:app_tiendita/src/modelos/product_model.dart';
+
+class Tienda {
+  final String name;
+  final String handle;
+  final int followers;
+  final String image;
+  final String category;
+  List<Product> storeProductList;
+
+  Tienda({this.name, this.handle, this.followers, this.image, this.category});
+
+  factory Tienda.fromJsonMap(Map<String, dynamic> json) {
+    return Tienda(
+      name: json['name'],
+      handle: json['handle'],
+      followers: json['followers'],
+      image: json['image'],
+      category: json['category'],
+    );
+  }
+}
+
 class TiendaList {
   List<Tienda> items = List();
 
@@ -10,25 +33,5 @@ class TiendaList {
       final tienda = Tienda.fromJsonMap(item);
       items.add(tienda);
     }
-  }
-}
-
-class Tienda {
-  final String name;
-  final String handle;
-  final int followers;
-  final String image;
-  final String category;
-
-  Tienda({this.name, this.handle, this.followers, this.image, this.category});
-
-  factory Tienda.fromJsonMap(Map<String, dynamic> json) {
-    return Tienda(
-      name: json['name'],
-      handle: json['handle'],
-      followers: json['followers'],
-      image: json['image'],
-      category: json['category'],
-    );
   }
 }

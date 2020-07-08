@@ -1,5 +1,4 @@
 import 'package:app_tiendita/src/maps/categories_map.dart';
-import 'package:app_tiendita/src/modelos/producto.dart';
 import 'package:app_tiendita/src/modelos/store_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
@@ -100,7 +99,7 @@ class StoreItemsPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
                   child: GridView.builder(
-                    itemCount: products.length,
+                    itemCount: 10,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: kDefaultPaddin,

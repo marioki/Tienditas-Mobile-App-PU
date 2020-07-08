@@ -27,6 +27,35 @@ Color arcoLila = Color(0xFFbdb2ff);
 Color arcoRosado = Color(0xFFffc6ff);
 Color arcoBlanco = Color(0xFFfffffc);
 
+
+//Colores Oficiales de Categorias
+Color catMedicina = Color(0xFF82FF9E);
+Color catGastronomia = Color(0xFFF56476);
+Color catMascotas = Color(0xFFC3F73A);
+Color catHogar = Color(0xFFAE2FEA);
+Color catPintura = Color(0xFFFC7A1E);
+Color catModa = Color(0xFFFF47DA);
+Color catArte = Color(0xFF04F06A);
+Color catIndustrial = Color(0xFF17BEBB);
+Color catPlantas = Color(0xFFF9EE2B);
+Color catDeportes = Color(0xFFB3001B);
+Color catPromociones = Color(0xFF2AEFF4);
+Color catTecnologia = Color(0xFF757780);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 TextStyle storeTitleCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
