@@ -1,14 +1,22 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
 
 class Tienda {
-  final String name;
-  final String handle;
-  final int followers;
-  final String image;
-  final String category;
+  String name;
+  String handle;
+  int followers;
+  String image;
+  String category;
+  var storeItemList = List();
   List<Product> storeProductList;
 
-  Tienda({this.name, this.handle, this.followers, this.image, this.category});
+  Tienda(
+      {this.name,
+      this.handle,
+      this.followers,
+      this.image,
+      this.category,
+      this.storeProductList,
+      this.storeItemList});
 
   factory Tienda.fromJsonMap(Map<String, dynamic> json) {
     return Tienda(
@@ -17,6 +25,7 @@ class Tienda {
       followers: json['followers'],
       image: json['image'],
       category: json['category'],
+      storeItemList: json['store_items'],
     );
   }
 }

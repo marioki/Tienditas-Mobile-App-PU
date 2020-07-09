@@ -49,7 +49,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               contentPadding: EdgeInsets.symmetric(horizontal: 16),
               leading: Text('Categorías', style: storeSubtitles),
               trailing: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'categories_page');
+                },
                 child: Text(
                   'Ver Todas',
                   style: storeOptions,
@@ -66,7 +68,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              margin: EdgeInsets.only(bottom: 10,top: 16),
+              margin: EdgeInsets.only(bottom: 10, top: 16),
               child: Text('Sugerencias para ti', style: storeSubtitles),
             ),
             Expanded(

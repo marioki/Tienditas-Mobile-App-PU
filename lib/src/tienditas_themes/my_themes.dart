@@ -26,9 +26,18 @@ Color arcoPurpura = Color(0xFFa0c4ff);
 Color arcoLila = Color(0xFFbdb2ff);
 Color arcoRosado = Color(0xFFffc6ff);
 Color arcoBlanco = Color(0xFFfffffc);
+//==================secondTestPallete==============================
+Color mattBlack = Color(0xFF50514f);
+Color mattBrown = Color(0xFFa15856);
+Color mattRed = Color(0xFFf25f5c);
+Color mattOrange = Color(0xFFf9a061);
+Color mattYellow = Color(0xFFffe066);
+Color mattGreen = Color(0xFF92ae83);
+Color mattBlue = Color(0xFF247ba0);
+Color mattAqua = Color(0xFF4a9eaa);
+Color mattLiteBlue = Color(0xFF70c1b3);
 
-
-//Colores Oficiales de Categorias
+//===================Colores Oficiales de Categorias================
 Color catMedicina = Color(0xFF82FF9E);
 Color catGastronomia = Color(0xFFF56476);
 Color catMascotas = Color(0xFFC3F73A);
@@ -41,20 +50,6 @@ Color catPlantas = Color(0xFFF9EE2B);
 Color catDeportes = Color(0xFFB3001B);
 Color catPromociones = Color(0xFF2AEFF4);
 Color catTecnologia = Color(0xFF757780);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 TextStyle storeTitleCardStyle = new TextStyle(
     fontFamily: 'Nunito',
@@ -126,7 +121,7 @@ TextStyle userCartTotalStyle = new TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18,
 );
-//Themes for Cart Page
+//===========Themes for Cart Page===============================================
 TextStyle cartItemTitle = new TextStyle(
   fontFamily: 'Nunito',
   color: Colors.white,
@@ -176,5 +171,19 @@ TextStyle cartTotalPriceStyle = new TextStyle(
   fontSize: 18,
 );
 
+//=============Navigation_Bar=================
+TextStyle naviBarSelectedItemLabel = new TextStyle(
+  fontFamily: 'Nunito',
+  color: azulTema,
+  fontWeight: FontWeight.normal,
+  fontSize: 14,
+);
+
+TextStyle naviBarNotSelectedItemLabel = new TextStyle(
+  fontFamily: 'Nunito',
+  color: Colors.grey,
+  fontWeight: FontWeight.normal,
+  fontSize: 8,
+);
 
 const kDefaultPaddin = 20.0;

@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/pages/store_front.dart';
+import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,29 +18,43 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _callPage(currentIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        currentIndex: currentIndex,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            title: Text('Home'),
-            icon: Icon(Icons.home),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        child: Card(
+          elevation: 30,
+          borderOnForeground: true,
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: BottomNavigationBar(
+            selectedIconTheme: IconThemeData(color: azulTema),
+            selectedLabelStyle: TextStyle(color: azulTema),
+            backgroundColor: Colors.white,
+            currentIndex: currentIndex,
+            unselectedItemColor: Colors.grey,
+            onTap: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                title: Text('Home'),
+                icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                title: Text('Carrito'),
+                icon: Icon(Icons.shopping_cart),
+              ),
+              BottomNavigationBarItem(
+                title: Text('Profile'),
+                icon: Icon(Icons.account_circle),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            title: Text('Carrito'),
-            icon: Icon(Icons.shopping_cart),
-          ),
-          BottomNavigationBarItem(
-            title: Text('Profile'),
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
+        ),
       ),
     );
   }
