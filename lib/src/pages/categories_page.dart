@@ -1,55 +1,71 @@
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/crearCategoryList.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: AppBar(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))),
+          centerTitle: true,
+          backgroundColor: azulTema,
+          title: Text(
+            'Categorías',
+            style: appBarStyle,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Container(
-              height: screenHeight * .25,
-              //margin: EdgeInsets.only(bottom: 16),
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                color: azulTema,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                    enableFeedback: true,
-                    icon: Container(
-                      margin: EdgeInsets.only(left: 16),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Text(
-                    'Categorías',
-                    style: storeTitleCardStyle,
-                  ),
-                  SizedBox(
-                    width: 16,
-                  )
-                ],
-              ),
-            ),
+//            Container(
+//              height: screenHeight * .25,
+//              //margin: EdgeInsets.only(bottom: 16),
+//              clipBehavior: Clip.antiAlias,
+//              decoration: BoxDecoration(
+//                color: azulTema,
+//                borderRadius: BorderRadius.only(
+//                  bottomLeft: Radius.circular(35),
+//                  bottomRight: Radius.circular(35),
+//                ),
+//              ),
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  IconButton(
+//                    enableFeedback: true,
+//                    icon: Container(
+//                      margin: EdgeInsets.only(left: 16),
+//                      child: Icon(
+//                        Icons.arrow_back,
+//                        color: Colors.white,
+//                        size: 30,
+//                      ),
+//                    ),
+//                    onPressed: () {
+//                      Navigator.pop(context);
+//                    },
+//                  ),
+//                  Text(
+//                    'Categorías',
+//                    style: storeTitleCardStyle,
+//                  ),
+//                  SizedBox(
+//                    width: 16,
+//                  )
+//                ],
+//              ),
+//            ),
             Expanded(
               child: Padding(
                 padding:

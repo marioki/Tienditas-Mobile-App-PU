@@ -16,65 +16,64 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Lista componentes desde aqui
-            //Contenedor del search bar
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              //<<>>
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _searchInput(),
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Container(
-                      child: Image(
-                        height: 35,
-                        width: 35,
-                        image: AssetImage('assets/images/codigo-qr.png'),
-                      ),
-                    ),
+    return Scaffold(
+      body: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //Lista componentes desde aqui
+              //Custom App Bar==========
+              Container(
+                child: Center(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 30),
+                    child: _searchInput(),
                   ),
-                ],
-              ),
-            ),
-            //Contenedor de Categorias
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              leading: Text('Categorías', style: storeSubtitles),
-              trailing: FlatButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'categories_page');
-                },
-                child: Text(
-                  'Ver Todas',
-                  style: storeOptions,
+                ),
+                height: 125,
+                decoration: BoxDecoration(
+                  color: azulTema,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30)),
                 ),
               ),
-            ),
-            Container(
-              //Category List Row Container
-              height: 110,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: getCategories(),
+              //Contenedor de Categorias
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                leading: Text('Categorías', style: storeSubtitles),
+                trailing: FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'categories_page');
+                  },
+                  child: Text(
+                    'Ver Todas',
+                    style: storeOptions,
+                  ),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              margin: EdgeInsets.only(bottom: 10, top: 16),
-              child: Text('Sugerencias para ti', style: storeSubtitles),
-            ),
-            Expanded(
-              child: getTiendasListViewBuilder(),
-            )
-          ],
+              Container(
+                //Category List Row Container
+                height: 110,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: getCategories(),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.only(bottom: 10, top: 16),
+                child: Text('Sugerencias para ti', style: storeSubtitles),
+              ),
+              Expanded(
+                child: getTiendasListViewBuilder(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -109,8 +108,15 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 //  ),
 
   Widget _searchInput() {
-    return Expanded(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blueGrey.shade300,
+        borderRadius: BorderRadius.circular(30),
+      ),
       child: TextField(
+
+        style: TextStyle(color: Colors.white),
+        toolbarOptions: ToolbarOptions(),
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -127,7 +133,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           ),
           suffixIcon: Icon(Icons.search),
           border: InputBorder.none,
-          hintText: 'Buscar',
+          hintText: 'Busca Tiendita',
           contentPadding: const EdgeInsets.only(
             left: 16,
             right: 20,

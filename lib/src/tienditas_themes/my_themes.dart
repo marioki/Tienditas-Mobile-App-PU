@@ -10,6 +10,8 @@ Color azulOptions = Color(0xFF0B46C5);
 Color grizSubtitulo = Color(0xFF919BAC);
 Color azulTema = Color(0xFF191660);
 Color rosadoBlur = Color(0xFFFC9BAF);
+Color azulTemaOpaco = Color(0xFFF3F6FB);
+
 
 Color rojoSpring = Color(0xFFfe4a49);
 Color celesteSpring = Color(0xFF2ab7ca);
@@ -184,6 +186,14 @@ TextStyle naviBarNotSelectedItemLabel = new TextStyle(
   color: Colors.grey,
   fontWeight: FontWeight.normal,
   fontSize: 8,
+);
+
+//=============AppBarStyle=================
+TextStyle appBarStyle = new TextStyle(
+  fontFamily: 'Nunito',
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 24,
 );
 
 const kDefaultPaddin = 20.0;
