@@ -20,6 +20,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       backgroundColor: azulTema,
       body: SafeArea(
         top: true,
