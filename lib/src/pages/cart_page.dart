@@ -14,12 +14,13 @@ class _CartPageState extends State<CartPage> {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(screenHeight * .25),
         child: AppBar(
+          elevation: 0,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))),
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35))),
           centerTitle: true,
           backgroundColor: azulTema,
           title: Text(
@@ -32,24 +33,7 @@ class _CartPageState extends State<CartPage> {
         child: Column(
           children: <Widget>[
             //Custom Appbar
-//          Container(
-//            height: screenHeight * .25,
-//            //margin: EdgeInsets.only(bottom: 16),
-//            clipBehavior: Clip.antiAlias,
-//            decoration: BoxDecoration(
-//              color: azulTema,
-//              borderRadius: BorderRadius.only(
-//                bottomLeft: Radius.circular(35),
-//                bottomRight: Radius.circular(35),
-//              ),
-//            ),
-//            child: Center(
-//              child: Text(
-//                'Mi Carrito',
-//                style: storeTitleCardStyle,
-//              ),
-//            ),
-//          ),
+
             //Total a pagar
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

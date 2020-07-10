@@ -14,65 +14,72 @@ class StoreFrontPage extends StatefulWidget {
 class _StoreFrontPageState extends State<StoreFrontPage> {
   final tiendasProvider = TiendasProvider();
 
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: azulTema,
       body: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //Lista componentes desde aqui
-              //Custom App Bar==========
-              Container(
-                child: Center(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 30),
-                    child: _searchInput(),
+        top: true,
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //Lista componentes desde aqui
+                //Custom App Bar==========
+                Container(
+                  child: Center(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 30, right: 30, top: 30),
+                      child: _searchInput(),
+                    ),
+                  ),
+                  height: screenHeight *.25,
+                  decoration: BoxDecoration(
+                    color: azulTema,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35)),
                   ),
                 ),
-                height: 125,
-                decoration: BoxDecoration(
-                  color: azulTema,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                ),
-              ),
-              //Contenedor de Categorias
-              ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                leading: Text('Categorías', style: storeSubtitles),
-                trailing: FlatButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'categories_page');
-                  },
-                  child: Text(
-                    'Ver Todas',
-                    style: storeOptions,
+                //Contenedor de Categorias
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  leading: Text('Categorías', style: storeSubtitles),
+                  trailing: FlatButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'categories_page');
+                    },
+                    child: Text(
+                      'Ver Todas',
+                      style: storeOptions,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                //Category List Row Container
-                height: 110,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: getCategories(),
+                Container(
+                  //Category List Row Container
+                  height: 110,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: getCategories(),
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                margin: EdgeInsets.only(bottom: 10, top: 16),
-                child: Text('Sugerencias para ti', style: storeSubtitles),
-              ),
-              Expanded(
-                child: getTiendasListViewBuilder(),
-              )
-            ],
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  margin: EdgeInsets.only(bottom: 10, top: 16),
+                  child: Text('Sugerencias para ti', style: storeSubtitles),
+                ),
+                Expanded(
+                  child: getTiendasListViewBuilder(),
+                )
+              ],
+            ),
           ),
         ),
       ),

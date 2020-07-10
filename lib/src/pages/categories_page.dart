@@ -11,12 +11,14 @@ class CategoriesPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(screenHeight * .25),
         child: AppBar(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30))),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(35),
+              bottomRight: Radius.circular(35),
+            ),
+          ),
           centerTitle: true,
           backgroundColor: azulTema,
           title: Text(

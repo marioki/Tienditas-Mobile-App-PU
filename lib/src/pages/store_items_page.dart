@@ -15,11 +15,13 @@ class StoreItemsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: getCategoryColor(args.category),
       body: SafeArea(
+        top: true,
         child: Container(
           color: Colors.white,
           child: Column(
             children: <Widget>[
               Container(
+                //margin: EdgeInsets.only(top: 24),
                 height: screenHeight * .25,
                 //margin: EdgeInsets.only(bottom: 16),
                 clipBehavior: Clip.antiAlias,
