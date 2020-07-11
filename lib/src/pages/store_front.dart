@@ -1,7 +1,11 @@
+import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/store_model.dart';
+import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/tiendas_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:app_tiendita/src/utils/crearCategoryList.dart';
+import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +18,17 @@ class StoreFrontPage extends StatefulWidget {
 class _StoreFrontPageState extends State<StoreFrontPage> {
   final tiendasProvider = TiendasProvider();
 
+  //List<Categoria> _categorias;
+  bool _loading = true;
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    CategoriesProvider().getAllCategories().then((categorias) {
+//      _categorias = categorias;
+//      _loading = false;
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +36,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       backgroundColor: azulTema,
       body: SafeArea(
         top: true,
@@ -42,7 +56,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       child: _searchInput(),
                     ),
                   ),
-                  height: screenHeight *.25,
+                  height: screenHeight * .25,
                   decoration: BoxDecoration(
                     color: azulTema,
                     borderRadius: BorderRadius.only(
@@ -65,13 +79,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   ),
                 ),
                 Container(
-                  //Category List Row Container
-                  height: 110,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: getCategories(),
-                  ),
-                ),
+                    //Category List Row Container
+                    height: 110,
+                    child: _carruselDeCategorias()),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   margin: EdgeInsets.only(bottom: 10, top: 16),
@@ -88,34 +98,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     );
   }
 
-//  getTiendas();
-
-//  Widget _swiperTarjetas() {
-//    return FutureBuilder(
-//        future: peliculasProvider.getEnCines(),
-//        builder: (
-//            BuildContext context,
-//            AsyncSnapshot<List> snapshot,
-//            ) {
-//          if (snapshot.hasData) {
-//            return StoreCardWidget(name: snapshot.,);
-//          } else {
-//            return Container(
-//              height: 400,
-//              child: Center(
-//                child: CircularProgressIndicator(),
-//              ),
-//            );
-//          }
-//        });
-//  }
-
-//  ListView(
-//  padding: EdgeInsets.symmetric(horizontal: 24),
-//  shrinkWrap: true,
-//  children: getStoreList(),
-//  ),
-
   Widget _searchInput() {
     return Container(
       decoration: BoxDecoration(
@@ -123,7 +105,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextField(
-
         style: TextStyle(color: Colors.white),
         toolbarOptions: ToolbarOptions(),
         textCapitalization: TextCapitalization.sentences,
@@ -193,5 +174,32 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         }
       },
     );
+  }
+
+  Widget _carruselDeCategorias() {
+    return FutureBuilder(
+        future: CategoriesProvider().getAllCategories(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            final Category myCategory = snapshot.data;
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: myCategory.body.category.length,
+              itemBuilder: (BuildContext context, int index) {
+                return CategoryCard(
+                  name: myCategory.body.category[index].categoryName,
+                  image: myCategory.body.category[index].iconUrl,
+                  color: myCategory.body.category[index].hexColor,
+                );
+              },
+            );
+          } else
+            return Container(
+              height: 400,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+        });
   }
 }
