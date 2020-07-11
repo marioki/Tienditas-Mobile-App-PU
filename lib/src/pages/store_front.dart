@@ -1,7 +1,9 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/store_model.dart';
+import 'package:app_tiendita/src/modelos/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/tiendas_provider.dart';
+import 'package:app_tiendita/src/providers/tiendita_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
@@ -14,20 +16,14 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
-   Category myCategory;
+  Category myCategory;
 
   final tiendasProvider = TiendasProvider();
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: azulTema,
@@ -46,7 +42,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   child: Center(
                     child: Padding(
                       padding:
-                      const EdgeInsets.only(left: 30, right: 30, top: 30),
+                          const EdgeInsets.only(left: 30, right: 30, top: 30),
                       child: _searchInput(),
                     ),
                   ),
@@ -64,8 +60,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   leading: Text('Categorías', style: storeSubtitles),
                   trailing: FlatButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, 'categories_page', arguments: myCategory);
+                      Navigator.pushNamed(context, 'categories_page',
+                          arguments: myCategory);
                     },
                     child: Text(
                       'Ver Todas',
@@ -76,7 +72,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 Container(
                   //Category List Row Container
                   height: 110,
-                  child: _carruselDeCategorias(),),
+                  child: _carruselDeCategorias(),
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   margin: EdgeInsets.only(bottom: 10, top: 16),
@@ -113,9 +110,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           suffixIcon: Icon(Icons.search),
@@ -138,24 +133,26 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget getTiendasListViewBuilder() {
     print('LLamada del metodo');
     return FutureBuilder(
-      future: tiendasProvider.getAllTiendas(),
-      builder: (BuildContext context,
-          snapshot,) {
+      future: TienditasProvider().getAllTienditas(),
+      builder: (
+        BuildContext context,
+        snapshot,
+      ) {
         if (snapshot.hasData) {
           print('aloo');
           print(snapshot.data);
+          Tiendita miTienda = snapshot.data;
           return ListView.builder(
-            itemCount: snapshot.data.length,
+            itemCount: miTienda.body.stores.length,
             padding: EdgeInsets.symmetric(horizontal: 24),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              Tienda miTienda = snapshot.data[index];
               return StoreCardWidget(
-                name: miTienda.name,
-                handle: miTienda.handle,
-                followers: miTienda.followers,
-                image: miTienda.image,
-                category: miTienda.category,
+                name: miTienda.body.stores[index].storeName,
+                handle: miTienda.body.stores[index].storeTagName,
+                category: miTienda.body.stores[index].categoryName,
+                colorHex: miTienda.body.stores[index].hexColor,
+
               );
             },
           );
@@ -176,7 +173,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         future: CategoriesProvider().getAllCategories(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-             myCategory = snapshot.data;
+            myCategory = snapshot.data;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: myCategory.body.category.length,

@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/maps/categories_map.dart';
 import 'package:app_tiendita/src/modelos/store_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
 
 class StoreCardWidget extends StatelessWidget {
@@ -9,14 +10,16 @@ class StoreCardWidget extends StatelessWidget {
   final int followers;
   final String image;
   final String category;
+  final String colorHex;
 
   const StoreCardWidget(
       {Key key,
       @required this.name,
       @required this.handle,
-      @required this.followers,
-      @required this.image,
-      this.category})
+      this.followers,
+      this.image,
+      this.category,
+      this.colorHex})
       : super(key: key);
 
   @override
@@ -32,7 +35,7 @@ class StoreCardWidget extends StatelessWidget {
             handle: handle,
             followers: followers,
             category: category,
-            image: image,
+            //image: image,
           ),
         );
       },
@@ -44,7 +47,7 @@ class StoreCardWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(35),
         ),
-        color: getCategoryColor(category),
+        color: getColorFromHex(colorHex),
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 20,
@@ -65,8 +68,7 @@ class StoreCardWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
-                          fit: BoxFit.contain,
-                          image: NetworkImage(image),
+                          image: AssetImage('assets/images/Bolso_Moda.png'),
                         ),
                       ),
                     ),
