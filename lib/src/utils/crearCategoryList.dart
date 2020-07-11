@@ -11,7 +11,7 @@ List<CategoryCard> getCategories() {
 
 
 
-
+//
 //  return [
 //    CategoryCard(
 //      name: 'Tecnologia',

@@ -1,5 +1,3 @@
-
-
 import 'dart:ui';
 
 Color getColorFromHex(String hexColor) {

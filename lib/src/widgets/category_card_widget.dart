@@ -28,18 +28,19 @@ class CategoryCard extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           margin: EdgeInsets.symmetric(horizontal: 10),
           child: Container(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: FadeInImage(
-                    image: NetworkImage(
-                      image,
-                    ),
-                    placeholder:
-                        AssetImage('assets/images/Huella_perro_Mascota.png'),
-                  )),
-              width: 75,
-              height: 75,
-              color: getColorFromHex(color)),
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: FadeInImage(
+                  image: NetworkImage(
+                    image,
+                  ),
+                  placeholder:
+                      AssetImage('assets/images/Huella_perro_Mascota.png'),
+                )),
+            width: 75,
+            height: 75,
+            color: getColorFromHex(color),
+          ),
         ),
         Container(
           margin: EdgeInsets.symmetric(vertical: 5),

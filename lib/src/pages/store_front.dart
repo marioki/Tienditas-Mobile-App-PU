@@ -3,8 +3,6 @@ import 'package:app_tiendita/src/modelos/store_model.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/tiendas_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/utils/color_from_hex.dart';
-import 'package:app_tiendita/src/utils/crearCategoryList.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,24 +14,20 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
+   Category myCategory;
+
   final tiendasProvider = TiendasProvider();
-
-  //List<Categoria> _categorias;
-  bool _loading = true;
-
-//  @override
-//  void initState() {
-//    super.initState();
-//    CategoriesProvider().getAllCategories().then((categorias) {
-//      _categorias = categorias;
-//      _loading = false;
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: azulTema,
@@ -52,7 +46,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   child: Center(
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 30, right: 30, top: 30),
+                      const EdgeInsets.only(left: 30, right: 30, top: 30),
                       child: _searchInput(),
                     ),
                   ),
@@ -70,7 +64,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   leading: Text('Categorías', style: storeSubtitles),
                   trailing: FlatButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'categories_page');
+                      Navigator.pushNamed(
+                          context, 'categories_page', arguments: myCategory);
                     },
                     child: Text(
                       'Ver Todas',
@@ -79,9 +74,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   ),
                 ),
                 Container(
-                    //Category List Row Container
-                    height: 110,
-                    child: _carruselDeCategorias()),
+                  //Category List Row Container
+                  height: 110,
+                  child: _carruselDeCategorias(),),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   margin: EdgeInsets.only(bottom: 10, top: 16),
@@ -118,7 +113,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
             ),
           ),
           suffixIcon: Icon(Icons.search),
@@ -142,10 +139,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     print('LLamada del metodo');
     return FutureBuilder(
       future: tiendasProvider.getAllTiendas(),
-      builder: (
-        BuildContext context,
-        snapshot,
-      ) {
+      builder: (BuildContext context,
+          snapshot,) {
         if (snapshot.hasData) {
           print('aloo');
           print(snapshot.data);
@@ -181,7 +176,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         future: CategoriesProvider().getAllCategories(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            final Category myCategory = snapshot.data;
+             myCategory = snapshot.data;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: myCategory.body.category.length,
