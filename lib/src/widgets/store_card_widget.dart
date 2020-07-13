@@ -27,17 +27,18 @@ class StoreCardWidget extends StatelessWidget {
     return FlatButton(
       padding: EdgeInsets.all(0),
       onPressed: () {
-        Navigator.pushNamed(
-          context,
-          'store_items_page',
-          arguments: Tienda(
-            name: name,
-            handle: handle,
-            followers: followers,
-            category: category,
-            //image: image,
-          ),
-        );
+        Navigator.pushNamed(context, 'place_holder_page');
+//        Navigator.pushNamed(
+//          context,
+//          'store_items_page',
+//          arguments: Tienda(
+//            name: name,
+//            handle: handle,
+//            followers: followers,
+//            category: category,
+//            //image: image,
+//          ),
+//        );
       },
       child: Card(
         margin: EdgeInsets.symmetric(
