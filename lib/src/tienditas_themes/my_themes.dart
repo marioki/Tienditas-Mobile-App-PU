@@ -11,7 +11,7 @@ Color grizSubtitulo = Color(0xFF919BAC);
 Color azulTema = Color(0xFF191660);
 Color rosadoBlur = Color(0xFFFC9BAF);
 Color azulTemaOpaco = Color(0xFFF3F6FB);
-
+Color grisClaroTema = Color(0xFFF3F6FB);
 
 Color rojoSpring = Color(0xFFfe4a49);
 Color celesteSpring = Color(0xFF2ab7ca);

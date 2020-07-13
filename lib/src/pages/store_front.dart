@@ -1,8 +1,6 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
-import 'package:app_tiendita/src/modelos/store_model.dart';
 import 'package:app_tiendita/src/modelos/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
-import 'package:app_tiendita/src/providers/tiendas_provider.dart';
 import 'package:app_tiendita/src/providers/tiendita_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
@@ -18,7 +16,11 @@ class StoreFrontPage extends StatefulWidget {
 class _StoreFrontPageState extends State<StoreFrontPage> {
   Category myCategory;
 
-  final tiendasProvider = TiendasProvider();
+  @override
+  void initState() {
+    super.initState();
+    //userTokenId =
+  }
 
   @override
   Widget build(BuildContext context) {
