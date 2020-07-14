@@ -30,8 +30,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: azulTema,
       body: SafeArea(
+        //Todo Test SafeArea fix
         top: true,
-        bottom: true,
+        bottom: false,
         child: Container(
           color: Colors.white,
           child: Padding(

@@ -88,7 +88,7 @@ class StoreItemsPage extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Image(
                                 fit: BoxFit.cover,
-                                //ToDO cambiar a fir cuando mande imagen el backend
+                                //ToDO cambiar a fit cuando mande imagen el backend
                                 image:
                                     AssetImage('assets/images/placeholder.png'),
                               ),
@@ -114,10 +114,15 @@ class StoreItemsPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: FutureBuilder(
-          future: ProductProvider().getStoreProducts(),
+          future: ProductProvider().getStoreProducts(args.storeTagName),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;
+              if (product.body.products.length < 1) {
+                return Image(
+                  image: AssetImage('assets/images/oops - Copy.jpg'),
+                );
+              }
               return GridView.builder(
                 itemCount: product.body.products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -135,8 +140,7 @@ class StoreItemsPage extends StatelessWidget {
                     outstanding: product.body.products[index].outstanding,
                     purchaseType: product.body.products[index].purchaseType,
                     quantity: product.body.products[index].quantity,
-                    registeredDate:
-                        product.body.products[index].registeredDate,
+                    registeredDate: product.body.products[index].registeredDate,
                     image: 'https://picsum.photos/200/300',
                     hexColor: args.hexColor,
                   );
