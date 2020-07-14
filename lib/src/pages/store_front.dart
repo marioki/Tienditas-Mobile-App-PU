@@ -31,6 +31,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       backgroundColor: azulTema,
       body: SafeArea(
         top: true,
+        bottom: true,
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -154,7 +155,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 handle: miTienda.body.stores[index].storeTagName,
                 category: miTienda.body.stores[index].categoryName,
                 colorHex: miTienda.body.stores[index].hexColor,
-
               );
             },
           );

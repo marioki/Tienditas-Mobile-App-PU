@@ -1,5 +1,4 @@
-import 'package:app_tiendita/src/maps/categories_map.dart';
-import 'package:app_tiendita/src/modelos/store_model.dart';
+import 'package:app_tiendita/src/modelos/tiendita_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +26,18 @@ class StoreCardWidget extends StatelessWidget {
     return FlatButton(
       padding: EdgeInsets.all(0),
       onPressed: () {
-        Navigator.pushNamed(context, 'place_holder_page');
-//        Navigator.pushNamed(
-//          context,
-//          'store_items_page',
-//          arguments: Tienda(
-//            name: name,
-//            handle: handle,
-//            followers: followers,
-//            category: category,
-//            //image: image,
-//          ),
-//        );
+        //Navigator.pushNamed(context, 'place_holder_page');
+        Navigator.pushNamed(
+          context,
+          'store_items_page',
+          arguments: Store(
+              storeName: name,
+              categoryName: category,
+              hexColor: colorHex,
+              storeTagName: handle),
+        );
       },
+      //Todo: Cambiar el tamaño del widget usando MediaQuery
       child: Card(
         margin: EdgeInsets.symmetric(
           vertical: 8,
@@ -52,7 +50,7 @@ class StoreCardWidget extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 20,
+            vertical: 10,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

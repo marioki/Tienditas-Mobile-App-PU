@@ -1,6 +1,9 @@
 import 'package:app_tiendita/src/maps/categories_map.dart';
-import 'package:app_tiendita/src/modelos/store_model.dart';
+import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +11,12 @@ import 'package:flutter/material.dart';
 class StoreItemsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Tienda args = ModalRoute.of(context).settings.arguments;
+    final Store args = ModalRoute.of(context).settings.arguments;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: getCategoryColor(args.category),
+      backgroundColor: getCategoryColor(args.hexColor),
       body: SafeArea(
         top: true,
         child: Container(
@@ -26,7 +29,7 @@ class StoreItemsPage extends StatelessWidget {
                 //margin: EdgeInsets.only(bottom: 16),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
-                  color: getCategoryColor(args.category),
+                  color: getColorFromHex(args.hexColor),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(35),
                     bottomRight: Radius.circular(35),
@@ -55,16 +58,16 @@ class StoreItemsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            args.name,
+                            args.storeName,
                             style: storeTitleCardStyle,
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '@${args.handle}',
+                            args.storeTagName,
                             style: storeDetailsCardStyle,
                           ),
                           Text(
-                            'Seguidores: ${args.followers.toString()}',
+                            'Seguidores: 21,312',
                             style: storeDetailsCardStyle,
                           ),
                         ],
@@ -84,8 +87,10 @@ class StoreItemsPage extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image(
-                                fit: BoxFit.contain,
-                                image: NetworkImage(args.image),
+                                fit: BoxFit.cover,
+                                //ToDO cambiar a fir cuando mande imagen el backend
+                                image:
+                                    AssetImage('assets/images/placeholder.png'),
                               ),
                             ),
                           ),
@@ -96,28 +101,55 @@ class StoreItemsPage extends StatelessWidget {
                 ),
               ),
               SearchBarWidget(),
-              Expanded(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-                  child: GridView.builder(
-                    itemCount: 10,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: kDefaultPaddin,
-                      mainAxisSpacing: kDefaultPaddin,
-                      childAspectRatio: 3 / 5,
-                    ),
-                    itemBuilder: (context, index) {
-                      return ProductItemCard(
-                        storeCategory: args.category,
-                      );
-                    },
-                  ),
-                ),
-              ),
+              _generateStoreProductList(args),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _generateStoreProductList(Store args) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+        child: FutureBuilder(
+          future: ProductProvider().getStoreProducts(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              Product product = snapshot.data;
+              return GridView.builder(
+                itemCount: product.body.products.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: kDefaultPaddin,
+                  mainAxisSpacing: kDefaultPaddin,
+                  childAspectRatio: 3 / 5,
+                ),
+                itemBuilder: (context, index) {
+                  return ProductItemCard(
+                    itemName: product.body.products[index].itemName,
+                    itemId: product.body.products[index].itemId,
+                    finalPrice: product.body.products[index].finalPrice,
+                    itemSatus: product.body.products[index].itemSatus,
+                    outstanding: product.body.products[index].outstanding,
+                    purchaseType: product.body.products[index].purchaseType,
+                    quantity: product.body.products[index].quantity,
+                    registeredDate:
+                        product.body.products[index].registeredDate,
+                    image: 'https://picsum.photos/200/300',
+                    hexColor: args.hexColor,
+                  );
+                },
+              );
+            } else
+              return Container(
+                height: 400,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+          },
         ),
       ),
     );
