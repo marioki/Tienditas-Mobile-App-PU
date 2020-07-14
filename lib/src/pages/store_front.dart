@@ -151,6 +151,22 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             padding: EdgeInsets.symmetric(horizontal: 24),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
+              if (index == miTienda.body.stores.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    StoreCardWidget(
+                      name: miTienda.body.stores[index].storeName,
+                      handle: miTienda.body.stores[index].storeTagName,
+                      category: miTienda.body.stores[index].categoryName,
+                      colorHex: miTienda.body.stores[index].hexColor,
+                    ),
+                    SizedBox(
+                      //Todo Change to media query when store card uses media query
+                      height: 100,
+                    ),
+                  ],
+                );
+              }
               return StoreCardWidget(
                 name: miTienda.body.stores[index].storeName,
                 handle: miTienda.body.stores[index].storeTagName,
