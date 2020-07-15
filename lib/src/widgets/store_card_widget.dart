@@ -23,6 +23,7 @@ class StoreCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return FlatButton(
       padding: EdgeInsets.all(0),
       onPressed: () {
@@ -59,15 +60,15 @@ class StoreCardWidget extends StatelessWidget {
                 margin: EdgeInsets.only(right: 10),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 40,
+                  radius: size.height * .04,
                   child: ClipOval(
                     child: SizedBox(
-                      width: 100,
                       height: 100,
+                      width: 100,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
-                          image: AssetImage('assets/images/Bolso_Moda.png'),
+                          image: AssetImage('assets/images/placeholder.png'),
                         ),
                       ),
                     ),

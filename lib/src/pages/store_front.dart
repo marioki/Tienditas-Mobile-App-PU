@@ -194,6 +194,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           if (snapshot.hasData) {
             myCategory = snapshot.data;
             return ListView.builder(
+
               scrollDirection: Axis.horizontal,
               itemCount: myCategory.body.category.length,
               itemBuilder: (BuildContext context, int index) {
