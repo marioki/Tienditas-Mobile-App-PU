@@ -16,9 +16,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       ),
       color: rosadoClaro,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: Column(

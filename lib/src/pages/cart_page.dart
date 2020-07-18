@@ -1,5 +1,5 @@
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/widgets/cart_item_widget.dart';
+import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
@@ -7,6 +7,7 @@ class CartPage extends StatefulWidget {
   _CartPageState createState() => _CartPageState();
 }
 
+//Todo Crear provider global en el primer elemnto del arbol para guardar la lista de items
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
@@ -98,15 +99,15 @@ class _CartPageState extends State<CartPage> {
             ),
             Expanded(
               child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 children: <Widget>[
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
-                  CartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
+                  NewCartItemWidget(),
                 ],
               ),
             ),

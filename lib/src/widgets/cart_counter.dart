@@ -16,7 +16,7 @@ class _CartCounterState extends State<CartCounter> {
       width: 95,
       //color: Colors.pinkAccent.shade100,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.pinkAccent.shade100,
       ),
       child: Row(
@@ -51,7 +51,6 @@ class _CartCounterState extends State<CartCounter> {
           ),
           Expanded(
             child: FlatButton(
-
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               padding: EdgeInsets.all(0),
               onPressed: () {
