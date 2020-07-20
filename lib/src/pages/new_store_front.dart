@@ -14,7 +14,7 @@ class NewStoreFront extends StatefulWidget {
 }
 
 class _NewStoreFrontState extends State<NewStoreFront> {
-  Category myCategory;
+  CategoryModel myCategory;
 
   @override
   Widget build(BuildContext context) {

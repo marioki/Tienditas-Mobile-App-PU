@@ -8,7 +8,7 @@ class CategoriesProvider {
   static const String url =
       'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/category';
 
-  Future<Category> getAllCategories() async {
+  Future<CategoryModel> getAllCategories() async {
 
     Future<http.Response> fetchUserTokenId() {
       return http.get('https://jsonplaceholder.typicode.com/albums/1');
@@ -24,7 +24,7 @@ class CategoriesProvider {
       final category = categoryFromJson(response.body);
       return category;
     } else {
-      return Category();
+      return CategoryModel();
     }
   }
 }

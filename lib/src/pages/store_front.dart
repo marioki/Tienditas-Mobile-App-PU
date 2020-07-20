@@ -14,7 +14,7 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
-  Category myCategory;
+  CategoryModel myCategory;
 
   @override
   void initState() {

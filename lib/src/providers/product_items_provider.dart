@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class ProductProvider {
   //Todo Traer productos por store usando uri constructor
 
-  Future<Product> getStoreProducts(storeTagName) async {
+  Future<Product> getStoreProducts(String storeTagName) async {
     final url = '$apiBaseUrl/api/v1/product?store_tag_name=$storeTagName';
 
     // var queryParameters = {'store_tag_name': '@asus'};
