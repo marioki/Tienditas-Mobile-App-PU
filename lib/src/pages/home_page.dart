@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_page.dart';
-import 'profile.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

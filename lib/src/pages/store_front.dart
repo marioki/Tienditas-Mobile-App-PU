@@ -133,7 +133,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget getTiendasListViewBuilder() {
     print('LLamada del metodo');
     return FutureBuilder(
-      future: TienditasProvider().getAllTienditas(),
+      future: TienditasProvider().getAllTienditas(context),
       builder: (
         BuildContext context,
         snapshot,
@@ -185,7 +185,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
-        future: CategoriesProvider().getAllCategories(),
+        future: CategoriesProvider().getAllCategories(context),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             myCategory = snapshot.data;

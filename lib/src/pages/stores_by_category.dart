@@ -54,7 +54,7 @@ class StoresByCategory extends StatelessWidget {
           SearchBarWidget(),
           FutureBuilder(
             future: TienditasPorCategoriaProvider()
-                .getTienditasPorCategoria(args.categoryName),
+                .getTienditasPorCategoria(args.categoryName, context),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 print('aloo');

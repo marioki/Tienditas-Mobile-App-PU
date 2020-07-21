@@ -90,7 +90,7 @@ class StoreItemsPage extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 //ToDO cambiar a fit cuando mande imagen el backend
                                 image:
-                                    AssetImage('assets/images/placeholder.png'),
+                                    AssetImage('assets/images/tienditas_placeholder.png'),
                               ),
                             ),
                           ),
@@ -101,7 +101,7 @@ class StoreItemsPage extends StatelessWidget {
                 ),
               ),
               SearchBarWidget(),
-              _generateStoreProductList(args),
+              _generateStoreProductList(args, context),
             ],
           ),
         ),
@@ -109,12 +109,13 @@ class StoreItemsPage extends StatelessWidget {
     );
   }
 
-  Widget _generateStoreProductList(Store args) {
+  Widget _generateStoreProductList(Store args, BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: FutureBuilder(
-          future: ProductProvider().getStoreProducts(args.storeTagName),
+          future:
+              ProductProvider().getStoreProducts(args.storeTagName, context),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;

@@ -68,7 +68,7 @@ class StoreCardWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
-                          image: AssetImage('assets/images/placeholder.png'),
+                          image: AssetImage('assets/images/tienditas_placeholder.png'),
                         ),
                       ),
                     ),
