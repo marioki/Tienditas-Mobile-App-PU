@@ -44,7 +44,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   child: Center(
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 30, right: 30, top: 30),
+                          const EdgeInsets.only(left: 32, right: 32, top: 16, bottom: 16),
                       child: _searchInput(),
                     ),
                   ),
@@ -95,19 +95,16 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget _searchInput() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blueGrey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: azulTema, fontFamily: "Nunito"),
         toolbarOptions: ToolbarOptions(),
         textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(
-              color: Color(0x4437474F),
-            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
@@ -117,7 +114,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           ),
           suffixIcon: Icon(Icons.search),
           border: InputBorder.none,
-          hintText: 'Busca Tiendita',
+          hintText: 'Buscar Tienditas',
           contentPadding: const EdgeInsets.only(
             left: 16,
             right: 20,

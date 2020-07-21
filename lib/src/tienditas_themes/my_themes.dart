@@ -57,13 +57,13 @@ TextStyle storeTitleCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: 18);
+    fontSize: 20);
 
 TextStyle storeDetailsCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: 11);
+    fontSize: 14);
 
 TextStyle storeCategoryStyle = new TextStyle(
     fontFamily: 'Nunito',
