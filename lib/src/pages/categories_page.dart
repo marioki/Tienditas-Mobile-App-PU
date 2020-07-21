@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Category args = ModalRoute.of(context).settings.arguments;
+    final CategoryModel args = ModalRoute.of(context).settings.arguments;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(

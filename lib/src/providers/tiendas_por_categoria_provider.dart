@@ -7,12 +7,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class TienditasProvider  {
-  static const String url =
-      'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store';
-  Future<Tiendita> getAllTienditas(BuildContext context) async {
+class TienditasPorCategoriaProvider {
+  //Todo Traer Tiendas por categoria usando uri constructor
+
+
+
+  Future<Tiendita> getTienditasPorCategoria(String categoryName, BuildContext context) async {
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
+
+    final String url =
+        'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store?category_name=$categoryName';
     final response = await http.get(url,
         headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {

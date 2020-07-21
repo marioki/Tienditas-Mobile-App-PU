@@ -1,30 +1,27 @@
 import 'dart:io';
 
-import 'package:app_tiendita/src/constants/UserTokenId.dart';
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
+import 'package:app_tiendita/src/utils/login_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class CategoriesProvider {
   static const String url =
       'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/category';
 
-  Future<Category> getAllCategories() async {
+  Future<CategoryModel> getAllCategories(BuildContext context) async {
+    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
-    Future<http.Response> fetchUserTokenId() {
-      return http.get('https://jsonplaceholder.typicode.com/albums/1');
-    }
-
-    final response = await http.get(url, headers: {
-      HttpHeaders.authorizationHeader:
-      constantDebugUserTokenId
-    });
+    final response = await http
+        .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
       print(response.body);
 
       final category = categoryFromJson(response.body);
       return category;
     } else {
-      return Category();
+      return CategoryModel();
     }
   }
 }

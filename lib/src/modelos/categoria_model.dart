@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
+CategoryModel categoryFromJson(String str) => CategoryModel.fromJson(json.decode(str));
 
-String categoryToJson(Category data) => json.encode(data.toJson());
+String categoryToJson(CategoryModel data) => json.encode(data.toJson());
 
-class Category {
-  Category({
+class CategoryModel {
+  CategoryModel({
     this.statusCode,
     this.body,
   });
@@ -17,7 +17,7 @@ class Category {
   int statusCode;
   Body body;
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
     statusCode: json["statusCode"],
     body: Body.fromJson(json["body"]),
   );

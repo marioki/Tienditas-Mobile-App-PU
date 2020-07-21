@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_page.dart';
-import 'profile.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       resizeToAvoidBottomInset: false,
       body: _callPage(currentIndex),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

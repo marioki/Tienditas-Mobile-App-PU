@@ -14,7 +14,7 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
-  Category myCategory;
+  CategoryModel myCategory;
 
   @override
   void initState() {
@@ -28,65 +28,63 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: azulTema,
-      body: SafeArea(
-        top: true,
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //Lista componentes desde aqui
-                //Custom App Bar==========
-                Container(
-                  child: Center(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 32, right: 32, top: 16, bottom: 16),
-                      child: _searchInput(),
-                    ),
-                  ),
-                  height: screenHeight * .25,
-                  decoration: BoxDecoration(
-                    color: azulTema,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(35),
-                        bottomRight: Radius.circular(35)),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //Lista componentes desde aqui
+            //Custom App Bar==========
+            CustomScrollView(
+              primary: false,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              slivers: <Widget>[
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30))),
+                  backgroundColor: azulTema,
+                  //pinned: true,
+                  floating: true,
+                  expandedHeight: 120.0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text('Basic Slivers'),
                   ),
                 ),
-                //Contenedor de Categorias
-                ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  leading: Text('Categorías', style: storeSubtitles),
-                  trailing: FlatButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'categories_page',
-                          arguments: myCategory);
-                    },
-                    child: Text(
-                      'Ver Todas',
-                      style: storeOptions,
-                    ),
-                  ),
-                ),
-                Container(
-                  //Category List Row Container
-                  height: 110,
-                  child: _carruselDeCategorias(),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  margin: EdgeInsets.only(bottom: 10, top: 16),
-                  child: Text('Sugerencias para ti', style: storeSubtitles),
-                ),
-                Expanded(
-                  child: getTiendasListViewBuilder(),
-                )
               ],
             ),
-          ),
+            //Contenedor de Categorias
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              leading: Text('Categorías', style: storeSubtitles),
+              trailing: FlatButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'categories_page',
+                      arguments: myCategory);
+                },
+                child: Text(
+                  'Ver Todas',
+                  style: storeOptions,
+                ),
+              ),
+            ),
+            Container(
+              //Category List Row Container
+              height: 110,
+              child: _carruselDeCategorias(),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              margin: EdgeInsets.only(bottom: 10, top: 16),
+              child: Text('Sugerencias para ti', style: storeSubtitles),
+            ),
+            Expanded(
+              child: getTiendasListViewBuilder(),
+            )
+          ],
         ),
       ),
     );
@@ -132,7 +130,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget getTiendasListViewBuilder() {
     print('LLamada del metodo');
     return FutureBuilder(
-      future: TienditasProvider().getAllTienditas(),
+      future: TienditasProvider().getAllTienditas(context),
       builder: (
         BuildContext context,
         snapshot,
@@ -146,12 +144,27 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             padding: EdgeInsets.symmetric(horizontal: 24),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
+              if (index == miTienda.body.stores.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    StoreCardWidget(
+                      name: miTienda.body.stores[index].storeName,
+                      handle: miTienda.body.stores[index].storeTagName,
+                      category: miTienda.body.stores[index].categoryName,
+                      colorHex: miTienda.body.stores[index].hexColor,
+                    ),
+                    SizedBox(
+                      //Todo Change to media query when store card uses media query
+                      height: 100,
+                    ),
+                  ],
+                );
+              }
               return StoreCardWidget(
                 name: miTienda.body.stores[index].storeName,
                 handle: miTienda.body.stores[index].storeTagName,
                 category: miTienda.body.stores[index].categoryName,
                 colorHex: miTienda.body.stores[index].hexColor,
-
               );
             },
           );
@@ -169,7 +182,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
-        future: CategoriesProvider().getAllCategories(),
+        future: CategoriesProvider().getAllCategories(context),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             myCategory = snapshot.data;
@@ -192,5 +205,33 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               ),
             );
         });
+  }
+
+  _crearEmailInput() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 50),
+      decoration: BoxDecoration(
+        color: grisClaroTema,
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: TextFormField(
+        cursorColor: Colors.black,
+        keyboardType: TextInputType.emailAddress,
+        decoration: new InputDecoration(
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding:
+                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            hintText: 'Escribe tu email',
+            hintStyle: TextStyle(
+              fontFamily: 'Nunito',
+              color: Colors.grey,
+              fontSize: 13,
+            )),
+      ),
+    );
   }
 }
