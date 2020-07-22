@@ -52,7 +52,7 @@ class ProductItemCard extends StatelessWidget {
               child: FadeInImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(image),
-                placeholder: AssetImage('assets/images/tienditas_placeholder.png'),
+                placeholder: AssetImage('assets/images/oops - Copy.jpg'),
               ),
             ),
           ),

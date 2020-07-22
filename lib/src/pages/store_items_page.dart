@@ -90,7 +90,7 @@ class StoreItemsPage extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 //ToDO cambiar a fit cuando mande imagen el backend
                                 image:
-                                    AssetImage('assets/images/tienditas_placeholder.png'),
+                                    AssetImage('assets/images/Casa.png'),
                               ),
                             ),
                           ),

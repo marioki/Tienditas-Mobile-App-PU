@@ -66,11 +66,12 @@ class StoreCardWidget extends StatelessWidget {
                       height: 100,
                       width: 100,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image(
-                          image: AssetImage('assets/images/tienditas_placeholder.png'),
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: FadeInImage(
+                            fit: BoxFit.contain,
+                            image: NetworkImage(image),
+                            placeholder: AssetImage('assets/images/placeholder.png'),
+                          )),
                     ),
                   ),
                 ),
