@@ -5,22 +5,29 @@ class UserCartState with ChangeNotifier {
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
 
-  void addProductoToCart(ProductElement productElement){
-    if(cartItemsIds.contains(productElement.itemId)){
+  void addProductoToCart(ProductElement productElement) {
+    if (cartItemsIds.contains(productElement.itemName)) {
       print('El producto ya esta en la canasta! awe');
       return;
+    } else {
+      cartProductList.add(productElement);
+      cartItemsIds.add(productElement.itemName);
+      notifyListeners();
     }
-    cartProductList.add(productElement);
-    cartItemsIds.add(productElement.itemId);
-    notifyListeners();
-    //Todo agregar el producto al carrto
   }
 
-  void deleteProductFromCart(){
-    //Todo Eliminar el Producto del carrito
+  void deleteProductFromCart(ProductElement productElement) {
+    if (cartItemsIds.contains(productElement.itemName)) {
+      cartProductList.removeWhere(
+          (element) => element.itemName == productElement.itemName);
+      cartItemsIds.remove(productElement.itemName);
+      notifyListeners();
+    } else {
+      print('El producto no esta en el carrito!');
+    }
   }
 
-  void deleteAllCartItems(){
+  void deleteAllCartItems() {
     //Todo Borrar todos los productos del carrito
   }
 }
