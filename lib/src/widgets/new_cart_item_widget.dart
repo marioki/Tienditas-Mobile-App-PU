@@ -110,7 +110,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                   height: 10,
                 ),
                 createCartCounter(widget.itemName),
-                RaisedButton(
+                FlatButton(
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
                     Provider.of<UserCartState>(context).deleteProductFromCart(
@@ -129,10 +129,9 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5),
       width: 95,
-      //color: Colors.pinkAccent.shade100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.pinkAccent.shade100,
+        color: Colors.transparent.withAlpha(50),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

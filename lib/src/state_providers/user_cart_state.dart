@@ -33,9 +33,10 @@ class UserCartState with ChangeNotifier {
 
   void addProductItemQuantity(String itemName) {
     int index = cartItemsIds.indexOf(itemName);
-    print(index);
+    print('product index $index');
     cartProductList[index].cartItemAmount++;
-    print(cartProductList[index].cartItemAmount);
+    print('price: ${cartProductList[index].cartItemAmount}');
+    calculateTotalPriceOfCart();
     notifyListeners();
   }
 
@@ -43,11 +44,12 @@ class UserCartState with ChangeNotifier {
     int index = cartItemsIds.indexOf(itemName);
     int itemAmount = cartProductList[index].cartItemAmount;
     if (itemAmount > 1) {
-      print(index);
+      print('product index $index');
       cartProductList[index].cartItemAmount--;
-      print(cartProductList[index].cartItemAmount);
+      print('price: ${cartProductList[index].cartItemAmount}');
+      calculateTotalPriceOfCart();
       notifyListeners();
-    }else{
+    } else {
       print('Minimo de 1 por producto');
     }
   }
@@ -62,7 +64,8 @@ class UserCartState with ChangeNotifier {
     //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
-      _totalPrice += double.parse(element.finalPrice).roundToDouble();
+      _totalPrice += double.parse(element.finalPrice).roundToDouble() *
+          element.cartItemAmount;
     });
     totalPrice = _totalPrice;
     print(totalPrice);
