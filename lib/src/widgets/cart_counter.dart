@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartCounter extends StatefulWidget {
+  CartCounter(String itemName);
+
 
 
   @override
@@ -11,70 +13,11 @@ class CartCounter extends StatefulWidget {
 }
 
 class _CartCounterState extends State<CartCounter> {
-
   int numOfItems = 1;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      width: 95,
-      //color: Colors.pinkAccent.shade100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.pinkAccent.shade100,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: FlatButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                setState(() {
-                  if (numOfItems > 1) {
-                    numOfItems--;
-                  }
-                });
-              },
-              child: Icon(
-                Icons.remove,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                // if our item is less  then 10 then  it shows 01 02 like that
-                numOfItems.toString(),
-                style: cartItemCounter,
-              ),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                setState(() {
-                  numOfItems++;
-//                  Provider.of<UserCartState>(context)
-//                      .addProductItemQuantity();
-                });
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+
   }
 
   SizedBox buildOutlineButton({IconData icon, Function press}) {

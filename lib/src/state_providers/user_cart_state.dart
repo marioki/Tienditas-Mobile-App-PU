@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class UserCartState with ChangeNotifier {
   double totalPrice = 0;
@@ -31,12 +32,33 @@ class UserCartState with ChangeNotifier {
   }
 
   void addProductItemQuantity(String itemName) {
-    //Todo implement cantidad de un item y calcular el precio despues
     int index = cartItemsIds.indexOf(itemName);
     print(index);
+    cartProductList[index].cartItemAmount++;
+    print(cartProductList[index].cartItemAmount);
+    notifyListeners();
   }
 
-  double calculateTotalPriceOfCart() {
+  void subtractProductItemQuantity(String itemName) {
+    int index = cartItemsIds.indexOf(itemName);
+    int itemAmount = cartProductList[index].cartItemAmount;
+    if (itemAmount > 1) {
+      print(index);
+      cartProductList[index].cartItemAmount--;
+      print(cartProductList[index].cartItemAmount);
+      notifyListeners();
+    }else{
+      print('Minimo de 1 por producto');
+    }
+  }
+
+  int getItemAmountInCart(String itemName) {
+    int index = cartItemsIds.indexOf(itemName);
+    int itemAmount = cartProductList[index].cartItemAmount;
+    return itemAmount;
+  }
+
+  calculateTotalPriceOfCart() {
     //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
@@ -45,7 +67,6 @@ class UserCartState with ChangeNotifier {
     totalPrice = _totalPrice;
     print(totalPrice);
     notifyListeners();
-    return totalPrice;
   }
 
   void deleteAllCartItems() {

@@ -45,7 +45,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     '\$50',
                     style: cartItemPrice,
                   ),
-                  CartCounter()
+                 // CartCounter()
                 ],
               ),
             )

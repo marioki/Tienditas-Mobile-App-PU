@@ -91,10 +91,7 @@ class _CartPageState extends State<CartPage> {
                               'PAGAR',
                               style: cartButtonPagarStyle,
                             ),
-                            onPressed: () {
-                              Provider.of<UserCartState>(context)
-                                  .calculateTotalPriceOfCart();
-                            },
+                            onPressed: () {},
                           )
                         ],
                       ),

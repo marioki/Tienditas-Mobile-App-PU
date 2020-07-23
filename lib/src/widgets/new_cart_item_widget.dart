@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'cart_counter.dart';
 
-class NewCartItemWidget extends StatelessWidget {
+class NewCartItemWidget extends StatefulWidget {
   final String quantity;
   final String itemName;
   final String purchaseType;
@@ -35,6 +35,11 @@ class NewCartItemWidget extends StatelessWidget {
       : super(key: key);
 
   @override
+  _NewCartItemWidgetState createState() => _NewCartItemWidgetState();
+}
+
+class _NewCartItemWidgetState extends State<NewCartItemWidget> {
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Card(
@@ -45,7 +50,7 @@ class NewCartItemWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35),
       ),
-      color: getColorFromHex(colorHex),
+      color: getColorFromHex(widget.colorHex),
       //getColorFromHex(colorHex)
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -85,7 +90,7 @@ class NewCartItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    itemName,
+                    widget.itemName,
                     style: storeTitleCardStyle,
                     overflow: TextOverflow.clip,
                   ),
@@ -98,24 +103,84 @@ class NewCartItemWidget extends StatelessWidget {
             Column(
               children: <Widget>[
                 Text(
-                  '\$$finalPrice',
+                  '\$${widget.finalPrice}',
                   style: cartItemPrice,
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                CartCounter(),
+                createCartCounter(widget.itemName),
                 RaisedButton(
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
                     Provider.of<UserCartState>(context).deleteProductFromCart(
-                        ProductElement(itemName: itemName));
+                        ProductElement(itemName: widget.itemName));
                   },
                 )
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  createCartCounter(String itemName) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      width: 95,
+      //color: Colors.pinkAccent.shade100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.pinkAccent.shade100,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                //--
+                Provider.of<UserCartState>(context)
+                    .subtractProductItemQuantity(itemName);
+              },
+              child: Icon(
+                Icons.remove,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                // if our item is less  then 10 then  it shows 01 02 like that
+                Provider.of<UserCartState>(context)
+                    .getItemAmountInCart(itemName)
+                    .toString(),
+                style: cartItemCounter,
+              ),
+            ),
+          ),
+          Expanded(
+            child: FlatButton(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                //++
+                Provider.of<UserCartState>(context)
+                    .addProductItemQuantity(itemName);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
