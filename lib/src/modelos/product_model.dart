@@ -55,6 +55,7 @@ class ProductElement {
     this.finalPrice,
     this.itemSatus,
     this.imageUrl,
+    this.hexColor
   });
 
   String quantity;
@@ -65,7 +66,11 @@ class ProductElement {
   String itemId;
   String finalPrice;
   ItemSatus itemSatus;
-  ImageUrl imageUrl;
+  String imageUrl;
+  //===Added Properties for cart page
+  int cartItemAmount;
+  String hexColor;
+
 
   factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
     quantity: json["quantity"],
@@ -76,7 +81,7 @@ class ProductElement {
     itemId: json["item_id"],
     finalPrice: json["final_price"],
     itemSatus: itemSatusValues.map[json["item_satus"]],
-    imageUrl: json["image_url"] == null ? null : imageUrlValues.map[json["image_url"]],
+    imageUrl: json["image_url"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -88,15 +93,9 @@ class ProductElement {
     "item_id": itemId,
     "final_price": finalPrice,
     "item_satus": itemSatusValues.reverse[itemSatus],
-    "image_url": imageUrl == null ? null : imageUrlValues.reverse[imageUrl],
+    "image_url": imageUrl,
   };
 }
-
-enum ImageUrl { WWW_GOOGLE_COM }
-
-final imageUrlValues = EnumValues({
-  "www.google.com": ImageUrl.WWW_GOOGLE_COM
-});
 
 enum ItemSatus { VIGENTE }
 

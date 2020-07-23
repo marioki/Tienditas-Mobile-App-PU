@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/tiendita_model.dart';
-import 'package:app_tiendita/src/utils/login_state.dart';
+import 'file:///C:/MyAndroidStudioProjects/app_tiendita/lib/src/state_providers/login_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';

@@ -1,8 +1,10 @@
 import 'package:app_tiendita/src/maps/categories_map.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductItemCard extends StatelessWidget {
   final String image;
@@ -14,7 +16,7 @@ class ProductItemCard extends StatelessWidget {
   final String itemId;
   final String finalPrice;
   final ItemSatus itemSatus;
-  final ImageUrl imageUrl;
+  final String imageUrl;
   final String hexColor;
 
   const ProductItemCard(
@@ -89,7 +91,19 @@ class ProductItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               color: getColorFromHex(hexColor),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<UserCartState>(context)
+                    .addProductoToCart(ProductElement(
+                  itemId: itemId,
+                  itemName: itemName,
+                  finalPrice: finalPrice,
+                  imageUrl: imageUrl,
+                  purchaseType: purchaseType,
+                  registeredDate: registeredDate,
+                  quantity: quantity,
+                  hexColor: hexColor,
+                ));
+              },
               child: Container(
                 width: double.infinity,
                 child: Center(

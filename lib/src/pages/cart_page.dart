@@ -1,6 +1,9 @@
+import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -98,19 +101,38 @@ class _CartPageState extends State<CartPage> {
               ],
             ),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                children: <Widget>[
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                  NewCartItemWidget(),
-                ],
+                child: Consumer<UserCartState>(
+              builder:
+                  (BuildContext context, UserCartState value, Widget child) {
+                if (value.cartProductList.isEmpty) {
+                  return ListView();
+                } else {
+                  return child;
+                }
+              },
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                itemCount:
+                    Provider.of<UserCartState>(context).cartProductList.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return NewCartItemWidget(
+                    itemName: Provider.of<UserCartState>(context)
+                        .cartProductList[index]
+                        .itemName,
+                    imageUrl: Provider.of<UserCartState>(context)
+                        .cartProductList[index]
+                        .imageUrl,
+                    finalPrice: Provider.of<UserCartState>(context)
+                        .cartProductList[index]
+                        .finalPrice,
+                    colorHex: Provider.of<UserCartState>(context)
+                        .cartProductList[index]
+                        .hexColor,
+                  );
+                },
               ),
-            ),
+            )),
           ],
         ),
       ),

@@ -42,7 +42,7 @@ class NewCartItemWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35),
       ),
-      color: rosadoClaro,
+      color: getColorFromHex(colorHex),
       //getColorFromHex(colorHex)
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -80,9 +80,9 @@ class NewCartItemWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Pesas', style: storeTitleCardStyle),
+                  Text(itemName, style: storeTitleCardStyle),
                   SizedBox(height: 0),
-                  Text('tagName', style: storeDetailsCardStyle),
+                  Text('', style: storeDetailsCardStyle),
                   Text('Entrega Inmediata', style: storeDetailsCardStyle),
                 ],
               ),
@@ -90,7 +90,7 @@ class NewCartItemWidget extends StatelessWidget {
             Column(
               children: <Widget>[
                 Text(
-                  '\$50',
+                  '\$$finalPrice',
                   style: cartItemPrice,
                 ),
                 SizedBox(

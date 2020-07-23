@@ -1,4 +1,4 @@
-import 'package:app_tiendita/src/utils/login_state.dart';
+import 'file:///C:/MyAndroidStudioProjects/app_tiendita/lib/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

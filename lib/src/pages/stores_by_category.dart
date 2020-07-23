@@ -73,6 +73,7 @@ class StoresByCategory extends StatelessWidget {
                             handle: miTienda.body.stores[index].storeTagName,
                             category: miTienda.body.stores[index].categoryName,
                             colorHex: miTienda.body.stores[index].hexColor,
+                            image: miTienda.body.stores[index].iconUrl,
                           ),
                           SizedBox(
                             //Todo Change to media query when store card uses media query
@@ -86,6 +87,7 @@ class StoresByCategory extends StatelessWidget {
                       handle: miTienda.body.stores[index].storeTagName,
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
+                      image: miTienda.body.stores[index].iconUrl,
                     );
                   },
                 );

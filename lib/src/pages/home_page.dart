@@ -1,7 +1,9 @@
 import 'package:app_tiendita/src/pages/store_front.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'cart_page.dart';
 import 'profile_page.dart';
