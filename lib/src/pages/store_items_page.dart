@@ -85,14 +85,12 @@ class StoreItemsPage extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image(
-                                fit: BoxFit.cover,
-                                //ToDO cambiar a fit cuando mande imagen el backend
-                                image:
-                                    AssetImage('assets/images/Casa.png'),
-                              ),
-                            ),
+                                padding: const EdgeInsets.all(8.0),
+                                child: FadeInImage(
+                                  image: NetworkImage(args.iconUrl),
+                                  placeholder: AssetImage(
+                                      'assets/images/placeholder.png'),
+                                )),
                           ),
                         ),
                       ),

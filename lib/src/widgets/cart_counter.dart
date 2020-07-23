@@ -1,12 +1,17 @@
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartCounter extends StatefulWidget {
+
+
   @override
   _CartCounterState createState() => _CartCounterState();
 }
 
 class _CartCounterState extends State<CartCounter> {
+
   int numOfItems = 1;
 
   @override
@@ -56,6 +61,8 @@ class _CartCounterState extends State<CartCounter> {
               onPressed: () {
                 setState(() {
                   numOfItems++;
+//                  Provider.of<UserCartState>(context)
+//                      .addProductItemQuantity();
                 });
               },
               child: Icon(

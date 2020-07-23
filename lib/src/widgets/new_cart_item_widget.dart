@@ -41,7 +41,7 @@ class NewCartItemWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical: 8,
       ),
-      elevation: 10,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35),
       ),
@@ -79,11 +79,16 @@ class NewCartItemWidget extends StatelessWidget {
               ),
             ),
             Container(
+              width: 100,
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(itemName, style: storeTitleCardStyle),
+                  Text(
+                    itemName,
+                    style: storeTitleCardStyle,
+                    overflow: TextOverflow.clip,
+                  ),
                   SizedBox(height: 0),
                   Text('', style: storeDetailsCardStyle),
                   Text('Entrega Inmediata', style: storeDetailsCardStyle),
@@ -103,8 +108,8 @@ class NewCartItemWidget extends StatelessWidget {
                 RaisedButton(
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
-                    Provider.of<UserCartState>(context)
-                        .deleteProductFromCart(ProductElement(itemName: itemName));
+                    Provider.of<UserCartState>(context).deleteProductFromCart(
+                        ProductElement(itemName: itemName));
                   },
                 )
               ],

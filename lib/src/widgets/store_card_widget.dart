@@ -35,7 +35,8 @@ class StoreCardWidget extends StatelessWidget {
               storeName: name,
               categoryName: category,
               hexColor: colorHex,
-              storeTagName: handle),
+              storeTagName: handle,
+              iconUrl: image),
         );
       },
       //Todo: Cambiar el tamaño del widget usando MediaQuery
@@ -70,7 +71,8 @@ class StoreCardWidget extends StatelessWidget {
                           child: FadeInImage(
                             fit: BoxFit.contain,
                             image: NetworkImage(image),
-                            placeholder: AssetImage('assets/images/placeholder.png'),
+                            placeholder:
+                                AssetImage('assets/images/placeholder.png'),
                           )),
                     ),
                   ),

@@ -68,7 +68,7 @@ class ProductElement {
   ItemSatus itemSatus;
   String imageUrl;
   //===Added Properties for cart page
-  int cartItemAmount;
+  int cartItemAmount = 1;
   String hexColor;
 
 

@@ -72,7 +72,7 @@ class _CartPageState extends State<CartPage> {
                                 style: cartTotalStyle,
                               ),
                               Text(
-                                '\$198.00',
+                                '\$${Provider.of<UserCartState>(context).totalPrice}',
                                 style: cartTotalPriceStyle,
                               ),
                             ],
@@ -91,7 +91,10 @@ class _CartPageState extends State<CartPage> {
                               'PAGAR',
                               style: cartButtonPagarStyle,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Provider.of<UserCartState>(context)
+                                  .calculateTotalPriceOfCart();
+                            },
                           )
                         ],
                       ),
