@@ -116,6 +116,35 @@ class _CartPageState extends State<CartPage> {
                       Provider.of<UserCartState>(context).cartItemsIds.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
+                    if(index == Provider.of<UserCartState>(context).cartItemsIds.length -1){
+                      return Column(
+                        children: <Widget>[
+                          NewCartItemWidget(
+                            itemId: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .itemId,
+                            itemName: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .itemName,
+                            imageUrl: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .imageUrl,
+                            finalPrice: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .finalPrice,
+                            colorHex: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .hexColor,
+                          ),
+                          SizedBox(
+                            //Todo Change to media query when store card uses media query
+                            height: 100,
+                          ),
+                        ],
+                      );
+                    }
+
+
                     print(index);
                     return NewCartItemWidget(
                       itemId: Provider.of<UserCartState>(context)
