@@ -101,38 +101,43 @@ class _CartPageState extends State<CartPage> {
               ],
             ),
             Expanded(
-                child: Consumer<UserCartState>(
-              builder:
-                  (BuildContext context, UserCartState value, Widget child) {
-                if (value.cartProductList.isEmpty) {
-                  return ListView();
-                } else {
-                  return child;
-                }
-              },
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount:
-                    Provider.of<UserCartState>(context).cartProductList.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return NewCartItemWidget(
-                    itemName: Provider.of<UserCartState>(context)
-                        .cartProductList[index]
-                        .itemName,
-                    imageUrl: Provider.of<UserCartState>(context)
-                        .cartProductList[index]
-                        .imageUrl,
-                    finalPrice: Provider.of<UserCartState>(context)
-                        .cartProductList[index]
-                        .finalPrice,
-                    colorHex: Provider.of<UserCartState>(context)
-                        .cartProductList[index]
-                        .hexColor,
-                  );
+              child: Consumer<UserCartState>(
+                builder:
+                    (BuildContext context, UserCartState value, Widget child) {
+                  if (value.cartProductList.isEmpty) {
+                    return ListView();
+                  } else {
+                    return child;
+                  }
                 },
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  itemCount:
+                      Provider.of<UserCartState>(context).cartItemsIds.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    print(index);
+                    return NewCartItemWidget(
+                      itemId: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .itemId,
+                      itemName: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .itemName,
+                      imageUrl: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .imageUrl,
+                      finalPrice: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .finalPrice,
+                      colorHex: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .hexColor,
+                    );
+                  },
+                ),
               ),
-            )),
+            ),
           ],
         ),
       ),

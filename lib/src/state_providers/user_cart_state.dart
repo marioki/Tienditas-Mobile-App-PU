@@ -7,22 +7,22 @@ class UserCartState with ChangeNotifier {
   List<String> cartItemsIds = [];
 
   void addProductoToCart(ProductElement productElement) {
-    if (cartItemsIds.contains(productElement.itemName)) {
+    if (cartItemsIds.contains(productElement.itemId)) {
       print('El producto ya esta en la canasta! awe');
       return;
     } else {
       cartProductList.add(productElement);
-      cartItemsIds.add(productElement.itemName);
+      cartItemsIds.add(productElement.itemId);
       calculateTotalPriceOfCart();
       notifyListeners();
     }
   }
 
   void deleteProductFromCart(ProductElement productElement) {
-    if (cartItemsIds.contains(productElement.itemName)) {
+    if (cartItemsIds.contains(productElement.itemId)) {
       cartProductList.removeWhere(
-          (element) => element.itemName == productElement.itemName);
-      cartItemsIds.remove(productElement.itemName);
+          (element) => element.itemId == productElement.itemId);
+      cartItemsIds.remove(productElement.itemId);
       calculateTotalPriceOfCart();
       notifyListeners();
     } else {
@@ -30,8 +30,8 @@ class UserCartState with ChangeNotifier {
     }
   }
 
-  void addProductItemQuantity(String itemName) {
-    int index = cartItemsIds.indexOf(itemName);
+  void addProductItemQuantity(String itemId) {
+    int index = cartItemsIds.indexOf(itemId);
     print('product index $index');
     cartProductList[index].cartItemAmount++;
     print('price: ${cartProductList[index].cartItemAmount}');
@@ -39,8 +39,8 @@ class UserCartState with ChangeNotifier {
     notifyListeners();
   }
 
-  void subtractProductItemQuantity(String itemName) {
-    int index = cartItemsIds.indexOf(itemName);
+  void subtractProductItemQuantity(String itemId) {
+    int index = cartItemsIds.indexOf(itemId);
     int itemAmount = cartProductList[index].cartItemAmount;
     if (itemAmount > 1) {
       print('product index $index');
@@ -53,8 +53,8 @@ class UserCartState with ChangeNotifier {
     }
   }
 
-  int getItemAmountInCart(String itemName) {
-    int index = cartItemsIds.indexOf(itemName);
+  int getItemAmountInCart(String itemId) {
+    int index = cartItemsIds.indexOf(itemId);
     int itemAmount = cartProductList[index].cartItemAmount;
     return itemAmount;
   }

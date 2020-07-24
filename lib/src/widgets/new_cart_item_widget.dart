@@ -109,7 +109,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                createCartCounter(widget.itemName),
+                createCartCounter(widget.itemId),
                 FlatButton(
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
@@ -125,7 +125,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
     );
   }
 
-  createCartCounter(String itemName) {
+  createCartCounter(String itemId) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5),
       width: 95,
@@ -143,7 +143,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               onPressed: () {
                 //--
                 Provider.of<UserCartState>(context)
-                    .subtractProductItemQuantity(itemName);
+                    .subtractProductItemQuantity(itemId);
               },
               child: Icon(
                 Icons.remove,
@@ -157,7 +157,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               child: Text(
                 // if our item is less  then 10 then  it shows 01 02 like that
                 Provider.of<UserCartState>(context)
-                    .getItemAmountInCart(itemName)
+                    .getItemAmountInCart(itemId)
                     .toString(),
                 style: cartItemCounter,
               ),
@@ -170,7 +170,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               onPressed: () {
                 //++
                 Provider.of<UserCartState>(context)
-                    .addProductItemQuantity(itemName);
+                    .addProductItemQuantity(itemId);
               },
               child: Icon(
                 Icons.add,
