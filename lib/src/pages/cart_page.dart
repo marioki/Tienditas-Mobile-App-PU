@@ -72,7 +72,7 @@ class _CartPageState extends State<CartPage> {
                                 style: cartTotalStyle,
                               ),
                               Text(
-                                '\$${Provider.of<UserCartState>(context).totalPrice}',
+                                '\$${Provider.of<UserCartState>(context).totalPrice.toStringAsFixed(2)}',
                                 style: cartTotalPriceStyle,
                               ),
                             ],

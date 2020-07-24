@@ -32,7 +32,6 @@ dependencies:
   provider: ^2.0.1
   firebase_auth: ^0.16.1
   google_sign_in: ^4.5.1
-  flutter_money_formatter: ^0.8.3
 
 
 

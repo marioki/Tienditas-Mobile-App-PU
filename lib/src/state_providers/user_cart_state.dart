@@ -1,6 +1,5 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class UserCartState with ChangeNotifier {
   double totalPrice = 0;
@@ -64,11 +63,11 @@ class UserCartState with ChangeNotifier {
     //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
-      _totalPrice += double.parse(element.finalPrice).roundToDouble() *
+      _totalPrice += double.parse(element.finalPrice) *
           element.cartItemAmount;
     });
     totalPrice = _totalPrice;
-    print(totalPrice);
+    print(totalPrice.toStringAsFixed(2));
     notifyListeners();
   }
 
