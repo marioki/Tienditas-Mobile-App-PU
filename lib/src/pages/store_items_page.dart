@@ -6,6 +6,7 @@ import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StoreItemsPage extends StatelessWidget {
@@ -52,14 +53,18 @@ class StoreItemsPage extends StatelessWidget {
                       },
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 40),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            args.storeName,
-                            style: storeTitleCardStyle,
+                          Container(
+                            width: 200,
+                            child: Text(
+                              args.storeName,
+                              style: storeTitleCardStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           SizedBox(height: 5),
                           Text(
