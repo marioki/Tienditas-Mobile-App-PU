@@ -114,7 +114,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
                     Provider.of<UserCartState>(context).deleteProductFromCart(
-                        ProductElement(itemName: widget.itemName));
+                        ProductElement(itemId: widget.itemId) );
                   },
                 )
               ],

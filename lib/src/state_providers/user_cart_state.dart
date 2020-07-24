@@ -34,7 +34,7 @@ class UserCartState with ChangeNotifier {
     int index = cartItemsIds.indexOf(itemId);
     print('product index $index');
     cartProductList[index].cartItemAmount++;
-    print('price: ${cartProductList[index].cartItemAmount}');
+    print('amount: ${cartProductList[index].cartItemAmount}');
     calculateTotalPriceOfCart();
     notifyListeners();
   }
