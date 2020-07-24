@@ -4,6 +4,7 @@ import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class ProductItemCard extends StatelessWidget {
@@ -103,6 +104,11 @@ class ProductItemCard extends StatelessWidget {
                   quantity: quantity,
                   hexColor: hexColor,
                 ));
+                final snackBar = SnackBar(
+                  duration: Duration(milliseconds: 300),
+                  content: Text('Al carrito!'),
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
               },
               child: Container(
                 width: double.infinity,
