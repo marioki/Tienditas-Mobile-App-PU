@@ -9,7 +9,18 @@ import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class StoreItemsPage extends StatelessWidget {
+class StoreItemsPage extends StatefulWidget {
+  @override
+  _StoreItemsPageState createState() => _StoreItemsPageState();
+}
+
+class _StoreItemsPageState extends State<StoreItemsPage> {
+  bool isSearching = false;
+  List<ProductElement> allProductsList = [];
+  List<ProductElement> filteredProducts = [];
+
+  List<ProductElement> finalListProductos;
+
   @override
   Widget build(BuildContext context) {
     final Store args = ModalRoute.of(context).settings.arguments;
@@ -103,7 +114,7 @@ class StoreItemsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SearchBarWidget(),
+              _searchBarWidget(),
               _generateStoreProductList(args, context),
             ],
           ),
@@ -122,13 +133,20 @@ class StoreItemsPage extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;
-              if (product.body.products.length < 1) {
+              allProductsList = product.body.products;
+              if (isSearching) {
+                finalListProductos = filteredProducts;
+              } else {
+                finalListProductos = allProductsList;
+              }
+
+              if (finalListProductos.length < 1) {
                 return Image(
                   image: AssetImage('assets/images/oops - Copy.jpg'),
                 );
               }
               return GridView.builder(
-                itemCount: product.body.products.length,
+                itemCount: finalListProductos.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: kDefaultPaddin,
@@ -137,14 +155,14 @@ class StoreItemsPage extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return ProductItemCard(
-                    itemName: product.body.products[index].itemName,
-                    itemId: product.body.products[index].itemId,
-                    finalPrice: product.body.products[index].finalPrice,
-                    itemSatus: product.body.products[index].itemSatus,
-                    outstanding: product.body.products[index].outstanding,
-                    purchaseType: product.body.products[index].purchaseType,
-                    quantity: product.body.products[index].quantity,
-                    registeredDate: product.body.products[index].registeredDate,
+                    itemName: finalListProductos[index].itemName,
+                    itemId: finalListProductos[index].itemId,
+                    finalPrice: finalListProductos[index].finalPrice,
+                    itemSatus: finalListProductos[index].itemSatus,
+                    outstanding: finalListProductos[index].outstanding,
+                    purchaseType: finalListProductos[index].purchaseType,
+                    quantity: finalListProductos[index].quantity,
+                    registeredDate: finalListProductos[index].registeredDate,
                     image: 'https://picsum.photos/200/300',
                     hexColor: args.hexColor,
                   );
@@ -159,6 +177,51 @@ class StoreItemsPage extends StatelessWidget {
               );
           },
         ),
+      ),
+    );
+  }
+
+  void _filterProducts(value) {
+    setState(() {
+      filteredProducts = allProductsList
+          .where((product) => product.itemName.toLowerCase().contains(value))
+          .toList();
+      print('Lista filtrada $filteredProducts');
+    });
+  }
+
+  _searchBarWidget() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 42),
+      child: TextField(
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide(
+              color: Color(0x4437474F),
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          suffixIcon: Icon(Icons.search),
+          border: InputBorder.none,
+          hintText: 'Buscar',
+          contentPadding: const EdgeInsets.only(
+            left: 16,
+            right: 20,
+            top: 14,
+            bottom: 14,
+          ),
+        ),
+        onChanged: (value) {
+          isSearching = true;
+          _filterProducts(value);
+        },
       ),
     );
   }
