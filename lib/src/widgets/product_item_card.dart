@@ -1,24 +1,41 @@
-import 'package:app_tiendita/src/maps/categories_map.dart';
+import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductItemCard extends StatelessWidget {
-  final String image = 'https://picsum.photos/200/300';
-  final String name = 'Producto 1';
-  final String delivery = 'Entrega Inmediata';
-  final double price = 199;
-  final String storeCategory;
+  final String image;
+  final String quantity;
+  final String itemName;
+  final PurchaseType purchaseType;
+  final Outstanding outstanding;
+  final String registeredDate;
+  final String itemId;
+  final String finalPrice;
+  final ItemSatus itemSatus;
+  final String imageUrl;
+  final String hexColor;
 
-  ProductItemCard({
-//    this.image,
-//    this.name,
-//    this.price,
-    this.storeCategory,
-//    this.delivery,
-  });
+  const ProductItemCard(
+      {Key key,
+      @required this.quantity,
+      @required this.itemName,
+      @required this.purchaseType,
+      @required this.outstanding,
+      @required this.registeredDate,
+      @required this.itemId,
+      @required this.finalPrice,
+      @required this.itemSatus,
+      this.imageUrl,
+      @required this.hexColor,
+      this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //Todo: Fix la cantidad de texto cambian el tamaño de la imagen del producto
     return Card(
 //      elevation: 10,
       clipBehavior: Clip.antiAlias,
@@ -35,8 +52,8 @@ class ProductItemCard extends StatelessWidget {
               //margin: EdgeInsets.only(top: 10),
               child: FadeInImage(
                 fit: BoxFit.cover,
-                image: NetworkImage('https://picsum.photos/200/300'),
-                placeholder: AssetImage('assets/images/placeholder.png'),
+                image: NetworkImage(image),
+                placeholder: AssetImage('assets/images/oops - Copy.jpg'),
               ),
             ),
           ),
@@ -48,18 +65,18 @@ class ProductItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  name,
+                  itemName,
                   style: storeItemTitleStyle,
                 ),
                 Text(
-                  delivery,
+                  'dilibiry',
                   style: storeItemSubTitleStyle,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
-                  '\$$price',
+                  '\$$finalPrice',
                   style: storeItemPriceStyle,
                 ),
               ],
@@ -72,8 +89,25 @@ class ProductItemCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              color: getCategoryColor(storeCategory),
-              onPressed: () {},
+              color: getColorFromHex(hexColor),
+              onPressed: () {
+                Provider.of<UserCartState>(context)
+                    .addProductoToCart(ProductElement(
+                  itemId: itemId,
+                  itemName: itemName,
+                  finalPrice: finalPrice,
+                  imageUrl: imageUrl,
+                  purchaseType: purchaseType,
+                  registeredDate: registeredDate,
+                  quantity: quantity,
+                  hexColor: hexColor,
+                ));
+                final snackBar = SnackBar(
+                  duration: Duration(milliseconds: 300),
+                  content: Text('Al carrito!'),
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              },
               child: Container(
                 width: double.infinity,
                 child: Center(

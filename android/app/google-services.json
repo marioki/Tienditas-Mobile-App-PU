@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "704134493695",
+    "firebase_url": "https://tienditas-c93ae.firebaseio.com",
+    "project_id": "tienditas-c93ae",
+    "storage_bucket": "tienditas-c93ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704134493695:android:25899c73c47875a708e3ca",
+        "android_client_info": {
+          "package_name": "com.mario.app_tiendita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbyqx2zoO6vSDOnNxf6Uq_OoqiAdUzMps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.startupalliance.tienditas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

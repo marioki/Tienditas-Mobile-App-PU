@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_page.dart';
-import 'profile.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,37 +17,47 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
+      resizeToAvoidBottomInset: false,
       body: _callPage(currentIndex),
-      bottomNavigationBar: _crearBottomNavigationBar(),
-    );
-  }
-
-  Widget _crearBottomNavigationBar() {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      selectedLabelStyle: navBarLabelStyle,
-      selectedIconTheme: IconThemeData(color: azulOscuro),
-      unselectedIconTheme: IconThemeData(color: Colors.grey),
-      unselectedItemColor: Colors.grey,
-      onTap: (index) {
-        setState(() {
-          currentIndex = index;
-        });
-      },
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          title: Text('Home'),
-          icon: Icon(Icons.home),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        child: Card(
+          elevation: 30,
+          borderOnForeground: true,
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.all(0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: BottomNavigationBar(
+            selectedIconTheme: IconThemeData(color: azulTema),
+            selectedLabelStyle: TextStyle(color: azulTema),
+            backgroundColor: Colors.white,
+            currentIndex: currentIndex,
+            unselectedItemColor: Colors.grey,
+            onTap: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                title: Text('Home'),
+                icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                title: Text('Carrito'),
+                icon: Icon(Icons.shopping_cart),
+              ),
+              BottomNavigationBarItem(
+                title: Text('Profile'),
+                icon: Icon(Icons.account_circle),
+              ),
+            ],
+          ),
         ),
-        BottomNavigationBarItem(
-          title: Text('Cart'),
-          icon: Icon(Icons.shopping_cart),
-        ),
-        BottomNavigationBarItem(
-          title: Text('Profile'),
-          icon: Icon(Icons.account_circle),
-        ),
-      ],
+      ),
     );
   }
 
