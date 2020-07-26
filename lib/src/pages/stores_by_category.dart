@@ -5,7 +5,6 @@ import 'package:app_tiendita/src/modelos/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/tiendas_por_categoria_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/capitalize.dart';
-import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,5 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/utils/crearCategoryList.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,6 @@ class CategoriesPage extends StatelessWidget {
                     childAspectRatio: 3 / 3,
                   ),
                   itemBuilder: (context, index) {
-                    final categories = getCategories();
                     return CategoryCard(
                       name: args.body.category[index].categoryName,
                       color: args.body.category[index].hexColor,

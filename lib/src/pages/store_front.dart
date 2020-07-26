@@ -21,33 +21,60 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 0),
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Lista componentes desde aqui
             //Custom App Bar==========
-            CustomScrollView(
-              primary: false,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              slivers: <Widget>[
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30))),
-                  backgroundColor: azulTema,
-                  //pinned: true,
-                  floating: true,
-                  expandedHeight: 120.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text('Basic Slivers'),
-                  ),
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                color: azulTema,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35),
                 ),
-              ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 275,
+                    decoration: BoxDecoration(
+                      color: grisClaroTema,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'search_for_store');
+                      },
+                      child: TextFormField(
+                        autofocus: false,
+                        enabled: false,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: new InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          prefixIcon: Icon(Icons.search),
+                          contentPadding: EdgeInsets.only(
+                              left: 15, bottom: 11, top: 11, right: 15),
+                          hintText: 'Buscar Tienda',
+                          hintStyle: TextStyle(
+                            fontFamily: 'Nunito',
+                            color: Colors.grey,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             //Contenedor de Categorias
             ListTile(

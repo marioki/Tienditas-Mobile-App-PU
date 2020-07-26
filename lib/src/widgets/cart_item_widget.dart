@@ -1,5 +1,4 @@
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/widgets/cart_counter.dart';
 import 'package:flutter/material.dart';
 
 class CartItemWidget extends StatefulWidget {
