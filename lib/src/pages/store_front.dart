@@ -49,7 +49,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       onFieldSubmitted: (value) {
                         if (value.length > 0) {
                           Navigator.pushNamed(context, 'search_for_store',
-                              arguments: value);
+                              arguments: value.toLowerCase());
                         }
                       },
                       autofocus: false,

@@ -73,6 +73,7 @@ class StoresByCategory extends StatelessWidget {
                             category: miTienda.body.stores[index].categoryName,
                             colorHex: miTienda.body.stores[index].hexColor,
                             image: miTienda.body.stores[index].iconUrl,
+                            followers: null, //todo backend facebook api
                           ),
                           SizedBox(
                             //Todo Change to media query when store card uses media query
@@ -87,6 +88,7 @@ class StoresByCategory extends StatelessWidget {
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
                       image: miTienda.body.stores[index].iconUrl,
+                      followers: null, //todo backend facebook api
                     );
                   },
                 );
