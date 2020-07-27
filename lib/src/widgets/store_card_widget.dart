@@ -15,10 +15,10 @@ class StoreCardWidget extends StatelessWidget {
       {Key key,
       @required this.name,
       @required this.handle,
-      this.followers,
-      this.image,
-      this.category,
-      this.colorHex})
+      @required this.followers,
+      @required this.image,
+      @required this.category,
+      @required this.colorHex})
       : super(key: key);
 
   @override

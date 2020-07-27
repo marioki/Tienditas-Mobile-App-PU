@@ -5,7 +5,7 @@ import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
+//Todo Usar URI constructor para tener nu solo tienditas provider para todos los calls
 
 class TienditasProvider  {
   static const String url =
