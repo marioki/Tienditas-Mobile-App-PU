@@ -3,7 +3,6 @@ import 'package:app_tiendita/src/providers/buscar_tienda_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchForStorePage extends StatefulWidget {
   @override
@@ -11,25 +10,54 @@ class SearchForStorePage extends StatefulWidget {
 }
 
 class _SearchForStorePageState extends State<SearchForStorePage> {
-  String userInput = '';
+  bool inSearchPage = false;
+  String userInput;
 
   @override
   Widget build(BuildContext context) {
+    String _userInputFromHome;
+    if (!inSearchPage) {
+      _userInputFromHome = ModalRoute.of(context).settings.arguments;
+      userInput = _userInputFromHome;
+    }
+
     Tiendita resultTiendita;
-    List<Store> listaTiendas;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: TextField(
-            decoration: InputDecoration(),
-            onSubmitted: (_userInput) {
-              if (_userInput.length > 0) {
-                setState(() {
-                  userInput = _userInput;
-                });
-              }
-            },
-            autofocus: true,
+          backgroundColor: azulTema,
+          title: Container(
+            width: 275,
+            decoration: BoxDecoration(
+              color: grisClaroTema,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: TextField(
+              onSubmitted: (_userInput) {
+                if (_userInput.length > 0) {
+                  setState(() {
+                    inSearchPage = true;
+                    userInput = _userInput;
+                  });
+                }
+              },
+              autofocus: true,
+              decoration: new InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                prefixIcon: Icon(Icons.search),
+                contentPadding:
+                    EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                hintText: 'Buscar Tienda',
+                hintStyle: TextStyle(
+                  fontFamily: 'Nunito',
+                  color: Colors.grey,
+                  fontSize: 13,
+                ),
+              ),
+            ),
           ),
         ),
         body: FutureBuilder(
@@ -42,6 +70,8 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;
               return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                shrinkWrap: true,
                 itemCount: resultTiendita.body.stores.length,
                 itemBuilder: (context, index) {
                   return StoreCardWidget(

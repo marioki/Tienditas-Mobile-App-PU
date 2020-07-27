@@ -45,30 +45,31 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       color: grisClaroTema,
                       borderRadius: BorderRadius.circular(32),
                     ),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'search_for_store');
+                    child: TextFormField(
+                      onFieldSubmitted: (value) {
+                        if (value.length > 0) {
+                          Navigator.pushNamed(context, 'search_for_store',
+                              arguments: value);
+                        }
                       },
-                      child: TextFormField(
-                        autofocus: false,
-                        enabled: false,
-                        cursorColor: Colors.black,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: new InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          prefixIcon: Icon(Icons.search),
-                          contentPadding: EdgeInsets.only(
-                              left: 15, bottom: 11, top: 11, right: 15),
-                          hintText: 'Buscar Tienda',
-                          hintStyle: TextStyle(
-                            fontFamily: 'Nunito',
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
+                      autofocus: false,
+                      enabled: true,
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: new InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        prefixIcon: Icon(Icons.search),
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
+                        hintText: 'Buscar Tienda',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Nunito',
+                          color: Colors.grey,
+                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -173,6 +174,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
                       image: miTienda.body.stores[index].iconUrl,
+                      followers:
+                          null, //todo traer followers del backend facebook api
                     ),
                     SizedBox(
                       //Todo Change to media query when store card uses media query
@@ -187,6 +190,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 category: miTienda.body.stores[index].categoryName,
                 colorHex: miTienda.body.stores[index].hexColor,
                 image: miTienda.body.stores[index].iconUrl,
+                followers: null, //Todo Change to media query when store card uses media query
               );
             },
           );
