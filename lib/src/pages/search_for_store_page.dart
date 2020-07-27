@@ -45,6 +45,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: TextFormField(
+                    controller: TextEditingController(text: userInput),
                     onFieldSubmitted: (_userInput) {
                       if (_userInput.length > 0) {
                         setState(() {
