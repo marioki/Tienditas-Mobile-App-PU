@@ -27,7 +27,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
       child: Column(
         children: <Widget>[
           Container(
-            height: 100,
+            height: 98,
             decoration: BoxDecoration(
               color: azulTema,
               borderRadius: BorderRadius.only(
@@ -45,6 +45,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: TextFormField(
+
                     controller: TextEditingController(text: userInput),
                     onFieldSubmitted: (_userInput) {
                       if (_userInput.length > 0) {
@@ -105,7 +106,12 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                   },
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 100),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
               }
             },
           ),

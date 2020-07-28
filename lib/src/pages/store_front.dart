@@ -28,7 +28,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             //Lista componentes desde aqui
             //Custom App Bar==========
             Container(
-              height: 100,
+              height: 98,
               decoration: BoxDecoration(
                 color: azulTema,
                 borderRadius: BorderRadius.only(
