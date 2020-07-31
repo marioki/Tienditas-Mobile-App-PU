@@ -47,6 +47,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                   ),
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(left: 25),
@@ -81,9 +82,14 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                             args.storeTagName,
                             style: storeDetailsCardStyle,
                           ),
-                          Text(
-                            'Seguidores: 21,312',
-                            style: storeDetailsCardStyle,
+                          Container(
+                            width: 200,
+                            child: Text(
+                              args.description,
+                              maxLines: 2,
+                              style: storeDetailsCardStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),

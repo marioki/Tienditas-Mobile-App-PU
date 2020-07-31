@@ -112,43 +112,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     );
   }
 
-  Widget _searchInput() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: TextField(
-        style: TextStyle(color: azulTema, fontFamily: "Nunito"),
-        toolbarOptions: ToolbarOptions(),
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          suffixIcon: Icon(Icons.search),
-          border: InputBorder.none,
-          hintText: 'Buscar Tienditas',
-          contentPadding: const EdgeInsets.only(
-            left: 16,
-            right: 20,
-            top: 14,
-            bottom: 14,
-          ),
-        ),
-        onChanged: (valor) {
-          setState(() {});
-        },
-      ),
-    );
-  }
-
   Widget getTiendasListViewBuilder() {
     print('LLamada del metodo');
     return FutureBuilder(
@@ -175,8 +138,11 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
                       image: miTienda.body.stores[index].iconUrl,
-                      followers:
-                          null, //todo traer followers del backend facebook api
+                      description: miTienda.body.stores[index].description,
+                      followers: null,
+                      originalStoreName:
+                          miTienda.body.stores[index].originalStoreName,
+                      provinceName: miTienda.body.stores[index].provinceName,
                     ),
                     SizedBox(
                       //Todo Change to media query when store card uses media query
@@ -191,7 +157,11 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 category: miTienda.body.stores[index].categoryName,
                 colorHex: miTienda.body.stores[index].hexColor,
                 image: miTienda.body.stores[index].iconUrl,
-                followers: null, //Todo Change to media query when store card uses media query
+                description: miTienda.body.stores[index].description,
+                followers: null,
+                originalStoreName:
+                    miTienda.body.stores[index].originalStoreName,
+                provinceName: miTienda.body.stores[index].provinceName,
               );
             },
           );
@@ -232,33 +202,5 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               ),
             );
         });
-  }
-
-  _crearEmailInput() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 50),
-      decoration: BoxDecoration(
-        color: grisClaroTema,
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: TextFormField(
-        cursorColor: Colors.black,
-        keyboardType: TextInputType.emailAddress,
-        decoration: new InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: 'Escribe tu email',
-            hintStyle: TextStyle(
-              fontFamily: 'Nunito',
-              color: Colors.grey,
-              fontSize: 13,
-            )),
-      ),
-    );
   }
 }

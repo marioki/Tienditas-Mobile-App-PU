@@ -46,48 +46,44 @@ class Body {
 
 class Store {
   Store({
+    this.originalStoreName,
     this.storeTagName,
-    this.hexColor,
-    this.registeredDate,
     this.categoryName,
-    this.storeStatus,
     this.iconUrl,
-    this.phoneNumber,
     this.provinceName,
+    this.description,
     this.storeName,
+    this.hexColor,
   });
 
+  String originalStoreName;
   String storeTagName;
-  String hexColor;
-  String registeredDate;
   String categoryName;
-  String storeStatus;
   String iconUrl;
-  String phoneNumber;
   String provinceName;
+  String description;
   String storeName;
+  String hexColor;
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
+    originalStoreName: json["original_store_name"],
     storeTagName: json["store_tag_name"],
-    hexColor: json["hex_color"],
-    registeredDate: json["registered_date"],
     categoryName: json["category_name"],
-    storeStatus: json["store_status"],
     iconUrl: json["icon_url"],
-    phoneNumber: json["phone_number"],
     provinceName: json["province_name"],
+    description: json["description"],
     storeName: json["store_name"],
+    hexColor: json["hex_color"],
   );
 
   Map<String, dynamic> toJson() => {
+    "original_store_name": originalStoreName,
     "store_tag_name": storeTagName,
-    "hex_color": hexColor,
-    "registered_date": registeredDate,
     "category_name": categoryName,
-    "store_status": storeStatus,
     "icon_url": iconUrl,
-    "phone_number": phoneNumber,
     "province_name": provinceName,
+    "description": description,
     "store_name": storeName,
+    "hex_color": hexColor,
   };
 }
