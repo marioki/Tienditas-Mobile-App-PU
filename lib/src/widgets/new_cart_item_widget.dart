@@ -73,7 +73,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                         fit: BoxFit.cover,
                         image: NetworkImage(widget.imageUrl),
                         placeholder:
-                            AssetImage('assets/images/placeholder.png'),
+                            AssetImage('assets/images/tienditas_placeholder.png'),
                       ),
                     ),
                   ),
@@ -88,6 +88,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                 children: <Widget>[
                   Text(
                     widget.itemName,
+                    maxLines: 2,
                     style: storeTitleCardStyle,
                     overflow: TextOverflow.clip,
                   ),
