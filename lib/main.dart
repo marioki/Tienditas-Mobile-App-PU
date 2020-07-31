@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               if (state.isLoggedIn()) {
                 return HomePage();
               } else {
-                return NewLoginPage();
+                return LoginPage();
               }
             },
             'cart': (BuildContext context) => CartPage(),
@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
             'place_holder_page': (BuildContext context) => PlaceHolderPage(),
             'stores_by_category': (BuildContext context) => StoresByCategory(),
             'search_for_store': (BuildContext context) => SearchForStorePage(),
-
           },
 //        onGenerateRoute: (RouteSettings settings) {
 //          return MaterialPageRoute(
