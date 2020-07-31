@@ -162,8 +162,9 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     purchaseType: finalListProductos[index].purchaseType,
                     quantity: finalListProductos[index].quantity,
                     registeredDate: finalListProductos[index].registeredDate,
-                    image: 'https://picsum.photos/200/300',
+                    image: finalListProductos[index].imageUrl,
                     hexColor: args.hexColor,
+                    imageUrl: finalListProductos[index].imageUrl,
                   );
                 },
               );

@@ -71,7 +71,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                       padding: const EdgeInsets.all(8.0),
                       child: FadeInImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage('https://picsum.photos/200/300'),
+                        image: NetworkImage(widget.imageUrl),
                         placeholder:
                             AssetImage('assets/images/placeholder.png'),
                       ),
