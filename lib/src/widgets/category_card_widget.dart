@@ -43,7 +43,7 @@ class CategoryCard extends StatelessWidget {
                       image,
                     ),
                     placeholder:
-                        AssetImage('assets/images/Huella_perro_Mascota.png'),
+                        AssetImage('assets/images/tienditas_placeholder.png'),
                   )),
               width: 75,
               height: 75,

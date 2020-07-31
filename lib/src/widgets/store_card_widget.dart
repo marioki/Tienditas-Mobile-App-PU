@@ -72,7 +72,7 @@ class StoreCardWidget extends StatelessWidget {
                             fit: BoxFit.contain,
                             image: NetworkImage(image),
                             placeholder:
-                                AssetImage('assets/images/placeholder.png'),
+                                AssetImage('assets/images/tienditas_placeholder.png'),
                           )),
                     ),
                   ),
