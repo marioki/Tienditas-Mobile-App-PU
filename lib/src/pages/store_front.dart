@@ -52,6 +52,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                               arguments: value.toLowerCase());
                         }
                       },
+                      textAlignVertical: TextAlignVertical.center,
                       autofocus: false,
                       enabled: true,
                       cursorColor: Colors.black,

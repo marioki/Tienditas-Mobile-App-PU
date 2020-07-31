@@ -55,6 +55,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                         });
                       }
                     },
+                    textAlignVertical: TextAlignVertical.center,
                     autofocus: false,
                     enabled: true,
                     cursorColor: Colors.black,
