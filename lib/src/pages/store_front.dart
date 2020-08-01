@@ -19,46 +19,48 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: getCustomAppBar(),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        top: true,
-        bottom: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Lista componentes desde aqui
-            //Custom App Bar ==========
-            //Contenedor de Categorias
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              leading: Text('Categorías', style: storeSubtitles),
-              trailing: FlatButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'categories_page',
-                      arguments: myCategory);
-                },
-                child: Text(
-                  'Ver Todas',
-                  style: storeOptions,
+    return Container(
+      color: azulTema,
+      child: SafeArea(
+        bottom: false,
+        child: Scaffold(
+          appBar: getCustomAppBar(),
+          resizeToAvoidBottomInset: false,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //Lista componentes desde aqui
+              //Custom App Bar ==========
+              //Contenedor de Categorias
+              ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                leading: Text('Categorías', style: storeSubtitles),
+                trailing: FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'categories_page',
+                        arguments: myCategory);
+                  },
+                  child: Text(
+                    'Ver Todas',
+                    style: storeOptions,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              //Category List Row Container
-              height: 110,
-              child: _carruselDeCategorias(),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              margin: EdgeInsets.only(bottom: 10, top: 16),
-              child: Text('Sugerencias para ti', style: storeSubtitles),
-            ),
-            Expanded(
-              child: getTiendasListViewBuilder(),
-            )
-          ],
+              Container(
+                //Category List Row Container
+                height: 110,
+                child: _carruselDeCategorias(),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.only(bottom: 10, top: 16),
+                child: Text('Sugerencias para ti', style: storeSubtitles),
+              ),
+              Expanded(
+                child: getTiendasListViewBuilder(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -158,9 +160,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   getCustomAppBar() {
     return PreferredSize(
-      preferredSize:Size(double.infinity,124) ,
+      preferredSize: Size(double.infinity, 100),
       child: Container(
-        height: 124,
+        height: 100,
         decoration: BoxDecoration(
           color: azulTema,
           borderRadius: BorderRadius.only(
@@ -187,7 +189,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 textAlignVertical: TextAlignVertical.center,
                 autofocus: false,
                 enabled: true,
-                cursorColor: Colors.black,
+                cursorColor: azulTema,
                 keyboardType: TextInputType.emailAddress,
                 decoration: new InputDecoration(
                   border: InputBorder.none,

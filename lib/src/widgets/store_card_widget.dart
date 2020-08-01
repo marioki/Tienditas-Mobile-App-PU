@@ -105,10 +105,11 @@ class StoreCardWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 0),
                       Text(handle, style: storeDetailsCardStyle),
+                      SizedBox(height: 10),
                       Text(
                         description,
                         maxLines: 2,
-                        style: storeDetailsCardStyle,
+                        style: storeDescriptionCardStyle,
                         overflow: TextOverflow.ellipsis,
                       )
                     ],

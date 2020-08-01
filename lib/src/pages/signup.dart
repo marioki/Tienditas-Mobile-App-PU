@@ -47,6 +47,41 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  Widget _buildNameTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Nombre',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Nunito',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.people,
+                color: Colors.white,
+              ),
+              hintText: 'Mario Montenegro',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +130,7 @@ class _SignUpState extends State<SignUp> {
         ),
         color: Colors.white,
         child: Text(
-          'LOGIN',
+          'Registrarme',
           style: TextStyle(
             color: azulTema,
             letterSpacing: 1.5,
@@ -235,12 +270,15 @@ class _SignUpState extends State<SignUp> {
                         'Registro',
                         style: kLabelStyle,
                       ),
+                      _buildNameTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
                       _buildEmailTF(),
                       SizedBox(
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
                       _buildLoginState(),
                     ],
                   ),

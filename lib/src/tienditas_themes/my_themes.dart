@@ -9,6 +9,7 @@ Color grizItem = Color(0xFFF3F6FB);
 Color azulOptions = Color(0xFF0B46C5);
 Color grizSubtitulo = Color(0xFF919BAC);
 Color azulTema = Color(0xFF191660);
+//Color azulTema = Color(0xFF5f58a1);
 Color rosadoBlur = Color(0xFFFC9BAF);
 Color azulTemaOpaco = Color(0xFFF3F6FB);
 Color grisClaroTema = Color(0xFFF3F6FB);
@@ -57,13 +58,19 @@ TextStyle storeTitleCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: 20);
+    fontSize: 18);
 
 TextStyle storeDetailsCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 14);
+
+TextStyle storeDescriptionCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+    fontSize: 12);
 
 TextStyle storeCategoryStyle = new TextStyle(
     fontFamily: 'Nunito',
