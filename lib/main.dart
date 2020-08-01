@@ -45,11 +45,6 @@ class MyApp extends StatelessWidget {
             'stores_by_category': (BuildContext context) => StoresByCategory(),
             'search_for_store': (BuildContext context) => SearchForStorePage(),
           },
-//        onGenerateRoute: (RouteSettings settings) {
-//          return MaterialPageRoute(
-//            builder: (BuildContext context) => HomePage(),
-//          );
-//        },
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,

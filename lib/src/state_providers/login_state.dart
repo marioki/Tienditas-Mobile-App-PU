@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginState with ChangeNotifier {
   bool _loggedIn = false;
@@ -12,6 +13,7 @@ class LoginState with ChangeNotifier {
   var anonResult;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   bool isLoggedIn() => _loggedIn;
 
@@ -55,19 +57,52 @@ class LoginState with ChangeNotifier {
     return idTokenResult;
   }
 
-//  Future<FirebaseUser> _handleSignIn() async {
-//    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-//    final GoogleSignInAuthentication googleAuth =
-//        await googleUser.authentication;
-//
-//    final AuthCredential credential = GoogleAuthProvider.getCredential(
-//      accessToken: googleAuth.accessToken,
-//      idToken: googleAuth.idToken,
-//    );
-//
-//    final FirebaseUser user =
-//        (await _auth.signInWithCredential(credential)).user;
-//    print("signed in " + user.displayName);
-//    return user;
-//  }
+  //==============ConGoogleAccount
+  //Sign in
+   signInWithGoogle() async {
+    final GoogleSignInAccount googleSignInAccount =
+        await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    print('signInWithGoogle succeeded: $user');
+  }
+
+  //Sign out
+  void signOutGoogle() async {
+    await _googleSignIn.signOut();
+
+    print("User Sign Out");
+  }
+
+//======Old Code============
+  Future<FirebaseUser> _handleSignIn() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final FirebaseUser user =
+        (await _auth.signInWithCredential(credential)).user;
+    print("signed in " + user.displayName);
+    return user;
+  }
 }

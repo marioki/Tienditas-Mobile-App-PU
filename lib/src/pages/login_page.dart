@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           _buildSocialBtn(
-            () => print('Login with Google'),
+            Provider.of<LoginState>(context, listen: false).signInWithGoogle,
             AssetImage(
               'assets/logos/google.png',
             ),
