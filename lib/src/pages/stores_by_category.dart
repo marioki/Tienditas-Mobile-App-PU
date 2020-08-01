@@ -15,41 +15,63 @@ class StoresByCategory extends StatelessWidget {
     final CategoryElement args = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: AppBar(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35))),
+          centerTitle: true,
+          backgroundColor: azulTema,
+          title: Column(children: <Widget>[
+            Text(
+              capitalize(args.categoryName),
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              'Categoria',
+              style: TextStyle(fontSize: 10),
+            ),
+          ]),
+        ),
+      ),
       body: Column(
         children: <Widget>[
-          CustomScrollView(
-            primary: false,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            slivers: <Widget>[
-              SliverAppBar(
-                centerTitle: true,
-                title: Column(
-                  children: <Widget>[
-                    Text(
-                      capitalize(args.categoryName),
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    Text(
-                      'Categoria',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
-                ),
-
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30))),
-                backgroundColor: azulTema,
-                //getColorFromHex(args.hexColor),
-                //pinned: true,
-                floating: true,
-                expandedHeight: 120.0,
-                flexibleSpace: FlexibleSpaceBar(),
-              ),
-            ],
-          ),
+//          CustomScrollView(
+//            primary: false,
+//            scrollDirection: Axis.vertical,
+//            shrinkWrap: true,
+//            slivers: <Widget>[
+//              SliverAppBar(
+//                centerTitle: true,
+//                title: Column(
+//                  children: <Widget>[
+//                    Text(
+//                      capitalize(args.categoryName),
+//                      style: TextStyle(fontSize: 24),
+//                    ),
+//                    Text(
+//                      'Categoria',
+//                      style: TextStyle(fontSize: 10),
+//                    ),
+//                  ],
+//                ),
+//
+//                shape: RoundedRectangleBorder(
+//                    borderRadius: BorderRadius.only(
+//                        bottomLeft: Radius.circular(30),
+//                        bottomRight: Radius.circular(30))),
+//                backgroundColor: azulTema,
+//                //getColorFromHex(args.hexColor),
+//                //pinned: true,
+//                floating: true,
+//                expandedHeight: 120.0,
+//                flexibleSpace: FlexibleSpaceBar(),
+//              ),
+//            ],
+//          ),
           SearchBarWidget(),
           FutureBuilder(
             future: TienditasPorCategoriaProvider()
