@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/pages/signup.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
@@ -211,7 +212,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignUp()),
+        );
+      },
       child: RichText(
         text: TextSpan(
           children: [
@@ -298,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
                       _buildLoginState(),
                       _buildSignInWithText(),
                       _buildSocialBtnRow(),
-                      //_buildSignupBtn(),
+                      _buildSignupBtn(),
                     ],
                   ),
                 ),
