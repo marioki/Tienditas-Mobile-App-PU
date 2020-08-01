@@ -72,7 +72,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                           Container(
                             width: 200,
                             child: Text(
-                              args.storeName,
+                              args.originalStoreName,
                               textAlign: TextAlign.start,
                               style: storeTitleCardStyle,
                               overflow: TextOverflow.ellipsis,

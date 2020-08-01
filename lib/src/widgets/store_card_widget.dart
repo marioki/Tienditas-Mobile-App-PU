@@ -98,7 +98,7 @@ class StoreCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        name,
+                        originalStoreName,
                         maxLines: 2,
                         style: storeTitleCardStyle,
                         overflow: TextOverflow.ellipsis,
