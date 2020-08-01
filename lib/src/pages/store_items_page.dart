@@ -73,6 +73,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                             width: 200,
                             child: Text(
                               args.storeName,
+                              textAlign: TextAlign.center,
                               style: storeTitleCardStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
