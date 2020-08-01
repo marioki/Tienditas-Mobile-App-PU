@@ -20,64 +20,16 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: getCustomAppBar(),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
+        top: true,
+        bottom: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Lista componentes desde aqui
-            //Custom App Bar==========
-            Container(
-              height: 98,
-              decoration: BoxDecoration(
-                color: azulTema,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 275,
-                    decoration: BoxDecoration(
-                      color: grisClaroTema,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: TextFormField(
-                      onFieldSubmitted: (value) {
-                        if (value.length > 0) {
-                          Navigator.pushNamed(context, 'search_for_store',
-                              arguments: value.toLowerCase());
-                        }
-                      },
-                      textAlignVertical: TextAlignVertical.center,
-                      autofocus: false,
-                      enabled: true,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: new InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        prefixIcon: Icon(Icons.search),
-                        contentPadding: EdgeInsets.only(
-                            left: 15, bottom: 11, top: 11, right: 15),
-                        hintText: 'Buscar Tienda',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Nunito',
-                          color: Colors.grey,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            //Custom App Bar ==========
             //Contenedor de Categorias
             ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -202,5 +154,62 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               ),
             );
         });
+  }
+
+  getCustomAppBar() {
+    return PreferredSize(
+      preferredSize:Size(double.infinity,124) ,
+      child: Container(
+        height: 124,
+        decoration: BoxDecoration(
+          color: azulTema,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(35),
+            bottomRight: Radius.circular(35),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 275,
+              decoration: BoxDecoration(
+                color: grisClaroTema,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: TextFormField(
+                onFieldSubmitted: (value) {
+                  if (value.length > 0) {
+                    Navigator.pushNamed(context, 'search_for_store',
+                        arguments: value.toLowerCase());
+                  }
+                },
+                textAlignVertical: TextAlignVertical.center,
+                autofocus: false,
+                enabled: true,
+                cursorColor: Colors.black,
+                keyboardType: TextInputType.emailAddress,
+                decoration: new InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Buscar Tienda',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Nunito',
+                    color: Colors.grey,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

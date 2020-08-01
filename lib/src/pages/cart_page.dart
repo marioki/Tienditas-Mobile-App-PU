@@ -9,7 +9,6 @@ class CartPage extends StatefulWidget {
   _CartPageState createState() => _CartPageState();
 }
 
-//Todo Crear provider global en el primer elemnto del arbol para guardar la lista de items
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class _CartPageState extends State<CartPage> {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * .25),
+        preferredSize: Size.fromHeight(100),
         child: AppBar(
           elevation: 0,
           shape: RoundedRectangleBorder(
