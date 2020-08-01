@@ -56,9 +56,13 @@ class StoresByCategory extends StatelessWidget {
                 .getTienditasPorCategoria(args.categoryName, context),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
-                print('aloo');
                 print(snapshot.data);
                 Tiendita miTienda = snapshot.data;
+                if (miTienda.body.stores.length < 1) {
+                  return Center(
+                    child: Text('Todavia hay tiendas en esta categoria...'),
+                  );
+                }
                 return ListView.builder(
                   itemCount: miTienda.body.stores.length,
                   padding: EdgeInsets.symmetric(horizontal: 24),
@@ -73,7 +77,13 @@ class StoresByCategory extends StatelessWidget {
                             category: miTienda.body.stores[index].categoryName,
                             colorHex: miTienda.body.stores[index].hexColor,
                             image: miTienda.body.stores[index].iconUrl,
-                            followers: null, //todo backend facebook api
+                            followers: null,
+                            provinceName:
+                                miTienda.body.stores[index].provinceName,
+                            originalStoreName:
+                                miTienda.body.stores[index].originalStoreName,
+                            description:
+                                miTienda.body.stores[index].description,
                           ),
                           SizedBox(
                             //Todo Change to media query when store card uses media query
@@ -88,11 +98,20 @@ class StoresByCategory extends StatelessWidget {
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
                       image: miTienda.body.stores[index].iconUrl,
-                      followers: null, //todo backend facebook api
+                      followers: null,
+                      provinceName: miTienda.body.stores[index].provinceName,
+                      originalStoreName:
+                          miTienda.body.stores[index].originalStoreName,
+                      description: miTienda.body.stores[index].description,
                     );
                   },
                 );
               } else {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error de conexción'),
+                  );
+                }
                 return Container(
                   height: 400,
                   child: Center(

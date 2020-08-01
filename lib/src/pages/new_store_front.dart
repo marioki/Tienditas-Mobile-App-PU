@@ -140,7 +140,10 @@ class _NewStoreFrontState extends State<NewStoreFront> {
                       category: miTienda.body.stores[index].categoryName,
                       colorHex: miTienda.body.stores[index].hexColor,
                       image: miTienda.body.stores[index].iconUrl,
-                      followers: null,//Todo traer followers de backen (facebook api)
+                      followers: null,
+                      description: null,
+                      provinceName: null,
+                      originalStoreName: null,
                     ),
                     SizedBox(
                       //Todo Change to media query when store card uses media query
@@ -155,7 +158,10 @@ class _NewStoreFrontState extends State<NewStoreFront> {
                 category: miTienda.body.stores[index].categoryName,
                 colorHex: miTienda.body.stores[index].hexColor,
                 image: miTienda.body.stores[index].iconUrl,
-                followers: null,//Todo traer followers de backen (facebook api)
+                followers: null,
+                description: null,
+                provinceName: null,
+                originalStoreName: null,
               );
             },
           );
@@ -171,32 +177,6 @@ class _NewStoreFrontState extends State<NewStoreFront> {
     );
   }
 
-  Widget _crearEmailInput() {
-    return Container(
-      decoration: BoxDecoration(
-        color: grisClaroTema,
-        borderRadius: BorderRadius.circular(32),
-      ),
-      child: TextFormField(
-        cursorColor: Colors.black,
-        keyboardType: TextInputType.emailAddress,
-        decoration: new InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: 'Escribe tu email',
-            hintStyle: TextStyle(
-              fontFamily: 'Nunito',
-              color: Colors.grey,
-              fontSize: 13,
-            )),
-      ),
-    );
-  }
 
   Widget createSearchAppBar() {
     return SliverAppBar(

@@ -47,6 +47,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                   ),
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(left: 25),
@@ -71,7 +72,8 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                           Container(
                             width: 200,
                             child: Text(
-                              args.storeName,
+                              args.originalStoreName,
+                              textAlign: TextAlign.start,
                               style: storeTitleCardStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -81,9 +83,14 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                             args.storeTagName,
                             style: storeDetailsCardStyle,
                           ),
-                          Text(
-                            'Seguidores: 21,312',
-                            style: storeDetailsCardStyle,
+                          Container(
+                            width: 200,
+                            child: Text(
+                              args.description,
+                              maxLines: 2,
+                              style: storeDetailsCardStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
@@ -162,8 +169,9 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     purchaseType: finalListProductos[index].purchaseType,
                     quantity: finalListProductos[index].quantity,
                     registeredDate: finalListProductos[index].registeredDate,
-                    image: 'https://picsum.photos/200/300',
+                    image: finalListProductos[index].imageUrl,
                     hexColor: args.hexColor,
+                    imageUrl: finalListProductos[index].imageUrl,
                   );
                 },
               );

@@ -45,7 +45,6 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: TextFormField(
-
                     controller: TextEditingController(text: userInput),
                     onFieldSubmitted: (_userInput) {
                       if (_userInput.length > 0) {
@@ -55,6 +54,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                         });
                       }
                     },
+                    textAlignVertical: TextAlignVertical.center,
                     autofocus: false,
                     enabled: true,
                     cursorColor: Colors.black,
@@ -100,8 +100,10 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                       colorHex: resultTiendita.body.stores[index].hexColor,
                       image: resultTiendita.body.stores[index].iconUrl,
                       category: resultTiendita.body.stores[index].categoryName,
-                      followers:
-                          null, //todo Followers desde backend Facebook api
+                      followers: null,
+                      provinceName: resultTiendita.body.stores[index].provinceName,
+                      description: resultTiendita.body.stores[index].description,
+                      originalStoreName: resultTiendita.body.stores[index].originalStoreName,
                     );
                   },
                 );

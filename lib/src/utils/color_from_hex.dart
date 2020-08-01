@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 Color getColorFromHex(String hexColor) {
   hexColor = hexColor.replaceAll("#", "");
   if (hexColor.length == 6) {
@@ -7,5 +9,7 @@ Color getColorFromHex(String hexColor) {
   }
   if (hexColor.length == 8) {
     return Color(int.parse("0x$hexColor"));
+  } else {
+    return Colors.white;
   }
 }

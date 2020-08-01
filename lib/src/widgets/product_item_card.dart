@@ -28,7 +28,7 @@ class ProductItemCard extends StatelessWidget {
       @required this.itemId,
       @required this.finalPrice,
       @required this.itemSatus,
-      this.imageUrl,
+      @required this.imageUrl,
       @required this.hexColor,
       this.image})
       : super(key: key);
@@ -49,11 +49,10 @@ class ProductItemCard extends StatelessWidget {
           Expanded(
             child: Container(
               width: double.infinity,
-              //margin: EdgeInsets.only(top: 10),
               child: FadeInImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(image),
-                placeholder: AssetImage('assets/images/oops - Copy.jpg'),
+                placeholder: AssetImage('assets/images/tienditas_placeholder.png'),
               ),
             ),
           ),
@@ -66,7 +65,9 @@ class ProductItemCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   itemName,
+                  maxLines: 1,
                   style: storeItemTitleStyle,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   'dilibiry',
