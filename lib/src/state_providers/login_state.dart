@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -59,7 +58,7 @@ class LoginState with ChangeNotifier {
 
   //==============ConGoogleAccount
   //Sign in
-   signInWithGoogle() async {
+  signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount =
         await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -80,6 +79,28 @@ class LoginState with ChangeNotifier {
     assert(user.uid == currentUser.uid);
 
     print('signInWithGoogle succeeded: $user');
+  }
+
+  signInWithFacebook(String result) async {
+    _loading = true;
+    notifyListeners();
+    if (result != null) {
+      try {
+        final facebookAuthCred =
+            FacebookAuthProvider.getCredential(accessToken: result);
+        final AuthResult authResult =
+            await _auth.signInWithCredential(facebookAuthCred);
+        final FirebaseUser user = authResult.user;
+        final userIdToken = await user.getIdToken();
+        currentUserIdToken = userIdToken.token;
+        print('signInWithFacebook succeeded');
+        _loggedIn = true;
+        notifyListeners();
+      } catch (e) {
+        _loggedIn = false;
+        notifyListeners();
+      }
+    }
   }
 
   //Sign out

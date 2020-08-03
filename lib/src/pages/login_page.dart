@@ -1,10 +1,13 @@
 import 'package:app_tiendita/src/pages/signup.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -153,6 +156,90 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _buildFacebookBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          loginWithFacebook();
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildSocialBtn(
+              () => print('Login with Facebook'),
+              AssetImage(
+                'assets/logos/facebook.png',
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              'FACEBOOK',
+              style: TextStyle(
+                color: azulTema,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Nunito',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGoogleBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          Provider.of<LoginState>(context, listen: false).login();
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildSocialBtn(
+              Provider.of<LoginState>(context, listen: false).signInWithGoogle,
+              AssetImage(
+                'assets/logos/google.png',
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              'GOOGLE',
+              style: TextStyle(
+                color: azulTema,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Nunito',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
@@ -176,8 +263,8 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 45.0,
-        width: 45.0,
+        height: 30.0,
+        width: 30.0,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: logo,
@@ -213,10 +300,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SignUp()),
-        );
+        Provider.of<LoginState>(context, listen: false).login();
       },
       child: RichText(
         text: TextSpan(
@@ -235,6 +319,28 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnonymous() {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<LoginState>(context, listen: false).login();
+      },
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Ingresar como invitado',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ],
@@ -288,23 +394,42 @@ class _LoginPageState extends State<LoginPage> {
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/logos/tienditas.png'),
+                              image:
+                                  AssetImage('assets/logos/logoTienditas.png'),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(height: 16.0),
-                      _buildEmailTF(),
                       SizedBox(
-                        height: 30.0,
+                        height: 250.0,
+                        width: 300.0,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/welcomeImage.png'),
+                            ),
+                          ),
+                        ),
                       ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginState(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Text(
+                        'Ingresa con:',
+                        style: kLabelStyle,
+                      ),
+                      _buildFacebookBtn(),
+                      Text(
+                        '- O -',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      _buildGoogleBtn(),
+                      _buildAnonymous()
                     ],
                   ),
                 ),
@@ -340,178 +465,20 @@ class _LoginPageState extends State<LoginPage> {
       child: _buildLoginBtn(),
     );
   }
+
+  loginWithFacebook() async {
+    String facebookId = "382658952699555";
+    String facebookRedirectUrl =
+        "https://www.facebook.com/connect/login_success.html";
+    String result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CustomWebView(
+                selectedUrl:
+                    'https://www.facebook.com/dialog/oauth?client_id=$facebookId&redirect_uri=$facebookRedirectUrl&response_type=token&scope=email,public_profile,',
+              ),
+          maintainState: true),
+    );
+    Provider.of<LoginState>(context, listen: false).signInWithFacebook(result);
+  }
 }
-
-// class _LoginPageState extends State<LoginPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final size = MediaQuery.of(context).size;
-//     return Scaffold(
-//       appBar: AppBar(
-//         bottom: PreferredSize(
-//           preferredSize: Size.fromHeight(size.height * .13),
-//           child: Container(
-//             padding: EdgeInsets.all(28),
-//             child: Row(
-//               children: <Widget>[
-//                 Text(
-//                   'Login',
-//                   style: TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 28,
-//                       fontFamily: 'Nunito',
-//                       fontWeight: FontWeight.bold),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//         backgroundColor: azulTema,
-//       ),
-//       body: SingleChildScrollView(
-//         child: Container(
-//           padding: EdgeInsets.symmetric(vertical: 32, horizontal: 28),
-//           child: Column(
-//             children: <Widget>[
-//               Text(
-//                 '¡Bienvenido a Tienditas!',
-//                 style: TextStyle(
-//                     letterSpacing: 3,
-//                     color: azulTema,
-//                     fontSize: 24,
-//                     fontWeight: FontWeight.bold,
-//                     fontFamily: 'Nunito'),
-//               ),
-//               SizedBox(height: 65),
-//               Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: <Widget>[
-//                   Container(
-//                     padding: EdgeInsets.symmetric(vertical: 10),
-//                     child: Text(
-//                       'Correo Electrónico',
-//                       style: TextStyle(
-//                         color: Colors.grey,
-//                         fontSize: 14,
-//                         fontWeight: FontWeight.normal,
-//                       ),
-//                     ),
-//                   ),
-//                   _crearEmailInput(),
-//                   SizedBox(height: 20),
-//                   Container(
-//                     padding: EdgeInsets.symmetric(vertical: 10),
-//                     child: Text(
-//                       'Contraseña',
-//                       style: TextStyle(
-//                         color: Colors.grey,
-//                         fontSize: 14,
-//                         fontWeight: FontWeight.normal,
-//                       ),
-//                     ),
-//                   ),
-//                   _crearPasswordInput(),
-//                   Row(
-//                     mainAxisAlignment: MainAxisAlignment.end,
-//                     children: <Widget>[
-//                       Container(
-//                         padding: EdgeInsets.all(16),
-//                         child: Text(
-//                           '¿Olvidaste tu contraseña?',
-//                           style: TextStyle(
-//                             fontSize: 13,
-//                             fontFamily: 'Nunito',
-//                             color: azulOptions,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   SizedBox(height: 38),
-//                   Container(
-//                     width: double.infinity,
-//                     child: FlatButton(
-//                       onPressed: () {
-//                         Navigator.pushNamed(context, 'new_store');
-//                       },
-//                       padding: EdgeInsets.symmetric(vertical: 16),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(35),
-//                       ),
-//                       color: azulTema,
-//                       child: Text(
-//                         'Entra',
-//                         style: TextStyle(
-//                           fontSize: 16,
-//                           fontFamily: 'Nunito',
-//                           color: Colors.white,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _crearEmailInput() {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: grisClaroTema,
-//         borderRadius: BorderRadius.circular(32),
-//       ),
-//       child: TextFormField(
-//         cursorColor: Colors.black,
-//         keyboardType: TextInputType.emailAddress,
-//         decoration: new InputDecoration(
-//             border: InputBorder.none,
-//             focusedBorder: InputBorder.none,
-//             enabledBorder: InputBorder.none,
-//             errorBorder: InputBorder.none,
-//             disabledBorder: InputBorder.none,
-//             contentPadding:
-//                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-//             hintText: 'Escribe tu email',
-//             hintStyle: TextStyle(
-//               fontFamily: 'Nunito',
-//               color: Colors.grey,
-//               fontSize: 13,
-//             )),
-//       ),
-//     );
-//   }
-
-//   Widget _crearPasswordInput() {
-//     return Container(
-//       decoration: BoxDecoration(
-//         color: grisClaroTema,
-//         borderRadius: BorderRadius.circular(32),
-//       ),
-//       child: TextFormField(
-//         obscureText: true,
-//         cursorColor: Colors.black,
-//         keyboardType: TextInputType.emailAddress,
-//         decoration: new InputDecoration(
-//             border: InputBorder.none,
-//             focusedBorder: InputBorder.none,
-//             enabledBorder: InputBorder.none,
-//             errorBorder: InputBorder.none,
-//             disabledBorder: InputBorder.none,
-//             contentPadding:
-//                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-//             hintText: 'contraseña',
-//             hintStyle: TextStyle(
-//               fontFamily: 'Nunito',
-//               color: Colors.grey,
-//               fontSize: 13,
-//             )),
-//       ),
-//     );
-//   }
-// }

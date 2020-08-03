@@ -14,10 +14,10 @@ final kHintTextStyle = TextStyle(
 );
 
 final kLabelStyle = TextStyle(
-  color: Colors.white,
-  fontWeight: FontWeight.bold,
-  fontFamily: 'Nunito',
-);
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 18);
 
 final kBoxDecorationStyle = BoxDecoration(
   color: Color(0xFFa4a1e5),
