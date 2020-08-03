@@ -97,29 +97,33 @@ class DeliveryOptionsPage extends StatelessWidget {
 
   Widget getDeliveryOptionsWidget() {
     return Card(
-      child: ListTile(
-        title: Row(
-          children: <Widget>[
-            Text('Pedido a My Loop Bands'),
-          ],
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              '\$2.50',
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: 'Nunito',
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+      clipBehavior: Clip.antiAlias,
+      child: FlatButton(
+        onPressed: () {  },
+        child: ListTile(
+          title: Row(
+            children: <Widget>[
+              Text('Pedido a My Loop Bands'),
+            ],
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                '\$2.50',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            SizedBox(width: 10),
-            Icon(Icons.more_horiz),
-          ],
+              SizedBox(width: 10),
+              Icon(Icons.more_horiz),
+            ],
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       ),
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
