@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/pages/cart_page.dart';
 import 'package:app_tiendita/src/pages/categories_page.dart';
+import 'package:app_tiendita/src/pages/delivery_options_page.dart';
 import 'package:app_tiendita/src/pages/home_page.dart';
 import 'package:app_tiendita/src/pages/login_page.dart';
 import 'package:app_tiendita/src/pages/new_login_page.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             'place_holder_page': (BuildContext context) => PlaceHolderPage(),
             'stores_by_category': (BuildContext context) => StoresByCategory(),
             'search_for_store': (BuildContext context) => SearchForStorePage(),
+            'delivery_options': (BuildContext context) => DeliveryOptionsPage(),
           },
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

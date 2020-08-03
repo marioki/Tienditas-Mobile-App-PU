@@ -89,7 +89,9 @@ class _CartPageState extends State<CartPage> {
                               'PAGAR',
                               style: cartButtonPagarStyle,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'delivery_options');
+                            },
                           )
                         ],
                       ),
