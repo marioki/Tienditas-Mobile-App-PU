@@ -205,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Provider.of<LoginState>(context, listen: false).login();
+          Provider.of<LoginState>(context, listen: false).signInWithGoogle();
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(

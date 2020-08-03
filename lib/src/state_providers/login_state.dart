@@ -78,7 +78,13 @@ class LoginState with ChangeNotifier {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    print('signInWithGoogle succeeded: $user');
+    IdTokenResult tokenResult = await user.getIdToken();
+    currentUserIdToken = tokenResult.token;
+    print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
+    print(currentUserIdToken);
+    _loggedIn = true;
+
+    notifyListeners();
   }
 
   signInWithFacebook(String result) async {
