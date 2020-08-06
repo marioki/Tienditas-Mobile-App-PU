@@ -1,7 +1,14 @@
+import 'package:app_tiendita/src/pages/checkout_sequence/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/widgets/alert_dialogs/delivery_alert_dialog.dart';
 import 'package:flutter/material.dart';
 
-class DeliveryOptionsPage extends StatelessWidget {
+class DeliveryOptionsPage extends StatefulWidget {
+  @override
+  _DeliveryOptionsPageState createState() => _DeliveryOptionsPageState();
+}
+
+class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +49,9 @@ class DeliveryOptionsPage extends StatelessWidget {
             ListView(
               shrinkWrap: true,
               children: <Widget>[
-                getDeliveryOptionsWidget(),
-                getDeliveryOptionsWidget(),
-                getDeliveryOptionsWidget(),
+                getDeliveryOptionsWidget(context),
+                getDeliveryOptionsWidget(context),
+                getDeliveryOptionsWidget(context),
               ],
             )
           ],
@@ -84,7 +91,14 @@ class DeliveryOptionsPage extends StatelessWidget {
                       fontFamily: 'Nunito',
                       fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EscogerDirecciones(),
+                    ),
+                  );
+                },
                 color: azulTema,
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 shape: RoundedRectangleBorder(
@@ -95,11 +109,19 @@ class DeliveryOptionsPage extends StatelessWidget {
         ));
   }
 
-  Widget getDeliveryOptionsWidget() {
+  Widget getDeliveryOptionsWidget(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
-        onPressed: () {  },
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return DeliveryAlertDialogWidget();
+            },
+          );
+        },
         child: ListTile(
           title: Row(
             children: <Widget>[
