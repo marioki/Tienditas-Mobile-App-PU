@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/pages/checkout_sequence/editar_direccion.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EscogerDirecciones(),
+                    builder: (context) => EditarDireccion(),
                   ),
                 );
               },
