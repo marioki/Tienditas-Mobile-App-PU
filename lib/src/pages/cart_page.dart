@@ -14,162 +14,197 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35))),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Mi Carrito',
-            style: appBarStyle,
+    return WillPopScope(
+      onWillPop: () {
+        return _onBackPressed(context);
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child: AppBar(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(35),
+                    bottomRight: Radius.circular(35))),
+            centerTitle: true,
+            backgroundColor: azulTema,
+            title: Text(
+              'Mi Carrito',
+              style: appBarStyle,
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            //Custom Appbar
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              //Custom Appbar
 
-            //Total a pagar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 6,
-                  child: Card(
-                    elevation: 15,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
-                        topLeft: Radius.circular(50),
+              //Total a pagar
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: Card(
+                      elevation: 15,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50),
+                          topLeft: Radius.circular(50),
+                        ),
                       ),
-                    ),
-                    margin: EdgeInsets.only(top: 16, bottom: 16),
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'TOTAL',
-                                style: cartTotalStyle,
-                              ),
-                              Text(
-                                '\$${Provider.of<UserCartState>(context).totalPrice.toStringAsFixed(2)}',
-                                style: cartTotalPriceStyle,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 32,
-                          ),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                      margin: EdgeInsets.only(top: 16, bottom: 16),
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'TOTAL',
+                                  style: cartTotalStyle,
+                                ),
+                                Text(
+                                  '\$${Provider.of<UserCartState>(context).totalPrice.toStringAsFixed(2)}',
+                                  style: cartTotalPriceStyle,
+                                ),
+                              ],
                             ),
-                            color: azulTema,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 35, vertical: 15),
-                            child: Text(
-                              'PAGAR',
-                              style: cartButtonPagarStyle,
+                            SizedBox(
+                              width: 32,
                             ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'delivery_options');
-                            },
-                          )
-                        ],
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              color: azulTema,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 35, vertical: 15),
+                              child: Text(
+                                'PAGAR',
+                                style: cartButtonPagarStyle,
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, 'delivery_options');
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Consumer<UserCartState>(
-                builder:
-                    (BuildContext context, UserCartState value, Widget child) {
-                  if (value.cartProductList.isEmpty) {
-                    return ListView();
-                  } else {
-                    return child;
-                  }
-                },
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  itemCount:
-                      Provider.of<UserCartState>(context).cartItemsIds.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    if(index == Provider.of<UserCartState>(context).cartItemsIds.length -1){
-                      return Column(
-                        children: <Widget>[
-                          NewCartItemWidget(
-                            itemId: Provider.of<UserCartState>(context)
-                                .cartProductList[index]
-                                .itemId,
-                            itemName: Provider.of<UserCartState>(context)
-                                .cartProductList[index]
-                                .itemName,
-                            imageUrl: Provider.of<UserCartState>(context)
-                                .cartProductList[index]
-                                .imageUrl,
-                            finalPrice: Provider.of<UserCartState>(context)
-                                .cartProductList[index]
-                                .finalPrice,
-                            colorHex: Provider.of<UserCartState>(context)
-                                .cartProductList[index]
-                                .hexColor,
-                          ),
-                          SizedBox(
-                            //Todo Change to media query when store card uses media query
-                            height: 100,
-                          ),
-                        ],
-                      );
+                ],
+              ),
+              Expanded(
+                child: Consumer<UserCartState>(
+                  builder: (BuildContext context, UserCartState value,
+                      Widget child) {
+                    if (value.cartProductList.isEmpty) {
+                      return ListView();
+                    } else {
+                      return child;
                     }
-
-
-                    print(index);
-                    return NewCartItemWidget(
-                      itemId: Provider.of<UserCartState>(context)
-                          .cartProductList[index]
-                          .itemId,
-                      itemName: Provider.of<UserCartState>(context)
-                          .cartProductList[index]
-                          .itemName,
-                      imageUrl: Provider.of<UserCartState>(context)
-                          .cartProductList[index]
-                          .imageUrl,
-                      finalPrice: Provider.of<UserCartState>(context)
-                          .cartProductList[index]
-                          .finalPrice,
-                      colorHex: Provider.of<UserCartState>(context)
-                          .cartProductList[index]
-                          .hexColor,
-                    );
                   },
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    itemCount:
+                        Provider.of<UserCartState>(context).cartItemsIds.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      if (index ==
+                          Provider.of<UserCartState>(context)
+                                  .cartItemsIds
+                                  .length -
+                              1) {
+                        return Column(
+                          children: <Widget>[
+                            NewCartItemWidget(
+                              itemId: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .itemId,
+                              itemName: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .itemName,
+                              imageUrl: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .imageUrl,
+                              finalPrice: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .finalPrice,
+                              colorHex: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .hexColor,
+                            ),
+                            SizedBox(
+                              //Todo Change to media query when store card uses media query
+                              height: 100,
+                            ),
+                          ],
+                        );
+                      }
+
+                      print(index);
+                      return NewCartItemWidget(
+                        itemId: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .itemId,
+                        itemName: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .itemName,
+                        imageUrl: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .imageUrl,
+                        finalPrice: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .finalPrice,
+                        colorHex: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .hexColor,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Future<bool> _onBackPressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('¿Cerrar la aplicacion??'),
+          content: Text('Perderas los articulos en tu carrito...'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('No'),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text('Sí'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
