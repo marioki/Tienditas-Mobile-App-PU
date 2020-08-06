@@ -41,14 +41,7 @@ class _EditarDireccionState extends State<EditarDireccion> {
                     fontFamily: 'Nunito',
                     fontWeight: FontWeight.bold),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditarDireccion(),
-                  ),
-                );
-              },
+              onPressed: () {},
               color: azulTema,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
               shape: RoundedRectangleBorder(
