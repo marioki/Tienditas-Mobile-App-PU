@@ -19,6 +19,7 @@ class _CartPageState extends State<CartPage> {
         return _onBackPressed(context);
       },
       child: Scaffold(
+        backgroundColor: grisClaroTema,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: AppBar(
@@ -126,30 +127,34 @@ class _CartPageState extends State<CartPage> {
                                   .cartItemsIds
                                   .length -
                               1) {
-                        return Column(
-                          children: <Widget>[
-                            NewCartItemWidget(
-                              itemId: Provider.of<UserCartState>(context)
-                                  .cartProductList[index]
-                                  .itemId,
-                              itemName: Provider.of<UserCartState>(context)
-                                  .cartProductList[index]
-                                  .itemName,
-                              imageUrl: Provider.of<UserCartState>(context)
-                                  .cartProductList[index]
-                                  .imageUrl,
-                              finalPrice: Provider.of<UserCartState>(context)
-                                  .cartProductList[index]
-                                  .finalPrice,
-                              colorHex: Provider.of<UserCartState>(context)
-                                  .cartProductList[index]
-                                  .hexColor,
-                            ),
-                            SizedBox(
-                              //Todo Change to media query when store card uses media query
-                              height: 100,
-                            ),
-                          ],
+                        return Container(
+                          padding: EdgeInsets.all(0),
+                          margin: EdgeInsets.all(0),
+                          child: Column(
+                            children: <Widget>[
+                              NewCartItemWidget(
+                                itemId: Provider.of<UserCartState>(context)
+                                    .cartProductList[index]
+                                    .itemId,
+                                itemName: Provider.of<UserCartState>(context)
+                                    .cartProductList[index]
+                                    .itemName,
+                                imageUrl: Provider.of<UserCartState>(context)
+                                    .cartProductList[index]
+                                    .imageUrl,
+                                finalPrice: Provider.of<UserCartState>(context)
+                                    .cartProductList[index]
+                                    .finalPrice,
+                                colorHex: Provider.of<UserCartState>(context)
+                                    .cartProductList[index]
+                                    .hexColor,
+                              ),
+                              SizedBox(
+                                //Todo Change to media query when store card uses media query
+                                height: 100,
+                              ),
+                            ],
+                          ),
                         );
                       }
 
