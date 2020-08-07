@@ -50,18 +50,17 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
             child: Row(
               children: <Widget>[
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomLeft: Radius.circular(15)),
-                  child: Image(
-                    height: 100,
-                    width: 100,
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      widget.imageUrl,
-                    ),
-                  ),
-                ),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                      placeholder:
+                          AssetImage('assets/images/tienditas_placeholder.png'),
+                      image: NetworkImage(widget.imageUrl),
+                    )),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
