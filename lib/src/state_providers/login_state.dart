@@ -10,6 +10,8 @@ class LoginState with ChangeNotifier {
   bool _loading = false;
   String currentUserIdToken;
 
+  FirebaseUser _firebaseUser;
+
   //anonimo
   var anonResult;
 
@@ -19,6 +21,8 @@ class LoginState with ChangeNotifier {
   bool isLoggedIn() => _loggedIn;
 
   bool isAnon() => _isAnon;
+
+  FirebaseUser getUser() => _firebaseUser;
 
   bool isLoading() => _loading;
 
@@ -91,21 +95,15 @@ class LoginState with ChangeNotifier {
 
       IdTokenResult tokenResult = await user.getIdToken();
       currentUserIdToken = tokenResult.token;
-      print('Token Desde La varialble   ${currentUserIdToken.toString()}');
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
-      print(tokenResult.token);
-      print(tokenResult.authTime);
-      print(tokenResult.claims);
-      print(tokenResult.expirationTime);
-      print(tokenResult.hashCode);
-      print(tokenResult.signInProvider);
-      print(tokenResult.issuedAtTime);
+      _firebaseUser = user;
+
       _loggedIn = true;
       _isAnon = false;
 
       notifyListeners();
     } else {
-      print('Sign in stop do to null account');
+      print('Sign in stopped do to null account');
     }
   }
 

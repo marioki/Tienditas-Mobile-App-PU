@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         children: <Widget>[
           ListTile(
+            onTap: () => UsuarioTienditasProvider().getUserInfo(context),
             leading: Icon(Icons.shopping_basket),
             title: Text('Mis Ordenes'),
           ),
