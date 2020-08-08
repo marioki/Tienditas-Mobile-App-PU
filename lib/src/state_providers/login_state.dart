@@ -41,6 +41,7 @@ class LoginState with ChangeNotifier {
   void logout() {
     _auth.signOut();
     _loggedIn = false;
+    _googleSignIn.signOut();
     notifyListeners();
   }
 
@@ -61,30 +62,35 @@ class LoginState with ChangeNotifier {
   signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount =
         await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
 
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential);
+      final FirebaseUser user = authResult.user;
 
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    IdTokenResult tokenResult = await user.getIdToken();
-    currentUserIdToken = tokenResult.token;
-    print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
-    print(currentUserIdToken);
-    _loggedIn = true;
+      IdTokenResult tokenResult = await user.getIdToken();
+      currentUserIdToken = tokenResult.token;
+      print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
+      print(currentUserIdToken);
+      _loggedIn = true;
 
-    notifyListeners();
+      notifyListeners();
+    } else {
+      print('Sign in stop do to null account');
+    }
   }
 
   signInWithFacebook(String result) async {
