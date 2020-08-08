@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 
 import 'cart_page.dart';
 import 'profile_page.dart';
+import 'new_user_sign_up_page.dart';
+
+import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -68,6 +72,9 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return CartPage();
       case 2:
+        if (Provider.of<LoginState>(context).isAnon()) {
+          return NewUserSignUpPage();
+        }
         return ProfilePage();
 
       default:

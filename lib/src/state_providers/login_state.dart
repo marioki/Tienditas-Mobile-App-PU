@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginState with ChangeNotifier {
   bool _loggedIn = false;
+  bool _isAnon;
   bool _loading = false;
   String currentUserIdToken;
 
@@ -15,6 +16,7 @@ class LoginState with ChangeNotifier {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   bool isLoggedIn() => _loggedIn;
+  bool isAnon() => _isAnon;
 
   bool isLoading() => _loading;
 
@@ -31,6 +33,7 @@ class LoginState with ChangeNotifier {
       print('Sign in with idToken halal: ${userIdToken.token}');
       currentUserIdToken = userIdToken.token;
       _loggedIn = true;
+      _isAnon = true;
       notifyListeners();
     } else {
       _loggedIn = false;
@@ -86,6 +89,7 @@ class LoginState with ChangeNotifier {
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
       print(currentUserIdToken);
       _loggedIn = true;
+      _isAnon = false;
 
       notifyListeners();
     } else {
