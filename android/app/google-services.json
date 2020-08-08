@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "704134493695-svjec6te7uhgdg0a85a4acvs1f5oqm55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "2f3a0bd373c71729f637faf3e3c2f62062f0a3d7"
+          }
+        },
+        {
+          "client_id": "704134493695-4cbqaregkk3rtid64lh4agv28csv814t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "eeb4e07c0d2bd8d6b90d0376601fbe2b01173d42"
+          }
+        },
+        {
           "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -28,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+              "client_id": "704134493695-kqjaieolhknqvv8dv9l7l9kttkpa01fc.apps.googleusercontent.com",
               "client_type": 3
             },
             {
