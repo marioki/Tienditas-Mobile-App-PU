@@ -36,6 +36,12 @@ class _ProfilePageState extends State<ProfilePage> {
             title: Text('Ayuda'),
           ),
           Divider(color: Colors.grey),
+          ListTile(
+            onTap: () => Provider.of<LoginState>(context).logout(),
+            leading: Icon(Icons.account_circle),
+            title: Text('Cerrar sesión'),
+          ),
+          Divider(color: Colors.grey),
         ],
       ),
     );
