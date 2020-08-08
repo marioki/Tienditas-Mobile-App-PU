@@ -38,7 +38,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
               children: <Widget>[
                 Container(
                   //margin: EdgeInsets.only(top: 24),
-                  height: screenHeight * .25,
+                  height: 100,
                   //margin: EdgeInsets.only(bottom: 16),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
@@ -231,7 +231,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
         ),
         onChanged: (value) {
           isSearching = true;
-          _filterProducts(value);
+          _filterProducts(value.toLowerCase());
         },
       ),
     );
