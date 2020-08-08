@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_tiendita/src/modelos/user_token_id_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,6 +17,7 @@ class LoginState with ChangeNotifier {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   bool isLoggedIn() => _loggedIn;
+
   bool isAnon() => _isAnon;
 
   bool isLoading() => _loading;
@@ -31,6 +33,8 @@ class LoginState with ChangeNotifier {
     if (user != null) {
       var userIdToken = await _getUserIdToken(user);
       print('Sign in with idToken halal: ${userIdToken.token}');
+      print('Objeto Token Anonimo Completo: '
+          '${userIdToken.toString()}');
       currentUserIdToken = userIdToken.token;
       _loggedIn = true;
       _isAnon = true;
@@ -84,10 +88,18 @@ class LoginState with ChangeNotifier {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
+
       IdTokenResult tokenResult = await user.getIdToken();
       currentUserIdToken = tokenResult.token;
+      print('Token Desde La varialble   ${currentUserIdToken.toString()}');
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
-      print(currentUserIdToken);
+      print(tokenResult.token);
+      print(tokenResult.authTime);
+      print(tokenResult.claims);
+      print(tokenResult.expirationTime);
+      print(tokenResult.hashCode);
+      print(tokenResult.signInProvider);
+      print(tokenResult.issuedAtTime);
       _loggedIn = true;
       _isAnon = false;
 
