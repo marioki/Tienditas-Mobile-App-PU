@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioTienditasProvider {
-  Future<UserTienditaResult> getUserInfo(BuildContext context) async {
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
-    final String userEmail = Provider.of<LoginState>(context).getUser().email;
+  Future<User> getUserInfo(
+      String userIdToken, String userEmail) async {
     print(userEmail.toString());
 
     //Todo Uri builder
@@ -23,7 +22,8 @@ class UsuarioTienditasProvider {
       print(response.body);
 
       final userTienditaResult = userTienditaResultFromJson(response.body);
-      return userTienditaResult;
+      User user = userTienditaResult.body.user;
+      return user;
     } else {
       print('Error user tienditas get info');
       print(response.body);

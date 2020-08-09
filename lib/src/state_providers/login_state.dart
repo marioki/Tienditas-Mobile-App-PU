@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'package:app_tiendita/src/modelos/user_token_id_model.dart';
+
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,6 +11,7 @@ class LoginState with ChangeNotifier {
   bool _isAnon;
   bool _loading = false;
   String currentUserIdToken;
+  User _user;
 
   FirebaseUser _firebaseUser;
 
@@ -18,11 +21,11 @@ class LoginState with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  User getTienditaUser() => _user;
+
   bool isLoggedIn() => _loggedIn;
 
   bool isAnon() => _isAnon;
-
-  FirebaseUser getUser() => _firebaseUser;
 
   bool isLoading() => _loading;
 
@@ -92,11 +95,14 @@ class LoginState with ChangeNotifier {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
-
       IdTokenResult tokenResult = await user.getIdToken();
       currentUserIdToken = tokenResult.token;
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
       _firebaseUser = user;
+      _user = await UsuarioTienditasProvider()
+          .getUserInfo(currentUserIdToken, user.email);
+      print('=================Detalles de Este Usuario ================');
+      print(_user.address);
 
       _loggedIn = true;
       _isAnon = false;

@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/pages/user/user_address_page.dart';
 import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,16 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         children: <Widget>[
           ListTile(
-            onTap: () => UsuarioTienditasProvider().getUserInfo(context),
+            onTap: () {},
             leading: Icon(Icons.shopping_basket),
             title: Text('Mis Ordenes'),
           ),
           Divider(color: Colors.grey),
           ListTile(
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return UserAddressPage();
+            })),
             leading: Icon(Icons.location_on),
             title: Text('Direcciones'),
           ),
