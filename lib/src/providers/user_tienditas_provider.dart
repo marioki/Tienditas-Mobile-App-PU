@@ -1,15 +1,11 @@
 import 'dart:io';
 
-import 'package:app_tiendita/src/modelos/categoria_model.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/state_providers/login_state.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioTienditasProvider {
-  Future<User> getUserInfo(
-      String userIdToken, String userEmail) async {
+  Future<User> getUserInfo(String userIdToken, String userEmail) async {
     print(userEmail.toString());
 
     //Todo Uri builder
@@ -18,12 +14,26 @@ class UsuarioTienditasProvider {
 
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
-    if (200 == response.statusCode) {
-      print(response.body);
 
-      final userTienditaResult = userTienditaResultFromJson(response.body);
-      User user = userTienditaResult.body.user;
-      return user;
+
+    if (200 == response.statusCode) {
+
+      print('Dentro de user tienditas provider code 200');
+      ResponseTienditasApi responseTienditasApi =
+          responseFromJson(response.body);
+      print('=========Status Code inside response body:');
+      print(responseTienditasApi.statusCode);
+      if (responseTienditasApi.statusCode == 200) {
+        final UserTienditaResult userTienditaResult =
+            userTienditaResultFromJson(response.body);
+        print('=============================================');
+        User user = userTienditaResult.body.user;
+        return user;
+      }else{
+        print('El usuario no existe en Tienditas DB');
+        return null;
+      }
+
     } else {
       print('Error user tienditas get info');
       print(response.body);

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/providers/create_user.dart';
 import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class LoginState with ChangeNotifier {
   bool _isAnon;
   bool _loading = false;
   String currentUserIdToken;
-  User _user;
+  User _userTienditas;
 
   FirebaseUser _firebaseUser;
 
@@ -21,7 +22,9 @@ class LoginState with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  User getTienditaUser() => _user;
+  FirebaseUser getFireBaseUser() => _firebaseUser;
+
+  User getTienditaUser() => _userTienditas;
 
   bool isLoggedIn() => _loggedIn;
 
@@ -99,15 +102,32 @@ class LoginState with ChangeNotifier {
       currentUserIdToken = tokenResult.token;
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
       _firebaseUser = user;
-      _user = await UsuarioTienditasProvider()
+      _userTienditas = await UsuarioTienditasProvider()
           .getUserInfo(currentUserIdToken, user.email);
-      print('=================Detalles de Este Usuario ================');
-      print(_user.address);
 
-      _loggedIn = true;
-      _isAnon = false;
+      if (_userTienditas != null) {
+        print('=================Detalles de Este Usuario ================');
+        print(_userTienditas.address);
 
-      notifyListeners();
+        _loggedIn = true;
+        _isAnon = false;
+
+        notifyListeners();
+      } else {
+        print('Tienes que crear el usuario aqui');
+        var userCreateResponse = await CreateTienditaUser()
+            .createUserTienditas(_firebaseUser, currentUserIdToken);
+        print(userCreateResponse.body);
+        if (userCreateResponse.statusCode == 200) {
+
+          _userTienditas = await UsuarioTienditasProvider()
+              .getUserInfo(currentUserIdToken, user.email);
+
+          _loggedIn = true;
+          _isAnon = false;
+          notifyListeners();
+        }
+      }
     } else {
       print('Sign in stopped do to null account');
     }
