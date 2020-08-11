@@ -94,6 +94,9 @@ class _CartPageState extends State<CartPage> {
                                 style: cartButtonPagarStyle,
                               ),
                               onPressed: () {
+                                print('Stores currently on the cart');
+                                print(Provider.of<UserCartState>(context)
+                                    .allStoreTagsList);
                                 Navigator.pushNamed(
                                     context, 'delivery_options');
                               },
@@ -144,6 +147,10 @@ class _CartPageState extends State<CartPage> {
                               colorHex: Provider.of<UserCartState>(context)
                                   .cartProductList[index]
                                   .hexColor,
+                              parentStoreTag:
+                                  Provider.of<UserCartState>(context)
+                                      .cartProductList[index]
+                                      .parentStoreTag,
                             ),
                             SizedBox(
                               //Todo Change to media query when store card uses media query
@@ -170,6 +177,9 @@ class _CartPageState extends State<CartPage> {
                         colorHex: Provider.of<UserCartState>(context)
                             .cartProductList[index]
                             .hexColor,
+                        parentStoreTag: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .parentStoreTag,
                       );
                     },
                   ),

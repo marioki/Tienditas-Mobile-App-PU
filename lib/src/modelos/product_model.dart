@@ -55,7 +55,8 @@ class ProductElement {
     this.finalPrice,
     this.itemSatus,
     this.imageUrl,
-    this.hexColor
+    this.hexColor,
+    this.parentStoreTag,
   });
 
   String quantity;
@@ -69,6 +70,7 @@ class ProductElement {
   String imageUrl;
   //===Added Properties for cart page
   int cartItemAmount = 1;
+  String parentStoreTag;
   String hexColor;
 
 

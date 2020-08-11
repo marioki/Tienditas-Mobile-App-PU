@@ -19,16 +19,17 @@ class NewCartItemWidget extends StatefulWidget {
   //ItemSatus itemSatus; //Todo definir tipo de variable
   final String imageUrl;
 
-  const NewCartItemWidget(
-      {Key key,
-      this.quantity,
-      this.itemName,
-      this.purchaseType,
-      this.registeredDate,
-      this.itemId,
-      this.finalPrice,
-      this.imageUrl,
-      this.colorHex})
+  final String parentStoreTag;
+
+  const NewCartItemWidget({Key key,
+    this.quantity,
+    this.itemName,
+    this.purchaseType,
+    this.registeredDate,
+    this.itemId,
+    this.finalPrice,
+    this.imageUrl,
+    this.colorHex, this.parentStoreTag,})
       : super(key: key);
 
   @override
@@ -38,7 +39,9 @@ class NewCartItemWidget extends StatefulWidget {
 class _NewCartItemWidgetState extends State<NewCartItemWidget> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     return Card(
       margin: EdgeInsets.symmetric(
         vertical: 8,
@@ -72,8 +75,8 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                       child: FadeInImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(widget.imageUrl),
-                        placeholder:
-                            AssetImage('assets/images/tienditas_placeholder.png'),
+                        placeholder: AssetImage(
+                            'assets/images/tienditas_placeholder.png'),
                       ),
                     ),
                   ),
@@ -112,7 +115,17 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                   child: Icon(Icons.delete_forever),
                   onPressed: () {
                     Provider.of<UserCartState>(context).deleteProductFromCart(
-                        ProductElement(itemId: widget.itemId));
+                      ProductElement(
+                        itemId: widget.itemId,
+                        itemName: widget.itemName,
+                        finalPrice: widget.finalPrice,
+                        imageUrl: widget.imageUrl,
+                        registeredDate: widget.registeredDate,
+                        quantity: widget.quantity,
+                        hexColor: widget.colorHex,
+                        parentStoreTag: widget.parentStoreTag,
+                      ),
+                    );
                   },
                 )
               ],

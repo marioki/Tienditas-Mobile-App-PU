@@ -5,12 +5,15 @@ class UserCartState with ChangeNotifier {
   double totalPrice = 0;
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
+  List<String> allStoreTagsList = [];
+  List<String> storeTagsListFiltered = [];
 
   void addProductoToCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
       print('El producto ya esta en la canasta! awe');
       return;
     } else {
+      allStoreTagsList.add(productElement.parentStoreTag);
       cartProductList.add(productElement);
       cartItemsIds.add(productElement.itemId);
       calculateTotalPriceOfCart();
@@ -20,8 +23,9 @@ class UserCartState with ChangeNotifier {
 
   void deleteProductFromCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
-      cartProductList.removeWhere(
-          (element) => element.itemId == productElement.itemId);
+      allStoreTagsList.remove(productElement.parentStoreTag);
+      cartProductList
+          .removeWhere((element) => element.itemId == productElement.itemId);
       cartItemsIds.remove(productElement.itemId);
       calculateTotalPriceOfCart();
       notifyListeners();
@@ -63,8 +67,7 @@ class UserCartState with ChangeNotifier {
     //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
-      _totalPrice += double.parse(element.finalPrice) *
-          element.cartItemAmount;
+      _totalPrice += double.parse(element.finalPrice) * element.cartItemAmount;
     });
     totalPrice = _totalPrice;
     print(totalPrice.toStringAsFixed(2));
