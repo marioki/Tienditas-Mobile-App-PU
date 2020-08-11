@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
@@ -97,6 +98,9 @@ class _CartPageState extends State<CartPage> {
                                 print('Stores currently on the cart');
                                 print(Provider.of<UserCartState>(context)
                                     .allStoreTagsList);
+                                print('Lista de Tiendas Filtradas');
+                                print(Provider.of<UserCartState>(context)
+                                    .filterParentStoreTagList());
                                 Navigator.pushNamed(
                                     context, 'delivery_options');
                               },

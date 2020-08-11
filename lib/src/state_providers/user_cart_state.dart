@@ -79,4 +79,13 @@ class UserCartState with ChangeNotifier {
     cartProductList.clear();
     cartItemsIds.clear();
   }
+
+  List<String> filterParentStoreTagList() {
+    allStoreTagsList.forEach((storeTag) {
+      if (!storeTagsListFiltered.contains(storeTag)) {
+        storeTagsListFiltered.add(storeTag);
+      }
+    });
+    return storeTagsListFiltered;
+  }
 }
