@@ -15,25 +15,21 @@ class UsuarioTienditasProvider {
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
 
-
     if (200 == response.statusCode) {
-
       print('Dentro de user tienditas provider code 200');
       ResponseTienditasApi responseTienditasApi =
           responseFromJson(response.body);
       print('=========Status Code inside response body:');
       print(responseTienditasApi.statusCode);
       if (responseTienditasApi.statusCode == 200) {
-        final UserTienditaResult userTienditaResult =
-            userTienditaResultFromJson(response.body);
+        final userTienditaResult = userTienditaResultFromJson(response.body);
         print('=============================================');
         User user = userTienditaResult.body.user;
         return user;
-      }else{
+      } else {
         print('El usuario no existe en Tienditas DB');
         return null;
       }
-
     } else {
       print('Error user tienditas get info');
       print(response.body);
