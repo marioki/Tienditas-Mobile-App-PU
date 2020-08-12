@@ -1,4 +1,6 @@
+import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/checkout_sequence/escoger_direcciones_page.dart';
+import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/alert_dialogs/delivery_alert_dialog.dart';
 import 'package:flutter/material.dart';
@@ -46,13 +48,30 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
               height: 8,
               width: double.infinity,
             ),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                getDeliveryOptionsWidget(context),
-                getDeliveryOptionsWidget(context),
-                getDeliveryOptionsWidget(context),
-              ],
+            Container(
+              height: 600,
+              child: FutureBuilder(
+                //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
+                future: DeliveryOptionsProvider()
+                    .getStoreDeliveryOptions(context, '@razer'),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(itemCount: 1,shrinkWrap: true,itemBuilder: (context, index) {
+                      DeliveryOptionsResponse deliveryOptionsResponse = snapshot.data;
+                      StoreDelliveryInfo storeDelliveryInfo = deliveryOptionsResponse.body.store;
+                      return getDeliveryOptionsWidget(context, storeDelliveryInfo);
+                    });
+                  } else {
+                    return Container(
+                      height: 400,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
+              ),
             )
           ],
         ),
@@ -109,7 +128,8 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         ));
   }
 
-  Widget getDeliveryOptionsWidget(BuildContext context) {
+  Widget getDeliveryOptionsWidget(
+      BuildContext context, StoreDelliveryInfo storeDeliveryInfo) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
@@ -125,14 +145,14 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         child: ListTile(
           title: Row(
             children: <Widget>[
-              Text('Pedido a My Loop Bands'),
+              Text(storeDeliveryInfo.storeName),
             ],
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                '\$2.50',
+                storeDeliveryInfo.deliveryOptions[0].fee,
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'Nunito',
