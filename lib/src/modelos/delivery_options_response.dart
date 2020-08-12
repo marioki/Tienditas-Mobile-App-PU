@@ -33,10 +33,10 @@ class Body {
     this.store,
   });
 
-  StoreDelliveryInfo store;
+  StoreDeliveryInfo store;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-    store: StoreDelliveryInfo.fromJson(json["store"]),
+    store: StoreDeliveryInfo.fromJson(json["store"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -44,8 +44,8 @@ class Body {
   };
 }
 
-class StoreDelliveryInfo {
-  StoreDelliveryInfo({
+class StoreDeliveryInfo {
+  StoreDeliveryInfo({
     this.originalStoreName,
     this.storeTagName,
     this.categoryName,
@@ -65,7 +65,7 @@ class StoreDelliveryInfo {
   String description;
   String storeName;
 
-  factory StoreDelliveryInfo.fromJson(Map<String, dynamic> json) => StoreDelliveryInfo(
+  factory StoreDeliveryInfo.fromJson(Map<String, dynamic> json) => StoreDeliveryInfo(
     originalStoreName: json["original_store_name"],
     storeTagName: json["store_tag_name"],
     categoryName: json["category_name"],

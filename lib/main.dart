@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/pages/cart_page.dart';
 import 'package:app_tiendita/src/pages/categories_page.dart';
+import 'package:app_tiendita/src/pages/delivery_options_page.dart';
 import 'package:app_tiendita/src/pages/home_page.dart';
 import 'package:app_tiendita/src/pages/login_page.dart';
 import 'package:app_tiendita/src/pages/place_holder_page.dart';
@@ -12,7 +13,7 @@ import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'file:///C:/myProjects/mobile_app/lib/src/pages/checkout_sequence/delivery_options_page.dart';
+
 
 void main() {
   runApp(MyApp());

@@ -4,6 +4,7 @@ import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/alert_dialogs/delivery_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryOptionsPage extends StatefulWidget {
   @override
@@ -26,33 +27,34 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
           centerTitle: true,
           backgroundColor: azulTema,
           title: Text(
-            'Delivery',
+            'Delivery ',
             style: appBarStyle,
           ),
         ),
       ),
       body: FutureBuilder(
         //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
-        future: DeliveryOptionsProvider()
-            .getStoreDeliveryOptions(context, '@razer'),
+        future: DeliveryOptionsProvider().getStoreDeliveryOptions(context,
+            Provider.of<UserCartState>(context).filterParentStoreTagList()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                      color: Colors.black,
-                      thickness: 2,
-                    ),
-                itemCount: 1,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DeliveryOptionsResponse deliveryOptionsResponse =
-                      snapshot.data;
-                  StoreDelliveryInfo storeDelliveryInfo =
-                      deliveryOptionsResponse.body.store;
-                  return ListTile(
-                    title: Text(storeDelliveryInfo.deliveryOptions[0].name),
-                  );
-                });
+            List<StoreDeliveryInfo> listOfOptions = snapshot.data;
+            return Column(
+              children: [
+                ListView.separated(
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: listOfOptions.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      StoreDeliveryInfo deliveryInfo = listOfOptions[index];
+                      return ListTile(
+                        title: Text(deliveryInfo.storeName),
+                        trailing: Text(deliveryInfo.deliveryOptions[0].fee),
+                        subtitle: Text(deliveryInfo.deliveryOptions[0].method),
+                      );
+                    }),
+              ],
+            );
           } else {
             return Container(
               height: 400,
@@ -63,6 +65,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
           }
         },
       ),
+
       //      bottomSheet: Container(
 //        padding: EdgeInsets.all(16),
 //        child: Row(
@@ -118,7 +121,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
   }
 
   Widget getDeliveryOptionsWidget(
-      BuildContext context, StoreDelliveryInfo storeDeliveryInfo) {
+      BuildContext context, StoreDeliveryInfo storeDeliveryInfo) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
