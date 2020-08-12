@@ -96,14 +96,21 @@ class _CartPageState extends State<CartPage> {
                                 style: cartButtonPagarStyle,
                               ),
                               onPressed: () {
-                                print('Stores currently on the cart');
-                                print(Provider.of<UserCartState>(context)
-                                    .allStoreTagsList);
-                                print('Lista de Tiendas Filtradas');
-                                print(Provider.of<UserCartState>(context)
-                                    .filterParentStoreTagList());
-                                Navigator.pushNamed(
-                                    context, 'delivery_options');
+                                if (Provider.of<UserCartState>(context)
+                                        .cartProductList
+                                        .length >
+                                    0) {
+                                  print('Stores currently on the cart');
+                                  print(Provider.of<UserCartState>(context)
+                                      .allStoreTagsList);
+                                  print('Lista de Tiendas Filtradas');
+                                  print(Provider.of<UserCartState>(context)
+                                      .filterParentStoreTagList());
+                                  Navigator.pushNamed(
+                                      context, 'delivery_options');
+                                } else {
+                                  print('======Carrito_Vacio======');
+                                }
                               },
                             )
                           ],

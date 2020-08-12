@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
+import 'package:app_tiendita/src/pages/checkout_sequence/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -66,57 +67,57 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         },
       ),
 
-      //      bottomSheet: Container(
-//        padding: EdgeInsets.all(16),
-//        child: Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceAround,
-//          children: <Widget>[
-//            Column(
-//              mainAxisSize: MainAxisSize.min,
-//              crossAxisAlignment: CrossAxisAlignment.start,
-//              children: <Widget>[
-//                Text(
-//                  'COSTO DE ENVÍO',
-//                  style: TextStyle(
-//                    fontWeight: FontWeight.bold,
-//                    color: grizSubtitulo,
-//                  ),
-//                ),
-//                Text(
-//                  '\$100.00',
-//                  style: TextStyle(
-//                    fontWeight: FontWeight.bold,
-//                    fontFamily: 'Nunito',
-//                    color: azulTema,
-//                  ),
-//                ),
-//              ],
-//            ),
-//            FlatButton(
-//              child: Text(
-//                'SIGUIENTE',
-//                style: TextStyle(
-//                    fontSize: 12,
-//                    color: Colors.white,
-//                    fontFamily: 'Nunito',
-//                    fontWeight: FontWeight.bold),
-//              ),
-//              onPressed: () {
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => EscogerDirecciones(),
-//                  ),
-//                );
-//              },
-//              color: azulTema,
-//              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-//              shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(35)),
-//            ),
-//          ],
-//        ),
-//      ),
+            bottomSheet: Container(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'COSTO DE ENVÍO',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: grizSubtitulo,
+                  ),
+                ),
+                Text(
+                  '\$100.00',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito',
+                    color: azulTema,
+                  ),
+                ),
+              ],
+            ),
+            FlatButton(
+              child: Text(
+                'SIGUIENTE',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EscogerDirecciones(),
+                  ),
+                );
+              },
+              color: azulTema,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
