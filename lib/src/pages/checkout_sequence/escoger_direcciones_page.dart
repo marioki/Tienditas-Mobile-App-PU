@@ -1,6 +1,9 @@
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/checkout_sequence/editar_direccion.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EscogerDirecciones extends StatefulWidget {
   @override
@@ -61,17 +64,18 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.all(16),
-        child: ListView(
-          children: <Widget>[
-            _getDireccionCard(
-                context, 1, 'Mi Chantín', 'Entrega por las Cumbres'),
-            SizedBox(height: 4),
-            _getDireccionCard(
-                context, 2, 'Donde mi Novia', 'Entrega por las Cumbres'),
-          ],
-        ),
-      ),
+          margin: EdgeInsets.all(16),
+          child: ListView.builder(
+            itemCount: Provider.of<LoginState>(context)
+                .getTienditaUser()
+                .address
+                .length,
+            itemBuilder: (context, index) {
+              User user = Provider.of<LoginState>(context).getTienditaUser();
+              return _getDireccionCard(context, index, user.address[index].name,
+                  user.address[index].referencePoint);
+            },
+          )),
     );
   }
 
