@@ -106,7 +106,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       return Text(
-                        snapshot.data.toString(),
+                        '\$${snapshot.data.toString()}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Nunito',
