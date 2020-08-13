@@ -8,14 +8,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-class DeliveryOptionsProvider {
+class TotalDeliveryFee {
   List<StoreDeliveryInfo> listOfDeliveryOptions = [];
+  double totalFee = 0;
 
-  Future<List<StoreDeliveryInfo>> getStoreDeliveryOptions(
+  Future<double> getTotalFee(
       BuildContext context, List<String> storeTagList) async {
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
-    for(int i = 0; i <storeTagList.length; i++ ){
+    for (int i = 0; i < storeTagList.length; i++) {
       String storeTag = storeTagList[i];
       String url =
           'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store?store_tag_name=$storeTag';
@@ -27,20 +28,17 @@ class DeliveryOptionsProvider {
         print(response.body);
 
         final deliveryOptionsResponse =
-        deliveryOptionsResponseFromJson(response.body);
-        StoreDeliveryInfo currentDeliveryOption = deliveryOptionsResponse.body.store;
-
-        listOfDeliveryOptions.add(currentDeliveryOption);
+            deliveryOptionsResponseFromJson(response.body);
+        StoreDeliveryInfo currentDeliveryOption =
+            deliveryOptionsResponse.body.store;
+        totalFee += double.parse(currentDeliveryOption.deliveryOptions[0].fee);
       } else {
         print('response status code ${response.statusCode}');
         return null;
       }
-
-
     }
 
-
     print('Return de provider:');
-    return listOfDeliveryOptions;
+    return totalFee;
   }
 }

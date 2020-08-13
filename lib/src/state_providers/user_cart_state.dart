@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
   double totalPrice = 0;
+  double deliveryTotalCost = 0;
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
   List<String> allStoreTagsList = [];
@@ -81,11 +82,17 @@ class UserCartState with ChangeNotifier {
   }
 
   List<String> filterParentStoreTagList() {
+    storeTagsListFiltered.clear();
     allStoreTagsList.forEach((storeTag) {
       if (!storeTagsListFiltered.contains(storeTag)) {
         storeTagsListFiltered.add(storeTag);
       }
     });
     return storeTagsListFiltered;
+  }
+
+  addToDeliveryFee(double fee) async{
+     deliveryTotalCost +=  await fee;
+      notifyListeners();
   }
 }
