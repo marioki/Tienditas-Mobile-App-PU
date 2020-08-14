@@ -1,17 +1,17 @@
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/pages/checkout_sequence/editar_direccion.dart';
-import 'package:app_tiendita/src/pages/metodo_de_pago.dart';
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
+import 'package:app_tiendita/src/pages/resumen_de_compra_page.dart';
+import 'package:app_tiendita/src/providers/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EscogerDirecciones extends StatefulWidget {
+class MetodoDePago extends StatefulWidget {
   @override
-  _EscogerDireccionesState createState() => _EscogerDireccionesState();
+  _MetodoDePagoState createState() => _MetodoDePagoState();
 }
 
-class _EscogerDireccionesState extends State<EscogerDirecciones> {
+class _MetodoDePagoState extends State<MetodoDePago> {
   int groupRadio = 0;
 
   @override
@@ -23,17 +23,46 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         child: AppBar(
           elevation: 0,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35))),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(35),
+              bottomRight: Radius.circular(35),
+            ),
+          ),
           centerTitle: true,
           backgroundColor: azulTema,
           title: Text(
-            'Dirección',
+            'Metodo de Pago',
             style: appBarStyle,
           ),
         ),
       ),
+      body: FutureBuilder(
+          future: UserCreditCardProvider().getUserCreditCards(context,
+              Provider.of<LoginState>(context).getFireBaseUser().email),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              List<CreditCard> listCreditCard = snapshot.data;
+              return Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listCreditCard.length,
+                    itemBuilder: (context, index) {
+                      return _creditCardItem(context, index, 'Credit Card',
+                          listCreditCard[index].number);
+                    },
+                  ),
+                ],
+              );
+            } else {
+              return Container(
+                height: 400,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          }),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
         child: Row(
@@ -51,7 +80,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return MetodoDePago();
+                      return ResumenDeCompra();
                     }));
               },
               color: azulTema,
@@ -62,23 +91,10 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
           ],
         ),
       ),
-      body: Container(
-          margin: EdgeInsets.all(16),
-          child: ListView.builder(
-            itemCount: Provider.of<LoginState>(context)
-                .getTienditaUser()
-                .address
-                .length,
-            itemBuilder: (context, index) {
-              User user = Provider.of<LoginState>(context).getTienditaUser();
-              return _getDireccionCard(context, index, user.address[index].name,
-                  user.address[index].referencePoint);
-            },
-          )),
     );
   }
 
-  _getDireccionCard(
+  Widget _creditCardItem(
       BuildContext context, int index, String title, String subtitle) {
     return Card(
       clipBehavior: Clip.antiAlias,
