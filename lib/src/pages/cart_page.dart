@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
@@ -96,20 +97,26 @@ class _CartPageState extends State<CartPage> {
                                 style: cartButtonPagarStyle,
                               ),
                               onPressed: () {
-                                if (Provider.of<UserCartState>(context)
-                                        .cartProductList
-                                        .length >
-                                    0) {
-                                  print('Stores currently on the cart');
-                                  print(Provider.of<UserCartState>(context)
-                                      .allStoreTagsList);
-                                  print('Lista de Tiendas Filtradas');
-                                  print(Provider.of<UserCartState>(context)
-                                      .filterParentStoreTagList());
-                                  Navigator.pushNamed(
-                                      context, 'delivery_options');
+                                if (!Provider.of<LoginState>(context)
+                                    .isAnon()) {
+                                  if (Provider.of<UserCartState>(context)
+                                          .cartProductList
+                                          .length >
+                                      0) {
+                                    print('Stores currently on the cart');
+                                    print(Provider.of<UserCartState>(context)
+                                        .allStoreTagsList);
+                                    print('Lista de Tiendas Filtradas');
+                                    print(Provider.of<UserCartState>(context)
+                                        .filterParentStoreTagList());
+                                    Navigator.pushNamed(
+                                        context, 'delivery_options');
+                                  } else {
+                                    print('======Carrito_Vacio======');
+                                  }
                                 } else {
-                                  print('======Carrito_Vacio======');
+                                  print(
+                                      'User is Anon. Must sign in to acces checkout');
                                 }
                               },
                             )
