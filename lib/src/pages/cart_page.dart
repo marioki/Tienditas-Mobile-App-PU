@@ -1,5 +1,3 @@
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -116,7 +114,7 @@ class _CartPageState extends State<CartPage> {
                                   }
                                 } else {
                                   print(
-                                      'User is Anon. Must sign in to acces checkout');
+                                      'User is Anon. Must sign in to access checkout');
                                 }
                               },
                             )

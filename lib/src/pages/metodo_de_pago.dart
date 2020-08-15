@@ -48,7 +48,10 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                     shrinkWrap: true,
                     itemCount: listCreditCard.length,
                     itemBuilder: (context, index) {
-                      return _creditCardItem(context, index, 'Credit Card',
+                      return _creditCardItem(
+                          context,
+                          index,
+                          listCreditCard[index].type,
                           listCreditCard[index].number);
                     },
                   ),
@@ -80,8 +83,8 @@ class _MetodoDePagoState extends State<MetodoDePago> {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return ResumenDeCompra();
-                    }));
+                  return ResumenDeCompra();
+                }));
               },
               color: azulTema,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),

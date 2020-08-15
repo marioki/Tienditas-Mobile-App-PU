@@ -71,6 +71,7 @@ class User {
 class CreditCard {
   CreditCard({
     this.number,
+    this.type,
     this.cvv,
     this.id,
     this.expirationDate,
@@ -78,6 +79,7 @@ class CreditCard {
   });
 
   String number;
+  String type;
   String cvv;
   String id;
   String expirationDate;
@@ -85,6 +87,7 @@ class CreditCard {
 
   factory CreditCard.fromJson(Map<String, dynamic> json) => CreditCard(
     number: json["number"],
+    type: json["type"],
     cvv: json["cvv"],
     id: json["id"],
     expirationDate: json["expiration_date"],
@@ -93,6 +96,7 @@ class CreditCard {
 
   Map<String, dynamic> toJson() => {
     "number": number,
+    "type": type,
     "cvv": cvv,
     "id": id,
     "expiration_date": expirationDate,
