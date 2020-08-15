@@ -1,13 +1,17 @@
+import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
-  double totalPrice = 0;
-  double deliveryTotalCost = 0;
+  double totalPriceOfItems = 0;
+  double _deliveryTotalCost = 0;
+  double totalAmountOfBatch;
+
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
   List<String> allStoreTagsList = [];
   List<String> storeTagsListFiltered = [];
+  Batch currentBatch = Batch();
 
   void addProductoToCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
@@ -70,8 +74,8 @@ class UserCartState with ChangeNotifier {
     cartProductList.forEach((element) {
       _totalPrice += double.parse(element.finalPrice) * element.cartItemAmount;
     });
-    totalPrice = _totalPrice;
-    print(totalPrice.toStringAsFixed(2));
+    totalPriceOfItems = _totalPrice;
+    print(totalPriceOfItems.toStringAsFixed(2));
     notifyListeners();
   }
 
@@ -91,8 +95,32 @@ class UserCartState with ChangeNotifier {
     return storeTagsListFiltered;
   }
 
-  addToDeliveryFee(double fee) async{
-     deliveryTotalCost +=  await fee;
-      notifyListeners();
+  //Limpiar el Batch
+  clearCurrentBatch() {
+    currentBatch = Batch();
+  }
+
+  //Agregar una orden al batch
+  addOrderToCurrentBatch(Order order) {
+    currentBatch.orders.add(order);
+  }
+
+  //agregar informacion general del batch
+  addGeneralBatchInfo() {
+//    currentBatch.totalAmount = _totalAmount;
+//    currentBatch.creditCardId = _creditCardId;
+//    currentBatch.paymentMethod = _paymentMethod;
+//    currentBatch.userName = firebaseUser.displayName;
+//    currentBatch.userEmail = firebase.email;
+  }
+
+  calculateTotalAmountOfBatch() {
+    totalAmountOfBatch = totalPriceOfItems + _deliveryTotalCost;
+    print('Total Amount of Batch: $totalAmountOfBatch');
+    print('$totalPriceOfItems + $_deliveryTotalCost');
+  }
+
+  setDeliveryTotalCost(double deliveryAmount) {
+    _deliveryTotalCost = deliveryAmount;
   }
 }

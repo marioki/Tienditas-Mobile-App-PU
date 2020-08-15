@@ -81,6 +81,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                print('=====Iniciar Creación del Batch de Compra=====');
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return ResumenDeCompra();

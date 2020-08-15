@@ -105,6 +105,8 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
+                      Provider.of<UserCartState>(context)
+                          .setDeliveryTotalCost(snapshot.data);
                       return Text(
                         '\$${snapshot.data.toString()}',
                         style: TextStyle(
@@ -130,6 +132,8 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                Provider.of<UserCartState>(context)
+                    .calculateTotalAmountOfBatch();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
