@@ -22,6 +22,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool nextButtonIsEnabled = false;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: PreferredSize(
@@ -122,7 +123,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
               ],
             ),
-            FlatButton(
+            RaisedButton(
               child: Text(
                 'SIGUIENTE',
                 style: TextStyle(
@@ -134,6 +135,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
               onPressed: () {
                 Provider.of<UserCartState>(context)
                     .calculateTotalAmountOfBatch();
+                Provider.of<UserCartState>(context).generateOrderList();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

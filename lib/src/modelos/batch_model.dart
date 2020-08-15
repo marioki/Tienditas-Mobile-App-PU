@@ -55,15 +55,15 @@ class Order {
 
   String amount;
   String storeTagName;
-  List<Element> elements;
+  List<ProductItem> elements;
   UserAddress userAddress;
   DeliveryOption deliveryOption;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         amount: json["amount"],
         storeTagName: json["store_tag_name"],
-        elements: List<Element>.from(
-            json["elements"].map((x) => Element.fromJson(x))),
+        elements: List<ProductItem>.from(
+            json["elements"].map((x) => ProductItem.fromJson(x))),
         userAddress: UserAddress.fromJson(json["user_address"]),
         deliveryOption: DeliveryOption.fromJson(json["delivery_option"]),
       );
@@ -101,8 +101,8 @@ class DeliveryOption {
       };
 }
 
-class Element {
-  Element({
+class ProductItem {
+  ProductItem({
     this.itemId,
     this.quantity,
   });
@@ -110,7 +110,7 @@ class Element {
   String itemId;
   String quantity;
 
-  factory Element.fromJson(Map<String, dynamic> json) => Element(
+  factory ProductItem.fromJson(Map<String, dynamic> json) => ProductItem(
         itemId: json["item_id"],
         quantity: json["quantity"],
       );

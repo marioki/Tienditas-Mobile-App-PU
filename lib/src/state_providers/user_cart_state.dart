@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
@@ -11,6 +14,8 @@ class UserCartState with ChangeNotifier {
   List<String> cartItemsIds = [];
   List<String> allStoreTagsList = [];
   List<String> storeTagsListFiltered = [];
+
+  List<Order> _orderList = List<Order>();
   Batch currentBatch = Batch();
 
   void addProductoToCart(ProductElement productElement) {
@@ -107,7 +112,7 @@ class UserCartState with ChangeNotifier {
 
   //agregar informacion general del batch
   addGeneralBatchInfo() {
-//    currentBatch.totalAmount = _totalAmount;
+    currentBatch.totalAmount = totalAmountOfBatch.toString();
 //    currentBatch.creditCardId = _creditCardId;
 //    currentBatch.paymentMethod = _paymentMethod;
 //    currentBatch.userName = firebaseUser.displayName;
@@ -122,5 +127,36 @@ class UserCartState with ChangeNotifier {
 
   setDeliveryTotalCost(double deliveryAmount) {
     _deliveryTotalCost = deliveryAmount;
+  }
+
+  generateOrderList() {
+    _orderList.clear();
+    for (int orderIndex = 0;
+        orderIndex < storeTagsListFiltered.length;
+        orderIndex++) {
+      _orderList.add(Order(
+          storeTagName: storeTagsListFiltered[orderIndex],
+          elements: List<ProductItem>()));
+      for (int itemIndex = 0; itemIndex < cartProductList.length; itemIndex++) {
+        if (cartProductList[itemIndex].parentStoreTag ==
+            _orderList[orderIndex].storeTagName) {
+          _orderList[orderIndex].elements.add(ProductItem(
+              itemId: itemIndex.toString(),
+              quantity: cartProductList[itemIndex].quantity));
+        }
+      }
+    }
+
+    print('====Lista de Ordes Creada====');
+    _orderList.forEach((order) {
+      print(order.storeTagName);
+      print(order.elements.length);
+    });
+  }
+
+  addUserAddresToOrders(UserAddress address) {
+    _orderList.forEach((order) {
+      order.userAddress = address;
+    });
   }
 }
