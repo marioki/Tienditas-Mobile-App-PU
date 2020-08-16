@@ -141,8 +141,8 @@ class UserCartState with ChangeNotifier {
         if (cartProductList[itemIndex].parentStoreTag ==
             _orderList[orderIndex].storeTagName) {
           _orderList[orderIndex].elements.add(ProductItem(
-              itemId: itemIndex.toString(),
-              quantity: cartProductList[itemIndex].quantity));
+              itemId: cartProductList[itemIndex].itemId,
+              quantity: cartProductList[itemIndex].cartItemAmount.toString()));
         }
       }
     }
@@ -151,6 +151,8 @@ class UserCartState with ChangeNotifier {
     _orderList.forEach((order) {
       print(order.storeTagName);
       print(order.elements.length);
+      print('item id:  ${order.elements[0].itemId}');
+      print('item quantity: ${order.elements[1].quantity}');
     });
   }
 
