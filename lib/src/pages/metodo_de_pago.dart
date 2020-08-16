@@ -2,6 +2,7 @@ import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/pages/resumen_de_compra_page.dart';
 import 'package:app_tiendita/src/providers/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class MetodoDePago extends StatefulWidget {
 
 class _MetodoDePagoState extends State<MetodoDePago> {
   int groupRadio = 0;
+  List<CreditCard> listCreditCard = List();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
               Provider.of<LoginState>(context).getFireBaseUser().email),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
-              List<CreditCard> listCreditCard = snapshot.data;
+              listCreditCard = snapshot.data;
               return Column(
                 children: [
                   ListView.builder(
@@ -129,6 +131,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
           trailing: Radio(
             activeColor: Colors.green,
             onChanged: (value) {
+              setUserCreditCard();
               setState(() {
                 groupRadio = value;
                 print(groupRadio);
@@ -143,5 +146,11 @@ class _MetodoDePagoState extends State<MetodoDePago> {
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
     );
+  }
+
+  void setUserCreditCard() {
+    String selectedCardId = listCreditCard[groupRadio].id;
+    Provider.of<UserCartState>(context)
+        .addUserCreditCardToBatch(selectedCardId);
   }
 }

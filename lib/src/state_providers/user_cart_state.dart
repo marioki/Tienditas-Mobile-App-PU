@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
@@ -152,7 +149,7 @@ class UserCartState with ChangeNotifier {
       print(order.storeTagName);
       print(order.elements.length);
       print('item id:  ${order.elements[0].itemId}');
-      print('item quantity: ${order.elements[1].quantity}');
+//      print('item quantity: ${order.elements[0].quantity}');
     });
   }
 
@@ -164,5 +161,10 @@ class UserCartState with ChangeNotifier {
     _orderList.forEach((order) {
       print(order.userAddress.referencePoint);
     });
+  }
+
+  addUserCreditCardToBatch(creditCardId) {
+    currentBatch.creditCardId = creditCardId;
+    print('User selected: ${currentBatch.creditCardId}');
   }
 }
