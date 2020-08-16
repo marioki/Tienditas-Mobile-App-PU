@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class CreateTienditaUser {
