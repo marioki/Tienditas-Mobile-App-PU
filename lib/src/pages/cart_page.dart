@@ -21,20 +21,18 @@ class _CartPageState extends State<CartPage> {
         return _onBackPressed(context);
       },
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(35),
-                    bottomRight: Radius.circular(35))),
-            centerTitle: true,
-            backgroundColor: azulTema,
-            title: Text(
-              'Mi Carrito',
-              style: appBarStyle,
-            ),
+        appBar: AppBar(
+          toolbarHeight: 100,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35))),
+          centerTitle: true,
+          backgroundColor: azulTema,
+          title: Text(
+            'Mi Carrito',
+            style: appBarStyle,
           ),
         ),
         body: SafeArea(

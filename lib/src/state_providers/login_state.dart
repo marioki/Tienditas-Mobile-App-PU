@@ -119,7 +119,6 @@ class LoginState with ChangeNotifier {
             .createUserTienditas(_firebaseUser, currentUserIdToken);
         print(userCreateResponse.body);
         if (userCreateResponse.statusCode == 200) {
-
           _userTienditas = await UsuarioTienditasProvider()
               .getUserInfo(currentUserIdToken, user.email);
 
@@ -145,13 +144,52 @@ class LoginState with ChangeNotifier {
         final FirebaseUser user = authResult.user;
         final userIdToken = await user.getIdToken();
         currentUserIdToken = userIdToken.token;
-        print('signInWithFacebook succeeded');
-        _loggedIn = true;
-        notifyListeners();
+        print('signInWithFacebook succeeded; Sign In As: ${user.displayName}');
+        _firebaseUser = user;
+        _userTienditas = await UsuarioTienditasProvider()
+            .getUserInfo(currentUserIdToken, user.email);
+
+        if (_userTienditas != null) {
+          print('=================Detalles de Este Usuario ================');
+          print(_userTienditas.name);
+
+          _loggedIn = true;
+          _isAnon = false;
+
+          notifyListeners();
+        } else {
+          print('Tienes que crear el usuario aqui');
+          var userCreateResponse = await CreateTienditaUser()
+              .createUserTienditas(_firebaseUser, currentUserIdToken);
+          print(userCreateResponse.body);
+          if (userCreateResponse.statusCode == 200) {
+            _userTienditas = await UsuarioTienditasProvider()
+                .getUserInfo(currentUserIdToken, user.email);
+
+            _loggedIn = true;
+            _isAnon = false;
+            notifyListeners();
+          }
+        }
       } catch (e) {
         _loggedIn = false;
         notifyListeners();
       }
+    }
+  }
+
+  reloadUserInfo() async {
+    _userTienditas = await UsuarioTienditasProvider()
+        .getUserInfo(currentUserIdToken, _firebaseUser.email);
+
+    if (_userTienditas != null) {
+      print('=================Detalles de Este Usuario ================');
+      print(_userTienditas.name);
+
+      _loggedIn = true;
+      _isAnon = false;
+
+      notifyListeners();
     }
   }
 
