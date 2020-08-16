@@ -1,7 +1,9 @@
+import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/checkout_sequence/editar_direccion.dart';
 import 'package:app_tiendita/src/pages/metodo_de_pago.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,10 +51,11 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+                setUserAddres();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return MetodoDePago();
-                    }));
+                  return MetodoDePago();
+                }));
               },
               color: azulTema,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
@@ -123,5 +126,19 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
     );
+  }
+
+  void setUserAddres() {
+    Address address =
+        Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
+
+    UserAddress userAddress = UserAddress(
+        addressLine1: address.addressLine1,
+        country: address.country,
+        phoneNumber: address.phoneNumber,
+        province: address.province,
+        referencePoint: address.referencePoint);
+
+    Provider.of<UserCartState>(context).setUserAddresToOrders(userAddress);
   }
 }

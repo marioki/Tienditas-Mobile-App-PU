@@ -154,9 +154,13 @@ class UserCartState with ChangeNotifier {
     });
   }
 
-  addUserAddresToOrders(UserAddress address) {
+  setUserAddresToOrders(UserAddress address) {
     _orderList.forEach((order) {
       order.userAddress = address;
+    });
+
+    _orderList.forEach((order) {
+      print(order.userAddress.referencePoint);
     });
   }
 }
