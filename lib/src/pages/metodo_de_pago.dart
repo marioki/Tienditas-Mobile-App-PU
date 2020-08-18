@@ -18,6 +18,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
 
   @override
   Widget build(BuildContext context) {
+    bool nextButtonIsEnabled = false;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: PreferredSize(
@@ -38,36 +39,48 @@ class _MetodoDePagoState extends State<MetodoDePago> {
           ),
         ),
       ),
-      body: FutureBuilder(
-          future: UserCreditCardProvider().getUserCreditCards(context,
-              Provider.of<LoginState>(context).getFireBaseUser().email),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
-              listCreditCard = snapshot.data;
-              return Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: listCreditCard.length,
-                    itemBuilder: (context, index) {
-                      return _creditCardItem(
-                          context,
-                          index,
-                          listCreditCard[index].type,
-                          listCreditCard[index].number);
-                    },
+      body: Container(
+        margin: EdgeInsets.all(16),
+        child: FutureBuilder(
+            future: UserCreditCardProvider().getUserCreditCards(context,
+                Provider.of<LoginState>(context).getFireBaseUser().email),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                listCreditCard = snapshot.data;
+                nextButtonIsEnabled = true;
+
+                return Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listCreditCard.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < listCreditCard.length) {
+                          return _creditCardItem(
+                              context,
+                              index,
+                              listCreditCard[index].type,
+                              listCreditCard[index].number);
+                        } else {
+                          return FlatButton(
+                            onPressed: () {},
+                            child: Text('+ Agregar Tarjeta'),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return Container(
+                  height: 400,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-                ],
-              );
-            } else {
-              return Container(
-                height: 400,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          }),
+                );
+              }
+            }),
+      ),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
         child: Row(
@@ -83,11 +96,15 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                print('=====Iniciar Creación del Batch de Compra=====');
-                Navigator.push(context,
+                if (nextButtonIsEnabled) {
+                  print('=====Iniciar Creación del Batch de Compra=====');
+                  Navigator.push(
+                    context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return ResumenDeCompra();
-                }));
+                      return ResumenDeCompra();
+                    }),
+                  );
+                }
               },
               color: azulTema,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),

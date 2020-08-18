@@ -69,13 +69,28 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
           margin: EdgeInsets.all(16),
           child: ListView.builder(
             itemCount: Provider.of<LoginState>(context)
-                .getTienditaUser()
-                .address
-                .length,
+                    .getTienditaUser()
+                    .address
+                    .length +
+                1,
             itemBuilder: (context, index) {
-              User user = Provider.of<LoginState>(context).getTienditaUser();
-              return _getDireccionCard(context, index, user.address[index].name,
-                  user.address[index].referencePoint);
+              if (index <
+                  Provider.of<LoginState>(context)
+                      .getTienditaUser()
+                      .address
+                      .length) {
+                User user = Provider.of<LoginState>(context).getTienditaUser();
+                return _getDireccionCard(
+                    context,
+                    index,
+                    user.address[index].name,
+                    user.address[index].referencePoint);
+              } else {
+                return FlatButton(
+                  onPressed: () {},
+                  child: Text('+ Agregar Dirección'),
+                );
+              }
             },
           )),
     );
