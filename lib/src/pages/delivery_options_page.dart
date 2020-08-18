@@ -48,7 +48,8 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             List<StoreDeliveryInfo> listOfOptions = snapshot.data;
-            Provider.of<UserCartState>(context).setDeliveryInfoList(listOfOptions);
+            Provider.of<UserCartState>(context)
+                .setDeliveryInfoList(listOfOptions);
             return Column(
               children: [
                 ListView.separated(
@@ -109,6 +110,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     if (snapshot.hasData) {
                       Provider.of<UserCartState>(context)
                           .setDeliveryTotalCost(snapshot.data);
+                      nextButtonIsEnabled = true;
                       return Text(
                         '\$${snapshot.data.toString()}',
                         style: TextStyle(
@@ -134,15 +136,17 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                Provider.of<UserCartState>(context)
-                    .calculateTotalAmountOfBatch();
-                Provider.of<UserCartState>(context).generateOrderList();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EscogerDirecciones(),
-                  ),
-                );
+                if (nextButtonIsEnabled) {
+                  Provider.of<UserCartState>(context)
+                      .calculateTotalAmountOfBatch();
+                  Provider.of<UserCartState>(context).generateOrderList();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EscogerDirecciones(),
+                    ),
+                  );
+                }
               },
               color: azulTema,
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
