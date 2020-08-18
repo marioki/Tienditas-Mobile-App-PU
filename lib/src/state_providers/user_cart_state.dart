@@ -7,6 +7,7 @@ class UserCartState with ChangeNotifier {
   double totalPriceOfItems = 0;
   double _deliveryTotalCost = 0;
   double totalAmountOfBatch;
+  double impuesto = 0;
   List<StoreDeliveryInfo> _listOfDeliveryOptions;
 
   List<ProductElement> cartProductList = [];
@@ -106,23 +107,13 @@ class UserCartState with ChangeNotifier {
     currentBatch = Batch();
   }
 
-  //Agregar una orden al batch
-  addOrderToCurrentBatch(Order order) {
-    currentBatch.orders.add(order);
-  }
-
-  //agregar informacion general del batch
-  addGeneralBatchInfo() {
-    currentBatch.totalAmount = totalAmountOfBatch.toString();
-//    currentBatch.creditCardId = _creditCardId;
-//    currentBatch.paymentMethod = _paymentMethod;
-//    currentBatch.userName = firebaseUser.displayName;
-//    currentBatch.userEmail = firebase.email;
-  }
 
   calculateTotalAmountOfBatch() {
     totalAmountOfBatch = totalPriceOfItems + _deliveryTotalCost;
+    impuesto = totalPriceOfItems * 0.07;
+    print(impuesto);
     print('Total Amount of Batch: $totalAmountOfBatch');
+    totalAmountOfBatch += impuesto;
     print('$totalPriceOfItems + $_deliveryTotalCost');
   }
 

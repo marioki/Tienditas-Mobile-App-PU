@@ -78,8 +78,10 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                               order.storeTagName,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontFamily: 'Nunito'),
                             ),
                             ListView.builder(
                               primary: false,
@@ -90,7 +92,9 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                                   '- ${order.elements[index].productName}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Colors.grey[600]),
+                                  style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontFamily: 'Nunito'),
                                 );
                               },
                             ),
@@ -129,10 +133,14 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(deliveryInfoList[index]
-                              .deliveryOptions[0]
-                              .method),
-                          Text(deliveryInfoList[index].deliveryOptions[0].name),
+                          Text(
+                            deliveryInfoList[index].deliveryOptions[0].method,
+                            style: TextStyle(fontFamily: 'Nunito'),
+                          ),
+                          Text(
+                            deliveryInfoList[index].deliveryOptions[0].name,
+                            style: TextStyle(fontFamily: 'Nunito'),
+                          ),
                         ],
                       ),
                       Container(
@@ -154,6 +162,22 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Nunito'),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Impuesto 7%',
+                    style: TextStyle(fontFamily: 'Nunito'),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      '\$${Provider.of<UserCartState>(context).impuesto.toStringAsFixed(2)}',
+                      style: TextStyle(fontFamily: 'Nunito'),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
@@ -181,7 +205,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     ),
                   ),
                   Text(
-                    '\$${Provider.of<UserCartState>(context).totalAmountOfBatch}',
+                    '\$${Provider.of<UserCartState>(context).totalAmountOfBatch.toStringAsFixed(2)}',
                     style: TextStyle(
                         color: azulTema,
                         fontSize: 16,

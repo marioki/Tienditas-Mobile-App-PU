@@ -112,7 +112,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                           .setDeliveryTotalCost(snapshot.data);
                       nextButtonIsEnabled = true;
                       return Text(
-                        '\$${snapshot.data.toString()}',
+                        '\$${snapshot.data.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Nunito',
