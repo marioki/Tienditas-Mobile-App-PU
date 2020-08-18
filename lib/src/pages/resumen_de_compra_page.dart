@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -180,7 +181,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     ),
                   ),
                   Text(
-                    '\$50',
+                    '\$${Provider.of<UserCartState>(context).totalAmountOfBatch}',
                     style: TextStyle(
                         color: azulTema,
                         fontSize: 16,
