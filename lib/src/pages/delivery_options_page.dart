@@ -48,6 +48,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             List<StoreDeliveryInfo> listOfOptions = snapshot.data;
+            Provider.of<UserCartState>(context).setDeliveryInfoList(listOfOptions);
             return Column(
               children: [
                 ListView.separated(

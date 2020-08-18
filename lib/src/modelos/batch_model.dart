@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 Batch batchFromJson(String str) => Batch.fromJson(json.decode(str));
 
 String batchToJson(Batch data) => json.encode(data.toJson());
@@ -53,7 +55,7 @@ class Order {
     this.deliveryOption,
   });
 
-  String amount;
+  double amount;
   String storeTagName;
   List<ProductItem> elements;
   UserAddress userAddress;
@@ -102,13 +104,17 @@ class DeliveryOption {
 }
 
 class ProductItem {
-  ProductItem({
-    this.itemId,
-    this.quantity,
-  });
+  ProductItem(
+      {this.itemId,
+      this.quantity,
+      //Added for resmuen display of products
+      this.productName,
+      this.itemPrice});
 
   String itemId;
   String quantity;
+  String productName;
+  double itemPrice;
 
   factory ProductItem.fromJson(Map<String, dynamic> json) => ProductItem(
         itemId: json["item_id"],
