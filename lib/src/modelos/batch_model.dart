@@ -59,7 +59,7 @@ class Order {
   String storeTagName;
   List<ProductItem> elements;
   UserAddress userAddress;
-  DeliveryOption deliveryOption;
+  BatchOrderDeliveryOption deliveryOption;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         amount: json["amount"],
@@ -67,7 +67,7 @@ class Order {
         elements: List<ProductItem>.from(
             json["elements"].map((x) => ProductItem.fromJson(x))),
         userAddress: UserAddress.fromJson(json["user_address"]),
-        deliveryOption: DeliveryOption.fromJson(json["delivery_option"]),
+        deliveryOption: BatchOrderDeliveryOption.fromJson(json["delivery_option"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -79,8 +79,8 @@ class Order {
       };
 }
 
-class DeliveryOption {
-  DeliveryOption({
+class BatchOrderDeliveryOption {
+  BatchOrderDeliveryOption({
     this.name,
     this.fee,
     this.method,
@@ -90,7 +90,7 @@ class DeliveryOption {
   String fee;
   String method;
 
-  factory DeliveryOption.fromJson(Map<String, dynamic> json) => DeliveryOption(
+  factory BatchOrderDeliveryOption.fromJson(Map<String, dynamic> json) => BatchOrderDeliveryOption(
         name: json["name"],
         fee: json["fee"],
         method: json["method"],

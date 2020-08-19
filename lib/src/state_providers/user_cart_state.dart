@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
@@ -107,7 +108,6 @@ class UserCartState with ChangeNotifier {
     currentBatch = Batch();
   }
 
-
   calculateTotalAmountOfBatch() {
     totalAmountOfBatch = totalPriceOfItems + _deliveryTotalCost;
     impuesto = totalPriceOfItems * 0.07;
@@ -134,6 +134,12 @@ class UserCartState with ChangeNotifier {
           amount: 0,
         ),
       );
+      var deliveryInfo = _listOfDeliveryOptions[orderIndex].deliveryOptions[0];
+      _orderList[orderIndex].deliveryOption = BatchOrderDeliveryOption(
+          fee: deliveryInfo.fee,
+          method: deliveryInfo.method,
+          name: deliveryInfo.name);
+
       for (int itemIndex = 0; itemIndex < cartProductList.length; itemIndex++) {
         if (cartProductList[itemIndex].parentStoreTag ==
             _orderList[orderIndex].storeTagName) {
@@ -178,4 +184,5 @@ class UserCartState with ChangeNotifier {
   setDeliveryInfoList(List<StoreDeliveryInfo> listOfDeliveryInfo) {
     _listOfDeliveryOptions = listOfDeliveryInfo;
   }
+
 }
