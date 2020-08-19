@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class CreateTienditaUser {
-  Future<http.Response> createUserTienditas(FirebaseUser firebaseUser, String userIdToken) async {
+  Future<http.Response> createUserTienditas(
+      FirebaseUser firebaseUser, String userIdToken) async {
     String _url =
         'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/user';
     String userEmail = firebaseUser.email;
@@ -13,8 +14,7 @@ class CreateTienditaUser {
     var bodyData = {
       "user": {
         "email": userEmail,
-        "first_name": userName,
-        "last_name": 'apellidoAqui',
+        "name": userName,
         "address": [],
         "credit_card": [],
         "preferences": []

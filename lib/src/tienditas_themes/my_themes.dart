@@ -60,6 +60,24 @@ TextStyle storeTitleCardStyle = new TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 18);
 
+TextStyle userProfileNameCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: azulTema,
+    fontWeight: FontWeight.bold,
+    fontSize: 18);
+
+TextStyle userProfileEmailCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Color(0xFF919BAC),
+    fontWeight: FontWeight.bold,
+    fontSize: 11);
+
+TextStyle userProfilePhoneNumberCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Color(0xFF919BAC),
+    fontWeight: FontWeight.bold,
+    fontSize: 11);
+
 TextStyle storeDetailsCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
@@ -164,6 +182,13 @@ TextStyle cartButtonPagarStyle = new TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
   fontSize: 14,
+);
+
+TextStyle userProfileButtonEdit = new TextStyle(
+  fontFamily: 'Nunito',
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 8,
 );
 
 TextStyle cartTotalStyle = new TextStyle(
