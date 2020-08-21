@@ -81,34 +81,70 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-            Container(
-              width: 100,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.itemName,
-                    maxLines: 2,
-                    style: storeTitleCardStyle,
-                    overflow: TextOverflow.clip,
-                  ),
-                  SizedBox(height: 0),
-                  Text('', style: storeDetailsCardStyle),
-                  Text('Entrega Inmediata', style: storeDetailsCardStyle),
-                ],
-              ),
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  '\$${widget.finalPrice}',
-                  style: cartItemPrice,
+          ),
+          GestureDetector(
+            child: Icon(Icons.delete_outline),
+            onTap: () {
+              Provider.of<UserCartState>(context)
+                  .deleteProductFromCart(ProductElement(itemId: widget.itemId));
+            },
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '\$${widget.finalPrice}',
+                style: TextStyle(
+                  color: azulTema,
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
                 ),
-                SizedBox(
-                  height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 4,
+                  horizontal: 8,
+                ),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Icon(
+                        Icons.remove,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      onTap: () {
+                        Provider.of<UserCartState>(context)
+                            .subtractProductItemQuantity(widget.itemId);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      Provider.of<UserCartState>(context)
+                          .getItemAmountInCart(widget.itemId)
+                          .toString(),
+                    ),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      child: Icon(
+                        Icons.add,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      onTap: () {
+                        Provider.of<UserCartState>(context)
+                            .addProductItemQuantity(widget.itemId);
+                      },
+                    ),
+                  ],
                 ),
                 createCartCounter(widget.itemId),
                 FlatButton(
