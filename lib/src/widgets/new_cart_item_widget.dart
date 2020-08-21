@@ -39,45 +39,71 @@ class NewCartItemWidget extends StatefulWidget {
 class _NewCartItemWidgetState extends State<NewCartItemWidget> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
-    return Card(
-      margin: EdgeInsets.symmetric(
-        vertical: 8,
-      ),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(35),
-      ),
-      color: getColorFromHex(widget.colorHex),
-      //getColorFromHex(colorHex)
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 25,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: size.height * .051,
-                child: ClipOval(
-                  child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FadeInImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(widget.imageUrl),
-                        placeholder: AssetImage(
-                            'assets/images/tienditas_placeholder.png'),
-                      ),
+    final size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                      placeholder:
+                      AssetImage('assets/images/tienditas_placeholder.png'),
+                      image: NetworkImage(widget.imageUrl),
+                    )),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          widget.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: azulTema,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          '@StoreTag',
+                          style: TextStyle(
+                            color: azulTema,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          'Tipo de Entrega.',
+                          style: TextStyle(
+                            color: azulTema,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Nunito',
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -146,28 +172,10 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                     ),
                   ],
                 ),
-                createCartCounter(widget.itemId),
-                FlatButton(
-                  child: Icon(Icons.delete_forever),
-                  onPressed: () {
-                    Provider.of<UserCartState>(context).deleteProductFromCart(
-                      ProductElement(
-                        itemId: widget.itemId,
-                        itemName: widget.itemName,
-                        finalPrice: widget.finalPrice,
-                        imageUrl: widget.imageUrl,
-                        registeredDate: widget.registeredDate,
-                        quantity: widget.quantity,
-                        hexColor: widget.colorHex,
-                        parentStoreTag: widget.parentStoreTag,
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
