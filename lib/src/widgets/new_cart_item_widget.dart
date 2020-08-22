@@ -21,7 +21,8 @@ class NewCartItemWidget extends StatefulWidget {
 
   final String parentStoreTag;
 
-  const NewCartItemWidget({Key key,
+  const NewCartItemWidget({
+    Key key,
     this.quantity,
     this.itemName,
     this.purchaseType,
@@ -29,8 +30,9 @@ class NewCartItemWidget extends StatefulWidget {
     this.itemId,
     this.finalPrice,
     this.imageUrl,
-    this.colorHex, this.parentStoreTag,})
-      : super(key: key);
+    this.colorHex,
+    this.parentStoreTag,
+  }) : super(key: key);
 
   @override
   _NewCartItemWidgetState createState() => _NewCartItemWidgetState();
@@ -59,7 +61,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                       width: 100,
                       height: 100,
                       placeholder:
-                      AssetImage('assets/images/tienditas_placeholder.png'),
+                          AssetImage('assets/images/tienditas_placeholder.png'),
                       image: NetworkImage(widget.imageUrl),
                     )),
                 Expanded(
@@ -113,8 +115,18 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
           GestureDetector(
             child: Icon(Icons.delete_outline),
             onTap: () {
-              Provider.of<UserCartState>(context)
-                  .deleteProductFromCart(ProductElement(itemId: widget.itemId));
+              Provider.of<UserCartState>(context).deleteProductFromCart(
+                ProductElement(
+                  itemId: widget.itemId,
+                  itemName: widget.itemName,
+                  finalPrice: widget.finalPrice,
+                  imageUrl: widget.imageUrl,
+                  registeredDate: widget.registeredDate,
+                  quantity: widget.quantity,
+                  hexColor: widget.colorHex,
+                  parentStoreTag: widget.parentStoreTag,
+                ),
+              );
             },
           ),
           Column(

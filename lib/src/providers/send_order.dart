@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,31 +10,20 @@ class SendBatchOfOrders {
       FirebaseUser firebaseUser, String userIdToken, Batch currentBatch) async {
     String _url =
         'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/order';
-    String userEmail = firebaseUser.email;
-    String userName = firebaseUser.displayName;
-
+    //Final batch set info
     var _batchBody = currentBatch.toJson();
-
-    var bodyData = {
-      "user": {
-        "email": userEmail,
-        "first_name": userName,
-        "last_name": 'apellidoAqui',
-        "address": [],
-        "credit_card": [],
-        "preferences": []
-      }
-    };
-
-    String _body = jsonEncode(bodyData);
+    var jsonBody = jsonEncode(_batchBody);
+    print(_batchBody);
+    print(jsonBody);
 
     var response = await http.post(
       _url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': userIdToken
+      headers: {
+        HttpHeaders.authorizationHeader: userIdToken,
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: _batchBody,
+      body: jsonBody,
     );
     print(response.body);
 

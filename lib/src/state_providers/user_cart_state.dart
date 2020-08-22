@@ -1,7 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
@@ -123,15 +123,17 @@ class UserCartState with ChangeNotifier {
 
   generateOrderList() {
     _orderList.clear();
+//    double orderAmountCounter = 0;
 
     for (int orderIndex = 0;
         orderIndex < storeTagsListFiltered.length;
         orderIndex++) {
+      double orderAmountCounter = 0;
       _orderList.add(
         Order(
           storeTagName: storeTagsListFiltered[orderIndex],
           elements: List<ProductItem>(),
-          amount: 0,
+          amount: '',
         ),
       );
       var deliveryInfo = _listOfDeliveryOptions[orderIndex].deliveryOptions[0];
@@ -143,16 +145,21 @@ class UserCartState with ChangeNotifier {
       for (int itemIndex = 0; itemIndex < cartProductList.length; itemIndex++) {
         if (cartProductList[itemIndex].parentStoreTag ==
             _orderList[orderIndex].storeTagName) {
-          _orderList[orderIndex].elements.add(ProductItem(
-                itemId: cartProductList[itemIndex].itemId,
-                quantity: cartProductList[itemIndex].cartItemAmount.toString(),
-                productName: cartProductList[itemIndex].itemName,
-                itemPrice: double.parse(cartProductList[itemIndex].finalPrice),
-              ));
+          _orderList[orderIndex].elements.add(
+                ProductItem(
+                  itemId: cartProductList[itemIndex].itemId,
+                  quantity:
+                      cartProductList[itemIndex].cartItemAmount.toString(),
+                  productName: cartProductList[itemIndex].itemName,
+                  itemPrice:
+                      double.parse(cartProductList[itemIndex].finalPrice),
+                ),
+              );
         }
       }
       _orderList[orderIndex].elements.forEach((productItem) {
-        _orderList[orderIndex].amount += productItem.itemPrice;
+        orderAmountCounter += productItem.itemPrice;
+        _orderList[orderIndex].amount = orderAmountCounter.toStringAsFixed(2);
       });
     }
     currentBatch.orders = _orderList;
@@ -185,4 +192,20 @@ class UserCartState with ChangeNotifier {
     _listOfDeliveryOptions = listOfDeliveryInfo;
   }
 
+  setCurrentBatchTotalAmount() {
+    currentBatch.totalAmount = totalAmountOfBatch.toStringAsFixed(2);
+  }
+
+  setCurrentBatchPaymentMethod() {
+    currentBatch.paymentMethod = "tarjeta de crédito";
+  }
+
+  setCurrentBatchUserInfo(FirebaseUser firebaseUser) {
+    currentBatch.userName = firebaseUser.displayName;
+    currentBatch.userEmail = firebaseUser.email;
+  }
+
+  setCurrentBatchPhoneNumber() {
+    currentBatch.phoneNumber = '67868434';
+  }
 }

@@ -244,7 +244,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       Provider.of<LoginState>(context).currentUserIdToken;
                   final _batch =
                       Provider.of<UserCartState>(context).currentBatch;
-                  var postRequest = SendBatchOfOrders()
+                  SendBatchOfOrders()
                       .sendBatchOfOrders(firebaseUser, userTokenId, _batch);
                 },
                 color: azulTema,

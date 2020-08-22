@@ -20,6 +20,7 @@ class _CartPageState extends State<CartPage> {
         return _onBackPressed(context);
       },
       child: Scaffold(
+        backgroundColor: grisClaroTema,
         appBar: AppBar(
           toolbarHeight: 100,
           elevation: 0,

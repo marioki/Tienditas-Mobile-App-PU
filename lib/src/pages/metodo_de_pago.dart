@@ -97,6 +97,11 @@ class _MetodoDePagoState extends State<MetodoDePago> {
               ),
               onPressed: () {
                 if (nextButtonIsEnabled) {
+                  setUserCreditCard();
+                  setCurrentBatchTotalAmount();
+                  setCurrentBatchPaymentMethod();
+                  setCurrentBatchUserInfo();
+                  setCurrentBatchPhoneNumber();
                   print('=====Iniciar Creación del Batch de Compra=====');
                   Navigator.push(
                     context,
@@ -148,7 +153,6 @@ class _MetodoDePagoState extends State<MetodoDePago> {
           trailing: Radio(
             activeColor: Colors.green,
             onChanged: (value) {
-              setUserCreditCard();
               setState(() {
                 groupRadio = value;
                 print(groupRadio);
@@ -169,5 +173,22 @@ class _MetodoDePagoState extends State<MetodoDePago> {
     String selectedCardId = listCreditCard[groupRadio].id;
     Provider.of<UserCartState>(context)
         .addUserCreditCardToBatch(selectedCardId);
+  }
+
+  void setCurrentBatchTotalAmount() {
+    Provider.of<UserCartState>(context).setCurrentBatchTotalAmount();
+  }
+
+  void setCurrentBatchPaymentMethod() {
+    Provider.of<UserCartState>(context).setCurrentBatchPaymentMethod();
+  }
+
+  void setCurrentBatchUserInfo() {
+    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
+    Provider.of<UserCartState>(context).setCurrentBatchUserInfo(firebaseUser);
+  }
+
+  setCurrentBatchPhoneNumber() {
+    Provider.of<UserCartState>(context).setCurrentBatchPhoneNumber();
   }
 }
