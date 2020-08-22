@@ -83,38 +83,43 @@ class _MetodoDePagoState extends State<MetodoDePago> {
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            FlatButton(
-              child: Text(
-                'SIGUIENTE',
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.bold),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: FlatButton(
+                child: Text(
+                  'SIGUIENTE',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  if (nextButtonIsEnabled) {
+                    setUserCreditCard();
+                    setCurrentBatchTotalAmount();
+                    setCurrentBatchPaymentMethod();
+                    setCurrentBatchUserInfo();
+                    setCurrentBatchPhoneNumber();
+                    print('=====Iniciar Creación del Batch de Compra=====');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return ResumenDeCompra();
+                      }),
+                    );
+                  }
+                },
+                color: azulTema,
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
               ),
-              onPressed: () {
-                if (nextButtonIsEnabled) {
-                  setUserCreditCard();
-                  setCurrentBatchTotalAmount();
-                  setCurrentBatchPaymentMethod();
-                  setCurrentBatchUserInfo();
-                  setCurrentBatchPhoneNumber();
-                  print('=====Iniciar Creación del Batch de Compra=====');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return ResumenDeCompra();
-                    }),
-                  );
-                }
-              },
-              color: azulTema,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35)),
             ),
           ],
         ),

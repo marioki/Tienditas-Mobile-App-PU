@@ -86,8 +86,9 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -126,32 +127,35 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
               ],
             ),
-            RaisedButton(
-              child: Text(
-                'SIGUIENTE',
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.bold),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: RaisedButton(
+                child: Text(
+                  'SIGUIENTE',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  if (nextButtonIsEnabled) {
+                    Provider.of<UserCartState>(context)
+                        .calculateTotalAmountOfBatch();
+                    Provider.of<UserCartState>(context).generateOrderList();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EscogerDirecciones(),
+                      ),
+                    );
+                  }
+                },
+                color: azulTema,
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
               ),
-              onPressed: () {
-                if (nextButtonIsEnabled) {
-                  Provider.of<UserCartState>(context)
-                      .calculateTotalAmountOfBatch();
-                  Provider.of<UserCartState>(context).generateOrderList();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EscogerDirecciones(),
-                    ),
-                  );
-                }
-              },
-              color: azulTema,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35)),
             ),
           ],
         ),

@@ -38,29 +38,40 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FlatButton(
-              child: Text(
-                'SIGUIENTE',
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.bold),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                width: 50,
               ),
-              onPressed: () {
-                setUserAddres();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return MetodoDePago();
-                }));
-              },
-              color: azulTema,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35)),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: FlatButton(
+                child: Text(
+                  'SIGUIENTE',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  setUserAddres();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return MetodoDePago();
+                  }));
+                },
+                color: azulTema,
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
+              ),
             ),
           ],
         ),

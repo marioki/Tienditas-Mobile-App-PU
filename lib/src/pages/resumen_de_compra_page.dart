@@ -197,6 +197,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
       bottomSheet: Container(
         color: Colors.white,
         padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -258,6 +259,4 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
       ),
     );
   }
-
-  Widget resumenItemWidget(String storeName) {}
 }
