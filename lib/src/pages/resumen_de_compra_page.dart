@@ -33,7 +33,8 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          'Resumen',
+          'Resumen'
+              '',
           style: appBarStyle,
         ),
       ),
