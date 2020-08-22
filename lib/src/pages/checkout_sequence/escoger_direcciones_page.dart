@@ -20,26 +20,23 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: grisClaroTema,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35))),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Dirección',
-            style: appBarStyle,
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        toolbarHeight: 100,
+        backgroundColor: azulTema,
+        title: Text(
+          'Dirección',
+          style: appBarStyle,
         ),
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
         margin: EdgeInsets.symmetric(horizontal: 20),
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

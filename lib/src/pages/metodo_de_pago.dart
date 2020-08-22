@@ -21,22 +21,18 @@ class _MetodoDePagoState extends State<MetodoDePago> {
     bool nextButtonIsEnabled = false;
     return Scaffold(
       backgroundColor: grisClaroTema,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
+      appBar: AppBar(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(35),
-              bottomRight: Radius.circular(35),
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Metodo de Pago',
-            style: appBarStyle,
-          ),
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        toolbarHeight: 100,
+        backgroundColor: azulTema,
+        title: Text(
+          'Metodo de Pago',
+          style: appBarStyle,
         ),
       ),
       body: Container(

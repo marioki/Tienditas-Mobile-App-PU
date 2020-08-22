@@ -23,22 +23,18 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
     Batch batch = Provider.of<UserCartState>(context).currentBatch;
     return Scaffold(
       backgroundColor: grisClaroTema,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
+      appBar: AppBar(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(35),
-              bottomRight: Radius.circular(35),
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Resumen',
-            style: appBarStyle,
-          ),
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        toolbarHeight: 100,
+        backgroundColor: azulTema,
+        title: Text(
+          'Resumen',
+          style: appBarStyle,
         ),
       ),
       body: SingleChildScrollView(
