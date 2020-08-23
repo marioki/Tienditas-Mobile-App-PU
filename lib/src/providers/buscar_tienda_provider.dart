@@ -8,31 +8,25 @@ import 'package:provider/provider.dart';
 //Todo Usar URI constructor para tener nu solo tienditas provider para todos los calls
 
 class BuscarTienditasProvider {
-  Future<Tiendita> getTienditasByNameOrTag(BuildContext context, String userInput) async {
+  Future<Tiendita> getTienditasByNameOrTag(
+      BuildContext context, String userInput) async {
     String userSearchParam;
     String formattedUserInput;
 
-    if (userInput.isNotEmpty){
+    if (userInput.isNotEmpty) {
       if (userInput.startsWith('@')) {
         print('User Input: $userInput');
-        formattedUserInput = userInput.replaceFirst('@', '');
-        print('User Input modified: $formattedUserInput');
         userSearchParam = 'store_tag_name';
       } else {
         userSearchParam = 'store_name';
         formattedUserInput = userInput;
       }
-
-    }else{
+    } else {
       return null;
     }
 
-
-
-
-
     final String url =
-        'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store_name?$userSearchParam=$formattedUserInput';
+        'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store_name?$userSearchParam=$userInput';
 
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
