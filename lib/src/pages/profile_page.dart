@@ -66,7 +66,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildMyAddressBtn(),
                   _buildPaymentMethodBtn(),
                   _buildPaymentHistoryBtn(),
-                  _buildHelpBtn()
+                  _buildHelpBtn(),
+                  _buildLogoutBtn(),
+                  SizedBox(height: 100,)
                 ],
               ),
             ),
@@ -272,6 +274,52 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Text(
               'Ayuda',
+              style: TextStyle(
+                color: azulTema,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Nunito',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogoutBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          Provider.of<LoginState>(context).logout();
+          print("Logout");
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 16,
+            ),
+            _buildMenuBtn(
+              () => print('Login with Facebook'),
+              AssetImage(
+                'assets/images/icons/ayuda.png',
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              'Cerrar sesión',
               style: TextStyle(
                 color: azulTema,
                 letterSpacing: 1.5,
