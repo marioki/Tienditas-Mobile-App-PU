@@ -138,6 +138,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           if (snapshot.hasData) {
             myCategory = snapshot.data;
             return ListView.builder(
+              addAutomaticKeepAlives: true,
               scrollDirection: Axis.horizontal,
               itemCount: myCategory.body.category.length,
               itemBuilder: (BuildContext context, int index) {
@@ -179,8 +180,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 color: grisClaroTema,
                 borderRadius: BorderRadius.circular(32),
               ),
-              child: TextFormField(
-                onFieldSubmitted: (value) {
+              child: TextField(
+                onSubmitted: (value) {
                   if (value.length > 0) {
                     Navigator.pushNamed(context, 'search_for_store',
                         arguments: value.toLowerCase());
