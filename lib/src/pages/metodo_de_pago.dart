@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
+import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
 import 'package:app_tiendita/src/pages/resumen_de_compra_page.dart';
 import 'package:app_tiendita/src/providers/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -59,7 +60,16 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                               listCreditCard[index].number);
                         } else {
                           return FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return CrearNuevaTarjeta();
+                                  },
+                                ),
+                              );
+                            },
                             child: Text('+ Agregar Tarjeta'),
                           );
                         }
@@ -80,7 +90,6 @@ class _MetodoDePagoState extends State<MetodoDePago> {
       bottomSheet: Container(
         padding: EdgeInsets.all(16),
         margin: EdgeInsets.symmetric(horizontal: 20),
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[

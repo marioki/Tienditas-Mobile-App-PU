@@ -1,6 +1,6 @@
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/pages/checkout_sequence/escoger_direcciones_page.dart';
+import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
 import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';

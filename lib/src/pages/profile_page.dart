@@ -68,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildPaymentHistoryBtn(),
                   _buildHelpBtn(),
                   _buildLogoutBtn(),
-                  SizedBox(height: 100,)
+                  SizedBox(height: 100),
                 ],
               ),
             ),

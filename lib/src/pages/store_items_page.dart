@@ -22,18 +22,9 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Store args = ModalRoute
-        .of(context)
-        .settings
-        .arguments;
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final Store args = ModalRoute.of(context).settings.arguments;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.width;
 
     return Container(
       color: Color(0xFF5f58a1),
@@ -148,7 +139,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: FutureBuilder(
           future:
-          ProductProvider().getStoreProducts(args.storeTagName, context),
+              ProductProvider().getStoreProducts(args.storeTagName, context),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;
@@ -174,18 +165,18 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                 ),
                 itemBuilder: (context, index) {
                   return ProductItemCard(
-                      itemName: finalListProductos[index].itemName,
-                      itemId: finalListProductos[index].itemId,
-                      finalPrice: finalListProductos[index].finalPrice,
-                      itemSatus: finalListProductos[index].itemSatus,
-                      outstanding: finalListProductos[index].outstanding,
-                      purchaseType: finalListProductos[index].purchaseType,
-                      quantity: finalListProductos[index].quantity,
-                      registeredDate: finalListProductos[index].registeredDate,
-                      image: finalListProductos[index].imageUrl,
-                      hexColor: args.hexColor,
-                      imageUrl: finalListProductos[index].imageUrl,
-                      parentStoreTag: args.storeTagName, 
+                    itemName: finalListProductos[index].itemName,
+                    itemId: finalListProductos[index].itemId,
+                    finalPrice: finalListProductos[index].finalPrice,
+                    itemSatus: finalListProductos[index].itemSatus,
+                    outstanding: finalListProductos[index].outstanding,
+                    purchaseType: finalListProductos[index].purchaseType,
+                    quantity: finalListProductos[index].quantity,
+                    registeredDate: finalListProductos[index].registeredDate,
+                    image: finalListProductos[index].imageUrl,
+                    hexColor: args.hexColor,
+                    imageUrl: finalListProductos[index].imageUrl,
+                    parentStoreTag: args.storeTagName,
                   );
                 },
               );
@@ -226,9 +217,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide(
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           suffixIcon: Icon(Icons.search),
