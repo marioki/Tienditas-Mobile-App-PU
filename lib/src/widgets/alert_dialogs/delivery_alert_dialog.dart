@@ -1,7 +1,15 @@
+import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryAlertDialogWidget extends StatefulWidget {
+  final List<StoreDeliveryInfo> listOfOptions;
+  final int index;
+
+  const DeliveryAlertDialogWidget(
+      {Key key, @required this.listOfOptions, @required this.index})
+      : super(key: key);
+
   @override
   _DeliveryAlertDialogWidgetState createState() =>
       _DeliveryAlertDialogWidgetState();
@@ -37,145 +45,58 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
       content: Container(
         padding: EdgeInsets.all(16),
         width: 350,
-        child: ListView(
+        child: ListView.builder(
+          itemCount: widget.listOfOptions[widget.index].deliveryOptions.length,
+          itemBuilder: (context, index) {
+            return FlatButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                setState(() {
+                  radioGroup = index + 1;
+                });
+              },
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(widget.listOfOptions[widget.index]
+                              .deliveryOptions[index].method),
+                          Text(
+                            widget.listOfOptions[widget.index]
+                                .deliveryOptions[index].fee,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Text(widget.listOfOptions[widget.index]
+                        .deliveryOptions[index].fee),
+                  ),
+                  Radio(
+                    groupValue: radioGroup,
+                    value: index + 1,
+                    activeColor: Colors.green,
+                    onChanged: (int value) {
+                      print(value);
+                      setState(() {
+                        radioGroup = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
           shrinkWrap: true,
-          children: <Widget>[
-            FlatButton(
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                setState(() {
-                  radioGroup = 1;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Opcion #1'),
-                          Text(
-                            'Entrega por las cumbres, San Fransico',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text('\$2.00'),
-                  ),
-                  Radio(
-                    groupValue: radioGroup,
-                    value: 1,
-                    activeColor: Colors.green,
-                    onChanged: (int value) {
-                      print(value);
-                      setState(() {
-                        radioGroup = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Divider(thickness: 1.5),
-            FlatButton(
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                setState(() {
-                  radioGroup = 2;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Opcion #1'),
-                          Text(
-                            'Entrega por las cumbres, San Francisco',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text('\$2.00'),
-                  ),
-                  Radio(
-                    groupValue: radioGroup,
-                    value: 2,
-                    activeColor: Colors.green,
-                    onChanged: (int value) {
-                      print(value);
-                      setState(() {
-                        radioGroup = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Divider(thickness: 1.5),
-            FlatButton(
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                setState(() {
-                  radioGroup = 3;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Opcion #1'),
-                          Text(
-                            'Entrega por las cumbres, San Fransico',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text('\$2.00'),
-                  ),
-                  Radio(
-                    groupValue: radioGroup,
-                    value: 3,
-                    activeColor: Colors.green,
-                    onChanged: (int value) {
-                      print(value);
-                      setState(() {
-                        radioGroup = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Divider(thickness: 1.5),
-          ],
         ),
       ),
       actions: <Widget>[

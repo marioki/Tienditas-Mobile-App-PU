@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-DeliveryOptionsResponse deliveryOptionsResponseFromJson(String str) => DeliveryOptionsResponse.fromJson(json.decode(str));
+DeliveryOptionsResponse deliveryOptionsResponseFromJson(String str) =>
+    DeliveryOptionsResponse.fromJson(json.decode(str));
 
-String deliveryOptionsResponseToJson(DeliveryOptionsResponse data) => json.encode(data.toJson());
+String deliveryOptionsResponseToJson(DeliveryOptionsResponse data) =>
+    json.encode(data.toJson());
 
 class DeliveryOptionsResponse {
   DeliveryOptionsResponse({
@@ -17,15 +19,16 @@ class DeliveryOptionsResponse {
   int statusCode;
   Body body;
 
-  factory DeliveryOptionsResponse.fromJson(Map<String, dynamic> json) => DeliveryOptionsResponse(
-    statusCode: json["statusCode"],
-    body: Body.fromJson(json["body"]),
-  );
+  factory DeliveryOptionsResponse.fromJson(Map<String, dynamic> json) =>
+      DeliveryOptionsResponse(
+        statusCode: json["statusCode"],
+        body: Body.fromJson(json["body"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "body": body.toJson(),
-  };
+        "statusCode": statusCode,
+        "body": body.toJson(),
+      };
 }
 
 class Body {
@@ -36,12 +39,12 @@ class Body {
   StoreDeliveryInfo store;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-    store: StoreDeliveryInfo.fromJson(json["store"]),
-  );
+        store: StoreDeliveryInfo.fromJson(json["store"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "store": store.toJson(),
-  };
+        "store": store.toJson(),
+      };
 }
 
 class StoreDeliveryInfo {
@@ -65,27 +68,30 @@ class StoreDeliveryInfo {
   String description;
   String storeName;
 
-  factory StoreDeliveryInfo.fromJson(Map<String, dynamic> json) => StoreDeliveryInfo(
-    originalStoreName: json["original_store_name"],
-    storeTagName: json["store_tag_name"],
-    categoryName: json["category_name"],
-    deliveryOptions: List<DeliveryOption>.from(json["delivery_options"].map((x) => DeliveryOption.fromJson(x))),
-    iconUrl: json["icon_url"],
-    provinceName: json["province_name"],
-    description: json["description"],
-    storeName: json["store_name"],
-  );
+  factory StoreDeliveryInfo.fromJson(Map<String, dynamic> json) =>
+      StoreDeliveryInfo(
+        originalStoreName: json["original_store_name"],
+        storeTagName: json["store_tag_name"],
+        categoryName: json["category_name"],
+        deliveryOptions: List<DeliveryOption>.from(
+            json["delivery_options"].map((x) => DeliveryOption.fromJson(x))),
+        iconUrl: json["icon_url"],
+        provinceName: json["province_name"],
+        description: json["description"],
+        storeName: json["store_name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "original_store_name": originalStoreName,
-    "store_tag_name": storeTagName,
-    "category_name": categoryName,
-    "delivery_options": List<dynamic>.from(deliveryOptions.map((x) => x.toJson())),
-    "icon_url": iconUrl,
-    "province_name": provinceName,
-    "description": description,
-    "store_name": storeName,
-  };
+        "original_store_name": originalStoreName,
+        "store_tag_name": storeTagName,
+        "category_name": categoryName,
+        "delivery_options":
+            List<dynamic>.from(deliveryOptions.map((x) => x.toJson())),
+        "icon_url": iconUrl,
+        "province_name": provinceName,
+        "description": description,
+        "store_name": storeName,
+      };
 }
 
 class DeliveryOption {
@@ -100,14 +106,14 @@ class DeliveryOption {
   String fee;
 
   factory DeliveryOption.fromJson(Map<String, dynamic> json) => DeliveryOption(
-    method: json["method"],
-    name: json["name"],
-    fee: json["fee"],
-  );
+        method: json["method"],
+        name: json["name"],
+        fee: json["fee"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "method": method,
-    "name": name,
-    "fee": fee,
-  };
+        "method": method,
+        "name": name,
+        "fee": fee,
+      };
 }
