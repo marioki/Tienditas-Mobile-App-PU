@@ -1,5 +1,4 @@
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
 import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
@@ -59,6 +58,18 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                         StoreDeliveryInfo deliveryInfo = listOfOptions[index];
 
                         return ListTile(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return DeliveryAlertDialogWidget(
+                                  listOfOptions: listOfOptions,
+                                  index: index,
+                                );
+                              },
+                            );
+                          },
                           title: Text(deliveryInfo.storeName),
                           trailing: Text(deliveryInfo.deliveryOptions[0].fee),
                           subtitle:
@@ -158,50 +169,6 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget getDeliveryOptionsWidget(
-      BuildContext context, StoreDeliveryInfo storeDeliveryInfo) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: FlatButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) {
-              return DeliveryAlertDialogWidget();
-            },
-          );
-        },
-        child: ListTile(
-          title: Row(
-            children: <Widget>[
-              Text(storeDeliveryInfo.storeName),
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                storeDeliveryInfo.deliveryOptions[0].fee,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(width: 10),
-              Icon(Icons.more_horiz),
-            ],
-          ),
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-        ),
-      ),
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
     );
   }
 }

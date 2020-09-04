@@ -1,7 +1,12 @@
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/providers/crear_tarjeta_provider.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:credit_card/credit_card_model.dart';
 import 'package:credit_card/flutter_credit_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CrearNuevaTarjeta extends StatefulWidget {
   @override
@@ -14,6 +19,7 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
   var cardHolderName = '';
   var cvvCode = '';
   var isCvvFocused = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,30 +41,6 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
           style: appBarStyle,
         ),
       ),
-//      bottomSheet: Container(
-//        padding: EdgeInsets.all(16),
-//        child: Row(
-//          mainAxisAlignment: MainAxisAlignment.end,
-//          children: <Widget>[
-//            FlatButton(
-//              child: Text(
-//                'Guardar',
-//                style: TextStyle(
-//                    fontSize: 12,
-//                    color: Colors.white,
-//                    fontFamily: 'Nunito',
-//                    fontWeight: FontWeight.bold),
-//              ),
-//              onPressed: () {},
-//              color: azulTema,
-//              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-//              shape: RoundedRectangleBorder(
-//                borderRadius: BorderRadius.circular(35),
-//              ),
-//            ),
-//          ],
-//        ),
-//      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -88,7 +70,39 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
                 ],
               ),
             ),
-            SizedBox(height: 200),
+            SizedBox(height: 10),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'Guardar',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () async {
+                      if (!isLoading) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await sendNewCard();
+                      }
+                    },
+                    color: azulTema,
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -103,5 +117,30 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
       cvvCode = creditCardModel.cvvCode;
       isCvvFocused = creditCardModel.isCvvFocused;
     });
+  }
+
+  Future<void> sendNewCard() async {
+    CreditCard newCard = CreditCard(
+      holderName: cardHolderName,
+      cvv: cvvCode,
+      expirationDate: expiryDate,
+      number: cardNumber,
+    );
+    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
+    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    var response = await CreateNewCreditCard()
+        .sendNewCreditCard(firebaseUser, userTokenId, newCard);
+    if (response.statusCode == 200) {
+      ResponseTienditasApi responseTienditasApi =
+          responseFromJson(response.body);
+      if (responseTienditasApi.statusCode == 200) {
+        print(responseTienditasApi.body.message);
+        isLoading = false;
+        Navigator.of(context).pop();
+      } else {
+        print(responseTienditasApi.body.message);
+        isLoading = false;
+      }
+    }
   }
 }

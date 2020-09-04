@@ -1,7 +1,5 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
-import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
-import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/send_order.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
