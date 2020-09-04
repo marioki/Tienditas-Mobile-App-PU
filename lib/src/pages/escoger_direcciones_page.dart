@@ -1,6 +1,5 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'file:///C:/myProjects/mobile_app/lib/src/pages/editar_direccion.dart';
 import 'package:app_tiendita/src/pages/crear_nueva_direccion_page.dart';
 import 'package:app_tiendita/src/pages/metodo_de_pago.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
