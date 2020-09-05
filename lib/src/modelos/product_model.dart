@@ -18,14 +18,14 @@ class Product {
   Body body;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-    statusCode: json["statusCode"],
-    body: Body.fromJson(json["body"]),
-  );
+        statusCode: json["statusCode"],
+        body: Body.fromJson(json["body"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "body": body.toJson(),
-  };
+        "statusCode": statusCode,
+        "body": body.toJson(),
+      };
 }
 
 class Body {
@@ -36,12 +36,13 @@ class Body {
   List<ProductElement> products;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-    products: List<ProductElement>.from(json["products"].map((x) => ProductElement.fromJson(x))),
-  );
+        products: List<ProductElement>.from(
+            json["products"].map((x) => ProductElement.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "products": List<dynamic>.from(products.map((x) => x.toJson())),
-  };
+        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+      };
 }
 
 class ProductElement {
@@ -55,7 +56,8 @@ class ProductElement {
     this.finalPrice,
     this.itemSatus,
     this.imageUrl,
-    this.hexColor
+    this.hexColor,
+    this.parentStoreTag,
   });
 
   String quantity;
@@ -67,53 +69,48 @@ class ProductElement {
   String finalPrice;
   ItemSatus itemSatus;
   String imageUrl;
+
   //===Added Properties for cart page
   int cartItemAmount = 1;
+  String parentStoreTag;
   String hexColor;
 
-
   factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
-    quantity: json["quantity"],
-    itemName: json["item_name"],
-    purchaseType: purchaseTypeValues.map[json["purchase_type"]],
-    outstanding: outstandingValues.map[json["outstanding"]],
-    registeredDate: json["registered_date"],
-    itemId: json["item_id"],
-    finalPrice: json["final_price"],
-    itemSatus: itemSatusValues.map[json["item_satus"]],
-    imageUrl: json["image_url"],
-  );
+        quantity: json["quantity"],
+        itemName: json["item_name"],
+        purchaseType: purchaseTypeValues.map[json["purchase_type"]],
+        outstanding: outstandingValues.map[json["outstanding"]],
+        registeredDate: json["registered_date"],
+        itemId: json["item_id"],
+        finalPrice: json["final_price"],
+        itemSatus: itemSatusValues.map[json["item_satus"]],
+        imageUrl: json["image_url"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "quantity": quantity,
-    "item_name": itemName,
-    "purchase_type": purchaseTypeValues.reverse[purchaseType],
-    "outstanding": outstandingValues.reverse[outstanding],
-    "registered_date": registeredDate,
-    "item_id": itemId,
-    "final_price": finalPrice,
-    "item_satus": itemSatusValues.reverse[itemSatus],
-    "image_url": imageUrl,
-  };
+        "quantity": quantity,
+        "item_name": itemName,
+        "purchase_type": purchaseTypeValues.reverse[purchaseType],
+        "outstanding": outstandingValues.reverse[outstanding],
+        "registered_date": registeredDate,
+        "item_id": itemId,
+        "final_price": finalPrice,
+        "item_satus": itemSatusValues.reverse[itemSatus],
+        "image_url": imageUrl,
+      };
 }
 
 enum ItemSatus { VIGENTE }
 
-final itemSatusValues = EnumValues({
-  "VIGENTE": ItemSatus.VIGENTE
-});
+final itemSatusValues = EnumValues({"VIGENTE": ItemSatus.VIGENTE});
 
 enum Outstanding { FALSE }
 
-final outstandingValues = EnumValues({
-  "FALSE": Outstanding.FALSE
-});
+final outstandingValues = EnumValues({"FALSE": Outstanding.FALSE});
 
 enum PurchaseType { NORMAL }
 
-final purchaseTypeValues = EnumValues({
-  "NORMAL": PurchaseType.NORMAL
-});
+final purchaseTypeValues = EnumValues({"NORMAL": PurchaseType.NORMAL});
 
 class EnumValues<T> {
   Map<String, T> map;

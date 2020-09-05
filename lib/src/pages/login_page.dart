@@ -1,9 +1,7 @@
-import 'package:app_tiendita/src/pages/signup.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -205,7 +203,8 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Provider.of<LoginState>(context, listen: false).signInWithGoogle();
+        Provider.of<LoginState>(context, listen: false).signInWithGoogle();
+
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(

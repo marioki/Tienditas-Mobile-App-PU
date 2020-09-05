@@ -19,17 +19,20 @@ class NewCartItemWidget extends StatefulWidget {
   //ItemSatus itemSatus; //Todo definir tipo de variable
   final String imageUrl;
 
-  const NewCartItemWidget(
-      {Key key,
-      this.quantity,
-      this.itemName,
-      this.purchaseType,
-      this.registeredDate,
-      this.itemId,
-      this.finalPrice,
-      this.imageUrl,
-      this.colorHex})
-      : super(key: key);
+  final String parentStoreTag;
+
+  const NewCartItemWidget({
+    Key key,
+    this.quantity,
+    this.itemName,
+    this.purchaseType,
+    this.registeredDate,
+    this.itemId,
+    this.finalPrice,
+    this.imageUrl,
+    this.colorHex,
+    this.parentStoreTag,
+  }) : super(key: key);
 
   @override
   _NewCartItemWidgetState createState() => _NewCartItemWidgetState();
@@ -112,8 +115,18 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
           GestureDetector(
             child: Icon(Icons.delete_outline),
             onTap: () {
-              Provider.of<UserCartState>(context)
-                  .deleteProductFromCart(ProductElement(itemId: widget.itemId));
+              Provider.of<UserCartState>(context).deleteProductFromCart(
+                ProductElement(
+                  itemId: widget.itemId,
+                  itemName: widget.itemName,
+                  finalPrice: widget.finalPrice,
+                  imageUrl: widget.imageUrl,
+                  registeredDate: widget.registeredDate,
+                  quantity: widget.quantity,
+                  hexColor: widget.colorHex,
+                  parentStoreTag: widget.parentStoreTag,
+                ),
+              );
             },
           ),
           Column(

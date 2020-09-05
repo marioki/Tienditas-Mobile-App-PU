@@ -22,65 +22,13 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
     }
 
     Tiendita resultTiendita;
-    return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 98,
-            decoration: BoxDecoration(
-              color: azulTema,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 275,
-                  decoration: BoxDecoration(
-                    color: grisClaroTema,
-                    borderRadius: BorderRadius.circular(32),
-                  ),
-                  child: TextFormField(
-                    controller: TextEditingController(text: userInput),
-                    onFieldSubmitted: (_userInput) {
-                      if (_userInput.length > 0) {
-                        setState(() {
-                          inSearchPage = true;
-                          userInput = _userInput.toLowerCase();
-                        });
-                      }
-                    },
-                    textAlignVertical: TextAlignVertical.center,
-                    autofocus: false,
-                    enabled: true,
-                    cursorColor: Colors.black,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: new InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 11, top: 11, right: 15),
-                      hintText: 'Buscar Tienda',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Nunito',
-                        color: Colors.grey,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FutureBuilder(
+    return Container(
+      color: azulTema,
+      child: SafeArea(
+        bottom: false,
+        child: Scaffold(
+          appBar: getCustomAppBar(),
+          body: FutureBuilder(
             future: BuscarTienditasProvider()
                 .getTienditasByNameOrTag(context, userInput),
             builder: (
@@ -89,23 +37,35 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
             ) {
               if (snapshot.hasData) {
                 resultTiendita = snapshot.data;
-                return ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  shrinkWrap: true,
-                  itemCount: resultTiendita.body.stores.length,
-                  itemBuilder: (context, index) {
-                    return StoreCardWidget(
-                      name: resultTiendita.body.stores[index].storeName,
-                      handle: resultTiendita.body.stores[index].storeTagName,
-                      colorHex: resultTiendita.body.stores[index].hexColor,
-                      image: resultTiendita.body.stores[index].iconUrl,
-                      category: resultTiendita.body.stores[index].categoryName,
-                      followers: null,
-                      provinceName: resultTiendita.body.stores[index].provinceName,
-                      description: resultTiendita.body.stores[index].description,
-                      originalStoreName: resultTiendita.body.stores[index].originalStoreName,
-                    );
-                  },
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        shrinkWrap: true,
+                        itemCount: resultTiendita.body.stores.length,
+                        itemBuilder: (context, index) {
+                          return StoreCardWidget(
+                            name: resultTiendita.body.stores[index].storeName,
+                            handle:
+                                resultTiendita.body.stores[index].storeTagName,
+                            colorHex:
+                                resultTiendita.body.stores[index].hexColor,
+                            image: resultTiendita.body.stores[index].iconUrl,
+                            category:
+                                resultTiendita.body.stores[index].categoryName,
+                            followers: null,
+                            provinceName:
+                                resultTiendita.body.stores[index].provinceName,
+                            description:
+                                resultTiendita.body.stores[index].description,
+                            originalStoreName: resultTiendita
+                                .body.stores[index].originalStoreName,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 );
               } else {
                 return Center(
@@ -117,8 +77,68 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
               }
             },
           ),
-        ],
+        ),
       ),
-    ));
+    );
+  }
+
+  getCustomAppBar() {
+    return PreferredSize(
+      preferredSize: Size(double.infinity, 100),
+      child: Container(
+        height: 100,
+        decoration: BoxDecoration(
+          color: azulTema,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(35),
+            bottomRight: Radius.circular(35),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 275,
+              decoration: BoxDecoration(
+                color: grisClaroTema,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: TextFormField(
+                controller: TextEditingController(text: userInput),
+                onFieldSubmitted: (_userInput) {
+                  if (_userInput.length > 0) {
+                    setState(() {
+                      inSearchPage = true;
+                      userInput = _userInput.toLowerCase();
+                    });
+                  }
+                },
+                textAlignVertical: TextAlignVertical.center,
+                autofocus: false,
+                enabled: true,
+                cursorColor: azulTema,
+                keyboardType: TextInputType.emailAddress,
+                decoration: new InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Buscar Tienda',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Nunito',
+                    color: Colors.grey,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

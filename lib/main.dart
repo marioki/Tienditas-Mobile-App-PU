@@ -3,8 +3,6 @@ import 'package:app_tiendita/src/pages/categories_page.dart';
 import 'package:app_tiendita/src/pages/delivery_options_page.dart';
 import 'package:app_tiendita/src/pages/home_page.dart';
 import 'package:app_tiendita/src/pages/login_page.dart';
-import 'package:app_tiendita/src/pages/new_login_page.dart';
-import 'package:app_tiendita/src/pages/place_holder_page.dart';
 import 'package:app_tiendita/src/pages/profile_page.dart';
 import 'package:app_tiendita/src/pages/search_for_store_page.dart';
 import 'package:app_tiendita/src/pages/store_items_page.dart';
@@ -14,6 +12,8 @@ import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+
 void main() {
   runApp(MyApp());
 }
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //Todo Update Provider package
     return ChangeNotifierProvider<LoginState>(
       builder: (BuildContext context) => LoginState(),
       child: ChangeNotifierProvider(
@@ -42,7 +43,6 @@ class MyApp extends StatelessWidget {
             'store_items_page': (BuildContext context) => StoreItemsPage(),
             'categories_page': (BuildContext context) => CategoriesPage(),
             'login_page': (BuildContext context) => LoginPage(),
-            'place_holder_page': (BuildContext context) => PlaceHolderPage(),
             'stores_by_category': (BuildContext context) => StoresByCategory(),
             'search_for_store': (BuildContext context) => SearchForStorePage(),
             'delivery_options': (BuildContext context) => DeliveryOptionsPage(),

@@ -1,81 +1,144 @@
+import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
+import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
+import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
+import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/widgets/alert_dialogs/delivery_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DeliveryOptionsPage extends StatelessWidget {
+class DeliveryOptionsPage extends StatefulWidget {
+  @override
+  _DeliveryOptionsPageState createState() => _DeliveryOptionsPageState();
+}
+
+class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool nextButtonIsEnabled = false;
     return Scaffold(
-        backgroundColor: grisClaroTema,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(35),
-                    bottomRight: Radius.circular(35))),
-            centerTitle: true,
-            backgroundColor: azulTema,
-            title: Text(
-              'Delivery',
-              style: appBarStyle,
-            ),
-          ),
+      backgroundColor: grisClaroTema,
+      appBar: AppBar(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        toolbarHeight: 100,
+        backgroundColor: azulTema,
+        title: Text(
+          'Delivery',
+          style: appBarStyle,
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 8,
-              width: double.infinity,
-            ),
-            Text(
-              'Escoge la opción de envío para tus pedidos...',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.clip,
-            ),
-            SizedBox(
-              height: 8,
-              width: double.infinity,
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                getDeliveryOptionsWidget(),
-                getDeliveryOptionsWidget(),
-                getDeliveryOptionsWidget(),
+      ),
+      body: FutureBuilder(
+        //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
+        future: DeliveryOptionsProvider().getStoreDeliveryOptions(context,
+            Provider.of<UserCartState>(context).filterParentStoreTagList()),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            List<StoreDeliveryInfo> listOfOptions = snapshot.data;
+            Provider.of<UserCartState>(context)
+                .setDeliveryInfoList(listOfOptions);
+            return Column(
+              children: [
+                ListView.separated(
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: listOfOptions.length + 1,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      if (index < listOfOptions.length) {
+                        StoreDeliveryInfo deliveryInfo = listOfOptions[index];
+
+                        return ListTile(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return DeliveryAlertDialogWidget(
+                                  listOfOptions: listOfOptions,
+                                  index: index,
+                                );
+                              },
+                            );
+                          },
+                          title: Text(deliveryInfo.storeName),
+                          trailing: Text(deliveryInfo.deliveryOptions[0].fee),
+                          subtitle:
+                              Text(deliveryInfo.deliveryOptions[0].method),
+                        );
+                      } else {
+                        return SizedBox(
+                          height: 100,
+                        );
+                      }
+                    }),
               ],
-            )
-          ],
-        ),
-        bottomSheet: Container(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'COSTO DE ENVÍO',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: grizSubtitulo,
-                    ),
-                  ),
-                  Text(
-                    '\$100.00',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Nunito',
-                      color: azulTema,
-                    ),
-                  ),
-                ],
+            );
+          } else {
+            return Container(
+              height: 400,
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
-              FlatButton(
+            );
+          }
+        },
+      ),
+      bottomSheet: Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'COSTO DE ENVÍO',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: grizSubtitulo,
+                  ),
+                ),
+                FutureBuilder(
+                  future: TotalDeliveryFee().getTotalFee(
+                      context,
+                      Provider.of<UserCartState>(context)
+                          .filterParentStoreTagList()),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      Provider.of<UserCartState>(context)
+                          .setDeliveryTotalCost(snapshot.data);
+                      nextButtonIsEnabled = true;
+                      return Text(
+                        '\$${snapshot.data.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Nunito',
+                          color: azulTema,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: RaisedButton(
                 child: Text(
                   'SIGUIENTE',
                   style: TextStyle(
@@ -84,49 +147,28 @@ class DeliveryOptionsPage extends StatelessWidget {
                       fontFamily: 'Nunito',
                       fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (nextButtonIsEnabled) {
+                    Provider.of<UserCartState>(context)
+                        .calculateTotalAmountOfBatch();
+                    Provider.of<UserCartState>(context).generateOrderList();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EscogerDirecciones(),
+                      ),
+                    );
+                  }
+                },
                 color: azulTema,
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35)),
               ),
-            ],
-          ),
-        ));
-  }
-
-  Widget getDeliveryOptionsWidget() {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: FlatButton(
-        onPressed: () {  },
-        child: ListTile(
-          title: Row(
-            children: <Widget>[
-              Text('Pedido a My Loop Bands'),
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                '\$2.50',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(width: 10),
-              Icon(Icons.more_horiz),
-            ],
-          ),
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+            ),
+          ],
         ),
       ),
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
     );
   }
 }

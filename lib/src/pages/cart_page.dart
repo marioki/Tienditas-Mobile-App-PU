@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
@@ -20,20 +21,18 @@ class _CartPageState extends State<CartPage> {
       },
       child: Scaffold(
         backgroundColor: grisClaroTema,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(35),
-                    bottomRight: Radius.circular(35))),
-            centerTitle: true,
-            backgroundColor: azulTema,
-            title: Text(
-              'Mi Carrito',
-              style: appBarStyle,
-            ),
+        appBar: AppBar(
+          toolbarHeight: 100,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35))),
+          centerTitle: true,
+          backgroundColor: azulTema,
+          title: Text(
+            'Mi Carrito',
+            style: appBarStyle,
           ),
         ),
         body: SafeArea(
@@ -75,7 +74,7 @@ class _CartPageState extends State<CartPage> {
                                   style: cartTotalStyle,
                                 ),
                                 Text(
-                                  '\$${Provider.of<UserCartState>(context).totalPrice.toStringAsFixed(2)}',
+                                  '\$${Provider.of<UserCartState>(context).totalPriceOfItems.toStringAsFixed(2)}',
                                   style: cartTotalPriceStyle,
                                 ),
                               ],
@@ -95,8 +94,27 @@ class _CartPageState extends State<CartPage> {
                                 style: cartButtonPagarStyle,
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(
-                                    context, 'delivery_options');
+                                if (!Provider.of<LoginState>(context)
+                                    .isAnon()) {
+                                  if (Provider.of<UserCartState>(context)
+                                          .cartProductList
+                                          .length >
+                                      0) {
+                                    print('Stores currently on the cart');
+                                    print(Provider.of<UserCartState>(context)
+                                        .allStoreTagsList);
+                                    print('Lista de Tiendas Filtradas');
+                                    print(Provider.of<UserCartState>(context)
+                                        .filterParentStoreTagList());
+                                    Navigator.pushNamed(
+                                        context, 'delivery_options');
+                                  } else {
+                                    print('======Carrito_Vacio======');
+                                  }
+                                } else {
+                                  print(
+                                      'User is Anon. Must sign in to access checkout');
+                                }
                               },
                             )
                           ],
@@ -127,34 +145,34 @@ class _CartPageState extends State<CartPage> {
                                   .cartItemsIds
                                   .length -
                               1) {
-                        return Container(
-                          padding: EdgeInsets.all(0),
-                          margin: EdgeInsets.all(0),
-                          child: Column(
-                            children: <Widget>[
-                              NewCartItemWidget(
-                                itemId: Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .itemId,
-                                itemName: Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .itemName,
-                                imageUrl: Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .imageUrl,
-                                finalPrice: Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .finalPrice,
-                                colorHex: Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .hexColor,
-                              ),
-                              SizedBox(
-                                //Todo Change to media query when store card uses media query
-                                height: 100,
-                              ),
-                            ],
-                          ),
+                        return Column(
+                          children: <Widget>[
+                            NewCartItemWidget(
+                              itemId: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .itemId,
+                              itemName: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .itemName,
+                              imageUrl: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .imageUrl,
+                              finalPrice: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .finalPrice,
+                              colorHex: Provider.of<UserCartState>(context)
+                                  .cartProductList[index]
+                                  .hexColor,
+                              parentStoreTag:
+                                  Provider.of<UserCartState>(context)
+                                      .cartProductList[index]
+                                      .parentStoreTag,
+                            ),
+                            SizedBox(
+                              //Todo Change to media query when store card uses media query
+                              height: 100,
+                            ),
+                          ],
                         );
                       }
 
@@ -175,6 +193,9 @@ class _CartPageState extends State<CartPage> {
                         colorHex: Provider.of<UserCartState>(context)
                             .cartProductList[index]
                             .hexColor,
+                        parentStoreTag: Provider.of<UserCartState>(context)
+                            .cartProductList[index]
+                            .parentStoreTag,
                       );
                     },
                   ),

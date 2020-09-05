@@ -17,21 +17,24 @@ class ProductItemCard extends StatelessWidget {
   final ItemSatus itemSatus;
   final String imageUrl;
   final String hexColor;
+  final String parentStoreTag;
 
-  const ProductItemCard(
-      {Key key,
-      @required this.quantity,
-      @required this.itemName,
-      @required this.purchaseType,
-      @required this.outstanding,
-      @required this.registeredDate,
-      @required this.itemId,
-      @required this.finalPrice,
-      @required this.itemSatus,
-      @required this.imageUrl,
-      @required this.hexColor,
-      this.image})
-      : super(key: key);
+//todo Esto puede ser reemplazado por un atributo de tipo productElement
+  const ProductItemCard({
+    Key key,
+    @required this.quantity,
+    @required this.itemName,
+    @required this.purchaseType,
+    @required this.outstanding,
+    @required this.registeredDate,
+    @required this.itemId,
+    @required this.finalPrice,
+    @required this.itemSatus,
+    @required this.imageUrl,
+    @required this.hexColor,
+    @required this.parentStoreTag,
+    this.image,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,8 @@ class ProductItemCard extends StatelessWidget {
               child: FadeInImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(image),
-                placeholder: AssetImage('assets/images/tienditas_placeholder.png'),
+                placeholder:
+                    AssetImage('assets/images/tienditas_placeholder.png'),
               ),
             ),
           ),
@@ -92,17 +96,19 @@ class ProductItemCard extends StatelessWidget {
               ),
               color: getColorFromHex(hexColor),
               onPressed: () {
-                Provider.of<UserCartState>(context)
-                    .addProductoToCart(ProductElement(
-                  itemId: itemId,
-                  itemName: itemName,
-                  finalPrice: finalPrice,
-                  imageUrl: imageUrl,
-                  purchaseType: purchaseType,
-                  registeredDate: registeredDate,
-                  quantity: quantity,
-                  hexColor: hexColor,
-                ));
+                Provider.of<UserCartState>(context).addProductoToCart(
+                  ProductElement(
+                    itemId: itemId,
+                    itemName: itemName,
+                    finalPrice: finalPrice,
+                    imageUrl: imageUrl,
+                    purchaseType: purchaseType,
+                    registeredDate: registeredDate,
+                    quantity: quantity,
+                    hexColor: hexColor,
+                    parentStoreTag: parentStoreTag,
+                  ),
+                );
                 final snackBar = SnackBar(
                   duration: Duration(milliseconds: 300),
                   content: Text('Al carrito!'),
