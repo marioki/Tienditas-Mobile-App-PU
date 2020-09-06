@@ -32,7 +32,9 @@ class _ProfilePageState extends State<ProfilePage> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35))),
+                bottomRight: Radius.circular(35)
+            ),
+        ),
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: azulTema,
