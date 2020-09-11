@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/providers/create_user.dart';
-import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
+import 'package:app_tiendita/src/providers/user/create_user.dart';
+import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

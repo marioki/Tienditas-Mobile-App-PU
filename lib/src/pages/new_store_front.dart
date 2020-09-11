@@ -1,7 +1,7 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
-import 'package:app_tiendita/src/providers/tiendita_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
@@ -115,7 +115,7 @@ class _NewStoreFrontState extends State<NewStoreFront> {
   getTiendasListViewBuilder() {
     print('LLamada del metodo');
     return FutureBuilder(
-      future: TienditasProvider().getAllTienditas(context),
+      future: StoreProvider().getAllTienditas(context),
       builder: (
         BuildContext context,
         snapshot,

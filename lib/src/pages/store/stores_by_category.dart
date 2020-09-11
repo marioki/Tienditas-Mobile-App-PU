@@ -1,8 +1,7 @@
 import 'dart:ui';
-
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/tiendita_model.dart';
-import 'package:app_tiendita/src/providers/tiendas_por_categoria_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/capitalize.dart';
 import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
@@ -74,8 +73,7 @@ class StoresByCategory extends StatelessWidget {
 //          ),
           SearchBarWidget(),
           FutureBuilder(
-            future: TienditasPorCategoriaProvider()
-                .getTienditasPorCategoria(args.categoryName, context),
+            future: StoreProvider().getTienditasPorCategoria(args.categoryName, context),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 print(snapshot.data);

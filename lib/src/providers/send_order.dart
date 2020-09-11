@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class SendBatchOfOrders {
   Future<http.Response> sendBatchOfOrders(
       FirebaseUser firebaseUser, String userIdToken, Batch currentBatch) async {
-    String _url =
-        'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/order';
+    String _url = '$baseApiUrl/api/v1/order';
     //Final batch set info
     var _batchBody = currentBatch.toJson();
     var jsonBody = jsonEncode(_batchBody);
