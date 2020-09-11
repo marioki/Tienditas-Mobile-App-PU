@@ -44,44 +44,45 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
             Provider.of<UserCartState>(context).filterParentStoreTagList()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            List<StoreDeliveryInfo> listOfOptions = snapshot.data;
+            List<StoreDeliveryInfo> listOfStores = snapshot.data;
             Provider.of<UserCartState>(context)
-                .setDeliveryInfoList(listOfOptions);
-            return Column(
-              children: [
-                ListView.separated(
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: listOfOptions.length + 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      if (index < listOfOptions.length) {
-                        StoreDeliveryInfo deliveryInfo = listOfOptions[index];
+                .setDeliveryInfoList(listOfStores);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: listOfStores.length + 1,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        if (index < listOfStores.length) {
+                          StoreDeliveryInfo deliveryInfo = listOfStores[index];
 
-                        return ListTile(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (context) {
-                                return DeliveryAlertDialogWidget(
-                                  listOfOptions: listOfOptions,
-                                  index: index,
-                                );
-                              },
-                            );
-                          },
-                          title: Text(deliveryInfo.storeName),
-                          trailing: Text(deliveryInfo.deliveryOptions[0].fee),
-                          subtitle:
-                              Text(deliveryInfo.deliveryOptions[0].method),
-                        );
-                      } else {
-                        return SizedBox(
-                          height: 100,
-                        );
-                      }
-                    }),
-              ],
+                          return ListTile(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) {
+                                  return DeliveryAlertDialogWidget(
+                                    listOfOptions: listOfStores,
+                                    index: index,
+                                  );
+                                },
+                              );
+                            },
+                            title: Text(deliveryInfo.storeName),
+                            subtitle: getDeliveryOptionsRadioGruop(deliveryInfo),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: 100,
+                          );
+                        }
+                      }),
+                ],
+              ),
             );
           } else {
             return Container(
@@ -169,6 +170,60 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
           ],
         ),
       ),
+    );
+  }
+
+  getDeliveryOptionsRadioGruop(StoreDeliveryInfo storeDeliveryInfo) {
+    int radioGroup;
+    return ListView.builder(
+      itemCount: storeDeliveryInfo.deliveryOptions.length,
+      itemBuilder: (context, index) {
+        return FlatButton(
+          padding: EdgeInsets.all(0),
+          onPressed: () {
+            setState(() {
+              radioGroup = index + 1;
+            });
+          },
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(storeDeliveryInfo.deliveryOptions[index].method),
+                      Text(
+                        storeDeliveryInfo.deliveryOptions[index].fee,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Text(storeDeliveryInfo.deliveryOptions[index].fee),
+              ),
+              Radio(
+                groupValue: radioGroup,
+                value: index + 1,
+                activeColor: Colors.green,
+                onChanged: (int value) {
+                  print(value);
+                  setState(() {
+                    radioGroup = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+      shrinkWrap: true,
     );
   }
 }
