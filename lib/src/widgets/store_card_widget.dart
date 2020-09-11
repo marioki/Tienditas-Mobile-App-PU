@@ -1,4 +1,4 @@
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';

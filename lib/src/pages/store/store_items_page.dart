@@ -1,5 +1,5 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';

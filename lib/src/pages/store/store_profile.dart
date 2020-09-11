@@ -1,4 +1,5 @@
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/store_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -16,9 +17,7 @@ class _StoreProfileState extends State<StoreProfile> {
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
-    print("en la vista nueva");
-    print(userInfo.stores);
-    Tiendita resultTiendita;
+    StoreResult resultTiendita;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,23 +38,69 @@ class _StoreProfileState extends State<StoreProfile> {
       body: FutureBuilder(
           future: StoreProvider().getStoreInfo(context, userInfo.stores[0]),
           builder: (BuildContext context, snapshot) {
-            print("El false ${snapshot.hasData}");
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;
-              return Column(
-                children: <Widget>[
-                  StoreCardWidget(
-                    name: resultTiendita.body.store.storeName,
-                    handle: resultTiendita.body.store.storeTagName,
-                    colorHex: resultTiendita.body.store.hexColor,
-                    image: resultTiendita.body.store.iconUrl,
-                    category: resultTiendita.body.store.categoryName,
-                    followers: null,
-                    provinceName: resultTiendita.body.store.provinceName,
-                    description: resultTiendita.body.store.description,
-                    originalStoreName: resultTiendita.body.store.originalStoreName,
-                  ),
-                ],
+              return Container(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                child: Column(
+                  children: <Widget>[
+                    StoreCardWidget(
+                      name: resultTiendita.body.store.storeName,
+                      handle: resultTiendita.body.store.storeTagName,
+                      colorHex: resultTiendita.body.store.hexColor,
+                      image: resultTiendita.body.store.iconUrl,
+                      category: resultTiendita.body.store.categoryName,
+                      followers: null,
+                      provinceName: resultTiendita.body.store.provinceName,
+                      description: resultTiendita.body.store.description,
+                      originalStoreName: resultTiendita.body.store.originalStoreName,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        StoreCard(
+                          amount: resultTiendita.body.store.pendingBalance,
+                          description: "Saldo Retenido",
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        StoreCard(
+                          amount: resultTiendita.body.store.balance,
+                          description: "Saldo Disponible",
+                        ),
+                      ],
+                    ),
+                    ActionButton(
+                      iconName: "camion",
+                      description: "Pedidos",
+                      onPressed: () {
+                        print("funciona");
+                      },
+                    ),
+                    ActionButton(
+                      iconName: "my_products",
+                      description: "Mis Productos",
+                      onPressed: () {
+                        print("funciona");
+                      },
+                    ),
+                    ActionButton(
+                      iconName: "analytics",
+                      description: "Analíticas",
+                      onPressed: () {
+                        print("funciona");
+                      }
+                    ),
+                    ActionButton(
+                      iconName: "camion",
+                      description: "Métodos de Envíos",
+                      onPressed: () {
+                        print("funciona");
+                      },
+                    ),
+                  ],
+                ),
               );
             } else {
               return Container(
@@ -66,6 +111,104 @@ class _StoreProfileState extends State<StoreProfile> {
               );
             }
           }
+      ),
+    );
+  }
+}
+
+class StoreCard extends StatelessWidget {
+  StoreCard({this.amount, this.description});
+
+  String amount;
+  String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.symmetric(
+          vertical: 8,
+        ),
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        color: Colors.white,
+        child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            child: Column(
+                children: <Widget>[
+                  Text(
+                    "\$ $amount",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Nunito"
+                    ),
+                  ),
+                  Text(
+                    "$description",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"
+                    ),
+                  ),
+                ]
+            ),
+        ),
+      ),
+    );
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  ActionButton({this.iconName, this.description, this.onPressed});
+  final String iconName;
+  final String description;
+  final Function onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: onPressed,
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Row(
+          children: <Widget>[
+            Image(
+              width: 40,
+              height: 40,
+              image: AssetImage(
+                  "assets/images/icons/$iconName.png"
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "$description",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "Nunito"
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

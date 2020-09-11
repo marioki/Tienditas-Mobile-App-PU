@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/store_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:app_tiendita/src/constants/api_constants.dart';
@@ -35,18 +36,18 @@ class StoreProvider {
     }
   }
 
-  Future<Tiendita> getStoreInfo(BuildContext context, String storeTagName) async {
+  Future<StoreResult> getStoreInfo(BuildContext context, String storeTagName) async {
     String url = '$baseApiUrl/api/v1/store?store_tag_name=$storeTagName';
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
       print(response.body);
-      return tienditaFromJson(response.body);
+      return  storeResultFromJson(response.body);
     } else {
       print('Error tienditas get info');
       print(response.body);
       print(response.statusCode);
-      return Tiendita();
+      return StoreResult();
     }
   }
 

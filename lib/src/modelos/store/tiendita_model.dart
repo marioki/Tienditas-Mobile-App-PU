@@ -26,8 +26,7 @@ class Tiendita {
 
 class Body {
   Body({
-    this.stores,
-    this.store
+    this.stores
   });
 
   List<Store> stores;
@@ -38,15 +37,6 @@ class Body {
 
   Map<String, dynamic> toJson() => {
     "stores": List<dynamic>.from(stores.map((x) => x.toJson())),
-  };
-
-  Store store;
-  factory Body.fromStoreJson(Map<String, dynamic> json) => Body(
-    store: Store.fromJson(json["store"]),
-  );
-
-  Map<String, dynamic> toStoreJson() => {
-    "store": store.toJson(),
   };
 }
 
