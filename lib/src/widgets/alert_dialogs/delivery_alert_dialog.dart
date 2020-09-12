@@ -16,7 +16,8 @@ class DeliveryAlertDialogWidget extends StatefulWidget {
 }
 
 class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
-  int radioGroup = 1;
+  int selectedRadio;
+  bool optionIsSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 setState(() {
-                  radioGroup = index + 1;
+                  selectedRadio = index;
                 });
               },
               child: Row(
@@ -82,13 +83,14 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
                         .deliveryOptions[index].fee),
                   ),
                   Radio(
-                    groupValue: radioGroup,
-                    value: index + 1,
+                    groupValue: selectedRadio,
+                    value: index,
                     activeColor: Colors.green,
                     onChanged: (int value) {
                       print(value);
                       setState(() {
-                        radioGroup = value;
+                        selectedRadio = value;
+                        optionIsSelected = true;
                       });
                     },
                   ),
@@ -108,10 +110,15 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
           textColor: Colors.grey,
         ),
         FlatButton(
-            onPressed: () {
+          onPressed: () {
+            if (optionIsSelected) {
               Navigator.pop(context);
-            },
-            child: Text('Ok')),
+              print(widget.listOfOptions[widget.index]
+                  .deliveryOptions[selectedRadio].method);
+            }
+          },
+          child: Text('Ok'),
+        ),
       ],
     );
   }

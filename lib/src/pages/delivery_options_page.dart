@@ -73,7 +73,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                               );
                             },
                             title: Text(deliveryInfo.storeName),
-                            subtitle: getDeliveryOptionsRadioGruop(deliveryInfo),
+                            subtitle: showSelectedOption(),
                           );
                         } else {
                           return SizedBox(
@@ -225,5 +225,9 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
       },
       shrinkWrap: true,
     );
+  }
+
+  Widget showSelectedOption() {
+    return Text('Opcion Sleccionada');
   }
 }
