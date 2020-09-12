@@ -40,7 +40,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
       ),
       body: FutureBuilder(
         //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
-        future: DeliveryOptionsProvider().getStoreDeliveryOptions(context,
+        future: DeliveryOptionsProvider().getStoresDeliveryInfo(context,
             Provider.of<UserCartState>(context).filterParentStoreTagList()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
