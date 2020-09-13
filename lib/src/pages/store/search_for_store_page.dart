@@ -1,5 +1,5 @@
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
-import 'package:app_tiendita/src/providers/buscar_tienda_provider.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,6 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
       _userInputFromHome = ModalRoute.of(context).settings.arguments;
       userInput = _userInputFromHome;
     }
-
     Tiendita resultTiendita;
     return Container(
       color: azulTema,
@@ -29,8 +28,7 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
         child: Scaffold(
           appBar: getCustomAppBar(),
           body: FutureBuilder(
-            future: BuscarTienditasProvider()
-                .getTienditasByNameOrTag(context, userInput),
+            future: StoreProvider().getTienditasByNameOrTag(context, userInput),
             builder: (
               BuildContext context,
               snapshot,
@@ -47,20 +45,14 @@ class _SearchForStorePageState extends State<SearchForStorePage> {
                         itemBuilder: (context, index) {
                           return StoreCardWidget(
                             name: resultTiendita.body.stores[index].storeName,
-                            handle:
-                                resultTiendita.body.stores[index].storeTagName,
-                            colorHex:
-                                resultTiendita.body.stores[index].hexColor,
+                            handle: resultTiendita.body.stores[index].storeTagName,
+                            colorHex: resultTiendita.body.stores[index].hexColor,
                             image: resultTiendita.body.stores[index].iconUrl,
-                            category:
-                                resultTiendita.body.stores[index].categoryName,
+                            category: resultTiendita.body.stores[index].categoryName,
                             followers: null,
-                            provinceName:
-                                resultTiendita.body.stores[index].provinceName,
-                            description:
-                                resultTiendita.body.stores[index].description,
-                            originalStoreName: resultTiendita
-                                .body.stores[index].originalStoreName,
+                            provinceName: resultTiendita.body.stores[index].provinceName,
+                            description: resultTiendita.body.stores[index].description,
+                            originalStoreName: resultTiendita.body.stores[index].originalStoreName,
                           );
                         },
                       ),

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final batch = batchFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -9,6 +5,43 @@ import 'package:flutter/cupertino.dart';
 Batch batchFromJson(String str) => Batch.fromJson(json.decode(str));
 
 String batchToJson(Batch data) => json.encode(data.toJson());
+
+class BatchResult {
+  BatchResult({
+    this.statusCode,
+    this.body,
+  });
+
+  int statusCode;
+  Body body;
+
+  factory BatchResult.fromJson(Map<String, dynamic> json) =>
+      BatchResult(
+        statusCode: json["statusCode"],
+        body: Body.fromJson(json["body"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+    "statusCode": statusCode,
+    "body": body.toJson(),
+  };
+}
+
+class Body {
+  Body({
+    this.batch,
+  });
+
+  Batch batch;
+
+  factory Body.fromJson(Map<String, dynamic> json) => Body(
+    batch: Batch.fromJson(json["batch"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "batch": batch.toJson(),
+  };
+}
 
 class Batch {
   Batch({

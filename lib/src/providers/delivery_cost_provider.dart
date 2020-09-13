@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class TotalDeliveryFee {
   List<StoreDeliveryInfo> listOfDeliveryOptions = [];
@@ -16,8 +16,7 @@ class TotalDeliveryFee {
 
     for (int i = 0; i < storeTagList.length; i++) {
       String storeTag = storeTagList[i];
-      String url =
-          'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/store?store_tag_name=$storeTag';
+      String url = '$baseApiUrl/api/v1/store?store_tag_name=$storeTag';
 
       final response = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});

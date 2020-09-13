@@ -1,5 +1,5 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/providers/user_tienditas_provider.dart';
+import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';

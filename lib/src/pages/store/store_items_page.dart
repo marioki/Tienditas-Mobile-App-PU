@@ -1,5 +1,5 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
@@ -136,8 +136,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: FutureBuilder(
-          future:
-              ProductProvider().getStoreProducts(args.storeTagName, context),
+          future: ProductProvider().getStoreProducts(args.storeTagName, context),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;
@@ -166,7 +165,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     itemName: finalListProductos[index].itemName,
                     itemId: finalListProductos[index].itemId,
                     finalPrice: finalListProductos[index].finalPrice,
-                    itemSatus: finalListProductos[index].itemSatus,
+                    itemSatus: finalListProductos[index].itemStatus,
                     outstanding: finalListProductos[index].outstanding,
                     purchaseType: finalListProductos[index].purchaseType,
                     quantity: finalListProductos[index].quantity,

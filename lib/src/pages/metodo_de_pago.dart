@@ -1,6 +1,6 @@
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
-import 'package:app_tiendita/src/providers/user_card_provider.dart';
+import 'package:app_tiendita/src/providers/user/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';

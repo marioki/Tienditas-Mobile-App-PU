@@ -47,6 +47,7 @@ class Body {
 
 class ProductElement {
   ProductElement({
+    this.storeTagName,
     this.quantity,
     this.itemName,
     this.purchaseType,
@@ -54,12 +55,14 @@ class ProductElement {
     this.registeredDate,
     this.itemId,
     this.finalPrice,
-    this.itemSatus,
+    this.basePrice,
+    this.itemStatus,
     this.imageUrl,
     this.hexColor,
     this.parentStoreTag,
   });
 
+  String storeTagName;
   String quantity;
   String itemName;
   PurchaseType purchaseType;
@@ -67,7 +70,8 @@ class ProductElement {
   String registeredDate;
   String itemId;
   String finalPrice;
-  ItemSatus itemSatus;
+  String basePrice;
+  ItemSatus itemStatus;
   String imageUrl;
 
   //===Added Properties for cart page
@@ -76,28 +80,32 @@ class ProductElement {
   String hexColor;
 
   factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
-        quantity: json["quantity"],
-        itemName: json["item_name"],
-        purchaseType: purchaseTypeValues.map[json["purchase_type"]],
-        outstanding: outstandingValues.map[json["outstanding"]],
-        registeredDate: json["registered_date"],
-        itemId: json["item_id"],
-        finalPrice: json["final_price"],
-        itemSatus: itemSatusValues.map[json["item_satus"]],
-        imageUrl: json["image_url"],
-      );
+    storeTagName: json["store_tag_name"],
+    quantity: json["quantity"],
+    itemName: json["item_name"],
+    purchaseType: purchaseTypeValues.map[json["purchase_type"]],
+    outstanding: outstandingValues.map[json["outstanding"]],
+    registeredDate: json["registered_date"],
+    itemId: json["item_id"],
+    finalPrice: json["final_price"],
+    basePrice: json["base_price"],
+    itemStatus: itemSatusValues.map[json["item_status"]],
+    imageUrl: json["image_url"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "quantity": quantity,
-        "item_name": itemName,
-        "purchase_type": purchaseTypeValues.reverse[purchaseType],
-        "outstanding": outstandingValues.reverse[outstanding],
-        "registered_date": registeredDate,
-        "item_id": itemId,
-        "final_price": finalPrice,
-        "item_satus": itemSatusValues.reverse[itemSatus],
-        "image_url": imageUrl,
-      };
+    "store_tag_name": storeTagName,
+    "quantity": quantity,
+    "item_name": itemName,
+    "purchase_type": purchaseTypeValues.reverse[purchaseType],
+    "outstanding": outstandingValues.reverse[outstanding],
+    "registered_date": registeredDate,
+    "item_id": itemId,
+    "final_price": finalPrice,
+    "base_price": basePrice,
+    "item_status": itemSatusValues.reverse[itemStatus],
+    "image_url": imageUrl,
+  };
 }
 
 enum ItemSatus { VIGENTE }

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_page.dart';
-import 'profile_page.dart';
+import 'user/profile_page.dart';
 import 'new_user_sign_up_page.dart';
 
 import 'package:app_tiendita/src/state_providers/login_state.dart';

@@ -1,7 +1,7 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
-import 'package:app_tiendita/src/providers/tiendita_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
@@ -67,16 +67,13 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   }
 
   Widget getTiendasListViewBuilder() {
-    print('LLamada del metodo');
     return FutureBuilder(
-      future: TienditasProvider().getAllTienditas(context),
+      future: StoreProvider().getAllTienditas(context),
       builder: (
         BuildContext context,
         snapshot,
       ) {
         if (snapshot.hasData) {
-          print('aloo');
-          print(snapshot.data);
           Tiendita miTienda = snapshot.data;
           return ListView.builder(
             itemCount: miTienda.body.stores.length,
@@ -99,7 +96,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       provinceName: miTienda.body.stores[index].provinceName,
                     ),
                     SizedBox(
-                      //Todo Change to media query when store card uses media query
                       height: 100,
                     ),
                   ],
