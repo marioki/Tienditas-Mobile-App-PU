@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -25,5 +26,53 @@ class ProductProvider {
     } else {
       return Product();
     }
+  }
+
+  Future<http.Response> updateProduct(String userIdToken, ProductElement productElement) async {
+    String _url = '$baseApiUrl/api/v1/product';
+    var bodyData = {
+      "product": {
+        "store_tag_name": productElement.storeTagName,
+        "item_id": productElement.itemId,
+        "base_price": productElement.basePrice,
+        "final_price": productElement.finalPrice,
+        "item_name": productElement.itemName,
+        "quantity": productElement.quantity
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> createProduct(String userIdToken, itemName, finalPrice, basePrice, quantity, storeTagName) async {
+    String _url = '$baseApiUrl/api/v1/product';
+    var bodyData = {
+      "product": {
+        "store_tag_name": storeTagName,
+        "base_price": basePrice,
+        "final_price": finalPrice,
+        "item_name": itemName,
+        "item_status": "entrega inmediata",
+        "quantity": quantity
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
   }
 }

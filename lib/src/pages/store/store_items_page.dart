@@ -165,7 +165,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     itemName: finalListProductos[index].itemName,
                     itemId: finalListProductos[index].itemId,
                     finalPrice: finalListProductos[index].finalPrice,
-                    itemSatus: finalListProductos[index].itemSatus,
+                    itemSatus: finalListProductos[index].itemStatus,
                     outstanding: finalListProductos[index].outstanding,
                     purchaseType: finalListProductos[index].purchaseType,
                     quantity: finalListProductos[index].quantity,

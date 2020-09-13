@@ -108,8 +108,6 @@ class StoreProvider {
         }
       }
     };
-    print("====== GUARDANDO ======");
-    print(bodyData);
     String _body = jsonEncode(bodyData);
     var response = await http.post(
       _url,
@@ -135,8 +133,6 @@ class StoreProvider {
         }
       }
     };
-    print("====== GUARDANDO ======");
-    print(bodyData);
     String _body = jsonEncode(bodyData);
     var response = await http.post(
       _url,

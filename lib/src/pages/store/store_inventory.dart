@@ -8,7 +8,8 @@ import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'edit_store_inventory.dart';
+import 'create_store_product.dart';
+import 'edit_store_product.dart';
 
 class StoreInventory extends StatefulWidget {
   StoreInventory({this.storeTagName});
@@ -49,8 +50,7 @@ class _StoreInventoryState extends State<StoreInventory> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditStoreInventory(
-                        appBarTitle: "Agregar Producto",
+                    builder: (context) => CreateStoreProduct(
                         storeTagName: widget.storeTagName
                     ),
                   )
@@ -87,7 +87,6 @@ class _StoreInventoryState extends State<StoreInventory> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => EditStoreInventory(
-                                appBarTitle: "Editar Producto",
                                 storeTagName: widget.storeTagName,
                                 productElement: finalListProductos[index]
                               ),

@@ -1,10 +1,14 @@
+import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/providers/product_items_provider.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditStoreInventory extends StatefulWidget {
-  EditStoreInventory({@required this.appBarTitle, @required this.storeTagName, this.productElement});
-  final String appBarTitle;
+  EditStoreInventory({@required this.storeTagName, this.productElement});
   final String storeTagName;
   final ProductElement productElement;
   @override
@@ -27,7 +31,7 @@ class _EditStoreInventoryState extends State<EditStoreInventory> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          '${widget.appBarTitle}',
+          'Editar Producto',
           style: appBarStyle,
         ),
       ),
@@ -47,12 +51,12 @@ class _EditStoreInventoryState extends State<EditStoreInventory> {
 
 // ignore: must_be_immutable
 class EditDeliveryOptionCard extends StatelessWidget {
-  EditDeliveryOptionCard({this.id, @required this.storeTagName, this.productElement});
+  EditDeliveryOptionCard({@required this.storeTagName, this.productElement});
 
   final String storeTagName;
-  final _formKey = GlobalKey<FormState>();
   final ProductElement productElement;
-  final String id;
+
+  final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   var response;
 
@@ -101,6 +105,28 @@ class EditDeliveryOptionCard extends StatelessWidget {
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
                                     Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
+                                    response = await ProductProvider().updateProduct(
+                                        Provider.of<LoginState>(context).currentUserIdToken,
+                                        productElement
+                                    );
+                                    if (response.statusCode == 200) {
+                                      ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+                                      if (responseTienditasApi.statusCode == 200) {
+                                        print(responseTienditasApi.body.message);
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                '${responseTienditasApi.body.message}'
+                                            ),
+                                          ),
+                                        );
+                                        isLoading = false;
+                                        Navigator.of(context).pop();
+                                      } else {
+                                        print(responseTienditasApi.body.message);
+                                        isLoading = false;
+                                      }
+                                    }
                                   }
                                 },
                                 color: Colors.green,
@@ -132,9 +158,9 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             ),
                           ),
                           TextFormField(
-                            //initialValue: name,
+                            initialValue: productElement.itemName,
                             onChanged: (String value) {
-                              print(value);
+                              productElement.itemName = value;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -160,10 +186,10 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             ),
                           ),
                           TextFormField(
-                            //initialValue: method,
+                            initialValue: productElement.finalPrice,
                             keyboardType: TextInputType.number,
                             onChanged: (String value) {
-                              print(value);
+                              productElement.finalPrice = value;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -189,10 +215,10 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             ),
                           ),
                           TextFormField(
-                            //initialValue: fee,
+                            initialValue: productElement.basePrice,
                             keyboardType: TextInputType.number,
                             onChanged: (String value) {
-                              print(value);
+                              productElement.basePrice = value;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -218,10 +244,10 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             ),
                           ),
                           TextFormField(
-                            //initialValue: method,
+                            initialValue: productElement.quantity,
                             keyboardType: TextInputType.number,
                             onChanged: (String value) {
-                              print(value);
+                              productElement.quantity = value;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
