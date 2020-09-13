@@ -1,6 +1,9 @@
 import 'package:app_tiendita/src/modelos/store/store_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/store/store_delivery_options.dart';
+import 'package:app_tiendita/src/pages/store/store_inventory.dart';
+import 'package:app_tiendita/src/pages/store/store_orders.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -36,7 +39,7 @@ class _StoreProfileState extends State<StoreProfile> {
         ),
       ),
       body: FutureBuilder(
-          future: StoreProvider().getStoreInfo(context, userInfo.stores[0]),
+          future: StoreProvider().getStoreInfo(context, userInfo.stores[1]),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;
@@ -75,28 +78,43 @@ class _StoreProfileState extends State<StoreProfile> {
                       iconName: "camion",
                       description: "Pedidos",
                       onPressed: () {
-                        print("funciona");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StoreOrders(
+                                storeTagName: resultTiendita.body.store.storeTagName,
+                              )
+                            )
+                        );
                       },
                     ),
                     ActionButton(
                       iconName: "my_products",
                       description: "Mis Productos",
                       onPressed: () {
-                        print("funciona");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StoreInventory(
+                                storeTagName: resultTiendita.body.store.storeTagName,
+                              ),
+                            )
+                        );
                       },
-                    ),
-                    ActionButton(
-                      iconName: "analytics",
-                      description: "Analíticas",
-                      onPressed: () {
-                        print("funciona");
-                      }
                     ),
                     ActionButton(
                       iconName: "camion",
                       description: "Métodos de Envíos",
                       onPressed: () {
-                        print("funciona");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StoreDeliveryOptions(
+                                deliveryOptions: resultTiendita.body.store.deliveryOptions,
+                                storeTagName: resultTiendita.body.store.storeTagName,
+                              ),
+                            )
+                        );
                       },
                     ),
                   ],
@@ -119,8 +137,8 @@ class _StoreProfileState extends State<StoreProfile> {
 class StoreCard extends StatelessWidget {
   StoreCard({this.amount, this.description});
 
-  String amount;
-  String description;
+  final String amount;
+  final String description;
 
   @override
   Widget build(BuildContext context) {

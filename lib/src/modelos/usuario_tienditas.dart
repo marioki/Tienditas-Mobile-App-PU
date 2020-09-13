@@ -73,8 +73,7 @@ class User {
         registeredDate: json["registered_date"],
         name: json["name"],
         stores: List<dynamic>.from(json["stores"].map((x) => x)),
-        address:
-            List<Address>.from(json["address"].map((x) => Address.fromJson(x))),
+        address: List<Address>.from(json["address"].map((x) => Address.fromJson(x))),
         preferences: List<dynamic>.from(json["preferences"].map((x) => x)),
         userEmail: json["email"],
         phoneNumber: json["phone_number"]

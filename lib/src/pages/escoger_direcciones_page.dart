@@ -161,8 +161,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
   }
 
   void setUserAddres() {
-    Address address =
-        Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
+    Address address = Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
 
     UserAddress userAddress = UserAddress(
         addressLine1: address.addressLine1,

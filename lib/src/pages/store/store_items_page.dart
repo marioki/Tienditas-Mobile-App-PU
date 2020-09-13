@@ -136,8 +136,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: FutureBuilder(
-          future:
-              ProductProvider().getStoreProducts(args.storeTagName, context),
+          future: ProductProvider().getStoreProducts(args.storeTagName, context),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Product product = snapshot.data;

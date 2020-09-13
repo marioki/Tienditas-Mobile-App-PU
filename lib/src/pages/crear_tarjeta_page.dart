@@ -131,8 +131,7 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
     var response = await CreateNewCreditCard()
         .sendNewCreditCard(firebaseUser, userTokenId, newCard);
     if (response.statusCode == 200) {
-      ResponseTienditasApi responseTienditasApi =
-          responseFromJson(response.body);
+      ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
       if (responseTienditasApi.statusCode == 200) {
         print(responseTienditasApi.body.message);
         isLoading = false;
