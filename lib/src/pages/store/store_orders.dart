@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/store/order_model.dart';
+import 'package:app_tiendita/src/pages/store/store_order_detail.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _StoreOrdersState extends State<StoreOrders> {
         ),
       ),
       body: FutureBuilder(
-        future: StoreProvider().getStoreBatch(context, widget.storeTagName),
+        future: StoreProvider().getStoreOrders(context, widget.storeTagName),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             StoreOrdersResult storeOrder = snapshot.data;
@@ -47,7 +48,14 @@ class _StoreOrdersState extends State<StoreOrders> {
                   userName: storeOrder.body.orders[index].userName,
                   orderDate: storeOrder.body.orders[index].orderDate,
                   onPressed: () {
-                    print("funciona $index");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StoreOrderDetail(
+                            order: storeOrder.body.orders[index]
+                          ),
+                        ),
+                    );
                   },
                 );
               },

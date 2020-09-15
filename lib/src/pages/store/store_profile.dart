@@ -20,7 +20,7 @@ class _StoreProfileState extends State<StoreProfile> {
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
-    StoreResult resultTiendita;
+    StoreModel resultTiendita;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,7 +39,7 @@ class _StoreProfileState extends State<StoreProfile> {
         ),
       ),
       body: FutureBuilder(
-          future: StoreProvider().getStoreInfo(context, userInfo.stores[1]),
+          future: StoreProvider().getStoreInfo(context, userInfo.stores[0]),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;

@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/store/create_store.dart';
 import 'package:app_tiendita/src/pages/store/store_profile.dart';
 import 'package:app_tiendita/src/pages/user/user_address_page.dart';
 import 'package:app_tiendita/src/pages/user/user_orders_page.dart';
@@ -47,10 +48,16 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Image.asset('assets/images/icons/tienda.png'),
             padding: EdgeInsets.only(right: 16.0),
             onPressed: () {
-              Navigator.push(
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => StoreProfile(),
+                ),
+              );*/
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateStore(),
                 ),
               );
             },

@@ -199,7 +199,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                           child: RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
+                                Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando...')));
                                 // editDeliveryOption
                                 if(id != null) {
                                   response = await StoreProvider().editDeliveryOption(

@@ -4,7 +4,6 @@ import 'package:app_tiendita/src/modelos/store/order_model.dart';
 import 'package:app_tiendita/src/modelos/store/store_model.dart' as StoreModel;
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -39,7 +38,7 @@ class StoreProvider {
     }
   }
 
-  Future<StoreModel.StoreResult> getStoreInfo(BuildContext context, String storeTagName) async {
+  Future<StoreModel.StoreModel> getStoreInfo(BuildContext context, String storeTagName) async {
     String url = '$baseApiUrl/api/v1/store?store_tag_name=$storeTagName';
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
@@ -50,7 +49,7 @@ class StoreProvider {
       print('Error tienditas get info');
       print(response.body);
       print(response.statusCode);
-      return StoreModel.StoreResult();
+      return StoreModel.StoreModel();
     }
   }
 
@@ -81,7 +80,7 @@ class StoreProvider {
     }
   }
 
-  Future<StoreOrdersResult> getStoreBatch(BuildContext context, String storeTagName) async {
+  Future<StoreOrdersResult> getStoreOrders(BuildContext context, String storeTagName) async {
     String url = '$baseApiUrl/api/v1/order?store_tag_name=$storeTagName';
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
@@ -131,6 +130,28 @@ class StoreProvider {
           "method": method,
           "fee": fee
         }
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> updateOrderStatus(String userIdToken, String storeTagName, String orderId, String status) async {
+    String _url = '$baseApiUrl/api/v1/order_status';
+    print(_url);
+    var bodyData = {
+      "order": {
+        "store_tag_name": storeTagName,
+        "order_id": orderId,
+        "status": status
       }
     };
     String _body = jsonEncode(bodyData);
