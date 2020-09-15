@@ -1,6 +1,8 @@
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryAlertDialogWidget extends StatefulWidget {
   final List<StoreDeliveryInfo> listOfOptions;
@@ -115,6 +117,15 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
               Navigator.pop(context);
               print(widget.listOfOptions[widget.index]
                   .deliveryOptions[selectedRadio].method);
+              //Aqui estoy agregando la opcion de delivey seleccionada a la lista en el UserCartStateProvider
+              DeliveryOption selectedOption = widget
+                  .listOfOptions[widget.index].deliveryOptions[selectedRadio];
+
+              selectedOption.selectedIndex = widget.index;
+              print(selectedOption.selectedIndex);
+
+              Provider.of<UserCartState>(context)
+                  .addSelectedDeliveryOption(selectedOption);
             }
           },
           child: Text('Ok'),

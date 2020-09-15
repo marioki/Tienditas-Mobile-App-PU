@@ -45,8 +45,6 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             List<StoreDeliveryInfo> listOfStores = snapshot.data;
-            Provider.of<UserCartState>(context)
-                .setDeliveryInfoList(listOfStores);
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -150,9 +148,16 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
                 onPressed: () {
                   if (nextButtonIsEnabled) {
+                    // Provider.of<UserCartState>(context)
+                    //     .clearSelectedDeliveryOptionList();
+
+                    Provider.of<UserCartState>(context).setDeliveryInfoList();
+
                     Provider.of<UserCartState>(context)
                         .calculateTotalAmountOfBatch();
+
                     Provider.of<UserCartState>(context).generateOrderList();
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
