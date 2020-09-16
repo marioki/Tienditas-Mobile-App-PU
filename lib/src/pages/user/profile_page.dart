@@ -1,4 +1,6 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/store/create_store.dart';
+import 'package:app_tiendita/src/pages/store/store_profile.dart';
 import 'package:app_tiendita/src/pages/user/user_address_page.dart';
 import 'package:app_tiendita/src/pages/user/user_orders_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
@@ -25,14 +27,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35))),
+                bottomRight: Radius.circular(35)
+            ),
+        ),
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: azulTema,
@@ -40,6 +43,29 @@ class _ProfilePageState extends State<ProfilePage> {
           'Mi Perfil',
           style: appBarStyle,
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Image.asset('assets/images/icons/tienda.png'),
+            padding: EdgeInsets.only(right: 16.0),
+            onPressed: () {
+              if(userInfo.stores.length > 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StoreProfile(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateStore(),
+                  ),
+                );
+              }
+            },
+          )
+        ],
       ),
       body: Stack(
         children: <Widget>[
@@ -57,8 +83,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   MyProfileWidget(
                     name: userInfo.name,
                     email: userInfo.userEmail,
-                    phoneNumber: "65982088",
-                    image: "userInfo.",
+                    phoneNumber: userInfo.phoneNumber,
+                    image: "userInfo",
                   ),
                   _buildMyOrdersBtn(),
                   _buildMyAddressBtn(),

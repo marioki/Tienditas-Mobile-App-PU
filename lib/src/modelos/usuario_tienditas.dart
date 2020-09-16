@@ -56,6 +56,7 @@ class User {
     this.address,
     this.preferences,
     this.userEmail,
+    this.phoneNumber
   });
 
   List<dynamic> creditCard;
@@ -66,15 +67,16 @@ class User {
   List<Address> address;
   List<dynamic> preferences;
   String userEmail;
+  String phoneNumber;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         registeredDate: json["registered_date"],
         name: json["name"],
         stores: List<dynamic>.from(json["stores"].map((x) => x)),
-        address:
-            List<Address>.from(json["address"].map((x) => Address.fromJson(x))),
+        address: List<Address>.from(json["address"].map((x) => Address.fromJson(x))),
         preferences: List<dynamic>.from(json["preferences"].map((x) => x)),
         userEmail: json["email"],
+        phoneNumber: json["phone_number"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,6 +87,7 @@ class User {
         "address": List<dynamic>.from(address.map((x) => x.toJson())),
         "preferences": List<dynamic>.from(preferences.map((x) => x)),
         "email": userEmail,
+        "phone_number": phoneNumber
       };
 }
 

@@ -1,23 +1,24 @@
 import 'dart:convert';
-
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:app_tiendita/src/constants/api_constants.dart';
 
-class CreateTienditaUser {
-  Future<http.Response> createUserTienditas(
-      FirebaseUser firebaseUser, String userIdToken) async {
-    String _url =
-        'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev/api/v1/user';
+class CreateNewCreditCard {
+  Future<http.Response> sendNewCreditCard(
+      FirebaseUser firebaseUser, String userIdToken, CreditCard newCard) async {
+    String _url = '$baseApiUrl/api/v1/credit_cards';
     String userEmail = firebaseUser.email;
-    String userName = firebaseUser.displayName;
 
     var bodyData = {
       "user": {
         "email": userEmail,
-        "name": userName,
-        "address": [],
-        "credit_card": [],
-        "preferences": []
+        "credit_card": {
+          "number": newCard.number,
+          "expiration_date": newCard.expirationDate,
+          "cvv": newCard.cvv,
+          "holder_name": newCard.holderName
+        }
       }
     };
 
@@ -31,7 +32,6 @@ class CreateTienditaUser {
       },
       body: _body,
     );
-    print(response.body);
 
     return response;
   }

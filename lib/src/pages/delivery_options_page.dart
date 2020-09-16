@@ -4,7 +4,7 @@ import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
-import 'package:app_tiendita/src/providers/store_delivery_options_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/alert_dialogs/delivery_alert_dialog.dart';

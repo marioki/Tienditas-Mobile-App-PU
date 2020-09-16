@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tiendita = tienditaFromJson(jsonString);
-
 import 'dart:convert';
 
 Tiendita tienditaFromJson(String str) => Tiendita.fromJson(json.decode(str));
@@ -18,30 +14,30 @@ class Tiendita {
   Body body;
 
   factory Tiendita.fromJson(Map<String, dynamic> json) => Tiendita(
-        statusCode: json["statusCode"],
-        body: Body.fromJson(json["body"]),
-      );
+    statusCode: json["statusCode"],
+    body: Body.fromJson(json["body"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "statusCode": statusCode,
-        "body": body.toJson(),
-      };
+    "statusCode": statusCode,
+    "body": body.toJson(),
+  };
 }
 
 class Body {
   Body({
-    this.stores,
+    this.stores
   });
 
   List<Store> stores;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-        stores: List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
-      );
+    stores: List<Store>.from(json["stores"].map((x) => Store.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "stores": List<dynamic>.from(stores.map((x) => x.toJson())),
-      };
+    "stores": List<dynamic>.from(stores.map((x) => x.toJson())),
+  };
 }
 
 class Store {
