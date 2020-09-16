@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
@@ -21,7 +22,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool nextButtonIsEnabled = false;
+    bool nextButtonIsEnabled = true;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -109,29 +110,13 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     color: grizSubtitulo,
                   ),
                 ),
-                FutureBuilder(
-                  future: TotalDeliveryFee().getTotalFee(
-                      context,
-                      Provider.of<UserCartState>(context)
-                          .filterParentStoreTagList()),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      Provider.of<UserCartState>(context)
-                          .setDeliveryTotalCost(snapshot.data);
-                      nextButtonIsEnabled = true;
-                      return Text(
-                        '\$${snapshot.data.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Nunito',
-                          color: azulTema,
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
+                Text(
+                  '\$${getTotalDeliveryFee()}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito',
+                    color: azulTema,
+                  ),
                 ),
               ],
             ),
@@ -152,6 +137,9 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     //     .clearSelectedDeliveryOptionList();
 
                     Provider.of<UserCartState>(context).setDeliveryInfoList();
+
+                    Provider.of<UserCartState>(context)
+                        .setDeliveryTotalCost(getTotalDeliveryFee());
 
                     Provider.of<UserCartState>(context)
                         .calculateTotalAmountOfBatch();
@@ -234,5 +222,18 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
 
   Widget showSelectedOption() {
     return Text('Opcion Sleccionada');
+  }
+
+  double getTotalDeliveryFee() {
+    double totalFee = 0;
+    List<DeliveryOption> selectedOptions =
+        Provider.of<UserCartState>(context).selectedDeliveryOptions;
+    if (selectedOptions.isNotEmpty) {
+      selectedOptions.forEach((element) {
+        totalFee += double.parse(element.fee);
+      });
+    }
+
+    return totalFee;
   }
 }

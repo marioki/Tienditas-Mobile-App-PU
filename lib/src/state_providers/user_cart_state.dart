@@ -29,14 +29,17 @@ class UserCartState with ChangeNotifier {
             newOption.selectedIndex) {
           selectedDeliveryOptions[index] = newOption;
           modified = true;
+          notifyListeners();
           break;
         }
       }
       if (!modified) {
         selectedDeliveryOptions.add(newOption);
+        notifyListeners();
       }
     } else {
       selectedDeliveryOptions.add(newOption);
+      notifyListeners();
     }
 
     // if (selectedDeliveryOptions.isNotEmpty) {
