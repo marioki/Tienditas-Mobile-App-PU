@@ -1,10 +1,11 @@
 import 'dart:io';
+
+import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class DeliveryOptionsProvider {
   List<StoreDeliveryInfo> listOfStoreDeliveryInfo = [];
@@ -22,12 +23,13 @@ class DeliveryOptionsProvider {
         final deliveryOptionsResponse =
         deliveryOptionsResponseFromJson(response.body);
         StoreDeliveryInfo currentDeliveryOption = deliveryOptionsResponse.body.store;
-        listOfDeliveryOptions.add(currentDeliveryOption);
+        listOfStoreDeliveryInfo.add(currentDeliveryOption);
       } else {
         print('response status code ${response.statusCode}');
         return null;
       }
     }
+
     print('Return de provider:');
     return listOfStoreDeliveryInfo;
   }
