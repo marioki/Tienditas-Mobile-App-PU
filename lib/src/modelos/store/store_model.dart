@@ -53,6 +53,7 @@ class Store {
     this.pendingBalance,
     this.storeName,
     this.hexColor,
+    this.storeStatus,
   });
 
   String originalStoreName;
@@ -66,19 +67,21 @@ class Store {
   String pendingBalance;
   String storeName;
   String hexColor;
+  String storeStatus;
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
-    originalStoreName: json["original_store_name"],
-    storeTagName: json["store_tag_name"],
-    balance: json["balance"],
-    categoryName: json["category_name"],
-    deliveryOptions: List<DeliveryOption>.from(json["delivery_options"].map((x) => DeliveryOption.fromJson(x))),
-    iconUrl: json["icon_url"],
-    provinceName: json["province_name"],
-    description: json["description"],
-    pendingBalance: json["pending_balance"],
-    storeName: json["store_name"],
-    hexColor: json["hex_color"],
+      originalStoreName: json["original_store_name"],
+      storeTagName: json["store_tag_name"],
+      balance: json["balance"],
+      categoryName: json["category_name"],
+      deliveryOptions: List<DeliveryOption>.from(json["delivery_options"].map((x) => DeliveryOption.fromJson(x))),
+      iconUrl: json["icon_url"],
+      provinceName: json["province_name"],
+      description: json["description"],
+      pendingBalance: json["pending_balance"],
+      storeName: json["store_name"],
+      hexColor: json["hex_color"],
+      storeStatus: json["store_status"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -93,6 +96,7 @@ class Store {
     "pending_balance": pendingBalance,
     "store_name": storeName,
     "hex_color": hexColor,
+    "store_status":  storeStatus
   };
 }
 

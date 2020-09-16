@@ -109,62 +109,56 @@ class OrderItemCard extends StatelessWidget {
         ),
         color: Colors.white,
         child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
+          padding: EdgeInsets.only(
+              top: 10,
+              bottom: 10,
+              left: 5
           ),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Pedido para $userName",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Nunito"
-                      ),
-                    ),
-                    FlatButton(
-                      onPressed: onPressed,
-                      child: Image(
-                        width: 20,
-                        height: 20,
-                        image: AssetImage(
-                            "assets/images/icons/order_detail_button.png"
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              FlatButton(
+                onPressed: onPressed,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Pedido para $userName",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"
                         ),
                       ),
-                    )
-                  ],
+                      Text(
+                        "Hora del pedido: $orderDate",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Total: $amount",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ]
                 ),
-                Text(
-                  "Hora del pedido: $orderDate",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Nunito"
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Total: $amount",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Nunito"
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ]
+              ),
+            ],
           ),
         ),
       ),
