@@ -1,8 +1,15 @@
+import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/province_model.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/store/store_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/province_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateStore extends StatefulWidget {
   @override
@@ -13,21 +20,22 @@ class _CreateStoreState extends State<CreateStore> {
   final _formKey = GlobalKey<FormState>();
   Store store;
   bool isLoading = false;
+  var response;
   List<String> _provinces = [
-    'Bocas del Toro',
-    'Coclé',
-    'Colón',
-    'Chiriquí',
-    'Darién',
-    'Herrera',
-    'Los Santos',
-    'Panamá',
-    'Veraguas',
-    'Panamá Oeste'
+    'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
   ];
   String _selectedLocation;
+  List<String> _categories = [
+    'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
+  ];
+  String _selectedCategory;
+  String storeTagName;
+  String storeName;
+  String description;
+  String phoneNumber;
   @override
   Widget build(BuildContext context) {
+    User userInfo = Provider.of<LoginState>(context).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -90,7 +98,7 @@ class _CreateStoreState extends State<CreateStore> {
                                 ),
                                 TextFormField(
                                   onChanged: (String value) {
-                                    store.originalStoreName = value;
+                                    storeName = value;
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
@@ -117,7 +125,7 @@ class _CreateStoreState extends State<CreateStore> {
                                 ),
                                 TextFormField(
                                   onChanged: (String value) {
-                                    store.storeTagName = value;
+                                    storeTagName = value;
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
@@ -142,20 +150,53 @@ class _CreateStoreState extends State<CreateStore> {
                                       fontFamily: "Nunito"
                                   ),
                                 ),
-                                TextFormField(
-                                  onChanged: (String value) {
-                                    print(value);
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Ingresar categoría de la tienda';
+                                FutureBuilder(
+                                  future: CategoriesProvider().getAllCategories(context),
+                                  builder: (BuildContext context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      CategoryModel resultcategories = snapshot.data;
+                                      var categories = resultcategories.body.category;
+                                      _categories = [];
+                                      for(var i=0; i < categories.length; i++) {
+                                        _categories.add(categories[i].categoryName);
+                                      }
+                                      return DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                          hint:  Text("Seleccionar categoría"),
+                                          value: _selectedCategory,
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _selectedCategory = newValue;
+                                            });
+                                          },
+                                          items: _categories.map((value) {
+                                            return new DropdownMenuItem(
+                                              child: new Text(value),
+                                              value: value,
+                                            );
+                                          }).toList(),
+                                        ),
+                                      );
+                                    } else {
+                                      return DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                          hint:  Text("Seleccionar categoría"),
+                                          value: _selectedCategory,
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _selectedCategory = newValue;
+                                            });
+                                          },
+                                          items: _categories.map((value) {
+                                            return new DropdownMenuItem(
+                                              child: new Text(value),
+                                              value: value,
+                                            );
+                                          }).toList(),
+                                        ),
+                                      );
                                     }
-                                    return null;
                                   },
-                                  decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      hintText: 'categoría'
-                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -171,7 +212,7 @@ class _CreateStoreState extends State<CreateStore> {
                                 ),
                                 TextFormField(
                                   onChanged: (String value) {
-                                    print(value);
+                                    description = value;
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
@@ -210,7 +251,6 @@ class _CreateStoreState extends State<CreateStore> {
                                             setState(() {
                                               _selectedLocation = newValue;
                                             });
-                                            print(newValue);
                                           },
                                           items: provinces.map((value) {
                                             return new DropdownMenuItem(
@@ -256,7 +296,7 @@ class _CreateStoreState extends State<CreateStore> {
                                 ),
                                 TextFormField(
                                   onChanged: (String value) {
-                                    print(value);
+                                    phoneNumber = value;
                                   },
                                   validator: (value) {
                                     if (value.isEmpty) {
@@ -277,44 +317,30 @@ class _CreateStoreState extends State<CreateStore> {
                                   child: RaisedButton(
                                     onPressed: () async {
                                       if (_formKey.currentState.validate()) {
-                                        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando...')));
-                                        // editDeliveryOption
-                                        /*if(id != null) {
-                                    response = await StoreProvider().editDeliveryOption(
-                                        Provider.of<LoginState>(context).currentUserIdToken,
-                                        storeTagName,
-                                        id,
-                                        name,
-                                        method,
-                                        fee
-                                    );
-                                  } else {
-                                    response = await StoreProvider().newDeliveryOption(
-                                        Provider.of<LoginState>(context).currentUserIdToken,
-                                        storeTagName,
-                                        name,
-                                        method,
-                                        fee
-                                    );
-                                  }
-                                  if (response.statusCode == 200) {
-                                    ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode == 200) {
-                                      print(responseTienditasApi.body.message);
-                                      Scaffold.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${responseTienditasApi.body.message}'
-                                          ),
-                                        ),
-                                      );
-                                      isLoading = false;
-                                      Navigator.of(context).pop();
-                                    } else {
-                                      print(responseTienditasApi.body.message);
-                                      isLoading = false;
-                                    }
-                                  }*/
+                                        if((_selectedCategory != null && _selectedLocation != null) &&
+                                        (!_selectedCategory.startsWith('Hubo') && !_selectedLocation.startsWith('Hubo'))) {
+                                          response = await StoreProvider().createStore(
+                                              Provider.of<LoginState>(context).currentUserIdToken,
+                                              storeTagName,
+                                              storeName,
+                                              _selectedLocation,
+                                              _selectedCategory,
+                                              description,
+                                              phoneNumber,
+                                              userInfo.userEmail
+                                          );
+                                        }
+                                        if (response.statusCode == 200) {
+                                          ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+                                          if (responseTienditasApi.statusCode == 200) {
+                                            print(responseTienditasApi.body.message);
+                                            isLoading = false;
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            print(responseTienditasApi.body.message);
+                                            isLoading = false;
+                                          }
+                                        }
                                       }
                                     },
                                     color: Colors.green,

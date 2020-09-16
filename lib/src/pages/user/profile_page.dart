@@ -48,18 +48,21 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Image.asset('assets/images/icons/tienda.png'),
             padding: EdgeInsets.only(right: 16.0),
             onPressed: () {
-              /*Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => StoreProfile(),
-                ),
-              );*/
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateStore(),
-                ),
-              );
+              if(userInfo.stores.length > 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StoreProfile(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateStore(),
+                  ),
+                );
+              }
             },
           )
         ],

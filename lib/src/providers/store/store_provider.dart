@@ -165,4 +165,33 @@ class StoreProvider {
     );
     return response;
   }
+
+  Future<http.Response> createStore(
+      String userIdToken, String storeTagName, String storeName, String provinceName,
+      String categoryName, String description, String phoneNumber, String userEmail
+      ) async {
+    String _url = '$baseApiUrl/api/v1/store';
+    var bodyData = {
+      "store": {
+        "store_tag_name": storeTagName,
+        "store_name": storeName,
+        "province_name": provinceName,
+        "category_name": categoryName,
+        "description": description,
+        "phone_number": phoneNumber,
+        "user_email": userEmail
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
 }

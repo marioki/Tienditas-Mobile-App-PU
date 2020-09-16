@@ -38,28 +38,39 @@ class _StoreOrdersState extends State<StoreOrders> {
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             StoreOrdersResult storeOrder = snapshot.data;
-            return ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              shrinkWrap: true,
-              itemCount: storeOrder.body.orders.length,
-              itemBuilder: (context, index) {
-                return OrderItemCard(
-                  amount: storeOrder.body.orders[index].amount,
-                  userName: storeOrder.body.orders[index].userName,
-                  orderDate: storeOrder.body.orders[index].orderDate,
-                  onPressed: () {
-                    Navigator.push(
+            if (storeOrder.body.orders.length > 0) {
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                shrinkWrap: true,
+                itemCount: storeOrder.body.orders.length,
+                itemBuilder: (context, index) {
+                  return OrderItemCard(
+                    amount: storeOrder.body.orders[index].amount,
+                    userName: storeOrder.body.orders[index].userName,
+                    orderDate: storeOrder.body.orders[index].orderDate,
+                    onPressed: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => StoreOrderDetail(
-                            order: storeOrder.body.orders[index]
+                              order: storeOrder.body.orders[index]
                           ),
                         ),
-                    );
-                  },
-                );
-              },
-            );
+                      );
+                    },
+                  );
+                },
+              );
+            } else {
+              return Container(
+                height: 400,
+                child: Center(
+                    child: Text(
+                        "No hay ordenes registradas"
+                    )
+                ),
+              );
+            }
           } else {
             return Container(
               height: 400,
