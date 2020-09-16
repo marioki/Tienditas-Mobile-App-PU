@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
+import 'package:app_tiendita/src/pages/resumen_de_compra_page.dart';
 import 'package:app_tiendita/src/providers/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
@@ -58,18 +59,25 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                           listCreditCard[index].type,
                           listCreditCard[index].number);
                     } else {
-                      return FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return CrearNuevaTarjeta();
-                              },
-                            ),
-                          );
-                        },
-                        child: Text('+ Agregar Tarjeta'),
+                      return Column(
+                        children: [
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return CrearNuevaTarjeta();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text('+ Agregar Tarjeta'),
+                          ),
+                          SizedBox(
+                            height: 100,
+                          )
+                        ],
                       );
                     }
                   },
@@ -84,48 +92,48 @@ class _MetodoDePagoState extends State<MetodoDePago> {
               }
             }),
       ),
-      // bottomSheet: Container(
-      //   padding: EdgeInsets.all(16),
-      //   margin: EdgeInsets.symmetric(horizontal: 20),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.end,
-      //     children: <Widget>[
-      //       Container(
-      //         margin: EdgeInsets.symmetric(horizontal: 20),
-      //         child: FlatButton(
-      //           child: Text(
-      //             'SIGUIENTE',
-      //             style: TextStyle(
-      //                 fontSize: 12,
-      //                 color: Colors.white,
-      //                 fontFamily: 'Nunito',
-      //                 fontWeight: FontWeight.bold),
-      //           ),
-      //           onPressed: () {
-      //             if (nextButtonIsEnabled) {
-      //               setUserCreditCard();
-      //               setCurrentBatchTotalAmount();
-      //               setCurrentBatchPaymentMethod();
-      //               setCurrentBatchUserInfo();
-      //               setCurrentBatchPhoneNumber();
-      //               print('=====Iniciar Creación del Batch de Compra=====');
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(builder: (BuildContext context) {
-      //                   return ResumenDeCompra();
-      //                 }),
-      //               );
-      //             }
-      //           },
-      //           color: azulTema,
-      //           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-      //           shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(35)),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      bottomSheet: Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: FlatButton(
+                child: Text(
+                  'SIGUIENTE',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  if (nextButtonIsEnabled) {
+                    setUserCreditCard();
+                    setCurrentBatchTotalAmount();
+                    setCurrentBatchPaymentMethod();
+                    setCurrentBatchUserInfo();
+                    setCurrentBatchPhoneNumber();
+                    print('=====Iniciar Creación del Batch de Compra=====');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return ResumenDeCompra();
+                      }),
+                    );
+                  }
+                },
+                color: azulTema,
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -134,7 +142,11 @@ class _MetodoDePagoState extends State<MetodoDePago> {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            groupRadio = index;
+          });
+        },
         child: ListTile(
           title: Row(
             children: <Widget>[
