@@ -35,8 +35,7 @@ class _StoreDeliveryOptionsState extends State<StoreDeliveryOptions> {
             icon: Icon(
               Icons.add
             ),
-            iconSize: 45,
-            color: Colors.lightGreenAccent,
+            iconSize: 40,
             padding: EdgeInsets.only(right: 16.0),
             onPressed: () {
               Navigator.push(
