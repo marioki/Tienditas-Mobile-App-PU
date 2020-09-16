@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
@@ -111,7 +113,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                   ),
                 ),
                 Text(
-                  '\$${getTotalDeliveryFee()}',
+                  '\$${getTotalDeliveryFee().toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Nunito',
@@ -133,25 +135,30 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
                 onPressed: () {
                   if (nextButtonIsEnabled) {
-                    // Provider.of<UserCartState>(context)
-                    //     .clearSelectedDeliveryOptionList();
+                    if (Provider.of<UserCartState>(context)
+                            .selectedDeliveryOptions
+                            .length ==
+                        Provider.of<UserCartState>(context)
+                            .filterParentStoreTagList()
+                            .length) {
+                      Provider.of<UserCartState>(context).setDeliveryInfoList();
 
-                    Provider.of<UserCartState>(context).setDeliveryInfoList();
+                      Provider.of<UserCartState>(context)
+                          .setDeliveryTotalCost(getTotalDeliveryFee());
 
-                    Provider.of<UserCartState>(context)
-                        .setDeliveryTotalCost(getTotalDeliveryFee());
+                      Provider.of<UserCartState>(context)
+                          .calculateTotalAmountOfBatch();
 
-                    Provider.of<UserCartState>(context)
-                        .calculateTotalAmountOfBatch();
+                      Provider.of<UserCartState>(context).generateOrderList();
 
-                    Provider.of<UserCartState>(context).generateOrderList();
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EscogerDirecciones(),
-                      ),
-                    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EscogerDirecciones(),
+                        ),
+                      );
+                    }else
+                      null;
                   }
                 },
                 color: azulTema,
