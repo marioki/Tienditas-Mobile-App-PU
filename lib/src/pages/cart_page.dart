@@ -106,6 +106,8 @@ class _CartPageState extends State<CartPage> {
                                     print('Lista de Tiendas Filtradas');
                                     print(Provider.of<UserCartState>(context)
                                         .filterParentStoreTagList());
+                                    Provider.of<UserCartState>(context)
+                                        .clearSelectedDeliveryOptionList();
                                     Navigator.pushNamed(
                                         context, 'delivery_options');
                                   } else {

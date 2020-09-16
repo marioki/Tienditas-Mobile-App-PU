@@ -1,6 +1,8 @@
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryAlertDialogWidget extends StatefulWidget {
   final List<StoreDeliveryInfo> listOfOptions;
@@ -16,7 +18,8 @@ class DeliveryAlertDialogWidget extends StatefulWidget {
 }
 
 class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
-  int radioGroup = 1;
+  int selectedRadio;
+  bool optionIsSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 setState(() {
-                  radioGroup = index + 1;
+                  selectedRadio = index;
                 });
               },
               child: Row(
@@ -82,13 +85,14 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
                         .deliveryOptions[index].fee),
                   ),
                   Radio(
-                    groupValue: radioGroup,
-                    value: index + 1,
+                    groupValue: selectedRadio,
+                    value: index,
                     activeColor: Colors.green,
                     onChanged: (int value) {
                       print(value);
                       setState(() {
-                        radioGroup = value;
+                        selectedRadio = value;
+                        optionIsSelected = true;
                       });
                     },
                   ),
@@ -108,10 +112,24 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
           textColor: Colors.grey,
         ),
         FlatButton(
-            onPressed: () {
+          onPressed: () {
+            if (optionIsSelected) {
               Navigator.pop(context);
-            },
-            child: Text('Ok')),
+              print(widget.listOfOptions[widget.index]
+                  .deliveryOptions[selectedRadio].method);
+              //Aqui estoy agregando la opcion de delivey seleccionada a la lista en el UserCartStateProvider
+              DeliveryOption selectedOption = widget
+                  .listOfOptions[widget.index].deliveryOptions[selectedRadio];
+
+              selectedOption.selectedIndex = widget.index;
+              print(selectedOption.selectedIndex);
+
+              Provider.of<UserCartState>(context)
+                  .addSelectedDeliveryOption(selectedOption);
+            }
+          },
+          child: Text('Ok'),
+        ),
       ],
     );
   }
