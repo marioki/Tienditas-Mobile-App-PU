@@ -34,8 +34,8 @@ dependencies:
   google_sign_in: ^4.5.1
   fluttertoast: ^7.0.1
   flutter_webview_plugin: ^0.3.10+1
+  progress_dialog: ^1.2.4
   credit_card: 0.1.6
-
 
 dev_dependencies:
   flutter_test:

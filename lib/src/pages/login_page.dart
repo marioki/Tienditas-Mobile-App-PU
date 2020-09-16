@@ -1,10 +1,11 @@
+import 'package:app_tiendita/src/pages/store_front.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
+import 'package:progress_dialog/progress_dialog.dart';
 import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -154,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildFacebookBtn() {
+  Widget _buildFacebookBtn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
@@ -326,6 +327,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildAnonymous() {
+    ProgressDialog pr = ProgressDialog(context);
+    pr.style(
+        message: 'Iniciando sesión...',
+        progressWidget: Container(
+          height: 400,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
     return GestureDetector(
       onTap: () {
         Provider.of<LoginState>(context, listen: false).login();
@@ -418,7 +428,7 @@ class _LoginPageState extends State<LoginPage> {
                         'Ingresa con:',
                         style: kLabelStyle,
                       ),
-                      _buildFacebookBtn(),
+                      _buildFacebookBtn(context),
                       Text(
                         '- O -',
                         style: TextStyle(
@@ -465,6 +475,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   loginWithFacebook() async {
+    ProgressDialog pr = ProgressDialog(context);
+    pr.style(
+      message: 'Iniciando sesión...',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+    await pr.show();
     String facebookId = "382658952699555";
     String facebookRedirectUrl =
         "https://www.facebook.com/connect/login_success.html";
@@ -477,6 +498,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
           maintainState: true),
     );
-    Provider.of<LoginState>(context, listen: false).signInWithFacebook(result);
+    pr.hide().whenComplete(() => Provider.of<LoginState>(context, listen: false)
+        .signInWithFacebook(result));
   }
 }
