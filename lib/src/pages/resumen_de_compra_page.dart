@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class ResumenDeCompra extends StatefulWidget {
   @override
@@ -16,6 +17,10 @@ class ResumenDeCompra extends StatefulWidget {
 class _ResumenDeCompraState extends State<ResumenDeCompra> {
   @override
   Widget build(BuildContext context) {
+//For showing progress percentage
+    final ProgressDialog pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+
     List<DeliveryOption> deliveryOptionList =
         Provider.of<UserCartState>(context).getListOfDeliveryInfo();
     Batch batch = Provider.of<UserCartState>(context).currentBatch;
@@ -230,15 +235,22 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       fontFamily: 'Nunito',
                       fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  await pr.show();
+
                   final firebaseUser =
                       Provider.of<LoginState>(context).getFireBaseUser();
                   final userTokenId =
                       Provider.of<LoginState>(context).currentUserIdToken;
                   final _batch =
                       Provider.of<UserCartState>(context).currentBatch;
-                  SendBatchOfOrders()
+                  var response = await SendBatchOfOrders()
                       .sendBatchOfOrders(firebaseUser, userTokenId, _batch);
+                  //Comprueba que la respuesta fue exitosa
+                  if (response.statusCode == 200) {
+                    await pr.hide();
+                    //Aqui comprobar que la compra fue exitosa
+                  }
                 },
                 color: azulTema,
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
