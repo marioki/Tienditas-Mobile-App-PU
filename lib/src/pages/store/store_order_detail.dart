@@ -123,9 +123,6 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
                             child: Text('Guardar'),
                             color: Color(0xFF191660),
                             onPressed: () async {
-                              print(widget.order.storeTagName);
-                              print(widget.order.orderId);
-                              print(selectedOption.option);
                               if(selectedOption != null) {
                                 response = await StoreProvider().updateOrderStatus(
                                     Provider.of<LoginState>(context).currentUserIdToken,
