@@ -99,11 +99,13 @@ class DeliveryOption {
     this.method,
     this.name,
     this.fee,
+    this.selectedIndex,
   });
 
   String method;
   String name;
   String fee;
+  int selectedIndex;
 
   factory DeliveryOption.fromJson(Map<String, dynamic> json) => DeliveryOption(
         method: json["method"],

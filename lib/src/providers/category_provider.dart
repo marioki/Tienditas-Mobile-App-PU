@@ -7,12 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class CategoriesProvider {
-  static const String url = '$baseApiUrl/api/v1/category';
   Future<CategoryModel> getAllCategories(BuildContext context) async {
+    String url = '$baseApiUrl/api/v1/category';
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
-      print(response.body);
       final category = categoryFromJson(response.body);
       return category;
     } else {

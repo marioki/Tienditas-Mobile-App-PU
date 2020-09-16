@@ -16,7 +16,7 @@ class ResumenDeCompra extends StatefulWidget {
 class _ResumenDeCompraState extends State<ResumenDeCompra> {
   @override
   Widget build(BuildContext context) {
-    List<StoreDeliveryInfo> deliveryInfoList =
+    List<DeliveryOption> deliveryOptionList =
         Provider.of<UserCartState>(context).getListOfDeliveryInfo();
     Batch batch = Provider.of<UserCartState>(context).currentBatch;
     return Scaffold(
@@ -32,7 +32,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
         backgroundColor: azulTema,
         title: Text(
           'Resumen'
-              '',
+          '',
           style: appBarStyle,
         ),
       ),
@@ -126,7 +126,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     shrinkWrap: true,
                     primary: false,
                     separatorBuilder: (context, index) => Divider(),
-                    itemCount: deliveryInfoList.length,
+                    itemCount: deliveryOptionList.length,
                     itemBuilder: (context, index) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,21 +135,18 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                deliveryInfoList[index]
-                                    .deliveryOptions[0]
-                                    .method,
+                                deliveryOptionList[index].method,
                                 style: TextStyle(fontFamily: 'Nunito'),
                               ),
                               Text(
-                                deliveryInfoList[index].deliveryOptions[0].name,
+                                deliveryOptionList[index].name,
                                 style: TextStyle(fontFamily: 'Nunito'),
                               ),
                             ],
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                                '\$${deliveryInfoList[index].deliveryOptions[0].fee}'),
+                            child: Text('\$${deliveryOptionList[index].fee}'),
                           )
                         ],
                       );

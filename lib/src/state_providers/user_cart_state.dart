@@ -9,7 +9,7 @@ class UserCartState with ChangeNotifier {
   double _deliveryTotalCost = 0;
   double totalAmountOfBatch;
   double impuesto = 0;
-  List<StoreDeliveryInfo> _listOfDeliveryOptions;
+  List<DeliveryOption> _listOfDeliveryOptions;
 
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
@@ -19,7 +19,45 @@ class UserCartState with ChangeNotifier {
   List<Order> _orderList = List<Order>();
   Batch currentBatch = Batch();
 
-  List<StoreDeliveryInfo> getListOfDeliveryInfo() => _listOfDeliveryOptions;
+  List<DeliveryOption> selectedDeliveryOptions = List();
+
+  addSelectedDeliveryOption(DeliveryOption newOption) {
+    bool modified = false;
+    if (selectedDeliveryOptions.isNotEmpty) {
+      for (int index = 0; index < selectedDeliveryOptions.length; index++) {
+        if (selectedDeliveryOptions[index].selectedIndex ==
+            newOption.selectedIndex) {
+          selectedDeliveryOptions[index] = newOption;
+          modified = true;
+          notifyListeners();
+          break;
+        }
+      }
+      if (!modified) {
+        selectedDeliveryOptions.add(newOption);
+        notifyListeners();
+      }
+    } else {
+      selectedDeliveryOptions.add(newOption);
+      notifyListeners();
+    }
+
+    // if (selectedDeliveryOptions.isNotEmpty) {
+    //   selectedDeliveryOptions.forEach((element) {
+    //     if (newOption.selectedIndex == element.selectedIndex) {
+    //       element = newOption;
+    //     } else {
+    //       selectedDeliveryOptions.add(newOption);
+    //       return;
+    //     }
+    //   });
+    // } else
+    //   selectedDeliveryOptions.add(newOption);
+  }
+
+  clearSelectedDeliveryOptionList() => selectedDeliveryOptions.clear();
+
+  List<DeliveryOption> getListOfDeliveryInfo() => _listOfDeliveryOptions;
 
   void addProductoToCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
@@ -136,7 +174,7 @@ class UserCartState with ChangeNotifier {
           amount: '',
         ),
       );
-      var deliveryInfo = _listOfDeliveryOptions[orderIndex].deliveryOptions[0];
+      var deliveryInfo = _listOfDeliveryOptions[orderIndex];
       _orderList[orderIndex].deliveryOption = BatchOrderDeliveryOption(
           fee: deliveryInfo.fee,
           method: deliveryInfo.method,
@@ -188,8 +226,9 @@ class UserCartState with ChangeNotifier {
     print('User selected: ${currentBatch.creditCardId}');
   }
 
-  setDeliveryInfoList(List<StoreDeliveryInfo> listOfDeliveryInfo) {
-    _listOfDeliveryOptions = listOfDeliveryInfo;
+//aqui le debo pasar la lista de delivary options (la opcion en si)
+  setDeliveryInfoList() {
+    _listOfDeliveryOptions = selectedDeliveryOptions;
   }
 
   setCurrentBatchTotalAmount() {

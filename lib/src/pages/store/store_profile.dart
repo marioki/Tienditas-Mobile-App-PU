@@ -20,7 +20,7 @@ class _StoreProfileState extends State<StoreProfile> {
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
-    StoreResult resultTiendita;
+    StoreModel resultTiendita;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

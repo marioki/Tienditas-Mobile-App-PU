@@ -54,6 +54,7 @@ class Order {
     this.orderId,
     this.userName,
     this.deliveryOption,
+    this.phoneNumber,
     this.orderStatusOrderDate,
   });
 
@@ -68,6 +69,7 @@ class Order {
   String orderId;
   String userName;
   DeliveryOption deliveryOption;
+  String phoneNumber;
   String orderStatusOrderDate;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -82,6 +84,7 @@ class Order {
     orderId: json["order_id"],
     userName: json["user_name"],
     deliveryOption: DeliveryOption.fromJson(json["delivery_option"]),
+    phoneNumber: json["phone_number"],
     orderStatusOrderDate: json["order_status-order_date"],
   );
 
@@ -97,6 +100,7 @@ class Order {
     "order_id": orderId,
     "user_name": userName,
     "delivery_option": deliveryOption.toJson(),
+    "phone_number": phoneNumber,
     "order_status-order_date": orderStatusOrderDate,
   };
 }
@@ -129,19 +133,23 @@ class OrderElement {
   OrderElement({
     this.itemId,
     this.quantity,
+    this.itemName
   });
 
   String itemId;
   String quantity;
+  String itemName;
 
   factory OrderElement.fromJson(Map<String, dynamic> json) => OrderElement(
-    itemId: json["item_id"],
-    quantity: json["quantity"],
+      itemId: json["item_id"],
+      quantity: json["quantity"],
+      itemName: json["item_name"]
   );
 
   Map<String, dynamic> toJson() => {
     "item_id": itemId,
     "quantity": quantity,
+    "item_name": itemName,
   };
 }
 

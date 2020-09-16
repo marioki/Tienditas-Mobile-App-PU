@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
 import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
@@ -21,7 +24,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool nextButtonIsEnabled = false;
+    bool nextButtonIsEnabled = true;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -40,48 +43,47 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
       ),
       body: FutureBuilder(
         //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
-        future: DeliveryOptionsProvider().getStoreDeliveryOptions(context,
+        future: DeliveryOptionsProvider().getStoresDeliveryInfo(context,
             Provider.of<UserCartState>(context).filterParentStoreTagList()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            List<StoreDeliveryInfo> listOfOptions = snapshot.data;
-            Provider.of<UserCartState>(context)
-                .setDeliveryInfoList(listOfOptions);
-            return Column(
-              children: [
-                ListView.separated(
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: listOfOptions.length + 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      if (index < listOfOptions.length) {
-                        StoreDeliveryInfo deliveryInfo = listOfOptions[index];
+            List<StoreDeliveryInfo> listOfStores = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: listOfStores.length + 1,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        if (index < listOfStores.length) {
+                          StoreDeliveryInfo deliveryInfo = listOfStores[index];
 
-                        return ListTile(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (context) {
-                                return DeliveryAlertDialogWidget(
-                                  listOfOptions: listOfOptions,
-                                  index: index,
-                                );
-                              },
-                            );
-                          },
-                          title: Text(deliveryInfo.storeName),
-                          trailing: Text(deliveryInfo.deliveryOptions[0].fee),
-                          subtitle:
-                              Text(deliveryInfo.deliveryOptions[0].method),
-                        );
-                      } else {
-                        return SizedBox(
-                          height: 100,
-                        );
-                      }
-                    }),
-              ],
+                          return ListTile(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) {
+                                  return DeliveryAlertDialogWidget(
+                                    listOfOptions: listOfStores,
+                                    index: index,
+                                  );
+                                },
+                              );
+                            },
+                            title: Text(deliveryInfo.storeName),
+                            subtitle: showSelectedOption(),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: 100,
+                          );
+                        }
+                      }),
+                ],
+              ),
             );
           } else {
             return Container(
@@ -110,29 +112,13 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                     color: grizSubtitulo,
                   ),
                 ),
-                FutureBuilder(
-                  future: TotalDeliveryFee().getTotalFee(
-                      context,
-                      Provider.of<UserCartState>(context)
-                          .filterParentStoreTagList()),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      Provider.of<UserCartState>(context)
-                          .setDeliveryTotalCost(snapshot.data);
-                      nextButtonIsEnabled = true;
-                      return Text(
-                        '\$${snapshot.data.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Nunito',
-                          color: azulTema,
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
+                Text(
+                  '\$${getTotalDeliveryFee().toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito',
+                    color: azulTema,
+                  ),
                 ),
               ],
             ),
@@ -149,15 +135,30 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
                 onPressed: () {
                   if (nextButtonIsEnabled) {
-                    Provider.of<UserCartState>(context)
-                        .calculateTotalAmountOfBatch();
-                    Provider.of<UserCartState>(context).generateOrderList();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EscogerDirecciones(),
-                      ),
-                    );
+                    if (Provider.of<UserCartState>(context)
+                            .selectedDeliveryOptions
+                            .length ==
+                        Provider.of<UserCartState>(context)
+                            .filterParentStoreTagList()
+                            .length) {
+                      Provider.of<UserCartState>(context).setDeliveryInfoList();
+
+                      Provider.of<UserCartState>(context)
+                          .setDeliveryTotalCost(getTotalDeliveryFee());
+
+                      Provider.of<UserCartState>(context)
+                          .calculateTotalAmountOfBatch();
+
+                      Provider.of<UserCartState>(context).generateOrderList();
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EscogerDirecciones(),
+                        ),
+                      );
+                    }else
+                      null;
                   }
                 },
                 color: azulTema,
@@ -170,5 +171,76 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         ),
       ),
     );
+  }
+
+  getDeliveryOptionsRadioGruop(StoreDeliveryInfo storeDeliveryInfo) {
+    int radioGroup;
+    return ListView.builder(
+      itemCount: storeDeliveryInfo.deliveryOptions.length,
+      itemBuilder: (context, index) {
+        return FlatButton(
+          padding: EdgeInsets.all(0),
+          onPressed: () {
+            setState(() {
+              radioGroup = index + 1;
+            });
+          },
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(storeDeliveryInfo.deliveryOptions[index].method),
+                      Text(
+                        storeDeliveryInfo.deliveryOptions[index].fee,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Text(storeDeliveryInfo.deliveryOptions[index].fee),
+              ),
+              Radio(
+                groupValue: radioGroup,
+                value: index + 1,
+                activeColor: Colors.green,
+                onChanged: (int value) {
+                  print(value);
+                  setState(() {
+                    radioGroup = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+      shrinkWrap: true,
+    );
+  }
+
+  Widget showSelectedOption() {
+    return Text('Opcion Sleccionada');
+  }
+
+  double getTotalDeliveryFee() {
+    double totalFee = 0;
+    List<DeliveryOption> selectedOptions =
+        Provider.of<UserCartState>(context).selectedDeliveryOptions;
+    if (selectedOptions.isNotEmpty) {
+      selectedOptions.forEach((element) {
+        totalFee += double.parse(element.fee);
+      });
+    }
+
+    return totalFee;
   }
 }

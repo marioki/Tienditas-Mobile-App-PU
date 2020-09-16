@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-StoreResult storeResultFromJson(String str) => StoreResult.fromJson(json.decode(str));
+StoreModel storeResultFromJson(String str) => StoreModel.fromJson(json.decode(str));
 
-String storeResultToJson(StoreResult data) => json.encode(data.toJson());
+String storeResultToJson(StoreModel data) => json.encode(data.toJson());
 
-class StoreResult {
-  StoreResult({
+class StoreModel {
+  StoreModel({
     this.statusCode,
     this.body,
   });
@@ -13,11 +13,10 @@ class StoreResult {
   int statusCode;
   Body body;
 
-  factory StoreResult.fromJson(Map<String, dynamic> json) =>
-      StoreResult(
-        statusCode: json["statusCode"],
-        body: Body.fromJson(json["body"]),
-      );
+  factory StoreModel.fromJson(Map<String, dynamic> json) => StoreModel(
+    statusCode: json["statusCode"],
+    body: Body.fromJson(json["body"]),
+  );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
