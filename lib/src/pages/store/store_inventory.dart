@@ -153,11 +153,17 @@ class ProductItemCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Image(
-                      width: 50,
-                      height: 50,
-                      image: NetworkImage(
-                        "$imageUrl"
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Image(
+                        width: 70,
+                        height: 70,
+                        image: NetworkImage(
+                          "$imageUrl"
+                        ),
                       ),
                     ),
                     FlatButton(

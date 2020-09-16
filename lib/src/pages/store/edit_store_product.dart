@@ -94,11 +94,17 @@ class EditDeliveryOptionCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Image(
-                                width: 50,
-                                height: 50,
-                                image: NetworkImage(
-                                    "${productElement.imageUrl}"
+                              Container(
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Image(
+                                  width: 90,
+                                  height: 90,
+                                  image: NetworkImage(
+                                      "${productElement.imageUrl}"
+                                  ),
                                 ),
                               ),
                               RaisedButton(
