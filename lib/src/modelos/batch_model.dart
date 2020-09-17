@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
-BatchResult batchFromJson(String str) => BatchResult.fromJson(json.decode(str));
+Batch batchFromJson(String str) => Batch.fromJson(json.decode(str));
 
 String batchToJson(Batch data) => json.encode(data.toJson());
 
@@ -15,11 +15,10 @@ class BatchResult {
   int statusCode;
   Body body;
 
-  factory BatchResult.fromJson(Map<String, dynamic> json) =>
-      BatchResult(
-        statusCode: json["statusCode"],
-        body: Body.fromJson(json["body"]),
-      );
+  factory BatchResult.fromJson(Map<String, dynamic> json) => BatchResult(
+    statusCode: json["statusCode"],
+    body: Body.fromJson(json["body"]),
+  );
 
   Map<String, dynamic> toJson() => {
     "statusCode": statusCode,
@@ -99,21 +98,22 @@ class Order {
   BatchOrderDeliveryOption deliveryOption;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-        amount: json["amount"],
-        storeTagName: json["store_tag_name"],
-        elements: List<ProductItem>.from(
-            json["elements"].map((x) => ProductItem.fromJson(x))),
-        userAddress: UserAddress.fromJson(json["user_address"]),
-        deliveryOption: BatchOrderDeliveryOption.fromJson(json["delivery_option"]),
-      );
+    amount: json["amount"],
+    storeTagName: json["store_tag_name"],
+    elements: List<ProductItem>.from(
+        json["elements"].map((x) => ProductItem.fromJson(x))),
+    userAddress: UserAddress.fromJson(json["user_address"]),
+    deliveryOption:
+    BatchOrderDeliveryOption.fromJson(json["delivery_option"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "amount": amount,
-        "store_tag_name": storeTagName,
-        "elements": List<dynamic>.from(elements.map((x) => x.toJson())),
-        "user_address": userAddress.toJson(),
-        "delivery_option": deliveryOption.toJson(),
-      };
+    "amount": amount,
+    "store_tag_name": storeTagName,
+    "elements": List<dynamic>.from(elements.map((x) => x.toJson())),
+    "user_address": userAddress.toJson(),
+    "delivery_option": deliveryOption.toJson(),
+  };
 }
 
 class BatchOrderDeliveryOption {
@@ -127,26 +127,27 @@ class BatchOrderDeliveryOption {
   String fee;
   String method;
 
-  factory BatchOrderDeliveryOption.fromJson(Map<String, dynamic> json) => BatchOrderDeliveryOption(
+  factory BatchOrderDeliveryOption.fromJson(Map<String, dynamic> json) =>
+      BatchOrderDeliveryOption(
         name: json["name"],
         fee: json["fee"],
         method: json["method"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "fee": fee,
-        "method": method,
-      };
+    "name": name,
+    "fee": fee,
+    "method": method,
+  };
 }
 
 class ProductItem {
   ProductItem(
       {this.itemId,
-      this.quantity,
-      //Added for resmuen display of products
-      this.productName,
-      this.itemPrice});
+        this.quantity,
+        //Added for resmuen display of products
+        this.productName,
+        this.itemPrice});
 
   String itemId;
   String quantity;
@@ -154,14 +155,16 @@ class ProductItem {
   double itemPrice;
 
   factory ProductItem.fromJson(Map<String, dynamic> json) => ProductItem(
-        itemId: json["item_id"],
-        quantity: json["quantity"],
-      );
+    itemId: json["item_id"],
+    quantity: json["quantity"],
+    productName: json["item_name"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "item_id": itemId,
-        "quantity": quantity,
-      };
+    "item_id": itemId,
+    "quantity": quantity,
+    "item_name": productName,
+  };
 }
 
 class UserAddress {
@@ -180,18 +183,18 @@ class UserAddress {
   String phoneNumber;
 
   factory UserAddress.fromJson(Map<String, dynamic> json) => UserAddress(
-        addressLine1: json["address_line_1"],
-        referencePoint: json["reference_point"],
-        country: json["country"],
-        province: json["province"],
-        phoneNumber: json["phone_number"],
-      );
+    addressLine1: json["address_line_1"],
+    referencePoint: json["reference_point"],
+    country: json["country"],
+    province: json["province"],
+    phoneNumber: json["phone_number"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "address_line_1": addressLine1,
-        "reference_point": referencePoint,
-        "country": country,
-        "province": province,
-        "phone_number": phoneNumber,
-      };
+    "address_line_1": addressLine1,
+    "reference_point": referencePoint,
+    "country": country,
+    "province": province,
+    "phone_number": phoneNumber,
+  };
 }
