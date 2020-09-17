@@ -18,7 +18,7 @@ class NewLoginPage extends StatelessWidget {
           child: RaisedButton(
             child: Text('Sign In'),
             onPressed: () {
-              Provider.of<LoginState>(context, listen: false).login();
+              Provider.of<LoginState>(context, listen: false).login(context);
             },
           ),
         ),

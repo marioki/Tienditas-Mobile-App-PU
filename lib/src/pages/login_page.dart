@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Provider.of<LoginState>(context, listen: false).login();
+          Provider.of<LoginState>(context, listen: false).login(context);
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -299,7 +299,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        Provider.of<LoginState>(context, listen: false).login();
+        Provider.of<LoginState>(context, listen: false).login(context);
       },
       child: RichText(
         text: TextSpan(
@@ -338,7 +338,7 @@ class _LoginPageState extends State<LoginPage> {
         ));
     return GestureDetector(
       onTap: () {
-        Provider.of<LoginState>(context, listen: false).login();
+        Provider.of<LoginState>(context, listen: false).login(context);
       },
       child: RichText(
         text: TextSpan(
@@ -475,17 +475,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   loginWithFacebook() async {
-    ProgressDialog pr = ProgressDialog(context);
-    pr.style(
-      message: 'Iniciando sesión...',
-      progressWidget: Container(
-        height: 400,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
-    await pr.show();
     String facebookId = "382658952699555";
     String facebookRedirectUrl =
         "https://www.facebook.com/connect/login_success.html";
@@ -498,7 +487,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
           maintainState: true),
     );
-    pr.hide().whenComplete(() => Provider.of<LoginState>(context, listen: false)
-        .signInWithFacebook(result));
+    Provider.of<LoginState>(context, listen: false)
+        .signInWithFacebook(result, context);
   }
 }

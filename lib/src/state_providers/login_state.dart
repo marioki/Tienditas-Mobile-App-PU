@@ -6,6 +6,7 @@ import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class LoginState with ChangeNotifier {
   bool _loggedIn = false;
@@ -32,7 +33,18 @@ class LoginState with ChangeNotifier {
 
   bool isLoading() => _loading;
 
-  void login() async {
+  void login(BuildContext context) async {
+    ProgressDialog pr = ProgressDialog(context);
+    pr.style(
+      message: 'Iniciando sesión...',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+    pr.show();
     _loading = true;
     notifyListeners();
 
@@ -46,10 +58,12 @@ class LoginState with ChangeNotifier {
       print('Objeto Token Anonimo Completo: '
           '${userIdToken.toString()}');
       currentUserIdToken = userIdToken.token;
+      pr.hide();
       _loggedIn = true;
       _isAnon = true;
       notifyListeners();
     } else {
+      pr.hide();
       _loggedIn = false;
       notifyListeners();
     }
@@ -132,8 +146,19 @@ class LoginState with ChangeNotifier {
     }
   }
 
-  signInWithFacebook(String result) async {
+  signInWithFacebook(String result, BuildContext context) async {
+    ProgressDialog pr = ProgressDialog(context);
+    pr.style(
+      message: 'Iniciando sesión...',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
     _loading = true;
+    pr.show();
     notifyListeners();
     if (result != null) {
       try {
@@ -152,7 +177,7 @@ class LoginState with ChangeNotifier {
         if (_userTienditas != null) {
           print('=================Detalles de Este Usuario ================');
           print(_userTienditas.name);
-
+          pr.hide();
           _loggedIn = true;
           _isAnon = false;
 
@@ -165,13 +190,14 @@ class LoginState with ChangeNotifier {
           if (userCreateResponse.statusCode == 200) {
             _userTienditas = await UsuarioTienditasProvider()
                 .getUserInfo(currentUserIdToken, user.email);
-
+            pr.hide();
             _loggedIn = true;
             _isAnon = false;
             notifyListeners();
           }
         }
       } catch (e) {
+        pr.hide();
         _loggedIn = false;
         notifyListeners();
       }
