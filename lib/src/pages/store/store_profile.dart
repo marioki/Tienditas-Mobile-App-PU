@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/store/store_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/store/edit_store.dart';
 import 'package:app_tiendita/src/pages/store/store_delivery_options.dart';
 import 'package:app_tiendita/src/pages/store/store_inventory.dart';
 import 'package:app_tiendita/src/pages/store/store_orders.dart';
@@ -44,82 +45,97 @@ class _StoreProfileState extends State<StoreProfile> {
             print(snapshot.data);
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;
-              return Container(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: Column(
-                  children: <Widget>[
-                    StoreCardWidget(
-                      name: resultTiendita.body.store.storeName,
-                      handle: resultTiendita.body.store.storeTagName,
-                      colorHex: resultTiendita.body.store.hexColor,
-                      image: resultTiendita.body.store.iconUrl,
-                      category: resultTiendita.body.store.categoryName,
-                      followers: null,
-                      provinceName: resultTiendita.body.store.provinceName,
-                      description: resultTiendita.body.store.description,
-                      originalStoreName:
-                          resultTiendita.body.store.originalStoreName,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        StoreCard(
-                          amount: resultTiendita.body.store.pendingBalance,
-                          description: "Saldo Retenido",
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        StoreCard(
-                          amount: resultTiendita.body.store.balance,
-                          description: "Saldo Disponible",
-                        ),
-                      ],
-                    ),
-                    ActionButton(
-                      iconName: "camion",
-                      description: "Pedidos",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => StoreOrders(
-                                      storeTagName: resultTiendita
-                                          .body.store.storeTagName,
-                                    )));
-                      },
-                    ),
-                    ActionButton(
-                      iconName: "my_products",
-                      description: "Mis Productos",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StoreInventory(
-                                storeTagName:
-                                    resultTiendita.body.store.storeTagName,
-                              ),
-                            ));
-                      },
-                    ),
-                    ActionButton(
-                      iconName: "camion",
-                      description: "Métodos de Envíos",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StoreDeliveryOptions(
-                                deliveryOptions:
-                                    resultTiendita.body.store.deliveryOptions,
-                                storeTagName:
-                                    resultTiendita.body.store.storeTagName,
-                              ),
-                            ));
-                      },
-                    ),
-                  ],
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: Column(
+                    children: <Widget>[
+                      StoreCardWidget(
+                        name: resultTiendita.body.store.storeName,
+                        handle: resultTiendita.body.store.storeTagName,
+                        colorHex: resultTiendita.body.store.hexColor,
+                        image: resultTiendita.body.store.iconUrl,
+                        category: resultTiendita.body.store.categoryName,
+                        followers: null,
+                        provinceName: resultTiendita.body.store.provinceName,
+                        description: resultTiendita.body.store.description,
+                        originalStoreName:
+                            resultTiendita.body.store.originalStoreName,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          StoreCard(
+                            amount: resultTiendita.body.store.pendingBalance,
+                            description: "Saldo Retenido",
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          StoreCard(
+                            amount: resultTiendita.body.store.balance,
+                            description: "Saldo Disponible",
+                          ),
+                        ],
+                      ),
+                      ActionButton(
+                        iconName: "camion",
+                        description: "Pedidos",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => StoreOrders(
+                                        storeTagName: resultTiendita
+                                            .body.store.storeTagName,
+                                      )));
+                        },
+                      ),
+                      ActionButton(
+                        iconName: "my_products",
+                        description: "Mis Productos",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StoreInventory(
+                                  storeTagName:
+                                      resultTiendita.body.store.storeTagName,
+                                ),
+                              ));
+                        },
+                      ),
+                      ActionButton(
+                        iconName: "camion",
+                        description: "Métodos de Envíos",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StoreDeliveryOptions(
+                                  deliveryOptions:
+                                      resultTiendita.body.store.deliveryOptions,
+                                  storeTagName:
+                                      resultTiendita.body.store.storeTagName,
+                                ),
+                              ));
+                        },
+                      ),
+                      ActionButton(
+                        iconName: "store_bw",
+                        description: "Editar Tienda",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditStore(
+                                  store: resultTiendita.body.store,
+                                ),
+                              ));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               );
             } else {

@@ -54,6 +54,7 @@ class Store {
     this.storeName,
     this.hexColor,
     this.storeStatus,
+    this.phoneNumber,
   });
 
   String originalStoreName;
@@ -68,6 +69,7 @@ class Store {
   String storeName;
   String hexColor;
   String storeStatus;
+  String phoneNumber;
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
       originalStoreName: json["original_store_name"],
@@ -81,7 +83,8 @@ class Store {
       pendingBalance: json["pending_balance"],
       storeName: json["store_name"],
       hexColor: json["hex_color"],
-      storeStatus: json["store_status"]
+      storeStatus: json["store_status"],
+      phoneNumber: json["phone_number"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,7 +99,8 @@ class Store {
     "pending_balance": pendingBalance,
     "store_name": storeName,
     "hex_color": hexColor,
-    "store_status":  storeStatus
+    "store_status":  storeStatus,
+    "phone_number": phoneNumber
   };
 }
 
