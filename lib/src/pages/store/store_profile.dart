@@ -27,8 +27,7 @@ class _StoreProfileState extends State<StoreProfile> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(35),
-              bottomRight: Radius.circular(35)
-          ),
+              bottomRight: Radius.circular(35)),
         ),
         centerTitle: true,
         toolbarHeight: 100,
@@ -41,6 +40,8 @@ class _StoreProfileState extends State<StoreProfile> {
       body: FutureBuilder(
           future: StoreProvider().getStoreInfo(context, userInfo.stores[0]),
           builder: (BuildContext context, snapshot) {
+            print(snapshot.hasData);
+            print(snapshot.data);
             if (snapshot.hasData) {
               resultTiendita = snapshot.data;
               return Container(
@@ -56,7 +57,8 @@ class _StoreProfileState extends State<StoreProfile> {
                       followers: null,
                       provinceName: resultTiendita.body.store.provinceName,
                       description: resultTiendita.body.store.description,
-                      originalStoreName: resultTiendita.body.store.originalStoreName,
+                      originalStoreName:
+                          resultTiendita.body.store.originalStoreName,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -81,11 +83,10 @@ class _StoreProfileState extends State<StoreProfile> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StoreOrders(
-                                storeTagName: resultTiendita.body.store.storeTagName,
-                              )
-                            )
-                        );
+                                builder: (context) => StoreOrders(
+                                      storeTagName: resultTiendita
+                                          .body.store.storeTagName,
+                                    )));
                       },
                     ),
                     ActionButton(
@@ -96,10 +97,10 @@ class _StoreProfileState extends State<StoreProfile> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => StoreInventory(
-                                storeTagName: resultTiendita.body.store.storeTagName,
+                                storeTagName:
+                                    resultTiendita.body.store.storeTagName,
                               ),
-                            )
-                        );
+                            ));
                       },
                     ),
                     ActionButton(
@@ -110,11 +111,12 @@ class _StoreProfileState extends State<StoreProfile> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => StoreDeliveryOptions(
-                                deliveryOptions: resultTiendita.body.store.deliveryOptions,
-                                storeTagName: resultTiendita.body.store.storeTagName,
+                                deliveryOptions:
+                                    resultTiendita.body.store.deliveryOptions,
+                                storeTagName:
+                                    resultTiendita.body.store.storeTagName,
                               ),
-                            )
-                        );
+                            ));
                       },
                     ),
                   ],
@@ -128,8 +130,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 ),
               );
             }
-          }
-      ),
+          }),
     );
   }
 }
@@ -154,32 +155,28 @@ class StoreCard extends StatelessWidget {
         ),
         color: Colors.white,
         child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
+          child: Column(children: <Widget>[
+            Text(
+              "\$ $amount",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Nunito"),
             ),
-            child: Column(
-                children: <Widget>[
-                  Text(
-                    "\$ $amount",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Nunito"
-                    ),
-                  ),
-                  Text(
-                    "$description",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: "Nunito"
-                    ),
-                  ),
-                ]
+            Text(
+              "$description",
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "Nunito"),
             ),
+          ]),
         ),
       ),
     );
@@ -209,9 +206,7 @@ class ActionButton extends StatelessWidget {
             Image(
               width: 40,
               height: 40,
-              image: AssetImage(
-                  "assets/images/icons/$iconName.png"
-              ),
+              image: AssetImage("assets/images/icons/$iconName.png"),
             ),
             SizedBox(
               width: 10,
@@ -222,8 +217,7 @@ class ActionButton extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
-                  fontFamily: "Nunito"
-              ),
+                  fontFamily: "Nunito"),
             )
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/pages/login_page.dart';
 import 'package:app_tiendita/src/pages/store_front.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,12 +74,30 @@ class _HomePageState extends State<HomePage> {
         return CartPage();
       case 2:
         if (Provider.of<LoginState>(context).isAnon()) {
-          return NewUserSignUpPage();
+          return LoginPage();
         }
         return ProfilePage();
 
       default:
         return StoreFrontPage();
     }
+  }
+
+  _showDialog(BuildContext context, String message) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Listo"),
+                onPressed: () {
+                  return LoginPage();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

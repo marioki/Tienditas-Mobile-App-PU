@@ -132,77 +132,72 @@ class ProductItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.symmetric(
-          vertical: 8,
-        ),
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.only(
-              top: 10,
-              bottom: 10,
-              left: 5
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.symmetric(
+            vertical: 8,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FlatButton(
-                onPressed: onPressed,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Image(
-                          width: 70,
-                          height: 70,
-                          image: NetworkImage(
-                              "$imageUrl"
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          color: Colors.white,
+          child: Container(
+            padding: EdgeInsets.only(
+                top: 8,
+                bottom: 8,
+                left: 16
+            ),
+            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Image(
+                            width: 70,
+                            height: 70,
+                            image: NetworkImage(
+                                "$imageUrl"
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        "$itemName",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"
+                        Text(
+                          "$itemName",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Nunito"
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Precio: $price",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
+                        Text(
+                          "Precio: $price",
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "Nunito"
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Cantidad disponible: $quantity",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
+                        Text(
+                          "Cantidad disponible: $quantity",
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "Nunito"
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                    ]
-                ),
-              ),
-            ],
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ]
+                  ),
           ),
         ),
       ),
