@@ -2,7 +2,7 @@ import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/store/create_store.dart';
 import 'package:app_tiendita/src/pages/store/store_profile.dart';
 import 'package:app_tiendita/src/pages/user/user_address_page.dart';
-import 'package:app_tiendita/src/pages/user/user_orders_page.dart';
+import 'package:app_tiendita/src/pages/user/user_batch_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -86,12 +86,73 @@ class _ProfilePageState extends State<ProfilePage> {
                     phoneNumber: userInfo.phoneNumber,
                     image: "userInfo",
                   ),
-                  _buildMyOrdersBtn(),
-                  _buildMyAddressBtn(),
-                  _buildPaymentMethodBtn(),
-                  _buildPaymentHistoryBtn(),
-                  _buildHelpBtn(),
-                  _buildLogoutBtn(),
+                  UserProfileActionBtn(
+                    text: "Mis Ordenes",
+                    imageName: "camion",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserBatchPage(
+                            userEmail: userInfo.userEmail,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Mis Direcciones",
+                    imageName: "navegador",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserAddressPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Métodos de Pago",
+                    imageName: "pago",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserBatchPage(
+                            userEmail: userInfo.userEmail,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Pagos Recibidos",
+                    imageName: "ayuda",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserPaymentMethod(),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Ayuda",
+                    imageName: "ayuda",
+                    onPressed: () {
+                      print("funciona");
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Cerrar Sesión",
+                    imageName: "ayuda",
+                    onPressed: () {
+                      Provider.of<LoginState>(context).logout();
+                      print("Logout");
+                    },
+                  ),
                   SizedBox(height: 100),
                 ],
               ),
@@ -102,308 +163,60 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildMenuBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 30.0,
-        width: 30.0,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMyOrdersBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UserOrdersPage(),
-            ),
-          );
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/camion.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Mis Órdenes',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMyAddressBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UserAddressPage(),
-            ),
-          );
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/navegador.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Direcciones',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPaymentMethodBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UserPaymentMethod(),
-            ),
-          );
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/pago.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Métodos de Pago',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHelpBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          print("pressed my orders");
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/ayuda.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Ayuda',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLogoutBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Provider.of<LoginState>(context).logout();
-          print("Logout");
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/ayuda.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Cerrar sesión',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPaymentHistoryBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          print("pressed my orders");
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              width: 16,
-            ),
-            _buildMenuBtn(
-              () => print('Login with Facebook'),
-              AssetImage(
-                'assets/images/icons/ayuda.png',
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Pagos Recibidos',
-              style: TextStyle(
-                color: azulTema,
-                letterSpacing: 1.5,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Future _getThingsOnStartup() async {
     await Future.sync(() => null);
   }
+}
+
+class UserProfileActionBtn extends StatelessWidget {
+  UserProfileActionBtn({this.text, this.imageName, this.onPressed});
+  final String text;
+  final String imageName;
+  final Function onPressed;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: onPressed,
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 16,
+            ),
+            Image(
+              height: 30,
+              width: 30,
+              image: AssetImage(
+                'assets/images/icons/$imageName.png',
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Text(
+              '$text',
+              style: TextStyle(
+                color: azulTema,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Nunito',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
-Batch batchFromJson(String str) => Batch.fromJson(json.decode(str));
+BatchResult batchFromJson(String str) => BatchResult.fromJson(json.decode(str));
 
 String batchToJson(Batch data) => json.encode(data.toJson());
 

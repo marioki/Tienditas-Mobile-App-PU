@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/store/order_model.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
@@ -261,93 +260,74 @@ class UserOrderInfo extends StatelessWidget {
           height: 15,
         ),
         Container(
-          padding: EdgeInsets.only(left: 10, right: 10),
           width: double.infinity,
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.symmetric(
-              vertical: 8,
+          padding: EdgeInsets.only(left: 15),
+          child: Text(
+            "Estado de la orden: ${order.orderStatus}",
+            style: TextStyle(
+                color:Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+                fontFamily: "Nunito"
             ),
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(left: 15),
+          child: Text(
+            "Productos",
+            style: TextStyle(
+                color: Color(0xFF191660),
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+                fontFamily: "Nunito"
             ),
-            color: Colors.white,
-            child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      "Estado de la orden: ${order.orderStatus}",
-                      style: TextStyle(
-                          color:Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: "Nunito"
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      "Productos",
-                      style: TextStyle(
-                          color: Color(0xFF191660),
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: "Nunito"
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    shrinkWrap: true,
-                    itemCount: order.orderElements.length,
-                    separatorBuilder: (context, index) => Divider(
-                      color: Colors.black,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${order.orderElements[index].itemName} x ${order.orderElements[index].quantity}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: "Nunito"
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
+          ),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.only(left: 8, right: 12),
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              margin: EdgeInsets.symmetric(
+                vertical: 8,
+              ),
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: Colors.white,
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: order.orderElements.length,
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.black,
+                ),
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            OrderElementCard(
+                              orderElement: order.orderElements[index],
                             ),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                ],
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
+            ),
           ),
         ),
       ],
@@ -355,6 +335,47 @@ class UserOrderInfo extends StatelessWidget {
   }
 }
 
+class OrderElementCard extends StatelessWidget {
+  OrderElementCard({this.orderElement});
+  final OrderElement orderElement;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      padding: EdgeInsets.only(
+          top: 8,
+          bottom: 8,
+          left: 16
+      ),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "${orderElement.itemName}",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Nunito"
+              ),
+            ),
+            Text(
+              "Cantidad ordenada: ${orderElement.quantity}",
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "Nunito"
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ]
+      ),
+    );
+  }
+}
 
 class ItemStatusOptions {
   ItemStatusOptions({this.option});
