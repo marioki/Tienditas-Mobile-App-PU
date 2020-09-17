@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/send_order.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
@@ -246,10 +247,21 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       Provider.of<UserCartState>(context).currentBatch;
                   var response = await SendBatchOfOrders()
                       .sendBatchOfOrders(firebaseUser, userTokenId, _batch);
+                  final responseTienditasApi = responseFromJson(response.body);
                   //Comprueba que la respuesta fue exitosa
                   if (response.statusCode == 200) {
                     await pr.hide();
                     //Aqui comprobar que la compra fue exitosa
+                    if (responseTienditasApi.statusCode == 200) {
+                      print(responseTienditasApi.body.message);
+                    } else {
+                      // Orden Fallida
+                      print(
+                          'orden fallo con codigo ${responseTienditasApi.body.message}');
+                    }
+                  } else {
+                    //Error de conexion
+                    print('Error de conexión ${response.statusCode}');
                   }
                 },
                 color: azulTema,
