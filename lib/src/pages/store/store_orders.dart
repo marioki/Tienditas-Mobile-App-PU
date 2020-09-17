@@ -98,67 +98,62 @@ class OrderItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.symmetric(
-          vertical: 8,
-        ),
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.only(
-              top: 10,
-              bottom: 10,
-              left: 5
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.symmetric(
+            vertical: 8,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              FlatButton(
-                onPressed: onPressed,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Pedido para $userName",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"
-                        ),
-                      ),
-                      Text(
-                        "Hora del pedido: $orderDate",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Total: $amount",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ]
-                ),
-              ),
-            ],
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          color: Colors.white,
+          child: Container(
+            padding: EdgeInsets.only(
+                top: 16,
+                bottom: 16,
+                left: 16
+            ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Pedido para $userName",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito"
+                    ),
+                  ),
+                  Text(
+                    "Hora del pedido: $orderDate",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Total: $amount",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ]
+            ),
           ),
         ),
       ),
