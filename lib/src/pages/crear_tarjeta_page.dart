@@ -111,7 +111,8 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
 
   void onCreditCardModelChange(CreditCardModel creditCardModel) {
     setState(() {
-      cardNumber = creditCardModel.cardNumber;
+      cardNumber =
+          creditCardModel.cardNumber.replaceAll(new RegExp(r"\s+"), "");
       expiryDate = creditCardModel.expiryDate;
       cardHolderName = creditCardModel.cardHolderName;
       cvvCode = creditCardModel.cvvCode;
@@ -126,12 +127,16 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
       expirationDate: expiryDate,
       number: cardNumber,
     );
+
+    //print(newCard.number);
+
     final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
     final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
     var response = await CreateNewCreditCard()
         .sendNewCreditCard(firebaseUser, userTokenId, newCard);
     if (response.statusCode == 200) {
-      ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+      ResponseTienditasApi responseTienditasApi =
+          responseFromJson(response.body);
       if (responseTienditasApi.statusCode == 200) {
         print(responseTienditasApi.body.message);
         isLoading = false;
