@@ -118,9 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UserBatchPage(
-                            userEmail: userInfo.userEmail,
-                          ),
+                          builder: (context) => UserPaymentMethod(),
                         ),
                       );
                     },
@@ -129,12 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: "Pagos Recibidos",
                     imageName: "ayuda",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserPaymentMethod(),
-                        ),
-                      );
+                      print("pagos");
                     },
                   ),
                   UserProfileActionBtn(
