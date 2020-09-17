@@ -129,6 +129,8 @@ class UserCartState with ChangeNotifier {
     //Todo Borrar todos los productos del carrito
     cartProductList.clear();
     cartItemsIds.clear();
+    storeTagsListFiltered.clear();
+    allStoreTagsList.clear();
   }
 
   List<String> filterParentStoreTagList() {

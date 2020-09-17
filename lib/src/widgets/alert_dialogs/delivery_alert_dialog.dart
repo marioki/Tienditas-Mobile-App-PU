@@ -56,6 +56,7 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
               onPressed: () {
                 setState(() {
                   selectedRadio = index;
+                  optionIsSelected = true;
                 });
               },
               child: Row(
