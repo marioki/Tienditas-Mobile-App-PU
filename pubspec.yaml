@@ -36,6 +36,8 @@ dependencies:
   flutter_webview_plugin: ^0.3.10+1
   progress_dialog: ^1.2.4
   credit_card: 0.1.6
+  progress_dialog: ^1.2.4
+
 
 dev_dependencies:
   flutter_test:
