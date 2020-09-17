@@ -21,6 +21,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
 //For showing progress percentage
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+    pr.style(message: 'Finalizando Compra...');
 
     List<DeliveryOption> deliveryOptionList =
         Provider.of<UserCartState>(context).getListOfDeliveryInfo();
