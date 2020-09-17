@@ -118,7 +118,12 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            groupRadio = index;
+            print(groupRadio);
+          });
+        },
         child: ListTile(
           title: Row(
             children: <Widget>[
