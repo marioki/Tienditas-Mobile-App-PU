@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/pages/orden_exitosa_page.dart';
 import 'package:app_tiendita/src/providers/send_order.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
@@ -254,7 +255,12 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     await pr.hide();
                     //Aqui comprobar que la compra fue exitosa
                     if (responseTienditasApi.statusCode == 200) {
+                      //La compra fue exitosa
                       print(responseTienditasApi.body.message);
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return OrdenExitosaPage();
+                      }), (route) => false);
                     } else {
                       // Orden Fallida
                       print(
