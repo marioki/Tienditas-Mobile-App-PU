@@ -31,10 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         elevation: 0,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(35),
-                bottomRight: Radius.circular(35)
-            ),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(35),
+              bottomRight: Radius.circular(35)),
         ),
         centerTitle: true,
         toolbarHeight: 100,
@@ -48,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Image.asset('assets/images/icons/tienda.png'),
             padding: EdgeInsets.only(right: 16.0),
             onPressed: () {
-              if(userInfo.stores.length > 0) {
+              if (userInfo.stores.length > 0) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/pages/orden_exitosa_page.dart';
 import 'package:app_tiendita/src/providers/send_order.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
@@ -21,6 +22,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
 //For showing progress percentage
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+    pr.style(message: 'Finalizando Compra...');
 
     List<DeliveryOption> deliveryOptionList =
         Provider.of<UserCartState>(context).getListOfDeliveryInfo();
@@ -94,13 +96,26 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                                   shrinkWrap: true,
                                   itemCount: order.elements.length,
                                   itemBuilder: (context, index) {
-                                    return Text(
-                                      '- ${order.elements[index].productName}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontFamily: 'Nunito'),
+                                    return Row(
+                                      children: [
+                                        Text('- '),
+                                        Text(
+                                          '${order.elements[index].quantity} x ',
+                                          style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontFamily: 'Nunito'),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            '${order.elements[index].productName}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontFamily: 'Nunito'),
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -173,7 +188,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Impuesto 7%',
+                        'ITBMS 7%',
                         style: TextStyle(fontFamily: 'Nunito'),
                       ),
                       Container(
@@ -253,7 +268,16 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     await pr.hide();
                     //Aqui comprobar que la compra fue exitosa
                     if (responseTienditasApi.statusCode == 200) {
+                      //La compra fue exitosa
                       print(responseTienditasApi.body.message);
+                      //Limpiar el Carrito
+                      Provider.of<UserCartState>(context).deleteAllCartItems();
+                      Provider.of<UserCartState>(context)
+                          .calculateTotalPriceOfCart();
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return OrdenExitosaPage();
+                      }), (route) => false);
                     } else {
                       // Orden Fallida
                       print(

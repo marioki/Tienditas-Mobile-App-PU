@@ -14,26 +14,26 @@ class StoresByCategory extends StatelessWidget {
     final CategoryElement args = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35))),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Column(children: <Widget>[
+      appBar: AppBar(
+        toolbarHeight: 100,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        backgroundColor: azulTema,
+        title: Column(
+          children: [
             Text(
-              capitalize(args.categoryName),
-              style: TextStyle(fontSize: 24),
+              args.categoryName,
+              style: appBarStyle,
             ),
             Text(
               'Categoria',
               style: TextStyle(fontSize: 10),
             ),
-          ]),
+          ],
         ),
       ),
       body: Column(
@@ -73,7 +73,8 @@ class StoresByCategory extends StatelessWidget {
 //          ),
           SearchBarWidget(),
           FutureBuilder(
-            future: StoreProvider().getTienditasPorCategoria(args.categoryName, context),
+            future: StoreProvider()
+                .getTienditasPorCategoria(args.categoryName, context),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 print(snapshot.data);

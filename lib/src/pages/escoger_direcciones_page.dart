@@ -118,7 +118,12 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: FlatButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            groupRadio = index;
+            print(groupRadio);
+          });
+        },
         child: ListTile(
           title: Row(
             children: <Widget>[
@@ -170,6 +175,6 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         province: address.province,
         referencePoint: address.referencePoint);
 
-    Provider.of<UserCartState>(context).setUserAddresToOrders(userAddress);
+    Provider.of<UserCartState>(context).setUserAddressToOrders(userAddress);
   }
 }

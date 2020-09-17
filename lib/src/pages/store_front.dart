@@ -19,47 +19,52 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    return Container(
-      color: azulTema,
-      child: SafeArea(
-        bottom: false,
-        child: Scaffold(
-          appBar: getCustomAppBar(),
-          resizeToAvoidBottomInset: false,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //Lista componentes desde aqui
-              //Custom App Bar ==========
-              //Contenedor de Categorias
-              ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                leading: Text('Categorías', style: storeSubtitles),
-                trailing: FlatButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'categories_page',
-                        arguments: myCategory);
-                  },
-                  child: Text(
-                    'Ver Todas',
-                    style: storeOptions,
+    return WillPopScope(
+      onWillPop: () {
+        return _onBackPressed(context);
+      },
+      child: Container(
+        color: azulTema,
+        child: SafeArea(
+          bottom: false,
+          child: Scaffold(
+            appBar: getCustomAppBar(),
+            resizeToAvoidBottomInset: false,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //Lista componentes desde aqui
+                //Custom App Bar ==========
+                //Contenedor de Categorias
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  leading: Text('Categorías', style: storeSubtitles),
+                  trailing: FlatButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'categories_page',
+                          arguments: myCategory);
+                    },
+                    child: Text(
+                      'Ver Todas',
+                      style: storeOptions,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                //Category List Row Container
-                height: 110,
-                child: _carruselDeCategorias(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                margin: EdgeInsets.only(bottom: 10, top: 16),
-                child: Text('Sugerencias para ti', style: storeSubtitles),
-              ),
-              Expanded(
-                child: getTiendasListViewBuilder(),
-              )
-            ],
+                Container(
+                  //Category List Row Container
+                  height: 110,
+                  child: _carruselDeCategorias(),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  margin: EdgeInsets.only(bottom: 10, top: 16),
+                  child: Text('Sugerencias para ti', style: storeSubtitles),
+                ),
+                Expanded(
+                  child: getTiendasListViewBuilder(),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -209,6 +214,32 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<bool> _onBackPressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('¿Cerrar la aplicacion??'),
+          content: Text('Perderas los articulos en tu carrito...'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('No'),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text('Sí'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
