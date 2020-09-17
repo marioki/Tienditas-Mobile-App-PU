@@ -108,12 +108,12 @@ class Order {
       );
 
   Map<String, dynamic> toJson() => {
-        "amount": amount,
-        "store_tag_name": storeTagName,
-        "elements": List<dynamic>.from(elements.map((x) => x.toJson())),
-        "user_address": userAddress.toJson(),
-        "delivery_option": deliveryOption.toJson(),
-      };
+    "amount": amount,
+    "store_tag_name": storeTagName,
+    "elements": List<dynamic>.from(elements.map((x) => x.toJson())),
+    "user_address": userAddress.toJson(),
+    "delivery_option": deliveryOption.toJson(),
+  };
 }
 
 class BatchOrderDeliveryOption {
@@ -135,19 +135,19 @@ class BatchOrderDeliveryOption {
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "fee": fee,
-        "method": method,
-      };
+    "name": name,
+    "fee": fee,
+    "method": method,
+  };
 }
 
 class ProductItem {
   ProductItem(
       {this.itemId,
-      this.quantity,
-      //Added for resmuen display of products
-      this.productName,
-      this.itemPrice});
+        this.quantity,
+        //Added for resmuen display of products
+        this.productName,
+        this.itemPrice});
 
   String itemId;
   String quantity;
@@ -183,18 +183,18 @@ class UserAddress {
   String phoneNumber;
 
   factory UserAddress.fromJson(Map<String, dynamic> json) => UserAddress(
-        addressLine1: json["address_line_1"],
-        referencePoint: json["reference_point"],
-        country: json["country"],
-        province: json["province"],
-        phoneNumber: json["phone_number"],
-      );
+    addressLine1: json["address_line_1"],
+    referencePoint: json["reference_point"],
+    country: json["country"],
+    province: json["province"],
+    phoneNumber: json["phone_number"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "address_line_1": addressLine1,
-        "reference_point": referencePoint,
-        "country": country,
-        "province": province,
-        "phone_number": phoneNumber,
-      };
+    "address_line_1": addressLine1,
+    "reference_point": referencePoint,
+    "country": country,
+    "province": province,
+    "phone_number": phoneNumber,
+  };
 }
