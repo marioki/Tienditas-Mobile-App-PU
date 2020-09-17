@@ -15,16 +15,15 @@ class BatchResult {
   int statusCode;
   Body body;
 
-  factory BatchResult.fromJson(Map<String, dynamic> json) =>
-      BatchResult(
+  factory BatchResult.fromJson(Map<String, dynamic> json) => BatchResult(
         statusCode: json["statusCode"],
         body: Body.fromJson(json["body"]),
       );
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "body": body.toJson(),
-  };
+        "statusCode": statusCode,
+        "body": body.toJson(),
+      };
 }
 
 class Body {
@@ -35,12 +34,12 @@ class Body {
   Batch batch;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-    batch: Batch.fromJson(json["batch"]),
-  );
+        batch: Batch.fromJson(json["batch"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "batch": batch.toJson(),
-  };
+        "batch": batch.toJson(),
+      };
 }
 
 class Batch {
@@ -63,24 +62,24 @@ class Batch {
   List<Order> orders;
 
   factory Batch.fromJson(Map<String, dynamic> json) => Batch(
-    totalAmount: json["total_amount"],
-    creditCardId: json["credit_card_id"],
-    paymentMethod: json["payment_method"],
-    userName: json["user_name"],
-    userEmail: json["user_email"],
-    phoneNumber: json["phone_number"],
-    orders: List<Order>.from(json["orders"].map((x) => Order.fromJson(x))),
-  );
+        totalAmount: json["total_amount"],
+        creditCardId: json["credit_card_id"],
+        paymentMethod: json["payment_method"],
+        userName: json["user_name"],
+        userEmail: json["user_email"],
+        phoneNumber: json["phone_number"],
+        orders: List<Order>.from(json["orders"].map((x) => Order.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "total_amount": totalAmount,
-    "credit_card_id": creditCardId,
-    "payment_method": paymentMethod,
-    "user_name": userName,
-    "user_email": userEmail,
-    "phone_number": phoneNumber,
-    "orders": List<dynamic>.from(orders.map((x) => x.toJson())),
-  };
+        "total_amount": totalAmount,
+        "credit_card_id": creditCardId,
+        "payment_method": paymentMethod,
+        "user_name": userName,
+        "user_email": userEmail,
+        "phone_number": phoneNumber,
+        "orders": List<dynamic>.from(orders.map((x) => x.toJson())),
+      };
 }
 
 class Order {
@@ -104,7 +103,8 @@ class Order {
         elements: List<ProductItem>.from(
             json["elements"].map((x) => ProductItem.fromJson(x))),
         userAddress: UserAddress.fromJson(json["user_address"]),
-        deliveryOption: BatchOrderDeliveryOption.fromJson(json["delivery_option"]),
+        deliveryOption:
+            BatchOrderDeliveryOption.fromJson(json["delivery_option"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -127,7 +127,8 @@ class BatchOrderDeliveryOption {
   String fee;
   String method;
 
-  factory BatchOrderDeliveryOption.fromJson(Map<String, dynamic> json) => BatchOrderDeliveryOption(
+  factory BatchOrderDeliveryOption.fromJson(Map<String, dynamic> json) =>
+      BatchOrderDeliveryOption(
         name: json["name"],
         fee: json["fee"],
         method: json["method"],
@@ -156,11 +157,13 @@ class ProductItem {
   factory ProductItem.fromJson(Map<String, dynamic> json) => ProductItem(
         itemId: json["item_id"],
         quantity: json["quantity"],
+        productName: json["item_name"],
       );
 
   Map<String, dynamic> toJson() => {
         "item_id": itemId,
         "quantity": quantity,
+        "item_name": productName,
       };
 }
 

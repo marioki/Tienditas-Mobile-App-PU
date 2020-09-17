@@ -194,6 +194,8 @@ class UserCartState with ChangeNotifier {
                 ),
               );
         }
+        //Probando item name
+        print(cartProductList[itemIndex].itemName);
       }
       _orderList[orderIndex].elements.forEach((productItem) {
         orderAmountCounter += productItem.itemPrice;
