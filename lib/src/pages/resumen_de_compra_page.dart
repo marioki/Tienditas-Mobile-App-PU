@@ -257,6 +257,10 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     if (responseTienditasApi.statusCode == 200) {
                       //La compra fue exitosa
                       print(responseTienditasApi.body.message);
+                      //Limpiar el Carrito
+                      Provider.of<UserCartState>(context).deleteAllCartItems();
+                      Provider.of<UserCartState>(context)
+                          .calculateTotalPriceOfCart();
                       Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return OrdenExitosaPage();
