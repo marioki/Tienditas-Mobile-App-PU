@@ -96,13 +96,26 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                                   shrinkWrap: true,
                                   itemCount: order.elements.length,
                                   itemBuilder: (context, index) {
-                                    return Text(
-                                      '- ${order.elements[index].productName}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontFamily: 'Nunito'),
+                                    return Row(
+                                      children: [
+                                        Text('- '),
+                                        Text(
+                                          '${order.elements[index].quantity} x ',
+                                          style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontFamily: 'Nunito'),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            '${order.elements[index].productName}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontFamily: 'Nunito'),
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -175,7 +188,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Impuesto 7%',
+                        'ITBMS 7%',
                         style: TextStyle(fontFamily: 'Nunito'),
                       ),
                       Container(

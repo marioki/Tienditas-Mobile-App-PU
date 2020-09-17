@@ -115,7 +115,6 @@ class UserCartState with ChangeNotifier {
   }
 
   calculateTotalPriceOfCart() {
-    //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
       _totalPrice += double.parse(element.finalPrice) * element.cartItemAmount;
@@ -196,11 +195,9 @@ class UserCartState with ChangeNotifier {
                 ),
               );
         }
-        //Probando item name
-        print(cartProductList[itemIndex].itemName);
       }
       _orderList[orderIndex].elements.forEach((productItem) {
-        orderAmountCounter += productItem.itemPrice;
+        orderAmountCounter += productItem.itemPrice * int.parse(productItem.quantity);
         _orderList[orderIndex].amount = orderAmountCounter.toStringAsFixed(2);
       });
     }
@@ -215,7 +212,7 @@ class UserCartState with ChangeNotifier {
     });
   }
 
-  setUserAddresToOrders(UserAddress address) {
+  setUserAddressToOrders(UserAddress address) {
     _orderList.forEach((order) {
       order.userAddress = address;
     });

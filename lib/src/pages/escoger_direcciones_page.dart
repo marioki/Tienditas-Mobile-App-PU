@@ -175,6 +175,6 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         province: address.province,
         referencePoint: address.referencePoint);
 
-    Provider.of<UserCartState>(context).setUserAddresToOrders(userAddress);
+    Provider.of<UserCartState>(context).setUserAddressToOrders(userAddress);
   }
 }
