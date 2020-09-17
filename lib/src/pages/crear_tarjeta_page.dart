@@ -1,12 +1,14 @@
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/user/crear_tarjeta_provider.dart';
+import 'package:app_tiendita/src/providers/user/user_card_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:credit_card/credit_card_model.dart';
 import 'package:credit_card/flutter_credit_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class CrearNuevaTarjeta extends StatefulWidget {
   @override
@@ -20,9 +22,22 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
   var cvvCode = '';
   var isCvvFocused = false;
   bool isLoading = false;
+  List<CreditCard> listCreditCard = [];
+  final _formKey = GlobalKey<FormState>();
+  var response;
+  ProgressDialog pr;
 
   @override
   Widget build(BuildContext context) {
+    pr = ProgressDialog(context);
+    pr.style(
+        message: 'Cargando...',
+        progressWidget: Container(
+          height: 400,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -91,7 +106,8 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
                         setState(() {
                           isLoading = true;
                         });
-                        await sendNewCard();
+                        await pr.show();
+                        await sendNewCard(context);
                       }
                     },
                     color: azulTema,
@@ -120,7 +136,8 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
     });
   }
 
-  Future<void> sendNewCard() async {
+  Future<void> sendNewCard(BuildContext context) async {
+    pr = ProgressDialog(context);
     CreditCard newCard = CreditCard(
       holderName: cardHolderName,
       cvv: cvvCode,
@@ -140,11 +157,34 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
       if (responseTienditasApi.statusCode == 200) {
         print(responseTienditasApi.body.message);
         isLoading = false;
+        pr.hide();
         Navigator.of(context).pop();
+        _showDialog(context, "Tarjeta Guardada");
       } else {
         print(responseTienditasApi.body.message);
         isLoading = false;
+        pr.hide();
+        Navigator.of(context).pop();
+        _showDialog(context, "No se pudo guardar tarjeta");
       }
     }
+  }
+
+  _showDialog(BuildContext context, String message) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Listo"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
