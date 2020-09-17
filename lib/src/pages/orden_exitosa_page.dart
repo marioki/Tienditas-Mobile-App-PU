@@ -5,31 +5,35 @@ class OrdenExitosaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.check_circle_outline,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Icon(
+            Icons.check_circle_outline,
+            color: Colors.green,
+            size: 200,
+          ),
+          Text('Compra Realizada!'),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35)),
               color: Colors.green,
-              size: 200,
-            ),
-            Text('Compra Confirmada!'),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: RaisedButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return HomePage();
-                  }));
-                },
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
               ),
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return HomePage();
+                }));
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
