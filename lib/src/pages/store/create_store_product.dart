@@ -126,14 +126,16 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           //   ),
                           // ),
                           GestureDetector(
-                            child: Image(
-                                image: loadedImg == null
-                                    ? AssetImage(
-                                        "assets/images/tienditas_placeholder.png")
-                                    : FileImage(loadedImg),
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.contain),
+                            child: loadedImg == null
+                                ? Icon(
+                                    Icons.add_a_photo,
+                                    size: 50,
+                                  )
+                                : Image(
+                                    image: FileImage(loadedImg),
+                                    width: 50,
+                                    height: 50,
+                                    fit: BoxFit.cover),
                             onTap: () {
                               return pickImageFromGallery(ImageSource.gallery);
                             },
@@ -151,7 +153,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         finalPrice,
                                         basePrice,
                                         quantity,
-                                        widget.storeTagName, itemImage64);
+                                        widget.storeTagName,
+                                        itemImage64);
                                 if (response.statusCode == 200) {
                                   ResponseTienditasApi responseTienditasApi =
                                       responseFromJson(response.body);
@@ -316,10 +319,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     setState(() {});
   }
 
-  void encodeImage(Io.File image) async{
-    final bytes =  image.readAsBytesSync();
-     itemImage64 =  base64Encode(bytes);
+  void encodeImage(Io.File image) async {
+    final bytes = image.readAsBytesSync();
+    itemImage64 = base64Encode(bytes);
     print(itemImage64);
-
   }
 }
