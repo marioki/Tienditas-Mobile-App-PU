@@ -96,7 +96,7 @@ class StoreProvider {
   }
 
   Future<http.Response> newDeliveryOption(String userIdToken, String storeTagName, String name, String method, String fee) async {
-    String _url = '$baseApiUrl/api/v1/update_store';
+    String _url = '$baseApiUrl/api/v1/store';
     var bodyData = {
       "store": {
         "store_tag_name": storeTagName,
@@ -108,7 +108,7 @@ class StoreProvider {
       }
     };
     String _body = jsonEncode(bodyData);
-    var response = await http.post(
+    var response = await http.put(
       _url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -120,7 +120,7 @@ class StoreProvider {
   }
 
   Future<http.Response> editDeliveryOption(String userIdToken, String storeTagName, String id, String name, String method, String fee) async {
-    String _url = '$baseApiUrl/api/v1/update_store';
+    String _url = '$baseApiUrl/api/v1/store';
     var bodyData = {
       "store": {
         "store_tag_name": storeTagName,
@@ -133,7 +133,7 @@ class StoreProvider {
       }
     };
     String _body = jsonEncode(bodyData);
-    var response = await http.post(
+    var response = await http.put(
       _url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
