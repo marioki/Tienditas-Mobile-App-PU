@@ -174,18 +174,21 @@ class UserAddress {
     this.country,
     this.referencePoint,
     this.province,
+    this.phoneNumber,
   });
 
   String addressLine1;
   String country;
   String referencePoint;
   String province;
+  String phoneNumber;
 
   factory UserAddress.fromJson(Map<String, dynamic> json) => UserAddress(
     addressLine1: json["address_line_1"],
     country: json["country"],
     referencePoint: json["reference_point"],
     province: json["province"],
+    phoneNumber: json["phone_number"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -193,5 +196,6 @@ class UserAddress {
     "country": country,
     "reference_point": referencePoint,
     "province": province,
+    "phone_number": phoneNumber
   };
 }

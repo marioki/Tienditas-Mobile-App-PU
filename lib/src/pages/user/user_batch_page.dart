@@ -35,7 +35,6 @@ class UserBatchPageState extends State<UserBatchPage> {
       body: FutureBuilder(
         future: UsuarioTienditasProvider().getUserOrders(Provider.of<LoginState>(context).currentUserIdToken, widget.userEmail),
         builder: (BuildContext context, snapshot) {
-          print(snapshot.hasData);
           if (snapshot.hasData) {
             UserOrderBatchModel batchResult = snapshot.data;
             if (batchResult.body.batches.length > 0) {
