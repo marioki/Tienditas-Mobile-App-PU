@@ -29,7 +29,7 @@ class ProductProvider {
   }
 
   Future<http.Response> updateProduct(
-      String userIdToken, ProductElement productElement) async {
+      {String userIdToken, ProductElement productElement}) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -53,8 +53,40 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> createProductWithImage({String userIdToken, itemName, finalPrice,
-      basePrice, quantity, storeTagName, itemImage}) async {
+  Future<http.Response> updateProductWithImage(
+      {String userIdToken, ProductElement productElement, itemImage}) async {
+    String _url = '$baseApiUrl/api/v1/product';
+    var bodyData = {
+      "product": {
+        "store_tag_name": productElement.storeTagName,
+        "item_id": productElement.itemId,
+        "base_price": productElement.basePrice,
+        "final_price": productElement.finalPrice,
+        "image": itemImage,
+        "item_name": productElement.itemName,
+        "quantity": productElement.quantity
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> createProductWithImage(
+      {String userIdToken,
+      itemName,
+      finalPrice,
+      basePrice,
+      quantity,
+      storeTagName,
+      itemImage}) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -79,8 +111,13 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> createProduct({String userIdToken, itemName, finalPrice,
-      basePrice, quantity, storeTagName}) async {
+  Future<http.Response> createProduct(
+      {String userIdToken,
+      itemName,
+      finalPrice,
+      basePrice,
+      quantity,
+      storeTagName}) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -103,5 +140,4 @@ class ProductProvider {
     );
     return response;
   }
-
 }

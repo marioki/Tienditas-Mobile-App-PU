@@ -13,7 +13,9 @@ import 'edit_store_product.dart';
 
 class StoreInventory extends StatefulWidget {
   StoreInventory({this.storeTagName});
+
   final String storeTagName;
+
   @override
   _StoreInventoryState createState() => _StoreInventoryState();
 }
@@ -32,8 +34,7 @@ class _StoreInventoryState extends State<StoreInventory> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(35),
-              bottomRight: Radius.circular(35)
-          ),
+              bottomRight: Radius.circular(35)),
         ),
         centerTitle: true,
         toolbarHeight: 100,
@@ -50,78 +51,78 @@ class _StoreInventoryState extends State<StoreInventory> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CreateStoreProduct(
-                        storeTagName: widget.storeTagName
-                    ),
-                  )
-              );
+                    builder: (context) =>
+                        CreateStoreProduct(storeTagName: widget.storeTagName),
+                  ));
             },
           )
         ],
       ),
       body: FutureBuilder(
-          future: ProductProvider().getStoreProducts(widget.storeTagName, context),
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.hasData) {
-              Product product = snapshot.data;
-              allProductsList = product.body.products;
-              print(allProductsList);
-              if (isSearching) {
-                finalListProductos = filteredProducts;
-              } else {
-                finalListProductos = allProductsList;
-              }
-              if(finalListProductos.length > 0) {
-                return ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  shrinkWrap: true,
-                  itemCount: finalListProductos.length,
-                  itemBuilder: (context, index) {
-                    return ProductItemCard(
-                      itemName: finalListProductos[index].itemName,
-                      price: finalListProductos[index].finalPrice,
-                      imageUrl: finalListProductos[index].imageUrl,
-                      quantity: finalListProductos[index].quantity,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditStoreInventory(
+        future:
+            ProductProvider().getStoreProducts(widget.storeTagName, context),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData) {
+            Product product = snapshot.data;
+            allProductsList = product.body.products;
+            print(allProductsList);
+            if (isSearching) {
+              finalListProductos = filteredProducts;
+            } else {
+              finalListProductos = allProductsList;
+            }
+            if (finalListProductos.length > 0) {
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                shrinkWrap: true,
+                itemCount: finalListProductos.length,
+                itemBuilder: (context, index) {
+                  return ProductItemCard(
+                    itemName: finalListProductos[index].itemName,
+                    price: finalListProductos[index].finalPrice,
+                    imageUrl: finalListProductos[index].imageUrl,
+                    quantity: finalListProductos[index].quantity,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditStoreInventory(
                                 storeTagName: widget.storeTagName,
-                                productElement: finalListProductos[index]
-                              ),
-                            )
-                        );
-                      },
-                    );
-                  },
-                );
-              } else {
-                return Container(
-                  height: 400,
-                  child: Center(
-                    child: Text(
-                      "Agregue productos"
-                    ),
-                  ),
-                );
-              }
+                                productElement: finalListProductos[index]),
+                          ));
+                    },
+                  );
+                },
+              );
             } else {
               return Container(
                 height: 400,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: Text("Agregue productos"),
                 ),
               );
             }
-          },
+          } else {
+            return Container(
+              height: 400,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     );
   }
 }
 
 class ProductItemCard extends StatelessWidget {
-  ProductItemCard({this.itemName, this.price, this.imageUrl, this.onPressed, this.quantity});
+  ProductItemCard(
+      {this.itemName,
+      this.price,
+      this.imageUrl,
+      this.onPressed,
+      this.quantity});
 
   final String itemName;
   final String price;
@@ -145,60 +146,50 @@ class ProductItemCard extends StatelessWidget {
           ),
           color: Colors.white,
           child: Container(
-            padding: EdgeInsets.only(
-                top: 8,
-                bottom: 8,
-                left: 16
-            ),
+            padding: EdgeInsets.only(top: 8, bottom: 8, left: 16),
             child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Image(
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "$imageUrl"
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "$itemName",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Nunito"
-                          ),
-                        ),
-                        Text(
-                          "Precio: $price",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Nunito"
-                          ),
-                        ),
-                        Text(
-                          "Cantidad disponible: $quantity",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 15,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: "Nunito"
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ]
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Image(
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.cover,
+                      image: NetworkImage("$imageUrl"),
+                    ),
                   ),
+                  Text(
+                    "$itemName",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito"),
+                  ),
+                  Text(
+                    "Precio: $price",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"),
+                  ),
+                  Text(
+                    "Cantidad disponible: $quantity",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ]),
           ),
         ),
       ),
