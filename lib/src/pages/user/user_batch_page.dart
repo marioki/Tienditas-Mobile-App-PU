@@ -68,10 +68,7 @@ class UserBatchPageState extends State<UserBatchPage> {
               );
             }
           } else {
-            return Container(
-              height: 400,
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -87,56 +84,54 @@ class UserOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.only(top: 8, bottom: 8),
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          color: Colors.white,
-          child: Container(
-            padding: EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 16),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Orden #${batch.batchId.substring(1, 8)}",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Nunito"),
-                    ),
-                    Text(
-                      "Total \$${batch.totalAmount}",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Nunito"),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Fecha: ${batch.batchDate}",
-                      style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          fontFamily: "Nunito"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.only(top: 8, bottom: 8),
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        color: Colors.white,
+        child: Container(
+          padding: EdgeInsets.only(top: 16, bottom: 16, left: 16, right: 16),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Orden #${batch.batchId.substring(1, 8)}",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito"),
+                  ),
+                  Text(
+                    "Total \$${batch.totalAmount}",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Nunito"),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    "Fecha: ${batch.batchDate}",
+                    style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: "Nunito"),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     name: userInfo.name,
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
-                    image: "userInfo",
+                    image: "https://devtalk.blender.org/uploads/default/original/2X/c/cbd0b1a6345a44b58dda0f6a355eb39ce4e8a56a.png",
                   ),
                   UserProfileActionBtn(
                     text: "Mis Ordenes",
