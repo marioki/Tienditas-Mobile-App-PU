@@ -10,14 +10,14 @@ import 'package:app_tiendita/src/constants/api_constants.dart';
 class ProductProvider {
   //Todo Traer productos por store usando uri constructor
 
-  Future<Product> getStoreProducts(String storeTagName, BuildContext context) async {
+  Future<Product> getStoreProducts(
+      String storeTagName, BuildContext context) async {
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
     final url = '$apiBaseUrl/api/v1/product?store_tag_name=$storeTagName';
 
-
-    final response = await http.get(url,
-        headers: {HttpHeaders.authorizationHeader: userIdToken});
+    final response = await http
+        .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
       print(response.body);
 
@@ -28,7 +28,8 @@ class ProductProvider {
     }
   }
 
-  Future<http.Response> updateProduct(String userIdToken, ProductElement productElement) async {
+  Future<http.Response> updateProduct(
+      String userIdToken, ProductElement productElement) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -52,13 +53,15 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> createProduct(String userIdToken, itemName, finalPrice, basePrice, quantity, storeTagName) async {
+  Future<http.Response> createProduct(String userIdToken, itemName, finalPrice,
+      basePrice, quantity, storeTagName, itemImage) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
         "store_tag_name": storeTagName,
         "base_price": basePrice,
         "final_price": finalPrice,
+        "image": itemImage,
         "item_name": itemName,
         "item_status": "entrega inmediata",
         "quantity": quantity

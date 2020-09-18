@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io' as Io;
+import 'dart:convert';
 
 import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
@@ -79,9 +80,11 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
 
   String quantity;
 
-  Future<File> imageFile;
+  Future<Io.File> imageFile;
 
-  File loadedImg;
+  Io.File loadedImg;
+
+  var itemImage64;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +151,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         finalPrice,
                                         basePrice,
                                         quantity,
-                                        widget.storeTagName);
+                                        widget.storeTagName, itemImage64);
                                 if (response.statusCode == 200) {
                                   ResponseTienditasApi responseTienditasApi =
                                       responseFromJson(response.body);
@@ -305,10 +308,18 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     });
   }
 
-  void loadImageFromGallery(File imageFile) async {
+  void loadImageFromGallery(Io.File imageFile) async {
     if (imageFile != null) {
       loadedImg = imageFile;
+      encodeImage(imageFile);
     }
     setState(() {});
+  }
+
+  void encodeImage(Io.File image) async{
+    final bytes =  image.readAsBytesSync();
+     itemImage64 =  base64Encode(bytes);
+    print(itemImage64);
+
   }
 }
