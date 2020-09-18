@@ -143,34 +143,74 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('Procesando')));
-                                response = await ProductProvider()
-                                    .createProduct(
+                                if (loadedImg != null) {
+                                  //Create product when image is loaded
+                                  Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text('Procesando')));
+                                  response = await ProductProvider()
+                                      .createProductWithImage(
+                                    quantity: quantity,
+                                    storeTagName: widget.storeTagName,
+                                    basePrice: basePrice,
+                                    finalPrice: finalPrice,
+                                    itemImage: itemImage64,
+                                    itemName: itemName,
+                                    userIdToken:
                                         Provider.of<LoginState>(context)
                                             .currentUserIdToken,
-                                        itemName,
-                                        finalPrice,
-                                        basePrice,
-                                        quantity,
-                                        widget.storeTagName,
-                                        itemImage64);
-                                if (response.statusCode == 200) {
-                                  ResponseTienditasApi responseTienditasApi =
-                                      responseFromJson(response.body);
-                                  if (responseTienditasApi.statusCode == 200) {
-                                    print(responseTienditasApi.body.message);
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            '${responseTienditasApi.body.message}'),
-                                      ),
-                                    );
-                                    isLoading = false;
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    print(responseTienditasApi.body.message);
-                                    isLoading = false;
+                                  );
+                                  if (response.statusCode == 200) {
+                                    ResponseTienditasApi responseTienditasApi =
+                                        responseFromJson(response.body);
+                                    if (responseTienditasApi.statusCode ==
+                                        200) {
+                                      print(responseTienditasApi.body.message);
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${responseTienditasApi.body.message}'),
+                                        ),
+                                      );
+                                      isLoading = false;
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      print(responseTienditasApi.body.message);
+                                      isLoading = false;
+                                    }
+                                  }
+                                } else {
+                                  //Create product when img is null
+                                  Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text('Procesando')));
+                                  response =
+                                      await ProductProvider().createProduct(
+                                    quantity: quantity,
+                                    storeTagName: widget.storeTagName,
+                                    basePrice: basePrice,
+                                    finalPrice: finalPrice,
+                                    itemName: itemName,
+                                    userIdToken:
+                                        Provider.of<LoginState>(context)
+                                            .currentUserIdToken,
+                                  );
+                                  if (response.statusCode == 200) {
+                                    ResponseTienditasApi responseTienditasApi =
+                                        responseFromJson(response.body);
+                                    if (responseTienditasApi.statusCode ==
+                                        200) {
+                                      print(responseTienditasApi.body.message);
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              '${responseTienditasApi.body.message}'),
+                                        ),
+                                      );
+                                      isLoading = false;
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      print(responseTienditasApi.body.message);
+                                      isLoading = false;
+                                    }
                                   }
                                 }
                               }

@@ -53,8 +53,8 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> createProduct(String userIdToken, itemName, finalPrice,
-      basePrice, quantity, storeTagName, itemImage) async {
+  Future<http.Response> createProductWithImage({String userIdToken, itemName, finalPrice,
+      basePrice, quantity, storeTagName, itemImage}) async {
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -78,4 +78,30 @@ class ProductProvider {
     );
     return response;
   }
+
+  Future<http.Response> createProduct({String userIdToken, itemName, finalPrice,
+      basePrice, quantity, storeTagName}) async {
+    String _url = '$baseApiUrl/api/v1/product';
+    var bodyData = {
+      "product": {
+        "store_tag_name": storeTagName,
+        "base_price": basePrice,
+        "final_price": finalPrice,
+        "item_name": itemName,
+        "item_status": "entrega inmediata",
+        "quantity": quantity
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
 }

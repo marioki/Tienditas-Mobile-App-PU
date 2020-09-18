@@ -161,6 +161,7 @@ class ProductItemCard extends StatelessWidget {
                           child: Image(
                             width: 70,
                             height: 70,
+                            fit: BoxFit.cover,
                             image: NetworkImage(
                                 "$imageUrl"
                             ),
