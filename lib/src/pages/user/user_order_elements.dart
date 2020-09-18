@@ -130,7 +130,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
               ),
             ),
           ),
-          Expanded(
+          Flexible(
             child: Container(
               padding: EdgeInsets.only(left: 8, right: 12),
               child: Card(
