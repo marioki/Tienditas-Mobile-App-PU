@@ -5,7 +5,6 @@ import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StoreFrontPage extends StatefulWidget {
@@ -81,6 +80,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         if (snapshot.hasData) {
           Tiendita miTienda = snapshot.data;
           return ListView.builder(
+            physics: BouncingScrollPhysics(),
             itemCount: miTienda.body.stores.length,
             padding: EdgeInsets.symmetric(horizontal: 24),
             shrinkWrap: true,
@@ -139,6 +139,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           if (snapshot.hasData) {
             myCategory = snapshot.data;
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               addAutomaticKeepAlives: true,
               scrollDirection: Axis.horizontal,
               itemCount: myCategory.body.category.length,
