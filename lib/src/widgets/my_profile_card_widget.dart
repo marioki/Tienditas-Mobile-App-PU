@@ -6,6 +6,7 @@ class MyProfileWidget extends StatelessWidget {
   final String email;
   final String image;
   final String phoneNumber;
+  final Function onPressed;
 
   const MyProfileWidget({
     Key key,
@@ -13,6 +14,7 @@ class MyProfileWidget extends StatelessWidget {
     @required this.email,
     @required this.image,
     @required this.phoneNumber,
+    @required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,6 @@ class MyProfileWidget extends StatelessWidget {
         horizontal: 8.0,
         vertical: 0.0,
       ),
-      //Todo: Cambiar el tamaño del widget usando MediaQuery
       child: Card(
         // clipBehavior: Clip.antiAlias,
         // margin: EdgeInsets.symmetric(
@@ -98,9 +99,7 @@ class MyProfileWidget extends StatelessWidget {
                             'Editar',
                             style: userProfileButtonEdit,
                           ),
-                          onPressed: () {
-                            print("Editar perfil");
-                          },
+                          onPressed: onPressed,
                         ),
                       ),
                     ],
