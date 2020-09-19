@@ -34,6 +34,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
             color: Colors.white,
             child: Column(
               children: <Widget>[
+                //Custom appBar
                 Container(
                   //margin: EdgeInsets.only(top: 24),
                   height: 100,
@@ -96,7 +97,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                               child: Text(
                                 args.originalStoreName,
                                 textAlign: TextAlign.start,
-                                maxLines: 2,
+                                maxLines: 1,
                                 style: storeTitleCardStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -106,13 +107,15 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                               args.storeTagName,
                               style: storeDetailsCardStyle,
                             ),
-                            Container(
-                              width: 200,
-                              child: Text(
-                                args.description,
-                                maxLines: 2,
-                                style: storeDetailsCardStyle,
-                                overflow: TextOverflow.ellipsis,
+                            Flexible(
+                              child: Container(
+                                width: 200,
+                                child: Text(
+                                  args.description,
+                                  maxLines: 2,
+                                  style: storeDetailsCardStyle,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                           ],
