@@ -329,11 +329,14 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     );
   }
 
-  pickImageFromGallery(ImageSource source) {
-    setState(() async {
+  pickImageFromGallery(ImageSource source) async{
+
       imageFile = ImagePicker.pickImage(source: source);
       loadImageFromGallery(await imageFile);
-    });
+      setState(() {
+
+      });
+
   }
 
   void loadImageFromGallery(Io.File imageFile) async {

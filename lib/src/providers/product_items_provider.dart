@@ -38,7 +38,7 @@ class ProductProvider {
         "base_price": productElement.basePrice,
         "final_price": productElement.finalPrice,
         "item_name": productElement.itemName,
-        "quantity": productElement.quantity
+        "quantity": productElement.quantity,
       }
     };
     String _body = jsonEncode(bodyData);
