@@ -74,7 +74,7 @@ class ProductItemCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  'dilibiry',
+                  purchaseType.toString(),
                   style: storeItemSubTitleStyle,
                 ),
                 SizedBox(
