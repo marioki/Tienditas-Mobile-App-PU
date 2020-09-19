@@ -122,6 +122,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                               child: Image(
                                 width: 90,
                                 height: 90,
+                                fit: BoxFit.cover,
                                 image: loadedImg == null
                                     ? NetworkImage(
                                         "${widget.productElement.imageUrl}")
@@ -142,7 +143,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         Provider.of<LoginState>(context)
                                             .currentUserIdToken,
                                     productElement: widget.productElement,
-                                    itemImage:  itemImage64,
+                                    itemImage: itemImage64,
                                   );
                                   if (response.statusCode == 200) {
                                     ResponseTienditasApi responseTienditasApi =
@@ -156,6 +157,10 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                               '${responseTienditasApi.body.message}'),
                                         ),
                                       );
+                                      //Clear Image Cahe
+
+                                      PaintingBinding.instance.imageCache
+                                          .clear();
                                       isLoading = false;
                                       Navigator.of(context).pop();
                                     } else {
@@ -329,14 +334,10 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     );
   }
 
-  pickImageFromGallery(ImageSource source) async{
-
-      imageFile = ImagePicker.pickImage(source: source);
-      loadImageFromGallery(await imageFile);
-      setState(() {
-
-      });
-
+  pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    loadImageFromGallery(await imageFile);
+    setState(() {});
   }
 
   void loadImageFromGallery(Io.File imageFile) async {
