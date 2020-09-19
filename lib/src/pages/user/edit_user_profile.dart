@@ -1,30 +1,25 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
-import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
-import 'package:app_tiendita/src/modelos/store/store_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
-import 'package:app_tiendita/src/providers/province_provider.dart';
-import 'package:app_tiendita/src/providers/store/store_provider.dart';
+import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EditStore extends StatefulWidget {
-  EditStore({this.store});
-  final Store store;
+class EditUserProfile extends StatefulWidget {
+  EditUserProfile({this.user});
+  User user;
   @override
-  _EditStoreState createState() => _EditStoreState();
+  _EditUserProfileState createState() => _EditUserProfileState();
 }
 
-class _EditStoreState extends State<EditStore> {
+class _EditUserProfileState extends State<EditUserProfile> {
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   var response;
-  List<String> _provinces = [
-    'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
-  ];
   List<String> _categories = [
     'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
   ];
@@ -43,7 +38,7 @@ class _EditStoreState extends State<EditStore> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          'Edita tu Tienda',
+          'Edita tu Perfil',
           style: appBarStyle,
         ),
       ),
@@ -84,7 +79,7 @@ class _EditStoreState extends State<EditStore> {
                                       height: 10,
                                     ),
                                     Text(
-                                      "Nombre de la tienda",
+                                      "Número de celular",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
@@ -93,55 +88,29 @@ class _EditStoreState extends State<EditStore> {
                                       ),
                                     ),
                                     TextFormField(
-                                      initialValue: widget.store.storeName,
+                                      initialValue: widget.user.phoneNumber,
                                       onChanged: (String value) {
-                                        widget.store.storeName = value;
-                                        print(widget.store.storeName);
+                                        widget.user.phoneNumber = value;
                                       },
                                       validator: (value) {
                                         if (value.isEmpty) {
-                                          return 'Ingresar nombre de la tienda';
+                                          return 'Ingresar número de celular';
                                         }
                                         return null;
                                       },
                                       decoration: InputDecoration(
                                           fillColor: Colors.white,
-                                          hintText: 'Mi Tienda'
+                                          hintText: '6123-4567'
                                       ),
                                     ),
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    Text(
-                                      "Tag de su tienda",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Nunito"
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      initialValue: widget.store.storeTagName,
-                                      onChanged: (String value) {
-                                        widget.store.storeTagName = value;
-                                      },
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Ingresar tag de su tienda';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          hintText: '@miTienda'
-                                      ),
-                                    ),
                                     SizedBox(
                                       height: 15,
                                     ),
                                     Text(
-                                      "Categoría",
+                                      "Preferencias",
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
@@ -162,11 +131,27 @@ class _EditStoreState extends State<EditStore> {
                                           return DropdownButtonHideUnderline(
                                             child: DropdownButton(
                                               hint:  Text("Seleccionar categoría"),
-                                              value: widget.store.categoryName,
                                               onChanged: (newValue) {
-                                                setState(() {
-                                                  widget.store.categoryName = newValue;
-                                                });
+                                                if (widget.user.preferences.contains(newValue)) {
+                                                  Scaffold.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          '$newValue ya se encuentra en sus preferencias'
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  Scaffold.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          '$newValue ha sido añadido a sus preferencias'
+                                                      ),
+                                                    ),
+                                                  );
+                                                  setState(() {
+                                                    widget.user.preferences.add(newValue);
+                                                  });
+                                                }
                                               },
                                               items: _categories.map((value) {
                                                 return new DropdownMenuItem(
@@ -195,112 +180,40 @@ class _EditStoreState extends State<EditStore> {
                                       },
                                     ),
                                     SizedBox(
-                                      height: 15,
+                                      height: 10,
                                     ),
-                                    Text(
-                                      "Descripción",
-                                      style: TextStyle(
+                                    Container(
+                                      height: 200,
+                                      child: ListView.separated(
+                                        separatorBuilder: (context, index) => Divider(
                                           color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Nunito"
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      initialValue: widget.store.description,
-                                      onChanged: (String value) {
-                                        widget.store.description = value;
-                                      },
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Ingresar descripción';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          hintText: 'una breve descripción y puede incluir emojies'
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      "Ubicación",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Nunito"
-                                      ),
-                                    ),
-                                    FutureBuilder(
-                                      future: ProvinceProvider().getAllProvinces(context),
-                                      builder: (BuildContext context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          ProvinceModel resultProvince = snapshot.data;
-                                          var provinces = resultProvince.body.province.provinces;
-                                          return DropdownButtonHideUnderline(
-                                            child: DropdownButton(
-                                              hint:  Text("Seleccionar ubicación"),
-                                              value: widget.store.provinceName,
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  widget.store.provinceName = newValue;
-                                                });
-                                              },
-                                              items: provinces.map((value) {
-                                                return new DropdownMenuItem(
-                                                  child: new Text(value),
-                                                  value: value,
-                                                );
-                                              }).toList(),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 15),
+                                        shrinkWrap: true,
+                                        itemCount: widget.user.preferences.length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                UserPreferenceCard(
+                                                  name: widget.user.preferences[index],
+                                                  onPressed: () {
+                                                    Scaffold.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'ha eliminado ${widget.user.preferences[index]} de sus preferencias'
+                                                        ),
+                                                      ),
+                                                    );
+                                                    setState(() {
+                                                      widget.user.preferences.removeAt(index);
+                                                    });
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           );
-                                        } else {
-                                          return DropdownButtonHideUnderline(
-                                            child: DropdownButton(
-                                              hint:  Text("Seleccionar ubicación"),
-                                              onChanged: (newValue) {
-                                                print(newValue);
-                                              },
-                                              items: _provinces.map((value) {
-                                                return new DropdownMenuItem(
-                                                  child: new Text(value),
-                                                  value: value,
-                                                );
-                                              }).toList(),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      "Teléfono de contacto",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Nunito"
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      initialValue: widget.store.phoneNumber,
-                                      onChanged: (String value) {
-                                        widget.store.phoneNumber = value;
-                                      },
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'Ingresar teléfono';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          hintText: '6123-4567'
+                                        },
                                       ),
                                     ),
                                     SizedBox(
@@ -311,31 +224,16 @@ class _EditStoreState extends State<EditStore> {
                                       child: RaisedButton(
                                         onPressed: () async {
                                           if (_formKey.currentState.validate()) {
-                                            if(widget.store.categoryName != null && widget.store.provinceName != null) {
-                                              if (widget.store.storeTagName.startsWith('@')) {
-                                                response = await StoreProvider().updateStore(
-                                                    Provider.of<LoginState>(context).currentUserIdToken,
-                                                    widget.store.storeTagName,
-                                                    widget.store.storeName,
-                                                    widget.store.provinceName,
-                                                    widget.store.categoryName,
-                                                    widget.store.description,
-                                                    widget.store.phoneNumber
-                                                );
-                                              } else {
-                                                Scaffold.of(context).showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                        'El tag de la tienda debe empezar por @'
-                                                    ),
-                                                  ),
-                                                );
-                                              }
+                                            if(widget.user.preferences != null) {
+                                              response = await UsuarioTienditasProvider().updateUser(
+                                                  Provider.of<LoginState>(context).currentUserIdToken,
+                                                  widget.user
+                                              );
                                             } else {
                                               Scaffold.of(context).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                      'Debe seleccionar provincia y categoría'
+                                                      'Debe seleccionar categorías para guardarlas en sus preferencias'
                                                   ),
                                                 ),
                                               );
@@ -354,7 +252,7 @@ class _EditStoreState extends State<EditStore> {
                                               Scaffold.of(context).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                      'Hubo problemas al editar la tienda, \nfavor revisar su conexión a internet'
+                                                      'Hubo problemas al editar su perfil, \nfavor revisar su conexión a internet'
                                                   ),
                                                 ),
                                               );
@@ -387,6 +285,43 @@ class _EditStoreState extends State<EditStore> {
               )
           );
         },
+      ),
+    );
+  }
+}
+
+class UserPreferenceCard extends StatelessWidget {
+  UserPreferenceCard({this.name, this.onPressed});
+
+  final String name;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+          children: <Widget>[
+            Text(
+              "$name",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "Nunito"
+              ),
+            ),
+            Spacer(),
+            IconButton(
+              icon: Icon(
+                  Icons.delete_outline
+              ),
+              iconSize: 28,
+              onPressed: onPressed,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ]
       ),
     );
   }

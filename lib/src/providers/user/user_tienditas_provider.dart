@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/user/user_order_batch.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
@@ -41,5 +41,28 @@ class UsuarioTienditasProvider {
       print(response.statusCode);
       return UserOrderBatchModel();
     }
+  }
+
+  Future<http.Response> updateUser(
+      String userIdToken, User user) async {
+    String _url = '$baseApiUrl/api/v1/user';
+    var bodyData = {
+      "user": {
+        "email": user.userEmail,
+        "phone_number": user.phoneNumber,
+        "preferences": user.preferences
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
   }
 }
