@@ -156,6 +156,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                 );
               }
               return GridView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: finalListProductos.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
