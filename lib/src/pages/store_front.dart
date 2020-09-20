@@ -88,6 +88,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Widget getTiendasListViewBuilder() {
     return SmartRefresher(
+      physics: BouncingScrollPhysics(),
       enablePullDown: true,
       enablePullUp: true,
       header: WaterDropHeader(),

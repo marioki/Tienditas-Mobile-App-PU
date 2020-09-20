@@ -145,50 +145,59 @@ class ProductItemCard extends StatelessWidget {
         ),
         color: Colors.white,
         child: Container(
-          padding: EdgeInsets.only(top: 8, bottom: 8, left: 16),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Image(
-                    width: 70,
-                    height: 70,
-                    fit: BoxFit.cover,
-                    image: NetworkImage("$imageUrl"),
-                  ),
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                Text(
-                  "$itemName",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Nunito"),
+                child: Image(
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.contain,
+                  image: NetworkImage("$imageUrl"),
                 ),
-                Text(
-                  "Precio: $price",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Nunito"),
-                ),
-                Text(
-                  "Cantidad disponible: $quantity",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: "Nunito"),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-              ]),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "$itemName",
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Precio: $price",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Cantidad disponible: $quantity",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
