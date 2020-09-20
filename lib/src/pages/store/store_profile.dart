@@ -113,10 +113,7 @@ class _StoreProfileState extends State<StoreProfile> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StoreDeliveryOptions(
-                                  deliveryOptions:
-                                      resultTiendita.body.store.deliveryOptions,
-                                  storeTagName:
-                                      resultTiendita.body.store.storeTagName,
+                                  store: resultTiendita.body.store
                                 ),
                               ));
                         },

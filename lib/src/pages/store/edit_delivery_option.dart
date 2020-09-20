@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/modelos/store/store_model.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -9,13 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditDeliveryOptions extends StatefulWidget {
-  EditDeliveryOptions({@required this.appBarTitle, @required this.storeTagName, this.name, this.method, this.fee, this.id});
+  EditDeliveryOptions({@required this.appBarTitle, @required this.storeTagName, this.deliveryOptions});
   final String appBarTitle;
   final String storeTagName;
-  final String name;
-  final String fee;
-  final String method;
-  final String id;
+  final DeliveryOption deliveryOptions;
   @override
   _EditDeliveryOptionsState createState() => _EditDeliveryOptionsState();
 }
@@ -47,10 +45,10 @@ class _EditDeliveryOptionsState extends State<EditDeliveryOptions> {
         },
         child: EditDeliveryOptionCard(
           storeTagName: widget.storeTagName,
-          name: widget.name,
-          method: widget.method,
-          fee: widget.fee,
-          id: widget.id,
+          name: widget.deliveryOptions.name,
+          method: widget.deliveryOptions.method,
+          fee: widget.deliveryOptions.fee,
+          id: widget.deliveryOptions.id,
         ),
       ),
     );
@@ -231,7 +229,12 @@ class EditDeliveryOptionCard extends StatelessWidget {
                                         ),
                                     );
                                     isLoading = false;
-                                    Navigator.of(context).pop();
+                                    var count = 0;
+                                    Navigator.popUntil(context, (route) {
+                                      return count++ == 2;
+                                    });
+                                    //Navigator.of(context).popUntil((route) => route.isFirst);
+                                    //Navigator.of(context).pop(context);
                                   } else {
                                     print(responseTienditasApi.body.message);
                                     isLoading = false;
