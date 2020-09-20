@@ -14,11 +14,13 @@ class StoreFrontPage extends StatefulWidget {
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
   Future<CategoryResponseModel> categoryResponse;
+  Future<Tiendita> tienditaResponse;
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      tienditaResponse = fetchTienditas(context);
       categoryResponse = fetchCategories(context);
     });
   }
@@ -80,7 +82,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Widget getTiendasListViewBuilder() {
     return FutureBuilder(
-      future: StoreProvider().getAllTienditas(context),
+      future: tienditaResponse,
       builder: (
         BuildContext context,
         snapshot,
@@ -253,5 +255,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Future<CategoryResponseModel> fetchCategories(BuildContext context) {
     return CategoriesProvider().getAllCategories(context);
+  }
+
+  Future<Tiendita> fetchTienditas(BuildContext context) {
+    return StoreProvider().getAllTienditas(context);
   }
 }
