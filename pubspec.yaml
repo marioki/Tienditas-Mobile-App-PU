@@ -38,6 +38,8 @@ dependencies:
   credit_card: 0.1.6
   image_picker: ^0.6.7+8
   flutter_cache_manager: ^1.4.2
+  pull_to_refresh: ^1.6.0
+
 
 
 
