@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'edit_delivery_option.dart';
 
 class StoreDeliveryOptions extends StatefulWidget {
-  StoreDeliveryOptions({@required this.deliveryOptions, @required this.storeTagName});
-  final List<DeliveryOption> deliveryOptions;
-  final String storeTagName;
+  StoreDeliveryOptions({@required this.store});
+  final Store store;
   @override
   _StoreDeliveryOptionsState createState() => _StoreDeliveryOptionsState();
 }
@@ -42,8 +41,8 @@ class _StoreDeliveryOptionsState extends State<StoreDeliveryOptions> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditDeliveryOptions(
-                      appBarTitle: "Agregar Método de Envío",
-                      storeTagName: widget.storeTagName
+                        appBarTitle: "Agregar Método de Envío",
+                        storeTagName: widget.store.storeTagName
                     ),
                   )
               );
@@ -57,26 +56,21 @@ class _StoreDeliveryOptionsState extends State<StoreDeliveryOptions> {
             child: ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 15),
               shrinkWrap: true,
-              itemCount: widget.deliveryOptions.length,
+              itemCount: widget.store.deliveryOptions.length,
               itemBuilder: (context, index) {
                 return Container(
                   child: Row(
                     children: <Widget>[
                       DeliveryOptionCard(
-                        name: widget.deliveryOptions[index].name,
-                        fee: widget.deliveryOptions[index].fee,
-                        method: widget.deliveryOptions[index].method,
+                        deliveryOption: widget.store.deliveryOptions[index],
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => EditDeliveryOptions(
                                   appBarTitle: "Editar Método de Envío",
-                                  storeTagName: widget.storeTagName,
-                                  name: widget.deliveryOptions[index].name,
-                                  fee: widget.deliveryOptions[index].fee,
-                                  method: widget.deliveryOptions[index].method,
-                                  id: widget.deliveryOptions[index].id,
+                                  storeTagName: widget.store.storeTagName,
+                                  deliveryOptions: widget.store.deliveryOptions[index]
                                 ),
                               )
                           );
@@ -95,11 +89,9 @@ class _StoreDeliveryOptionsState extends State<StoreDeliveryOptions> {
 }
 
 class DeliveryOptionCard extends StatelessWidget {
-  DeliveryOptionCard({this.name, this.method, this.fee, this.onPressed});
+  DeliveryOptionCard({this.deliveryOption, this.onPressed});
 
-  final String name;
-  final String method;
-  final String fee;
+  final DeliveryOption deliveryOption;
   final Function onPressed;
 
   @override
@@ -127,7 +119,7 @@ class DeliveryOptionCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "$name",
+                          "${deliveryOption.name}",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
@@ -136,7 +128,7 @@ class DeliveryOptionCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Precio: $fee",
+                          "Precio: ${deliveryOption.fee}",
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: 15,
@@ -145,7 +137,7 @@ class DeliveryOptionCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "$method",
+                          "${deliveryOption.method}",
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: 15,
