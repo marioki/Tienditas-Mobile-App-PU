@@ -13,7 +13,15 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
-  CategoryModel myCategory;
+  Future<CategoryResponseModel> categoryResponse;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      categoryResponse = fetchCategories(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +47,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
                   leading: Text('Categorías', style: storeSubtitles),
                   trailing: FlatButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.pushNamed(context, 'categories_page',
-                          arguments: myCategory);
+                          arguments: await categoryResponse);
                     },
                     child: Text(
                       'Ver Todas',
@@ -134,20 +142,19 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
-        future: CategoriesProvider().getAllCategories(context),
+        future: categoryResponse,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            myCategory = snapshot.data;
             return ListView.builder(
               physics: BouncingScrollPhysics(),
               addAutomaticKeepAlives: true,
               scrollDirection: Axis.horizontal,
-              itemCount: myCategory.body.category.length,
+              itemCount: snapshot.data.body.categoryList.length,
               itemBuilder: (BuildContext context, int index) {
                 return CategoryCard(
-                  name: myCategory.body.category[index].categoryName,
-                  image: myCategory.body.category[index].iconUrl,
-                  color: myCategory.body.category[index].hexColor,
+                  name: snapshot.data.body.categoryList[index].categoryName,
+                  image: snapshot.data.body.categoryList[index].iconUrl,
+                  color: snapshot.data.body.categoryList[index].hexColor,
                 );
               },
             );
@@ -242,5 +249,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         );
       },
     );
+  }
+
+  Future<CategoryResponseModel> fetchCategories(BuildContext context) {
+    return CategoriesProvider().getAllCategories(context);
   }
 }

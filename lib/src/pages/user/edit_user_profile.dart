@@ -122,8 +122,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                       future: CategoriesProvider().getAllCategories(context),
                                       builder: (BuildContext context, snapshot) {
                                         if (snapshot.hasData) {
-                                          CategoryModel resultcategories = snapshot.data;
-                                          var categories = resultcategories.body.category;
+                                          CategoryResponseModel resultcategories = snapshot.data;
+                                          var categories = resultcategories.body.categoryList;
                                           _categories = [];
                                           for(var i=0; i < categories.length; i++) {
                                             _categories.add(categories[i].categoryName);
