@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/store/create_store.dart';
 import 'package:app_tiendita/src/pages/store/store_profile.dart';
+import 'package:app_tiendita/src/pages/user/edit_user_profile.dart';
 import 'package:app_tiendita/src/pages/user/user_address_page.dart';
 import 'package:app_tiendita/src/pages/user/user_batch_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
@@ -83,7 +84,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     name: userInfo.name,
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
-                    image: "https://devtalk.blender.org/uploads/default/original/2X/c/cbd0b1a6345a44b58dda0f6a355eb39ce4e8a56a.png",
+                    image: Provider.of<LoginState>(context).getFireBaseUser().photoUrl,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditUserProfile(
+                            user: userInfo,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   UserProfileActionBtn(
                     text: "Mis Ordenes",

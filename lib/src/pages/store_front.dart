@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class StoreFrontPage extends StatefulWidget {
   @override
@@ -14,7 +15,21 @@ class StoreFrontPage extends StatefulWidget {
 }
 
 class _StoreFrontPageState extends State<StoreFrontPage> {
-  CategoryModel myCategory;
+  Future<CategoryResponseModel> categoryResponse;
+  Future<Tiendita> tienditaResponse;
+
+  //Pull to refres package
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      tienditaResponse = fetchTienditas(context);
+      categoryResponse = fetchCategories(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +55,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
                   leading: Text('Categorías', style: storeSubtitles),
                   trailing: FlatButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.pushNamed(context, 'categories_page',
-                          arguments: myCategory);
+                          arguments: await categoryResponse);
                     },
                     child: Text(
                       'Ver Todas',
@@ -72,81 +87,111 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
   }
 
   Widget getTiendasListViewBuilder() {
-    return FutureBuilder(
-      future: StoreProvider().getAllTienditas(context),
-      builder: (
-        BuildContext context,
-        snapshot,
-      ) {
-        if (snapshot.hasData) {
-          Tiendita miTienda = snapshot.data;
-          return ListView.builder(
-            itemCount: miTienda.body.stores.length,
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == miTienda.body.stores.length - 1) {
-                return Column(
-                  children: <Widget>[
-                    StoreCardWidget(
-                      name: miTienda.body.stores[index].storeName,
-                      handle: miTienda.body.stores[index].storeTagName,
-                      category: miTienda.body.stores[index].categoryName,
-                      colorHex: miTienda.body.stores[index].hexColor,
-                      image: miTienda.body.stores[index].iconUrl,
-                      description: miTienda.body.stores[index].description,
-                      followers: null,
-                      originalStoreName:
-                          miTienda.body.stores[index].originalStoreName,
-                      provinceName: miTienda.body.stores[index].provinceName,
-                    ),
-                    SizedBox(
-                      height: 100,
-                    ),
-                  ],
-                );
-              }
-              return StoreCardWidget(
-                name: miTienda.body.stores[index].storeName,
-                handle: miTienda.body.stores[index].storeTagName,
-                category: miTienda.body.stores[index].categoryName,
-                colorHex: miTienda.body.stores[index].hexColor,
-                image: miTienda.body.stores[index].iconUrl,
-                description: miTienda.body.stores[index].description,
-                followers: null,
-                originalStoreName:
-                    miTienda.body.stores[index].originalStoreName,
-                provinceName: miTienda.body.stores[index].provinceName,
-              );
-            },
-          );
-        } else {
+    return SmartRefresher(
+      physics: BouncingScrollPhysics(),
+      enablePullDown: true,
+      enablePullUp: true,
+      header: WaterDropHeader(),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = Text("pull up load");
+          } else if (mode == LoadStatus.loading) {
+            body = CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = Text("Load Failed!Click retry!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = Text("release to load more");
+          } else {
+            body = Text("No more Data");
+          }
           return Container(
-            height: 400,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+            height: 55.0,
+            child: Center(child: body),
           );
-        }
-      },
+        },
+      ),
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: FutureBuilder(
+        future: tienditaResponse,
+        builder: (
+          BuildContext context,
+          snapshot,
+        ) {
+          if (snapshot.hasData) {
+            Tiendita miTienda = snapshot.data;
+            return ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: miTienda.body.stores.length,
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == miTienda.body.stores.length - 1) {
+                  return Column(
+                    children: <Widget>[
+                      StoreCardWidget(
+                        name: miTienda.body.stores[index].storeName,
+                        handle: miTienda.body.stores[index].storeTagName,
+                        category: miTienda.body.stores[index].categoryName,
+                        colorHex: miTienda.body.stores[index].hexColor,
+                        image: miTienda.body.stores[index].iconUrl,
+                        description: miTienda.body.stores[index].description,
+                        followers: null,
+                        originalStoreName:
+                            miTienda.body.stores[index].originalStoreName,
+                        provinceName: miTienda.body.stores[index].provinceName,
+                      ),
+                      SizedBox(
+                        height: 100,
+                      ),
+                    ],
+                  );
+                }
+                return StoreCardWidget(
+                  name: miTienda.body.stores[index].storeName,
+                  handle: miTienda.body.stores[index].storeTagName,
+                  category: miTienda.body.stores[index].categoryName,
+                  colorHex: miTienda.body.stores[index].hexColor,
+                  image: miTienda.body.stores[index].iconUrl,
+                  description: miTienda.body.stores[index].description,
+                  followers: null,
+                  originalStoreName:
+                      miTienda.body.stores[index].originalStoreName,
+                  provinceName: miTienda.body.stores[index].provinceName,
+                );
+              },
+            );
+          } else {
+            return Container(
+              height: 400,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
-        future: CategoriesProvider().getAllCategories(context),
+        future: categoryResponse,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            myCategory = snapshot.data;
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               addAutomaticKeepAlives: true,
               scrollDirection: Axis.horizontal,
-              itemCount: myCategory.body.category.length,
+              itemCount: snapshot.data.body.categoryList.length,
               itemBuilder: (BuildContext context, int index) {
                 return CategoryCard(
-                  name: myCategory.body.category[index].categoryName,
-                  image: myCategory.body.category[index].iconUrl,
-                  color: myCategory.body.category[index].hexColor,
+                  name: snapshot.data.body.categoryList[index].categoryName,
+                  image: snapshot.data.body.categoryList[index].iconUrl,
+                  color: snapshot.data.body.categoryList[index].hexColor,
                 );
               },
             );
@@ -241,5 +286,31 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         );
       },
     );
+  }
+
+  Future<CategoryResponseModel> fetchCategories(BuildContext context) {
+    return CategoriesProvider().getAllCategories(context);
+  }
+
+  Future<Tiendita> fetchTienditas(BuildContext context) {
+    return StoreProvider().getAllTienditas(context);
+  }
+
+  void _onRefresh() async {
+    // monitor network fetch
+    setState(() {
+      tienditaResponse = fetchTienditas(context);
+    });
+
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    //todo Shimer animation. while is loading
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
   }
 }

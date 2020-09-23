@@ -97,7 +97,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                           height: 4,
                         ),
                         Text(
-                          'Tipo de Entrega.',
+                          widget.purchaseType.toString(),
                           style: TextStyle(
                             color: azulTema,
                             fontSize: 12,

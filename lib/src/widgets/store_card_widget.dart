@@ -99,7 +99,7 @@ class StoreCardWidget extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         originalStoreName,
-                        maxLines: 2,
+                        maxLines: 1,
                         style: storeTitleCardStyle,
                         overflow: TextOverflow.ellipsis,
                       ),

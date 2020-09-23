@@ -282,6 +282,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       // Orden Fallida
                       print(
                           'orden fallo con codigo ${responseTienditasApi.body.message}');
+                      _showDialog(context, 'Intenta con otro metodo de pago.');
                     }
                   } else {
                     //Error de conexion
@@ -298,5 +299,23 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
         ),
       ),
     );
+  }
+
+  _showDialog(BuildContext context, String message) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Listo"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

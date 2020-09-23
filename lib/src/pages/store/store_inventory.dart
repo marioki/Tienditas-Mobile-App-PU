@@ -65,7 +65,7 @@ class _StoreInventoryState extends State<StoreInventory> {
           if (snapshot.hasData) {
             Product product = snapshot.data;
             allProductsList = product.body.products;
-            print(allProductsList);
+            //print(allProductsList);
             if (isSearching) {
               finalListProductos = filteredProducts;
             } else {
@@ -132,64 +132,71 @@ class ProductItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.symmetric(
-            vertical: 8,
-          ),
-          elevation: 10,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          color: Colors.white,
-          child: Container(
-            padding: EdgeInsets.only(top: 8, bottom: 8, left: 16),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Image(
-                      width: 70,
-                      height: 70,
-                      fit: BoxFit.cover,
-                      image: NetworkImage("$imageUrl"),
-                    ),
-                  ),
-                  Text(
-                    "$itemName",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Nunito"),
-                  ),
-                  Text(
-                    "Precio: $price",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: "Nunito"),
-                  ),
-                  Text(
-                    "Cantidad disponible: $quantity",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: "Nunito"),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ]),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.symmetric(
+          vertical: 8,
+        ),
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        color: Colors.white,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image(
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.contain,
+                  image: NetworkImage("$imageUrl"),
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "$itemName",
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Precio: $price",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Cantidad disponible: $quantity",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ]),
+              ),
+            ],
           ),
         ),
       ),
