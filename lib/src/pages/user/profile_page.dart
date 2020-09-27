@@ -84,7 +84,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     name: userInfo.name,
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
-                    image: Provider.of<LoginState>(context).getFireBaseUser().photoUrl,
+                    image: Provider.of<LoginState>(context)
+                        .getFireBaseUser()
+                        .photoUrl,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -98,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   UserProfileActionBtn(
                     text: "Mis Ordenes",
-                    imageName: "camion",
+                    imageName: "orders",
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -135,13 +137,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   UserProfileActionBtn(
-                    text: "Pagos Recibidos",
-                    imageName: "ayuda",
-                    onPressed: () {
-                      print("pagos");
-                    },
-                  ),
-                  UserProfileActionBtn(
                     text: "Ayuda",
                     imageName: "ayuda",
                     onPressed: () {
@@ -150,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   UserProfileActionBtn(
                     text: "Cerrar Sesión",
-                    imageName: "ayuda",
+                    imageName: "logout",
                     onPressed: () {
                       Provider.of<LoginState>(context).logout();
                       print("Logout");
@@ -221,5 +216,4 @@ class UserProfileActionBtn extends StatelessWidget {
       ),
     );
   }
-
 }

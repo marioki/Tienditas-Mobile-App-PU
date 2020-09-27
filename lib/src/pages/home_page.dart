@@ -48,15 +48,15 @@ class _HomePageState extends State<HomePage> {
             },
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                title: Text('Home'),
+                label: 'Inicio',
                 icon: Icon(Icons.home),
               ),
               BottomNavigationBarItem(
-                title: Text('Carrito'),
+                label: 'Carrito',
                 icon: Icon(Icons.shopping_cart),
               ),
               BottomNavigationBarItem(
-                title: Text('Profile'),
+                label: 'Perfil',
                 icon: Icon(Icons.account_circle),
               ),
             ],
