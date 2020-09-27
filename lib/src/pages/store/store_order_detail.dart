@@ -135,6 +135,10 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
                                     print(responseTienditasApi.body.message);
                                     isLoading = false;
                                     Navigator.of(context).pop();
+                                    widget.order.orderStatus = selectedOption.option;
+                                    /*setState(() {
+                                      widget.order.orderStatus = selectedOption.option;
+                                    });*/
                                   } else {
                                     print(responseTienditasApi.body.message);
                                     isLoading = false;

@@ -85,7 +85,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                           height: 4,
                         ),
                         Text(
-                          '@StoreTag',
+                          widget.parentStoreTag,
                           style: TextStyle(
                             color: azulTema,
                             fontSize: 12,
@@ -96,15 +96,16 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                         SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          widget.purchaseType.toString(),
-                          style: TextStyle(
-                            color: azulTema,
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: 'Nunito',
-                          ),
-                        )
+                        //Todo  Tipo de Compra
+                        // Text(
+                        //   widget.purchaseType.toString(),
+                        //   style: TextStyle(
+                        //     color: azulTema,
+                        //     fontSize: 12,
+                        //     fontWeight: FontWeight.normal,
+                        //     fontFamily: 'Nunito',
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

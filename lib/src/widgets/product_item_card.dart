@@ -73,10 +73,11 @@ class ProductItemCard extends StatelessWidget {
                   style: storeItemTitleStyle,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  purchaseType.toString(),
-                  style: storeItemSubTitleStyle,
-                ),
+                //Todo  Tipo de Compra
+                // Text(
+                //   purchaseType.toString(),
+                //   style: storeItemSubTitleStyle,
+                // ),
                 SizedBox(
                   height: 5,
                 ),

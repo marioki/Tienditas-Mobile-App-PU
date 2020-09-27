@@ -91,20 +91,20 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       physics: BouncingScrollPhysics(),
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(),
+      header: WaterDropHeader(complete: Text('¡Actualizado!'),),
       footer: CustomFooter(
         builder: (BuildContext context, LoadStatus mode) {
           Widget body;
           if (mode == LoadStatus.idle) {
-            body = Text("pull up load");
+            //body = Text("pull up load");
           } else if (mode == LoadStatus.loading) {
             body = CupertinoActivityIndicator();
           } else if (mode == LoadStatus.failed) {
-            body = Text("Load Failed!Click retry!");
+            body = Text("Error de conexión...");
           } else if (mode == LoadStatus.canLoading) {
-            body = Text("release to load more");
+           // body = Text("release to load more");
           } else {
-            body = Text("No more Data");
+            //body = Text("No more Data");
           }
           return Container(
             height: 55.0,

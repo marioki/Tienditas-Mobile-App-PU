@@ -112,29 +112,6 @@ class _EditStoreState extends State<EditStore> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                Text(
-                                  "Tag de su tienda",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Nunito"),
-                                ),
-                                TextFormField(
-                                  initialValue: widget.store.storeTagName,
-                                  onChanged: (String value) {
-                                    widget.store.storeTagName = value;
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Ingresar tag de su tienda';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      hintText: '@miTienda'),
-                                ),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -317,8 +294,6 @@ class _EditStoreState extends State<EditStore> {
                                       if (_formKey.currentState.validate()) {
                                         if (widget.store.categoryName != null &&
                                             widget.store.provinceName != null) {
-                                          if (widget.store.storeTagName
-                                              .startsWith('@')) {
                                             response = await StoreProvider()
                                                 .updateStore(
                                                     Provider.of<LoginState>(
@@ -330,14 +305,6 @@ class _EditStoreState extends State<EditStore> {
                                                     widget.store.categoryName,
                                                     widget.store.description,
                                                     widget.store.phoneNumber);
-                                          } else {
-                                            Scaffold.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    'El tag de la tienda debe empezar por @'),
-                                              ),
-                                            );
-                                          }
                                         } else {
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
