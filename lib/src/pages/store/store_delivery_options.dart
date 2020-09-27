@@ -70,7 +70,10 @@ class _StoreDeliveryOptionsState extends State<StoreDeliveryOptions> {
                                 builder: (context) => EditDeliveryOptions(
                                   appBarTitle: "Editar Método de Envío",
                                   storeTagName: widget.store.storeTagName,
-                                  deliveryOptions: widget.store.deliveryOptions[index]
+                                  name: widget.store.deliveryOptions[index].name,
+                                  fee: widget.store.deliveryOptions[index].fee,
+                                  method: widget.store.deliveryOptions[index].method,
+                                  id: widget.store.deliveryOptions[index].id
                                 ),
                               )
                           );
