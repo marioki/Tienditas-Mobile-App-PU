@@ -234,7 +234,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                                     isLoading = false;
                                     var count = 0;
                                     Navigator.popUntil(context, (route) {
-                                      return count++ == 2;
+                                      return count++ == 3;
                                     });
                                     //Navigator.of(context).popUntil((route) => route.isFirst);
                                     //Navigator.of(context).pop(context);

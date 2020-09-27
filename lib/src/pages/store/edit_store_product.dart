@@ -170,8 +170,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                   }
                                 } else {
                                   //Update product when image is null
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('Procesando')));
+                                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
                                   response =
                                       await ProductProvider().updateProduct(
                                     userIdToken:
@@ -192,7 +191,10 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         ),
                                       );
                                       isLoading = false;
-                                      Navigator.of(context).pop();
+                                      var count = 0;
+                                      Navigator.popUntil(context, (route) {
+                                        return count++ == 2;
+                                      });
                                     } else {
                                       print(responseTienditasApi.body.message);
                                       isLoading = false;
