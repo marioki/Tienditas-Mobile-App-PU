@@ -10,10 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditDeliveryOptions extends StatefulWidget {
-  EditDeliveryOptions({@required this.appBarTitle, @required this.storeTagName, this.deliveryOptions});
+  EditDeliveryOptions({@required this.appBarTitle, @required this.storeTagName, this.name, this.method, this.fee, this.id});
   final String appBarTitle;
   final String storeTagName;
-  final DeliveryOption deliveryOptions;
+  final String name;
+  final String fee;
+  final String method;
+  final String id;
   @override
   _EditDeliveryOptionsState createState() => _EditDeliveryOptionsState();
 }
@@ -45,10 +48,10 @@ class _EditDeliveryOptionsState extends State<EditDeliveryOptions> {
         },
         child: EditDeliveryOptionCard(
           storeTagName: widget.storeTagName,
-          name: widget.deliveryOptions.name,
-          method: widget.deliveryOptions.method,
-          fee: widget.deliveryOptions.fee,
-          id: widget.deliveryOptions.id,
+          name: widget.name,
+          method: widget.method,
+          fee: widget.fee,
+          id: widget.id,
         ),
       ),
     );

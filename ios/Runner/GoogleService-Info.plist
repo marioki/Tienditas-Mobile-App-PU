@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>704134493695-svjec6te7uhgdg0a85a4acvs1f5oqm55.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA0gYGk_bX277Eigs_3030eYuGky81mYVU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>704134493695</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.startupalliance.tienditas</string>
+	<key>PROJECT_ID</key>
+	<string>tienditas-c93ae</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tienditas-c93ae.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:704134493695:ios:f400756da92c97c208e3ca</string>
+	<key>DATABASE_URL</key>
+	<string>https://tienditas-c93ae.firebaseio.com</string>
+</dict>
+</plist>
