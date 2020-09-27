@@ -85,7 +85,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                           height: 4,
                         ),
                         Text(
-                          '@StoreTag',
+                          widget.parentStoreTag,
                           style: TextStyle(
                             color: azulTema,
                             fontSize: 12,
