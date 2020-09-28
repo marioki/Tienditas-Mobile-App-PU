@@ -15,7 +15,17 @@ class MetodoDePago extends StatefulWidget {
 
 class _MetodoDePagoState extends State<MetodoDePago> {
   int groupRadio = 0;
-  List<CreditCard> listCreditCard = List();
+  Future<List<CreditCard>> listCreditCard;
+
+  List<CreditCard> currentCardList;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      listCreditCard = fetchCreditCards();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +51,22 @@ class _MetodoDePagoState extends State<MetodoDePago> {
       body: Container(
         padding: EdgeInsets.all(16),
         child: FutureBuilder(
-            future: UserCreditCardProvider().getUserCreditCards(context,
-                Provider.of<LoginState>(context).getFireBaseUser().email),
+            future: listCreditCard,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
-                listCreditCard = snapshot.data;
+                currentCardList = snapshot.data;
                 nextButtonIsEnabled = true;
 
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: listCreditCard.length + 1,
+                  itemCount: currentCardList.length + 1,
                   itemBuilder: (context, index) {
-                    if (index < listCreditCard.length) {
+                    if (index < currentCardList.length) {
                       return _creditCardItem(
                           context,
                           index,
-                          listCreditCard[index].type,
-                          listCreditCard[index].number);
+                          currentCardList[index].type,
+                          currentCardList[index].number);
                     } else {
                       return Column(
                         children: [
@@ -70,7 +79,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                                     return CrearNuevaTarjeta();
                                   },
                                 ),
-                              );
+                              ).then((value) => reloadCardList());
                             },
                             child: Text('+ Agregar Tarjeta'),
                           ),
@@ -189,7 +198,7 @@ class _MetodoDePagoState extends State<MetodoDePago> {
   }
 
   void setUserCreditCard() {
-    String selectedCardId = listCreditCard[groupRadio].id;
+    String selectedCardId = currentCardList[groupRadio].id;
     Provider.of<UserCartState>(context)
         .addUserCreditCardToBatch(selectedCardId);
   }
@@ -209,5 +218,19 @@ class _MetodoDePagoState extends State<MetodoDePago> {
 
   setCurrentBatchPhoneNumber() {
     Provider.of<UserCartState>(context).setCurrentBatchPhoneNumber();
+  }
+
+  Future<List<CreditCard>> fetchCreditCards() {
+    return UserCreditCardProvider().getUserCreditCards(
+        context,
+        Provider.of<LoginState>(context, listen: false)
+            .getFireBaseUser()
+            .email);
+  }
+
+  reloadCardList() async {
+    setState(() {
+      listCreditCard = fetchCreditCards();
+    });
   }
 }

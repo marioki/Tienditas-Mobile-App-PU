@@ -11,7 +11,7 @@ class UserCreditCardProvider {
 
   Future<List<CreditCard>> getUserCreditCards(BuildContext context, email) async {
     String url = '$baseApiUrl/api/v1/credit_cards?email=$email';
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
 
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
