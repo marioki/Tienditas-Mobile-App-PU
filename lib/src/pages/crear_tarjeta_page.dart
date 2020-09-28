@@ -16,6 +16,7 @@ class CrearNuevaTarjeta extends StatefulWidget {
 }
 
 class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
+  var displayCardNumber = '';
   var cardNumber = '';
   var expiryDate = '';
   var cardHolderName = '';
@@ -69,7 +70,7 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
               child: Column(
                 children: [
                   CreditCardWidget(
-                    cardNumber: cardNumber,
+                    cardNumber: displayCardNumber,
                     expiryDate: expiryDate,
                     cardHolderName: cardHolderName,
                     cvvCode: cvvCode,
@@ -129,6 +130,7 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
     setState(() {
       cardNumber =
           creditCardModel.cardNumber.replaceAll(new RegExp(r"\s+"), "");
+      displayCardNumber = creditCardModel.cardNumber;
       expiryDate = creditCardModel.expiryDate;
       cardHolderName = creditCardModel.cardHolderName;
       cvvCode = creditCardModel.cvvCode;
