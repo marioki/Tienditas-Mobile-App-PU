@@ -89,105 +89,105 @@ class EditDeliveryOptionCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 15),
               child: Card(
-              clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.symmetric(
-                vertical: 8,
-              ),
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              color: Colors.white,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
+                clipBehavior: Clip.antiAlias,
+                margin: EdgeInsets.symmetric(
+                  vertical: 8,
                 ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Nombre",
-                          style: TextStyle(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                color: Colors.white,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Nombre",
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               fontFamily: "Nunito"
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          initialValue: name,
-                          onChanged: (String value) {
-                            name = value;
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Ingresar nombre del método de envío';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              hintText: 'nombre'
+                          TextFormField(
+                            initialValue: name,
+                            onChanged: (String value) {
+                              name = value;
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Ingresar nombre del método de envío';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: 'nombre'
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Método de Envío",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Nunito"
+                          SizedBox(
+                            height: 15,
                           ),
-                        ),
-                        TextFormField(
-                          initialValue: method,
-                          onChanged: (String value) {
-                            method = value;
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Ingresar método de envío';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              hintText: 'método'
+                          Text(
+                            "Método de Envío",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Nunito"
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Costo",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Nunito"
+                          TextFormField(
+                            initialValue: method,
+                            onChanged: (String value) {
+                              method = value;
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Ingresar método de envío';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: 'método'
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          initialValue: fee,
-                          onChanged: (String value) {
-                            fee = value;
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Ingresar costo del método de envío';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Costo",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Nunito"
+                            ),
+                          ),
+                          TextFormField(
+                            initialValue: fee,
+                            onChanged: (String value) {
+                              fee = value;
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Ingresar costo del método de envío';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
                               fillColor: Colors.white,
                               hintText: 'costo'
                           ),

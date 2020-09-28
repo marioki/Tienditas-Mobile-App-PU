@@ -1,16 +1,15 @@
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'edit_user_address.dart';
+
 class UserAddressPage extends StatefulWidget {
   @override
   _UserAddressPageState createState() => _UserAddressPageState();
-  //Todo Traer direcciones del usuario cuando se abre estra pagina
 }
 
 class _UserAddressPageState extends State<UserAddressPage> {
@@ -61,13 +60,40 @@ class _UserAddressPageState extends State<UserAddressPage> {
                 ],
               ),
               trailing: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditUserAddress(
+                        appBarTitle: "Agregar Dirección",
+                        userEmail: user.userEmail,
+                        method: "put",
+                        id: user.address[index].id,
+                        name: user.address[index].name,
+                        addressLine: user.address[index].addressLine1,
+                        referencePoint: user.address[index].referencePoint,
+                        provinceName: user.address[index].province,
+                      ),
+                    ),
+                  );
+                },
                 child: Text('Editar'),
               ),
             );
           } else {
             return FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditUserAddress(
+                      appBarTitle: "Agregar Dirección",
+                      userEmail: user.userEmail,
+                      method: "post",
+                    ),
+                  ),
+                );
+              },
               child: Text('+ Agregar Dirección'),
             );
           }

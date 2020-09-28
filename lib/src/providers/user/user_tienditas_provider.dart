@@ -65,4 +65,74 @@ class UsuarioTienditasProvider {
     );
     return response;
   }
+
+  Future<http.Response> createAddress(
+      String userIdToken,
+      String userEmail,
+      String name,
+      String addressLine1,
+      String referencePoint,
+      String country,
+      String province) async {
+    String _url = '$baseApiUrl/api/v1/address';
+    var bodyData = {
+      "user": {
+        "email": userEmail,
+        "address": {
+          "name": name,
+          "address_line_1": addressLine1,
+          "reference_point": referencePoint,
+          "country": country,
+          "province": province
+        }
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> updateAddress(
+      String userIdToken,
+      String id,
+      String userEmail,
+      String name,
+      String addressLine1,
+      String referencePoint,
+      String country,
+      String province) async {
+    String _url = '$baseApiUrl/api/v1/address';
+    var bodyData = {
+      "user": {
+        "email": userEmail,
+        "address": {
+          "id": id,
+          "name": name,
+          "address_line_1": addressLine1,
+          "reference_point": referencePoint,
+          "country": country,
+          "province": province
+        }
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
 }

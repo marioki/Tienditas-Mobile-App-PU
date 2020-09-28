@@ -63,27 +63,16 @@ class EditDeliveryOptionCard extends StatefulWidget {
 
 class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   ProductElement productElement;
-
   final _formKey = GlobalKey<FormState>();
-
   bool isLoading = false;
-
   var response;
-
   String imageUrl = defaultProductImageURL;
-
   String basePrice;
-
   String finalPrice;
-
   String itemName;
-
   String quantity;
-
   Future<Io.File> imageFile;
-
   Io.File loadedImg;
-
   var itemImage64;
 
   @override

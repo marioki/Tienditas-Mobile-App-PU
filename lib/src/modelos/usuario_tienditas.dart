@@ -93,6 +93,7 @@ class User {
 
 class Address {
   Address({
+    this.id,
     this.country,
     this.referencePoint,
     this.province,
@@ -102,6 +103,7 @@ class Address {
     this.isDefault,
   });
 
+  String id;
   String country;
   String referencePoint;
   String province;
@@ -111,6 +113,7 @@ class Address {
   String isDefault;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
+        id: json["id"],
         country: json["country"],
         referencePoint: json["reference_point"],
         province: json["province"],
@@ -121,6 +124,7 @@ class Address {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "country": country,
         "reference_point": referencePoint,
         "province": province,
