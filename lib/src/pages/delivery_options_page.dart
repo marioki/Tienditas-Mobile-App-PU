@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
-import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/pages/escoger_direcciones_page.dart';
-import 'package:app_tiendita/src/providers/delivery_cost_provider.dart';
 import 'package:app_tiendita/src/providers/store/store_delivery_options_provider.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -17,9 +13,14 @@ class DeliveryOptionsPage extends StatefulWidget {
 }
 
 class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
+  Future<List<StoreDeliveryInfo>> listOfDeliveryOptions;
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      listOfDeliveryOptions = fetchDeliveryOptions();
+    });
   }
 
   @override
@@ -43,8 +44,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
       ),
       body: FutureBuilder(
         //Todo el metodo de getStoreDeliveryOptions retorne una lista de listas
-        future: DeliveryOptionsProvider().getStoresDeliveryInfo(context,
-            Provider.of<UserCartState>(context).filterParentStoreTagList()),
+        future: listOfDeliveryOptions,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             List<StoreDeliveryInfo> listOfStores = snapshot.data;
@@ -157,7 +157,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                           builder: (context) => EscogerDirecciones(),
                         ),
                       );
-                    }else
+                    } else
                       null;
                   }
                 },
@@ -242,5 +242,12 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
     }
 
     return totalFee;
+  }
+
+  Future<List<StoreDeliveryInfo>> fetchDeliveryOptions() {
+    return DeliveryOptionsProvider().getStoresDeliveryInfo(
+        context,
+        Provider.of<UserCartState>(context, listen: false)
+            .filterParentStoreTagList());
   }
 }
