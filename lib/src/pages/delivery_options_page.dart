@@ -60,21 +60,10 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                         if (index < listOfStores.length) {
                           StoreDeliveryInfo deliveryInfo = listOfStores[index];
 
-                          return ListTile(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) {
-                                  return DeliveryAlertDialogWidget(
-                                    listOfOptions: listOfStores,
-                                    index: index,
-                                  );
-                                },
-                              );
-                            },
-                            title: Text(deliveryInfo.storeName),
-                            subtitle: showSelectedOption(),
+                          return InfoTile(
+                            deliveryInfo: deliveryInfo,
+                            index: index,
+                            listOfStores: listOfStores,
                           );
                         } else {
                           return SizedBox(
@@ -249,5 +238,50 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
         context,
         Provider.of<UserCartState>(context, listen: false)
             .filterParentStoreTagList());
+  }
+}
+
+class InfoTile extends StatefulWidget {
+  final listOfStores;
+  final index;
+  final deliveryInfo;
+
+  InfoTile({
+    Key key,
+    this.listOfStores,
+    this.index,
+    this.deliveryInfo,
+  }) : super(key: key);
+
+  @override
+  _InfoTileState createState() => _InfoTileState();
+}
+
+class _InfoTileState extends State<InfoTile> {
+  String displayText = 'Escoge el metodo de entrega';
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        var val = await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) {
+            return DeliveryAlertDialogWidget(
+              listOfOptions: widget.listOfStores,
+              index: widget.index,
+            );
+          },
+        );
+        setState(() {
+          print('+++++++Seleccionaste: $val +++++++++');
+          displayText = val;
+          print(displayText);
+        });
+      },
+      title: Text(widget.deliveryInfo.storeName),
+      subtitle: Text(displayText),
+    );
   }
 }
