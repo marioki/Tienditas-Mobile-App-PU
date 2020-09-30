@@ -73,9 +73,12 @@ class _CartPageState extends State<CartPage> {
                                   'TOTAL',
                                   style: cartTotalStyle,
                                 ),
-                                Text(
-                                  '\$${Provider.of<UserCartState>(context).totalPriceOfItems.toStringAsFixed(2)}',
-                                  style: cartTotalPriceStyle,
+                                GestureDetector(
+                                  onLongPressUp: showEasterSnackBar,
+                                  child: Text(
+                                    '\$${Provider.of<UserCartState>(context).totalPriceOfItems.toStringAsFixed(2)}',
+                                    style: cartTotalPriceStyle,
+                                  ),
                                 ),
                               ],
                             ),
@@ -234,5 +237,13 @@ class _CartPageState extends State<CartPage> {
         );
       },
     );
+  }
+
+  showEasterSnackBar() {
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: 100),
+      content: Text('...marioki'),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 }

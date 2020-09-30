@@ -258,7 +258,7 @@ class InfoTile extends StatefulWidget {
 }
 
 class _InfoTileState extends State<InfoTile> {
-  String displayText = 'Escoge el metodo de entrega';
+  String displayText = 'Escoge el método de entrega';
 
   @override
   Widget build(BuildContext context) {
@@ -266,22 +266,24 @@ class _InfoTileState extends State<InfoTile> {
       onTap: () async {
         var val = await showDialog(
           context: context,
-          barrierDismissible: true,
+          barrierDismissible: false,
           builder: (context) {
             return DeliveryAlertDialogWidget(
               listOfOptions: widget.listOfStores,
               index: widget.index,
+
             );
           },
         );
         setState(() {
           print('+++++++Seleccionaste: $val +++++++++');
-          displayText = val;
+          displayText = val == null ? 'Escoge el método de entrega' : val;
           print(displayText);
         });
       },
       title: Text(widget.deliveryInfo.storeName),
       subtitle: Text(displayText),
+      trailing: Icon(Icons.arrow_forward_ios),
     );
   }
 }
