@@ -47,8 +47,9 @@ class _StoreProfileState extends State<StoreProfile> {
               resultTiendita = snapshot.data;
               return SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.only(left: 15, right: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       StoreCardWidget(
                         name: resultTiendita.body.store.storeName,
