@@ -91,7 +91,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       physics: BouncingScrollPhysics(),
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(complete: Text('¡Actualizado!'),),
+      header: WaterDropHeader(
+        complete: Text('¡Actualizado!'),
+      ),
       footer: CustomFooter(
         builder: (BuildContext context, LoadStatus mode) {
           Widget body;
@@ -102,7 +104,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
           } else if (mode == LoadStatus.failed) {
             body = Text("Error de conexión...");
           } else if (mode == LoadStatus.canLoading) {
-           // body = Text("release to load more");
+            // body = Text("release to load more");
           } else {
             //body = Text("No more Data");
           }

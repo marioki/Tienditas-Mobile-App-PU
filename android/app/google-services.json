@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "704134493695-dkl1rfbdjmk9kkmdheaq1p6e7e4vm6tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "98e88ae79699640fe87816a410879b5880d2de91"
+          }
+        },
+        {
           "client_id": "704134493695-svjec6te7uhgdg0a85a4acvs1f5oqm55.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -28,6 +36,50 @@
           "android_info": {
             "package_name": "com.mario.app_tiendita",
             "certificate_hash": "eeb4e07c0d2bd8d6b90d0376601fbe2b01173d42"
+          }
+        },
+        {
+          "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbyqx2zoO6vSDOnNxf6Uq_OoqiAdUzMps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704134493695-kqjaieolhknqvv8dv9l7l9kttkpa01fc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.startupalliance.tienditas"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704134493695:android:827fb3958f93a86e08e3ca",
+        "android_client_info": {
+          "package_name": "com.startupalliance.tienditas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704134493695-ipiqlvl7q4kav4l345laruujckfhhg3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "98e88ae79699640fe87816a410879b5880d2de91"
           }
         },
         {
