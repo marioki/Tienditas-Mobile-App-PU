@@ -71,7 +71,7 @@ class _StoreProfileState extends State<StoreProfile> {
                             description: "Saldo Retenido",
                           ),
                           SizedBox(
-                            width: 15,
+                            width: 8,
                           ),
                           StoreCard(
                             amount: resultTiendita.body.store.balance,
@@ -170,15 +170,14 @@ class StoreCard extends StatelessWidget {
         color: Colors.white,
         child: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 20,
             vertical: 10,
           ),
           child: Column(children: <Widget>[
             Text(
-              "\$ $amount",
+              "\$$amount",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 25,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   fontFamily: "Nunito"),
             ),
@@ -186,7 +185,7 @@ class StoreCard extends StatelessWidget {
               "$description",
               style: TextStyle(
                   color: Colors.black54,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.normal,
                   fontFamily: "Nunito"),
             ),

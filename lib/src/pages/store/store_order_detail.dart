@@ -136,9 +136,6 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
                                     isLoading = false;
                                     Navigator.of(context).pop();
                                     widget.order.orderStatus = selectedOption.option;
-                                    /*setState(() {
-                                      widget.order.orderStatus = selectedOption.option;
-                                    });*/
                                   } else {
                                     print(responseTienditasApi.body.message);
                                     isLoading = false;
@@ -166,7 +163,6 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
 
 class UserOrderInfo extends StatelessWidget {
   UserOrderInfo({this.order});
-
   final Order order;
   @override
   Widget build(BuildContext context) {
@@ -344,7 +340,6 @@ class OrderElementCard extends StatelessWidget {
   final OrderElement orderElement;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.only(
           top: 8,
