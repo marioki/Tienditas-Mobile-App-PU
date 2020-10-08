@@ -174,7 +174,7 @@ class StoreCard extends StatelessWidget {
           ),
           child: Column(children: <Widget>[
             Text(
-              "\$ $amount",
+              "\$$amount",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 24,
