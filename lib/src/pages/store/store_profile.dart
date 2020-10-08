@@ -170,7 +170,6 @@ class StoreCard extends StatelessWidget {
         color: Colors.white,
         child: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 20,
             vertical: 10,
           ),
           child: Column(children: <Widget>[
