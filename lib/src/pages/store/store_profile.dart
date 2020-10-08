@@ -71,7 +71,7 @@ class _StoreProfileState extends State<StoreProfile> {
                             description: "Saldo Retenido",
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 8,
                           ),
                           StoreCard(
                             amount: resultTiendita.body.store.balance,
