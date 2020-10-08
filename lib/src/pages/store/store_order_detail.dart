@@ -288,9 +288,9 @@ class UserOrderInfo extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
+        Flexible(
           child: Container(
-            padding: EdgeInsets.only(left: 8, right: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: Card(
               clipBehavior: Clip.antiAlias,
               margin: EdgeInsets.symmetric(
@@ -349,14 +349,20 @@ class OrderElementCard extends StatelessWidget {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              "${orderElement.itemName}",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Nunito"
-              ),
+            Row(
+              children: [
+                Text(
+                  "${orderElement.itemName}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Nunito",
+                  ),
+                ),
+              ],
             ),
             Text(
               "Cantidad ordenada: ${orderElement.quantity}",

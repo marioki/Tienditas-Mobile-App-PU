@@ -115,7 +115,6 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
         FlatButton(
           onPressed: () {
             if (optionIsSelected) {
-              Navigator.pop(context);
               print(widget.listOfOptions[widget.index]
                   .deliveryOptions[selectedRadio].method);
               //Aqui estoy agregando la opcion de delivey seleccionada a la lista en el UserCartStateProvider
@@ -127,6 +126,8 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
 
               Provider.of<UserCartState>(context)
                   .addSelectedDeliveryOption(selectedOption);
+
+              Navigator.pop(context, selectedOption.name);
             }
           },
           child: Text('Ok'),
