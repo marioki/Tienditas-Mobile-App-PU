@@ -236,7 +236,7 @@ class StoreProvider {
         "category_name": categoryName,
         "description": description,
         "phone_number": phoneNumber,
-        "user_email": userEmail,
+        "user_email": userEmail
       }
     };
     print(bodyData);

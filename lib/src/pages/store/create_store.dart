@@ -454,11 +454,10 @@ class _CreateStoreState extends State<CreateStore> {
     );
   }
 
-  pickImageFromGallery(ImageSource source) {
-    setState(() async {
-      imageFile = ImagePicker.pickImage(source: source);
-      loadImageFromGallery(await imageFile);
-    });
+  pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    loadImageFromGallery(await imageFile);
+    setState(() {});
   }
 
   void loadImageFromGallery(Io.File imageFile) async {
