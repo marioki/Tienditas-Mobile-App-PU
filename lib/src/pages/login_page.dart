@@ -93,7 +93,8 @@ class _LoginPageState extends State<LoginPage> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Provider.of<LoginState>(context, listen: false).signInWithGoogle();
+          Provider.of<LoginState>(context, listen: false)
+              .signInWithGoogle(context);
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _buildSocialBtn(
-              Provider.of<LoginState>(context, listen: false).signInWithGoogle,
+              () => print('Login with Facebook'),
               AssetImage(
                 'assets/logos/google.png',
               ),
@@ -162,28 +163,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 32.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Facebook'),
-            AssetImage(
-              'assets/logos/facebook.png',
-            ),
-          ),
-          _buildSocialBtn(
-            Provider.of<LoginState>(context, listen: false).signInWithGoogle,
-            AssetImage(
-              'assets/logos/google.png',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildSignupBtn() {
     return GestureDetector(

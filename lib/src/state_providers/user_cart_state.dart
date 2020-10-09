@@ -197,7 +197,8 @@ class UserCartState with ChangeNotifier {
         }
       }
       _orderList[orderIndex].elements.forEach((productItem) {
-        orderAmountCounter += productItem.itemPrice * int.parse(productItem.quantity);
+        orderAmountCounter +=
+            productItem.itemPrice * int.parse(productItem.quantity);
         _orderList[orderIndex].amount = orderAmountCounter.toStringAsFixed(2);
       });
     }

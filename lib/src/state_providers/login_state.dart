@@ -88,12 +88,27 @@ class LoginState with ChangeNotifier {
     return idTokenResult;
   }
 
-  //==============ConGoogleAccount
+  //==============Con=Google=Account==============
   //Sign in
-  signInWithGoogle() async {
+  signInWithGoogle(BuildContext context) async {
+    ProgressDialog pr = ProgressDialog(context, isDismissible: false);
+
+    pr.style(
+      message: 'Iniciando sesión...',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+    _loading = true;
+
     final GoogleSignInAccount googleSignInAccount =
         await _googleSignIn.signIn();
     if (googleSignInAccount != null) {
+      pr.show();
+
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -125,6 +140,7 @@ class LoginState with ChangeNotifier {
 
         _loggedIn = true;
         _isAnon = false;
+        pr.hide();
 
         notifyListeners();
       } else {
@@ -138,6 +154,7 @@ class LoginState with ChangeNotifier {
 
           _loggedIn = true;
           _isAnon = false;
+          pr.hide();
           notifyListeners();
         }
       }
@@ -147,7 +164,7 @@ class LoginState with ChangeNotifier {
   }
 
   signInWithFacebook(String result, BuildContext context) async {
-    ProgressDialog pr = ProgressDialog(context);
+    ProgressDialog pr = ProgressDialog(context, isDismissible: false);
     pr.style(
       message: 'Iniciando sesión...',
       progressWidget: Container(
