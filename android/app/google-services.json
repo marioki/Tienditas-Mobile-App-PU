@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "704134493695-dim8g9fsvpemo35fqaa4si5bcqg6us8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "569614a651e90d3482c5ba0ef4c90dd8beca8b03"
+          }
+        },
+        {
           "client_id": "704134493695-dkl1rfbdjmk9kkmdheaq1p6e7e4vm6tj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -74,6 +82,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "704134493695-u53th4vdlnkrnlfhs3lvl2ebeqvbi70h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "569614a651e90d3482c5ba0ef4c90dd8beca8b03"
+          }
+        },
         {
           "client_id": "704134493695-ipiqlvl7q4kav4l345laruujckfhhg3i.apps.googleusercontent.com",
           "client_type": 1,

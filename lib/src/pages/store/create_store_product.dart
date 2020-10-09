@@ -107,13 +107,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          // Image(
-                          //   width: 50,
-                          //   height: 50,
-                          //   image: NetworkImage(
-                          //       "$imageUrl"
-                          //   ),
-                          // ),
                           GestureDetector(
                             child: loadedImg == null
                                 ? Icon(
@@ -129,6 +122,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                               return pickImageFromGallery(ImageSource.gallery);
                             },
                           ),
+
                           RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {

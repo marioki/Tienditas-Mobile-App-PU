@@ -4,6 +4,7 @@ import 'package:app_tiendita/src/modelos/store/order_model.dart';
 import 'package:app_tiendita/src/modelos/store/store_model.dart' as StoreModel;
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -180,7 +181,7 @@ class StoreProvider {
     return response;
   }
 
-  Future<http.Response> createStore(
+  Future<http.Response> createStoreWithLogo(
       String userIdToken,
       String storeTagName,
       String storeName,
@@ -188,7 +189,8 @@ class StoreProvider {
       String categoryName,
       String description,
       String phoneNumber,
-      String userEmail) async {
+      String userEmail,
+      String base64Icon) async {
     String _url = '$baseApiUrl/api/v1/store';
     var bodyData = {
       "store": {
@@ -198,7 +200,43 @@ class StoreProvider {
         "category_name": categoryName,
         "description": description,
         "phone_number": phoneNumber,
-        "user_email": userEmail
+        "user_email": userEmail,
+        "icon": base64Icon,
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> createStore(
+    String userIdToken,
+    String storeTagName,
+    String storeName,
+    String provinceName,
+    String categoryName,
+    String description,
+    String phoneNumber,
+    String userEmail,
+  ) async {
+    String _url = '$baseApiUrl/api/v1/store';
+    var bodyData = {
+      "store": {
+        "store_tag_name": storeTagName,
+        "store_name": storeName,
+        "province_name": provinceName,
+        "category_name": categoryName,
+        "description": description,
+        "phone_number": phoneNumber,
+        "user_email": userEmail,
       }
     };
     print(bodyData);

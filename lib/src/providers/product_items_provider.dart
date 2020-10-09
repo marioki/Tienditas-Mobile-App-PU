@@ -14,7 +14,7 @@ class ProductProvider {
       String storeTagName, BuildContext context) async {
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
 
-    final url = '$apiBaseUrl/api/v1/product?store_tag_name=$storeTagName';
+    final url = '$baseApiUrl/api/v1/product?store_tag_name=$storeTagName';
 
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
