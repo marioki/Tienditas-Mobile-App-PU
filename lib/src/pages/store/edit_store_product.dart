@@ -158,7 +158,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         ),
                                       );
                                       //Clear Image Cahe
-
                                       PaintingBinding.instance.imageCache
                                           .clear();
                                       isLoading = false;
@@ -170,7 +169,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                   }
                                 } else {
                                   //Update product when image is null
-                                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
+                                  Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text('Procesando')));
                                   response =
                                       await ProductProvider().updateProduct(
                                     userIdToken:

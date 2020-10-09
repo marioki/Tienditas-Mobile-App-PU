@@ -283,4 +283,43 @@ class StoreProvider {
     );
     return response;
   }
+
+
+//Actualizar Store con imagen
+  Future<http.Response> updateStoreWithImage(
+      String userIdToken,
+      String storeTagName,
+      String storeName,
+      String provinceName,
+      String categoryName,
+      String description,
+      String phoneNumber,
+      String base64Image) async {
+    String _url = '$baseApiUrl/api/v1/store';
+    var bodyData = {
+      "store": {
+        "store_tag_name": storeTagName,
+        "store_name": storeName,
+        "province_name": provinceName,
+        "category_name": categoryName,
+        "description": description,
+        "phone_number": phoneNumber,
+        "icon": base64Image
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+
+
 }

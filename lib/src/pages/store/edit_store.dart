@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
@@ -9,7 +11,9 @@ import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' as Io;
 
 class EditStore extends StatefulWidget {
   EditStore({this.store});
@@ -30,6 +34,10 @@ class _EditStoreState extends State<EditStore> {
   List<String> _categories = [
     'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
   ];
+
+  Future<Io.File> imageFile;
+  Io.File loadedImg;
+  var itemImage64;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +90,32 @@ class _EditStoreState extends State<EditStore> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                Align(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      return pickImageFromGallery(
+                                          ImageSource.gallery);
+                                    },
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Image(
+                                        width: 90,
+                                        height: 90,
+                                        fit: BoxFit.cover,
+                                        image: loadedImg == null
+                                            ? NetworkImage(
+                                                "${widget.store.iconUrl}")
+                                            : FileImage(loadedImg),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -294,6 +328,20 @@ class _EditStoreState extends State<EditStore> {
                                       if (_formKey.currentState.validate()) {
                                         if (widget.store.categoryName != null &&
                                             widget.store.provinceName != null) {
+                                          if (itemImage64 != null) {
+                                            response = await StoreProvider()
+                                                .updateStoreWithImage(
+                                              Provider.of<LoginState>(context)
+                                                  .currentUserIdToken,
+                                              widget.store.storeTagName,
+                                              widget.store.storeName,
+                                              widget.store.provinceName,
+                                              widget.store.categoryName,
+                                              widget.store.description,
+                                              widget.store.phoneNumber,
+                                              itemImage64,
+                                            );
+                                          } else {
                                             response = await StoreProvider()
                                                 .updateStore(
                                                     Provider.of<LoginState>(
@@ -305,6 +353,7 @@ class _EditStoreState extends State<EditStore> {
                                                     widget.store.categoryName,
                                                     widget.store.description,
                                                     widget.store.phoneNumber);
+                                          }
                                         } else {
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
@@ -319,6 +368,9 @@ class _EditStoreState extends State<EditStore> {
                                               responseFromJson(response.body);
                                           if (responseTienditasApi.statusCode ==
                                               200) {
+                                            //Clear Image Cahe
+                                            PaintingBinding.instance.imageCache
+                                                .clear();
                                             print(responseTienditasApi
                                                 .body.message);
                                             isLoading = false;
@@ -362,5 +414,25 @@ class _EditStoreState extends State<EditStore> {
         },
       ),
     );
+  }
+
+  pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    loadImageFromGallery(await imageFile);
+    setState(() {});
+  }
+
+  void loadImageFromGallery(Io.File imageFile) async {
+    if (imageFile != null) {
+      loadedImg = imageFile;
+      encodeImage(imageFile);
+    }
+    setState(() {});
+  }
+
+  void encodeImage(Io.File image) async {
+    final bytes = image.readAsBytesSync();
+    itemImage64 = base64Encode(bytes);
+    print(itemImage64);
   }
 }
