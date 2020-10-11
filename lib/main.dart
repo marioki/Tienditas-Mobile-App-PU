@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/pages/cart_page.dart';
 import 'package:app_tiendita/src/pages/categories_page.dart';
 import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
@@ -10,10 +11,16 @@ import 'package:app_tiendita/src/pages/store/store_items_page.dart';
 import 'package:app_tiendita/src/pages/store/stores_by_category.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  if (kReleaseMode) {
+    //Debug
+    baseApiUrl = productionUrl;
+  }
+
   runApp(MyApp());
 }
 

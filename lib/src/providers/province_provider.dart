@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class ProvinceProvider {
   Future<ProvinceModel> getAllProvinces(BuildContext context) async {
-    const String url = '$baseApiUrl/api/v1/catalog_province';
+    String url = '$baseApiUrl/api/v1/catalog_province';
     final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {

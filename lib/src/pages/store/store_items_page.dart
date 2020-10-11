@@ -80,7 +80,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                                   child: FadeInImage(
                                     image: NetworkImage(args.iconUrl),
                                     placeholder: AssetImage(
-                                        'assets/images/placeholder.png'),
+                                        'assets/images/tienditas_placeholder.png'),
                                   )),
                             ),
                           ),
