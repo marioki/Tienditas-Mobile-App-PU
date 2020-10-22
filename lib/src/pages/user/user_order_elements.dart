@@ -19,6 +19,13 @@ class UserOrderElements extends StatefulWidget {
 
 class _UserOrderElementsState extends State<UserOrderElements> {
   ProgressDialog pr;
+  bool isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isButtonEnabled = checkUserConfirmation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +124,21 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                   fontFamily: "Nunito"),
             ),
           ),
-          showConfirmButton(),
+          RaisedButton(
+            onPressed: isButtonEnabled ? () => sendUserConfirmation() : null,
+            child: Text(
+              'Confirmar Entrega',
+              style: TextStyle(
+                fontFamily: 'Nunito',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            color: azulTema,
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
           SizedBox(
             height: 10,
           ),
@@ -180,79 +201,61 @@ class _UserOrderElementsState extends State<UserOrderElements> {
     );
   }
 
-  Widget showConfirmButton() {
+  sendUserConfirmation() async {
+    pr = ProgressDialog(context, isDismissible: false);
+    pr.style(
+        message: 'Cargando...',
+        progressWidget: Container(
+          height: 400,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ));
+    pr.show();
+
+    String userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    var response = await OrderConfirmationByUser().confirmOrder(
+      storeTagName: widget.order.storeTagName,
+      orderId: widget.order.orderId,
+      userIdToken: userIdToken,
+    );
+    if (response.statusCode == 200) {
+      ResponseTienditasApi responseTienditasApi =
+          responseFromJson(response.body);
+      if (responseTienditasApi.statusCode == 200 &&
+          responseTienditasApi.body.message ==
+              'Orden actualizada correctamente') {
+        print(
+            '+++++++++++La entrega de la  orden ha sido confirmada por el usuario+++++++++++');
+        setState(() {
+          isButtonEnabled = false;
+        });
+        pr.hide();
+      } else {
+        //No se logro la confirmación intentar nueva mente
+        print(
+            '++++++++++++${responseTienditasApi.statusCode}  ${responseTienditasApi.body.message}+++++++++++++');
+        pr.hide();
+      }
+    } else {
+      //Error de Conexion
+      print('+++++++++error: ${response.statusCode}+++++++++');
+      pr.hide();
+    }
+  }
+
+  bool checkUserConfirmation() {
     if (widget.order.orderStatus == 'Recibida') {
       if (widget.order.userConfirmation == 'Pendiente') {
-        return RaisedButton(
-          onPressed: () async {
-            pr = ProgressDialog(context, isDismissible: false);
-            pr.style(
-                message: 'Cargando...',
-                progressWidget: Container(
-                  height: 400,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ));
-            pr.show();
-
-            String userIdToken =
-                Provider.of<LoginState>(context).currentUserIdToken;
-            var response = await OrderConfirmationByUser().confirmOrder(
-              storeTagName: widget.order.storeTagName,
-              orderId: widget.order.orderId,
-              userIdToken: userIdToken,
-            );
-            if (response.statusCode == 200) {
-              ResponseTienditasApi responseTienditasApi =
-                  responseFromJson(response.body);
-              if (responseTienditasApi.statusCode == 200 &&
-                  responseTienditasApi.body.message ==
-                      'Orden actualizada correctamente') {
-                print(
-                    '+++++++++++La entrega de la  orden ha sido confirmada por el usuario+++++++++++');
-                pr.hide();
-              } else {
-                print(
-                    '++++++++++++${responseTienditasApi.statusCode}  ${responseTienditasApi.body.message}+++++++++++++');
-                pr.hide();
-              }
-            } else {
-              print('+++++++++error: ${response.statusCode}+++++++++');
-              pr.hide();
-            }
-          },
-          child: Text(
-            'Confirmar Entrega',
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          color: azulTema,
-          textColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        );
+          return true;
       } else if (widget.order.userConfirmation == 'Confirmado') {
-        return RaisedButton(
-          child: Text(
-            'Confirmar Entrega',
-            style: TextStyle(
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          color: azulTema,
-          textColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          onPressed: null,
-        );
-      } else
-        return Container();
-    } else
-      return Container();
+          return false;
+      }else {
+        return false;
+      }
+    } else {
+        return false;
+    }
   }
 }
 
