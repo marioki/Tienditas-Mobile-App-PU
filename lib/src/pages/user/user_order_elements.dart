@@ -1,16 +1,25 @@
+import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/user/user_order_batch.dart';
+import 'package:app_tiendita/src/providers/user/confirmar_orden_recibida.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:provider/provider.dart';
 
 class UserOrderElements extends StatefulWidget {
   UserOrderElements({this.order});
+
   final Order order;
+
   @override
   _UserOrderElementsState createState() => _UserOrderElementsState();
 }
 
 class _UserOrderElementsState extends State<UserOrderElements> {
+  ProgressDialog pr;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +66,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"
-                        ),
+                            fontFamily: "Nunito"),
                       ),
                       Text(
                         "Forma de envío: ${widget.order.deliveryOption.name}",
@@ -66,8 +74,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                             color: Colors.black54,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
-                        ),
+                            fontFamily: "Nunito"),
                       ),
                       SizedBox(
                         height: 5,
@@ -78,8 +85,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
-                        ),
+                            fontFamily: "Nunito"),
                       ),
                       SizedBox(
                         height: 5,
@@ -90,14 +96,12 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"
-                        ),
+                            fontFamily: "Nunito"),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                    ]
-                ),
+                    ]),
               ),
             ),
           ),
@@ -107,13 +111,13 @@ class _UserOrderElementsState extends State<UserOrderElements> {
             child: Text(
               "Estado de la orden: ${widget.order.orderStatus}",
               style: TextStyle(
-                  color:Colors.black,
+                  color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
-                  fontFamily: "Nunito"
-              ),
+                  fontFamily: "Nunito"),
             ),
           ),
+          showConfirmButton(),
           SizedBox(
             height: 10,
           ),
@@ -126,8 +130,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
                   color: Color(0xFF191660),
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
-                  fontFamily: "Nunito"
-              ),
+                  fontFamily: "Nunito"),
             ),
           ),
           Flexible(
@@ -176,20 +179,93 @@ class _UserOrderElementsState extends State<UserOrderElements> {
       ),
     );
   }
+
+  Widget showConfirmButton() {
+    if (widget.order.orderStatus == 'Recibida') {
+      if (widget.order.userConfirmation == 'Pendiente') {
+        return RaisedButton(
+          onPressed: () async {
+            pr = ProgressDialog(context, isDismissible: false);
+            pr.style(
+                message: 'Cargando...',
+                progressWidget: Container(
+                  height: 400,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ));
+            pr.show();
+
+            String userIdToken =
+                Provider.of<LoginState>(context).currentUserIdToken;
+            var response = await OrderConfirmationByUser().confirmOrder(
+              storeTagName: widget.order.storeTagName,
+              orderId: widget.order.orderId,
+              userIdToken: userIdToken,
+            );
+            if (response.statusCode == 200) {
+              ResponseTienditasApi responseTienditasApi =
+                  responseFromJson(response.body);
+              if (responseTienditasApi.statusCode == 200 &&
+                  responseTienditasApi.body.message ==
+                      'Orden actualizada correctamente') {
+                print(
+                    '+++++++++++La entrega de la  orden ha sido confirmada por el usuario+++++++++++');
+                pr.hide();
+              } else {
+                print(
+                    '++++++++++++${responseTienditasApi.statusCode}  ${responseTienditasApi.body.message}+++++++++++++');
+                pr.hide();
+              }
+            } else {
+              print('+++++++++error: ${response.statusCode}+++++++++');
+              pr.hide();
+            }
+          },
+          child: Text(
+            'Confirmar Entrega',
+            style: TextStyle(
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: azulTema,
+          textColor: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        );
+      } else if (widget.order.userConfirmation == 'Confirmado') {
+        return RaisedButton(
+          child: Text(
+            'Confirmar Entrega',
+            style: TextStyle(
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          color: azulTema,
+          textColor: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          onPressed: null,
+        );
+      } else
+        return Container();
+    } else
+      return Container();
+  }
 }
 
 class OrderElementCard extends StatelessWidget {
   OrderElementCard({this.orderElement});
+
   final OrderElement orderElement;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      padding: EdgeInsets.only(
-          top: 8,
-          bottom: 8,
-          left: 16
-      ),
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 16),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -199,8 +275,7 @@ class OrderElementCard extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  fontFamily: "Nunito"
-              ),
+                  fontFamily: "Nunito"),
             ),
             Text(
               "Cantidad ordenada: ${orderElement.quantity}",
@@ -208,14 +283,12 @@ class OrderElementCard extends StatelessWidget {
                   color: Colors.black54,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
-                  fontFamily: "Nunito"
-              ),
+                  fontFamily: "Nunito"),
             ),
             SizedBox(
               height: 5,
             ),
-          ]
-      ),
+          ]),
     );
   }
 }
