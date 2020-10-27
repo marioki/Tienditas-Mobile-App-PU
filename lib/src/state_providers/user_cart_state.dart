@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
+  int _cartItemsQuantity = 0;
   double totalPriceOfItems = 0;
   double _deliveryTotalCost = 0;
   double totalAmountOfBatch;
@@ -20,6 +21,8 @@ class UserCartState with ChangeNotifier {
   Batch currentBatch = Batch();
 
   List<DeliveryOption> selectedDeliveryOptions = List();
+
+  int getCartItemsQuantity() => _cartItemsQuantity;
 
   addSelectedDeliveryOption(DeliveryOption newOption) {
     bool modified = false;
@@ -64,6 +67,7 @@ class UserCartState with ChangeNotifier {
       print('El producto ya esta en la canasta! awe');
       return;
     } else {
+      _cartItemsQuantity++;
       allStoreTagsList.add(productElement.parentStoreTag);
       cartProductList.add(productElement);
       cartItemsIds.add(productElement.itemId);
@@ -74,6 +78,7 @@ class UserCartState with ChangeNotifier {
 
   void deleteProductFromCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
+      _cartItemsQuantity--;
       allStoreTagsList.remove(productElement.parentStoreTag);
       cartProductList
           .removeWhere((element) => element.itemId == productElement.itemId);
