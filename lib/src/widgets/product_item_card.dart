@@ -1,4 +1,6 @@
+import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/pages/store/product_details_page.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
@@ -50,13 +52,16 @@ class ProductItemCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: Container(
-              width: double.infinity,
-              child: FadeInImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(image),
-                placeholder:
-                    AssetImage('assets/images/tienditas_placeholder.png'),
+            child: GestureDetector(
+              onTap: () => goToProductDetails(context),
+              child: Container(
+                width: double.infinity,
+                child: FadeInImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(image),
+                  placeholder:
+                      AssetImage('assets/images/tienditas_placeholder.png'),
+                ),
               ),
             ),
           ),
@@ -130,5 +135,22 @@ class ProductItemCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  goToProductDetails(BuildContext context) {
+    return Navigator.pushNamed(context, 'product_details_page',
+        arguments: ProductItemCard(
+          quantity: this.quantity,
+          itemName: this.itemName,
+          purchaseType: this.purchaseType,
+          outstanding: this.outstanding,
+          registeredDate: this.registeredDate,
+          itemId: this.itemId,
+          finalPrice: this.finalPrice,
+          itemSatus: this.itemSatus,
+          imageUrl: this.imageUrl,
+          hexColor: this.hexColor,
+          parentStoreTag: this.parentStoreTag,
+        ));
   }
 }

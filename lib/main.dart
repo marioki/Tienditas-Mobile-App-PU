@@ -5,6 +5,7 @@ import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
 import 'package:app_tiendita/src/pages/delivery_options_page.dart';
 import 'package:app_tiendita/src/pages/home_page.dart';
 import 'package:app_tiendita/src/pages/login_page.dart';
+import 'package:app_tiendita/src/pages/store/product_details_page.dart';
 import 'package:app_tiendita/src/pages/user/profile_page.dart';
 import 'package:app_tiendita/src/pages/store/search_for_store_page.dart';
 import 'package:app_tiendita/src/pages/store/store_items_page.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
             'search_for_store': (BuildContext context) => SearchForStorePage(),
             'delivery_options': (BuildContext context) => DeliveryOptionsPage(),
             'create_credit_card': (BuildContext context) => CrearNuevaTarjeta(),
+            'product_details_page': (BuildContext context) => ProductDetailsPage(),
           },
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
