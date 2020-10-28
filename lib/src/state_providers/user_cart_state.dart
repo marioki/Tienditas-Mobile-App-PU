@@ -135,6 +135,7 @@ class UserCartState with ChangeNotifier {
     cartItemsIds.clear();
     storeTagsListFiltered.clear();
     allStoreTagsList.clear();
+    _cartItemsQuantity = 0;
   }
 
   List<String> filterParentStoreTagList() {
