@@ -56,11 +56,14 @@ class ProductItemCard extends StatelessWidget {
               onTap: () => goToProductDetails(context),
               child: Container(
                 width: double.infinity,
-                child: FadeInImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(image),
-                  placeholder:
-                      AssetImage('assets/images/tienditas_placeholder.png'),
+                child: Hero(
+                  tag: itemId,
+                  child: FadeInImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(image),
+                    placeholder:
+                        AssetImage('assets/images/tienditas_placeholder.png'),
+                  ),
                 ),
               ),
             ),
