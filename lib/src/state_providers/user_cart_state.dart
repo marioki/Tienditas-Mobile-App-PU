@@ -205,6 +205,9 @@ class UserCartState with ChangeNotifier {
       _orderList[orderIndex].elements.forEach((productItem) {
         orderAmountCounter +=
             productItem.itemPrice * int.parse(productItem.quantity);
+
+        orderAmountCounter += double.parse(deliveryInfo.fee);
+
         _orderList[orderIndex].amount = orderAmountCounter.toStringAsFixed(2);
       });
     }
