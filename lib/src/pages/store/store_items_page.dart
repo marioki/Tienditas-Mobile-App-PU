@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
+import 'package:app_tiendita/src/pages/cart_page.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -124,22 +125,31 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                           ],
                         ),
                       ),
-                      Badge(
-                        child: Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return CartPage();
+                            },
+                          ));
+                        },
+                        child: Badge(
+                          child: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
+                          badgeContent: Text(
+                            Provider.of<UserCartState>(context)
+                                .getCartItemsQuantity()
+                                .toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          showBadge: (Provider.of<UserCartState>(context)
+                                      .getCartItemsQuantity() >
+                                  0)
+                              ? true
+                              : false,
                         ),
-                        badgeContent: Text(
-                          Provider.of<UserCartState>(context)
-                              .getCartItemsQuantity()
-                              .toString(),
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        showBadge: (Provider.of<UserCartState>(context)
-                                    .getCartItemsQuantity() >
-                                0)
-                            ? true
-                            : false,
                       ),
                     ],
                   ),
