@@ -1,11 +1,12 @@
-import 'package:app_tiendita/src/pages/store_front.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:package_info/package_info.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:provider/provider.dart';
+
 import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -163,7 +164,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
@@ -305,7 +305,28 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       _buildGoogleBtn(),
-                      _buildAnonymous()
+                      _buildAnonymous(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      FutureBuilder(
+                        future: getVersionNumber(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              'v${snapshot.data}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -357,5 +378,12 @@ class _LoginPageState extends State<LoginPage> {
     );
     Provider.of<LoginState>(context, listen: false)
         .signInWithFacebook(result, context);
+  }
+
+  Future<String> getVersionNumber() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+
+    return version;
   }
 }
