@@ -92,7 +92,8 @@ class _UserAddressPageState extends State<UserAddressPage> {
                       method: "post",
                     ),
                   ),
-                );
+                ).then((value) =>
+                    Provider.of<LoginState>(context).reloadUserInfo());
               },
               child: Text('+ Agregar Dirección'),
             );
