@@ -1,6 +1,11 @@
+import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/pages/cart_page.dart';
+import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   @override
@@ -14,6 +19,42 @@ class ProductDetailsPage extends StatelessWidget {
           leading: BackButton(
             color: Colors.black,
           ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return CartPage();
+                  },
+                ));
+              },
+              child: Align(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: Hero(
+                    tag: 'cart',
+                    child: Badge(
+                      child: Icon(
+                        Icons.shopping_cart_outlined,
+                        color: Colors.black,
+                      ),
+                      badgeContent: Text(
+                        Provider.of<UserCartState>(context)
+                            .getCartItemsQuantity()
+                            .toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      showBadge: (Provider.of<UserCartState>(context)
+                                  .getCartItemsQuantity() >
+                              0)
+                          ? true
+                          : false,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
           actionsIconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
@@ -92,7 +133,27 @@ class ProductDetailsPage extends StatelessWidget {
                                 color: azulTema,
                                 textColor: Colors.white,
                                 child: Text('Al Carrito'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Provider.of<UserCartState>(context)
+                                      .addProductoToCart(
+                                    ProductElement(
+                                      itemId: args.itemId,
+                                      itemName: args.itemName,
+                                      finalPrice: args.finalPrice,
+                                      imageUrl: args.imageUrl,
+                                      purchaseType: args.purchaseType,
+                                      registeredDate: args.registeredDate,
+                                      quantity: args.quantity,
+                                      hexColor: args.hexColor,
+                                      parentStoreTag: args.parentStoreTag,
+                                    ),
+                                  );
+                                  final snackBar = SnackBar(
+                                    duration: Duration(milliseconds: 300),
+                                    content: Text('Al carrito!'),
+                                  );
+                                  //Scaffold.of(context).showSnackBar(snackBar);
+                                },
                               ),
                             ),
                           ],
