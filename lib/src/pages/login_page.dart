@@ -17,44 +17,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
 
-  Widget _buildLoginBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Provider.of<LoginState>(context, listen: false).login(context);
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Text(
-          'LOGIN',
-          style: TextStyle(
-            color: azulTema,
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Nunito',
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildFacebookBtn(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        padding: EdgeInsets.symmetric(vertical: 8),
         elevation: 5.0,
         onPressed: () {
           loginWithFacebook();
         },
-        padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -67,9 +38,6 @@ class _LoginPageState extends State<LoginPage> {
               AssetImage(
                 'assets/logos/facebook.png',
               ),
-            ),
-            SizedBox(
-              width: 16,
             ),
             Text(
               'FACEBOOK',
@@ -89,15 +57,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildGoogleBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
+        padding: EdgeInsets.symmetric(vertical: 8),
         elevation: 5.0,
         onPressed: () {
           Provider.of<LoginState>(context, listen: false)
               .signInWithGoogle(context);
         },
-        padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -110,9 +77,6 @@ class _LoginPageState extends State<LoginPage> {
               AssetImage(
                 'assets/logos/google.png',
               ),
-            ),
-            SizedBox(
-              width: 16,
             ),
             Text(
               'GOOGLE',
@@ -130,25 +94,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildSignInWithText() {
-    return Column(
-      children: <Widget>[
-        Text(
-          '- O -',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          'Regístrate con',
-          style: kLabelStyle,
-        ),
-      ],
-    );
-  }
-
   Widget _buildSocialBtn(Function onTap, AssetImage logo) {
     return GestureDetector(
       onTap: onTap,
@@ -159,36 +104,6 @@ class _LoginPageState extends State<LoginPage> {
           image: DecorationImage(
             image: logo,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () {
-        Provider.of<LoginState>(context, listen: false).login(context);
-      },
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: '¿No tienes una cuenta?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -253,113 +168,56 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32.0,
-                    vertical: 32.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(height: 16.0),
-                      SizedBox(
-                        height: 100.0,
-                        width: 250.0,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/logos/logoTienditas.png'),
+                padding: EdgeInsets.all(32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage('assets/logos/logoTienditas.png'),
+                    ),
+                    Image(
+                      image: AssetImage('assets/images/welcomeImage.png'),
+                    ),
+                    Text(
+                      'Ingresa con:',
+                      style: kLabelStyle,
+                    ),
+                    _buildFacebookBtn(context),
+                    Text(
+                      '- O -',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    _buildGoogleBtn(),
+                    _buildAnonymous(),
+                    FutureBuilder(
+                      future: getVersionNumber(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(
+                            'v${snapshot.data}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16.0),
-                      SizedBox(
-                        height: 250.0,
-                        width: 300.0,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/welcomeImage.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      Text(
-                        'Ingresa con:',
-                        style: kLabelStyle,
-                      ),
-                      _buildFacebookBtn(context),
-                      Text(
-                        '- O -',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      _buildGoogleBtn(),
-                      _buildAnonymous(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      FutureBuilder(
-                        future: getVersionNumber(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            return Text(
-                              'v${snapshot.data}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ],
                 ),
               )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildLoginState() {
-    return Consumer<LoginState>(
-      builder: (BuildContext context, LoginState value, Widget child) {
-        if (value.isLoading()) {
-          return Column(children: <Widget>[
-            SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              child: CircularProgressIndicator(),
-              height: 40.0,
-              width: 40.0,
-            ),
-            SizedBox(
-              height: 32,
-            )
-          ]);
-        } else {
-          return child;
-        }
-      },
-      child: _buildLoginBtn(),
     );
   }
 
