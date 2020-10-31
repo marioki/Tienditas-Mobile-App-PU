@@ -9,6 +9,14 @@ class ProductDetailsPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: BackButton(
+            color: Colors.black,
+          ),
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
+        ),
         body: Align(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,6 +41,7 @@ class ProductDetailsPage extends StatelessWidget {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Text(
@@ -41,7 +50,7 @@ class ProductDetailsPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 32,
+                                fontSize: 24,
                                 fontFamily: 'Nunito',
                               ),
                             ),
@@ -51,7 +60,7 @@ class ProductDetailsPage extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.normal,
-                              fontSize: 32,
+                              fontSize: 24,
                               fontFamily: 'Nunito',
                             ),
                           ),
@@ -74,17 +83,20 @@ class ProductDetailsPage extends StatelessWidget {
                           wordSpacing: 3,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: FlatButton(
-                              color: azulTema,
-                              textColor: Colors.white,
-                              child: Text('Al Carrito'),
-                              onPressed: () {},
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: FlatButton(
+                                color: azulTema,
+                                textColor: Colors.white,
+                                child: Text('Al Carrito'),
+                                onPressed: () {},
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     ],
                   ),
