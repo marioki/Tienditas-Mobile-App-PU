@@ -99,25 +99,22 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                       },
                     ));
                   },
-                  child: Hero(
-                    tag: 'cart',
-                    child: Badge(
-                      child: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: Colors.white,
-                      ),
-                      badgeContent: Text(
-                        Provider.of<UserCartState>(context)
-                            .getCartItemsQuantity()
-                            .toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      showBadge: (Provider.of<UserCartState>(context)
-                                  .getCartItemsQuantity() >
-                              0)
-                          ? true
-                          : false,
+                  child: Badge(
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
                     ),
+                    badgeContent: Text(
+                      Provider.of<UserCartState>(context)
+                          .getCartItemsQuantity()
+                          .toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    showBadge: (Provider.of<UserCartState>(context)
+                                .getCartItemsQuantity() >
+                            0)
+                        ? true
+                        : false,
                   ),
                 ),
               ],
