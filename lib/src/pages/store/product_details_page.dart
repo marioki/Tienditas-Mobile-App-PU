@@ -55,56 +55,56 @@ class ProductDetailsPage extends StatelessWidget {
           actionsIconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-        body: Align(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Hero(
-                  tag: args.itemId,
-                  child: Image(
-                    image: NetworkImage(args.imageUrl),
-                  ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Hero(
+                tag: args.itemId,
+                child: Image(
+                  image: NetworkImage(args.imageUrl),
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              args.itemName,
-                              maxLines: 2,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
-                                fontFamily: 'Nunito',
-                              ),
-                            ),
-                          ),
-                          Text(
-                            '\$${args.finalPrice}',
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            args.itemName,
+                            maxLines: 2,
                             style: TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                               fontSize: 24,
                               fontFamily: 'Nunito',
                             ),
                           ),
-                        ],
-                      ),
-                      Text(
+                        ),
+                        Text(
+                          '\$${args.finalPrice}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 24,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Text(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
                         ', sed do eiusmod tempor incididunt ut labore et dolo'
                         're magna aliqua. Ut enim ad minim veniam, quis nostr'
@@ -121,47 +121,47 @@ class ProductDetailsPage extends StatelessWidget {
                           wordSpacing: 3,
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: FlatButton(
-                                color: azulTema,
-                                textColor: Colors.white,
-                                child: Text('Al Carrito'),
-                                onPressed: () {
-                                  Provider.of<UserCartState>(context)
-                                      .addProductoToCart(
-                                    ProductElement(
-                                      itemId: args.itemId,
-                                      itemName: args.itemName,
-                                      finalPrice: args.finalPrice,
-                                      imageUrl: args.imageUrl,
-                                      purchaseType: args.purchaseType,
-                                      registeredDate: args.registeredDate,
-                                      quantity: args.quantity,
-                                      hexColor: args.hexColor,
-                                      parentStoreTag: args.parentStoreTag,
-                                    ),
-                                  );
-                                  final snackBar = SnackBar(
-                                    duration: Duration(milliseconds: 300),
-                                    content: Text('Al carrito!'),
-                                  );
-                                  //Scaffold.of(context).showSnackBar(snackBar);
-                                },
-                              ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FlatButton(
+                              color: azulTema,
+                              textColor: Colors.white,
+                              child: Text('Al Carrito'),
+                              onPressed: () {
+                                Provider.of<UserCartState>(context)
+                                    .addProductoToCart(
+                                  ProductElement(
+                                    itemId: args.itemId,
+                                    itemName: args.itemName,
+                                    finalPrice: args.finalPrice,
+                                    imageUrl: args.imageUrl,
+                                    purchaseType: args.purchaseType,
+                                    registeredDate: args.registeredDate,
+                                    quantity: args.quantity,
+                                    hexColor: args.hexColor,
+                                    parentStoreTag: args.parentStoreTag,
+                                  ),
+                                );
+                                final snackBar = SnackBar(
+                                  duration: Duration(milliseconds: 300),
+                                  content: Text('Al carrito!'),
+                                );
+                                //Scaffold.of(context).showSnackBar(snackBar);
+                              },
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
