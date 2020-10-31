@@ -2,6 +2,7 @@ import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/crear_nueva_direccion_page.dart';
 import 'package:app_tiendita/src/pages/metodo_de_pago.dart';
+import 'package:app_tiendita/src/pages/user/edit_user_address.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -96,14 +97,21 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
               } else {
                 return FlatButton(
                   onPressed: () {
+                    User user =
+                        Provider.of<LoginState>(context).getTienditaUser();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return CrearNuevaDireccion();
+                          return EditUserAddress(
+                            method: 'post',
+                            appBarTitle: 'Agregar Dirección',
+                            userEmail: user.userEmail,
+                          );
                         },
                       ),
-                    );
+                    ).then((value) =>
+                        Provider.of<LoginState>(context).reloadUserInfo());
                   },
                   child: Text('+ Agregar Dirección'),
                 );
@@ -166,7 +174,8 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
   }
 
   void setUserAddres() {
-    Address address = Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
+    Address address =
+        Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
 
     UserAddress userAddress = UserAddress(
         addressLine1: address.addressLine1,
