@@ -34,126 +34,98 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
         top: true,
         bottom: false,
         child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 100,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(35),
+                    bottomRight: Radius.circular(35))),
+            centerTitle: false,
+            backgroundColor: Color(0xFF5f58a1),
+            title: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 0),
+                  height: 70,
+                  width: 70,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 40,
+                    child: ClipOval(
+                      child: SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FadeInImage(
+                              image: NetworkImage(args.iconUrl),
+                              placeholder: AssetImage(
+                                  'assets/images/tienditas_placeholder.png'),
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          args.storeName,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          args.storeTagName,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          args.description,
+                          maxLines: 2,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return CartPage();
+                      },
+                    ));
+                  },
+                  child: Badge(
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                    ),
+                    badgeContent: Text(
+                      Provider.of<UserCartState>(context)
+                          .getCartItemsQuantity()
+                          .toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    showBadge: (Provider.of<UserCartState>(context)
+                                .getCartItemsQuantity() >
+                            0)
+                        ? true
+                        : false,
+                  ),
+                ),
+              ],
+            ),
+          ),
           body: Container(
             color: Colors.white,
             child: Column(
               children: <Widget>[
                 //Custom appBar
-                Container(
-                  //margin: EdgeInsets.only(top: 24),
-                  height: 100,
-                  //margin: EdgeInsets.only(bottom: 16),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF5f58a1),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(35),
-                      bottomRight: Radius.circular(35),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 8),
-                      ),
-                      IconButton(
-                        enableFeedback: true,
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 0),
-                        height: 70,
-                        width: 70,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 40,
-                          child: ClipOval(
-                            child: SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FadeInImage(
-                                    image: NetworkImage(args.iconUrl),
-                                    placeholder: AssetImage(
-                                        'assets/images/tienditas_placeholder.png'),
-                                  )),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              width: 200,
-                              child: Text(
-                                args.originalStoreName,
-                                textAlign: TextAlign.start,
-                                maxLines: 1,
-                                style: storeTitleCardStyle,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              args.storeTagName,
-                              style: storeDetailsCardStyle,
-                            ),
-                            Flexible(
-                              child: Container(
-                                width: 200,
-                                child: Text(
-                                  args.description,
-                                  maxLines: 2,
-                                  style: storeDetailsCardStyle,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return CartPage();
-                            },
-                          ));
-                        },
-                        child: Badge(
-                          child: Icon(
-                            Icons.shopping_cart_outlined,
-                            color: Colors.white,
-                          ),
-                          badgeContent: Text(
-                            Provider.of<UserCartState>(context)
-                                .getCartItemsQuantity()
-                                .toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          showBadge: (Provider.of<UserCartState>(context)
-                                      .getCartItemsQuantity() >
-                                  0)
-                              ? true
-                              : false,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+
                 _searchBarWidget(),
                 _generateStoreProductList(args, context),
               ],
