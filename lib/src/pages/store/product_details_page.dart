@@ -4,6 +4,7 @@ import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -68,97 +69,96 @@ class ProductDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            args.itemName,
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              fontFamily: 'Nunito',
-                            ),
-                          ),
-                        ),
-                        Text(
-                          '\$${args.finalPrice}',
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          args.itemName,
+                          maxLines: 2,
                           style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.bold,
                             fontSize: 24,
                             fontFamily: 'Nunito',
                           ),
                         ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
-                        ', sed do eiusmod tempor incididunt ut labore et dolo'
-                        're magna aliqua. Ut enim ad minim veniam, quis nostr'
-                        'ud exercitation ullamco laboris nisi ut aliquip ex '
-                        'ea commodo consequat. Duis aute irure dolor in repre'
-                        'henderit in voluptate velit esse cillum dolore eu f'
-                        'ugiat nulla pariatur. Excepteur sint occaecat cupida'
-                        'tat non proident, sunt in culpa qui officia deserunt'
-                        ' mollit anim id est laborum',
-                        maxLines: 4,
+                      ),
+                      Text(
+                        '\$${args.finalPrice}',
                         style: TextStyle(
-                          fontSize: 16,
                           color: Colors.black,
-                          wordSpacing: 3,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 24,
+                          fontFamily: 'Nunito',
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: FlatButton(
-                              color: azulTema,
-                              textColor: Colors.white,
-                              child: Text('Al Carrito'),
-                              onPressed: () {
-                                Provider.of<UserCartState>(context)
-                                    .addProductoToCart(
-                                  ProductElement(
-                                    itemId: args.itemId,
-                                    itemName: args.itemName,
-                                    finalPrice: args.finalPrice,
-                                    imageUrl: args.imageUrl,
-                                    purchaseType: args.purchaseType,
-                                    registeredDate: args.registeredDate,
-                                    quantity: args.quantity,
-                                    hexColor: args.hexColor,
-                                    parentStoreTag: args.parentStoreTag,
-                                  ),
-                                );
-                                final snackBar = SnackBar(
-                                  duration: Duration(milliseconds: 300),
-                                  content: Text('Al carrito!'),
-                                );
-                                //Scaffold.of(context).showSnackBar(snackBar);
-                              },
-                            ),
+                    ],
+                  ),
+                  //Todo descripcion del producto
+                  // Expanded(
+                  //   child: Text(
+                  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+                  //     ', sed do eiusmod tempor incididunt ut labore et dolo'
+                  //     're magna aliqua. Ut enim ad minim veniam, quis nostr'
+                  //     'ud exercitation ullamco laboris nisi ut aliquip ex '
+                  //     'ea commodo consequat. Duis aute irure dolor in repre'
+                  //     'henderit in voluptate velit esse cillum dolore eu f'
+                  //     'ugiat nulla pariatur. Excepteur sint occaecat cupida'
+                  //     'tat non proident, sunt in culpa qui officia deserunt'
+                  //     ' mollit anim id est laborum',
+                  //     maxLines: 4,
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       color: Colors.black,
+                  //       wordSpacing: 3,
+                  //     ),
+                  //   ),
+                  // ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: FlatButton(
+                            color: azulTema,
+                            textColor: Colors.white,
+                            child: Text('Al Carrito'),
+                            onPressed: () {
+                              Provider.of<UserCartState>(context)
+                                  .addProductoToCart(
+                                ProductElement(
+                                  itemId: args.itemId,
+                                  itemName: args.itemName,
+                                  finalPrice: args.finalPrice,
+                                  imageUrl: args.imageUrl,
+                                  purchaseType: args.purchaseType,
+                                  registeredDate: args.registeredDate,
+                                  quantity: args.quantity,
+                                  hexColor: args.hexColor,
+                                  parentStoreTag: args.parentStoreTag,
+                                ),
+                              );
+                              final snackBar = SnackBar(
+                                duration: Duration(milliseconds: 300),
+                                content: Text('Al carrito!'),
+                              );
+                              //Scaffold.of(context).showSnackBar(snackBar);
+                            },
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             )
           ],
