@@ -78,6 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                 'assets/logos/google.png',
               ),
             ),
+            SizedBox(
+              width: 8,
+            ),
             Text(
               'GOOGLE',
               style: TextStyle(

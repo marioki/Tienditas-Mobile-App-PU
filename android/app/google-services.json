@@ -83,6 +83,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "704134493695-7b1qs4ngopt30h9gtv30rb8fcg0aorc5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "7deca2c478475318717d3412ee0916291de0b968"
+          }
+        },
+        {
           "client_id": "704134493695-ib38khb6eqghie0flr1qqaccqv0itvul.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
