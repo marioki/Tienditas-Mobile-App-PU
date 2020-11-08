@@ -75,6 +75,9 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     itemCount: batch.orders.length,
                     itemBuilder: (context, index) {
                       Order order = batch.orders[index];
+                      //Precio de todos los productos
+                      double orderTotalPrice = double.parse(order.amount) -
+                          double.parse(order.deliveryOption.fee);
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -125,7 +128,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              '\$${order.amount.toString()}',
+                              '\$${orderTotalPrice.toStringAsFixed(2)}',
                             ),
                           )
                         ],
