@@ -122,7 +122,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                               return pickImageFromGallery(ImageSource.gallery);
                             },
                           ),
-
                           RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
@@ -327,11 +326,11 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     );
   }
 
-  pickImageFromGallery(ImageSource source) {
-    setState(() async {
-      imageFile = ImagePicker.pickImage(source: source);
-      loadImageFromGallery(await imageFile);
-    });
+  pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    loadImageFromGallery(await imageFile);
+
+    setState(() {});
   }
 
   void loadImageFromGallery(Io.File imageFile) async {
