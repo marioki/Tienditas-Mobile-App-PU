@@ -60,6 +60,7 @@ class ProductElement {
     this.imageUrl,
     this.hexColor,
     this.parentStoreTag,
+    this.deliveryTime,
   });
 
   String storeTagName;
@@ -79,33 +80,37 @@ class ProductElement {
   String parentStoreTag;
   String hexColor;
 
+  String deliveryTime;
+
   factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
-    storeTagName: json["store_tag_name"],
-    quantity: json["quantity"],
-    itemName: json["item_name"],
-    purchaseType: purchaseTypeValues.map[json["purchase_type"]],
-    outstanding: outstandingValues.map[json["outstanding"]],
-    registeredDate: json["registered_date"],
-    itemId: json["item_id"],
-    finalPrice: json["final_price"],
-    basePrice: json["base_price"],
-    itemStatus: itemSatusValues.map[json["item_status"]],
-    imageUrl: json["image_url"],
-  );
+        storeTagName: json["store_tag_name"],
+        quantity: json["quantity"],
+        itemName: json["item_name"],
+        purchaseType: purchaseTypeValues.map[json["purchase_type"]],
+        outstanding: outstandingValues.map[json["outstanding"]],
+        registeredDate: json["registered_date"],
+        itemId: json["item_id"],
+        finalPrice: json["final_price"],
+        basePrice: json["base_price"],
+        itemStatus: itemSatusValues.map[json["item_status"]],
+        imageUrl: json["image_url"],
+        deliveryTime: json["delivery_time"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "store_tag_name": storeTagName,
-    "quantity": quantity,
-    "item_name": itemName,
-    "purchase_type": purchaseTypeValues.reverse[purchaseType],
-    "outstanding": outstandingValues.reverse[outstanding],
-    "registered_date": registeredDate,
-    "item_id": itemId,
-    "final_price": finalPrice,
-    "base_price": basePrice,
-    "item_status": itemSatusValues.reverse[itemStatus],
-    "image_url": imageUrl,
-  };
+        "store_tag_name": storeTagName,
+        "quantity": quantity,
+        "item_name": itemName,
+        "purchase_type": purchaseTypeValues.reverse[purchaseType],
+        "outstanding": outstandingValues.reverse[outstanding],
+        "registered_date": registeredDate,
+        "item_id": itemId,
+        "final_price": finalPrice,
+        "base_price": basePrice,
+        "item_status": itemSatusValues.reverse[itemStatus],
+        "image_url": imageUrl,
+        "delivery_time": deliveryTime
+      };
 }
 
 enum ItemSatus { VIGENTE }

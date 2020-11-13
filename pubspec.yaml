@@ -41,6 +41,8 @@ dependencies:
   pull_to_refresh: ^1.6.2
   badges: ^1.1.4
   package_info: ^0.4.3
+  numberpicker: ^1.2.1
+
 
 
 

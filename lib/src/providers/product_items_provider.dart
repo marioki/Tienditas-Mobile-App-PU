@@ -28,8 +28,12 @@ class ProductProvider {
     }
   }
 
-  Future<http.Response> updateProduct(
-      {String userIdToken, ProductElement productElement}) async {
+  Future<http.Response> updateProduct({
+    String userIdToken,
+    ProductElement productElement,
+    String deliveryTime,
+  }) async {
+    print('=========Updatr Product Method============');
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -39,6 +43,7 @@ class ProductProvider {
         "final_price": productElement.finalPrice,
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
+        "delivery_time": deliveryTime,
       }
     };
     String _body = jsonEncode(bodyData);
@@ -53,8 +58,13 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> updateProductWithImage(
-      {String userIdToken, ProductElement productElement, itemImage}) async {
+  Future<http.Response> updateProductWithImage({
+    String userIdToken,
+    ProductElement productElement,
+    itemImage,
+    String deliveryTime,
+  }) async {
+    print('=========Updatr Product with Image Method============');
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -64,7 +74,8 @@ class ProductProvider {
         "final_price": productElement.finalPrice,
         "image": itemImage,
         "item_name": productElement.itemName,
-        "quantity": productElement.quantity
+        "quantity": productElement.quantity,
+        "delivery_time": deliveryTime,
       }
     };
     String _body = jsonEncode(bodyData);
@@ -86,7 +97,10 @@ class ProductProvider {
       basePrice,
       quantity,
       storeTagName,
-      itemImage}) async {
+      itemImage,
+      String deliveryTime}) async {
+    print('=========Create Product with image Method============');
+
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -96,7 +110,8 @@ class ProductProvider {
         "image": itemImage,
         "item_name": itemName,
         "item_status": "entrega inmediata",
-        "quantity": quantity
+        "quantity": quantity,
+        "delivery_time": deliveryTime
       }
     };
     String _body = jsonEncode(bodyData);
@@ -111,13 +126,17 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> createProduct(
-      {String userIdToken,
-      itemName,
-      finalPrice,
-      basePrice,
-      quantity,
-      storeTagName}) async {
+  Future<http.Response> createProduct({
+    String userIdToken,
+    itemName,
+    finalPrice,
+    basePrice,
+    quantity,
+    storeTagName,
+    String deliveryTime,
+  }) async {
+    print('=========Create Product Method============');
+
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
@@ -126,7 +145,8 @@ class ProductProvider {
         "final_price": finalPrice,
         "item_name": itemName,
         "item_status": "entrega inmediata",
-        "quantity": quantity
+        "quantity": quantity,
+        "delivery_time": deliveryTime
       }
     };
     String _body = jsonEncode(bodyData);

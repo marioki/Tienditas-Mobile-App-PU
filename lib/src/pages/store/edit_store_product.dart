@@ -9,6 +9,7 @@ import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 class EditStoreInventory extends StatefulWidget {
@@ -78,6 +79,11 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
 
   var itemImage64;
 
+  //Delivery Time Picker fields
+  int deliveryTimeNumber = 1;
+  String deliveryRangeValue = 'dias';
+  int step = 1;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -144,6 +150,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                             .currentUserIdToken,
                                     productElement: widget.productElement,
                                     itemImage: itemImage64,
+                                    deliveryTime: getDeliveryTimeInfo(),
                                   );
                                   if (response.statusCode == 200) {
                                     ResponseTienditasApi responseTienditasApi =
@@ -177,7 +184,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         Provider.of<LoginState>(context)
                                             .currentUserIdToken,
                                     productElement: widget.productElement,
-                                  );
+                                        deliveryTime: getDeliveryTimeInfo(),
+
+                                      );
                                   if (response.statusCode == 200) {
                                     ResponseTienditasApi responseTienditasApi =
                                         responseFromJson(response.body);
@@ -327,6 +336,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       SizedBox(
                         height: 20,
                       ),
+                      _buildDeliveryTimeWidget()
                     ]),
               ),
             ),
@@ -354,5 +364,57 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     final bytes = image.readAsBytesSync();
     itemImage64 = base64Encode(bytes);
     print(itemImage64);
+  }
+
+  String getDeliveryTimeInfo() {
+    String deliveryTimeInfo =
+        deliveryTimeNumber.toString() + ' ' + deliveryRangeValue;
+    print(deliveryTimeInfo);
+    print('========================================');
+    return deliveryTimeInfo;
+  }
+
+  _buildDeliveryTimeWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        NumberPicker.integer(
+          initialValue: deliveryTimeNumber,
+          minValue: 1,
+          maxValue: 30,
+          highlightSelectedValue: true,
+          step: step,
+          onChanged: (num value) {
+            setState(() {
+              deliveryTimeNumber = value;
+            });
+          },
+        ),
+        Text('X'),
+        DropdownButton(
+          items: [
+            DropdownMenuItem(
+              child: Text('Dias'),
+              value: 'dias',
+            ),
+            DropdownMenuItem(
+              child: Text('Semanas'),
+              value: 'semanas',
+            ),
+            DropdownMenuItem(
+              child: Text('Meses'),
+              value: 'meses',
+            ),
+          ],
+          value: deliveryRangeValue,
+          onChanged: (value) {
+            setState(() {
+              deliveryRangeValue = value;
+              print(deliveryRangeValue);
+            });
+          },
+        ),
+      ],
+    );
   }
 }
