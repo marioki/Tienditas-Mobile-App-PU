@@ -42,6 +42,7 @@ class ProductItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //double _finalPrice = double.parse(source);
     //Todo: Fix la cantidad de texto cambian el tamaño de la imagen del producto
     return Card(
 //      elevation: 10,
@@ -92,7 +93,7 @@ class ProductItemCard extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  '\$$finalPrice',
+                  '\$${(double.parse(finalPrice).toStringAsFixed(2))}',
                   style: storeItemPriceStyle,
                 ),
                 Text((deliveryTime != null) ? deliveryTime : ''),

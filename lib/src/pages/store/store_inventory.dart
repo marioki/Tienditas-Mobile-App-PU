@@ -176,7 +176,7 @@ class ProductItemCard extends StatelessWidget {
                             fontFamily: "Nunito"),
                       ),
                       Text(
-                        "Precio: $price",
+                        "Precio: \$${double.parse(price).toStringAsFixed(2)}",
                         style: TextStyle(
                             color: Colors.black54,
                             fontSize: 15,
