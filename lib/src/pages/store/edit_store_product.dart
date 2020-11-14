@@ -10,6 +10,7 @@ import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 class EditStoreInventory extends StatefulWidget {
@@ -86,6 +87,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
 
   @override
   Widget build(BuildContext context) {
+    final ProgressDialog pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+    pr.style(message: 'Guardando...');
     return SingleChildScrollView(
       child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
         Container(
@@ -139,6 +143,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           RaisedButton(
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
+                                pr.show();
                                 if (loadedImg != null) {
                                   //Update product when image is loaded
                                   Scaffold.of(context).showSnackBar(
@@ -153,6 +158,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                     deliveryTime: getDeliveryTimeInfo(),
                                   );
                                   if (response.statusCode == 200) {
+                                    pr.hide();
                                     ResponseTienditasApi responseTienditasApi =
                                         responseFromJson(response.body);
                                     if (responseTienditasApi.statusCode ==
@@ -184,10 +190,10 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         Provider.of<LoginState>(context)
                                             .currentUserIdToken,
                                     productElement: widget.productElement,
-                                        deliveryTime: getDeliveryTimeInfo(),
-
-                                      );
+                                    deliveryTime: getDeliveryTimeInfo(),
+                                  );
                                   if (response.statusCode == 200) {
+                                    pr.hide();
                                     ResponseTienditasApi responseTienditasApi =
                                         responseFromJson(response.body);
                                     if (responseTienditasApi.statusCode ==
