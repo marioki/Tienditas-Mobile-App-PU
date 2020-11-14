@@ -20,6 +20,7 @@ class ProductItemCard extends StatelessWidget {
   final String imageUrl;
   final String hexColor;
   final String parentStoreTag;
+  final String deliveryTime;
 
 //todo Esto puede ser reemplazado por un atributo de tipo productElement
   const ProductItemCard({
@@ -35,7 +36,8 @@ class ProductItemCard extends StatelessWidget {
     @required this.imageUrl,
     @required this.hexColor,
     @required this.parentStoreTag,
-    this.image,
+    @required this.image,
+    @required this.deliveryTime,
   }) : super(key: key);
 
   @override
@@ -93,6 +95,7 @@ class ProductItemCard extends StatelessWidget {
                   '\$$finalPrice',
                   style: storeItemPriceStyle,
                 ),
+                Text((deliveryTime != null) ? deliveryTime : ''),
               ],
             ),
           ),
@@ -154,6 +157,7 @@ class ProductItemCard extends StatelessWidget {
           imageUrl: this.imageUrl,
           hexColor: this.hexColor,
           parentStoreTag: this.parentStoreTag,
+          deliveryTime: this.deliveryTime,
         ));
   }
 }

@@ -81,15 +81,23 @@ class ProductDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Text(
-                          args.itemName,
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            fontFamily: 'Nunito',
-                          ),
+                        child: Column(
+                          children: [
+                            Text(
+                              args.itemName,
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                fontFamily: 'Nunito',
+                              ),
+                            ),
+                            Text((args.deliveryTime != null)
+                                ? args.deliveryTime
+                                : '')
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
                         ),
                       ),
                       Text(
