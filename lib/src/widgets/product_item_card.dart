@@ -36,7 +36,7 @@ class ProductItemCard extends StatelessWidget {
     @required this.imageUrl,
     @required this.hexColor,
     @required this.parentStoreTag,
-    @required this.image,
+    this.image,
     @required this.deliveryTime,
   }) : super(key: key);
 
@@ -159,6 +159,7 @@ class ProductItemCard extends StatelessWidget {
           hexColor: this.hexColor,
           parentStoreTag: this.parentStoreTag,
           deliveryTime: this.deliveryTime,
+          image: null,
         ));
   }
 }

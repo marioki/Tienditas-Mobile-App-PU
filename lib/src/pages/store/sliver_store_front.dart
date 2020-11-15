@@ -1,6 +1,5 @@
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
-import 'package:app_tiendita/src/pages/store/sliver_store_front.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -9,19 +8,20 @@ import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'dart:math' as math;
 
-class StoreFrontPage extends StatefulWidget {
+class SliverStoreFront extends StatefulWidget {
   @override
-  _StoreFrontPageState createState() => _StoreFrontPageState();
+  _SliverStoreFrontState createState() => _SliverStoreFrontState();
 }
 
-class _StoreFrontPageState extends State<StoreFrontPage> {
+class _SliverStoreFrontState extends State<SliverStoreFront> {
   Future<CategoryResponseModel> categoryResponse;
   Future<Tiendita> tienditaResponse;
 
   //Pull to refres package
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -34,63 +34,56 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
-    return WillPopScope(
-      onWillPop: () {
-        return _onBackPressed(context);
-      },
-      child: Container(
-        color: azulTema,
-        child: SafeArea(
-          bottom: false,
-          child: Scaffold(
-            appBar: getCustomAppBar(),
+    final screenSize = MediaQuery.of(context).size;
+    return Container(
+      color: azulTema,
+      child: SafeArea(
+        bottom: false,
+        child: Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //Lista componentes desde aqui
-                //Custom App Bar ==========
-                //Contenedor de Categorias
-                ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  leading: Text('Categorías', style: storeSubtitles),
-                  trailing: FlatButton(
-                    onPressed: () async {
-                      Navigator.pushNamed(context, 'categories_page',
-                          arguments: await categoryResponse);
+            body: CustomScrollView(
+              slivers: [
+                getNewCustomAppBar(),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return FutureBuilder(
+                        future: tienditaResponse,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          Tiendita miTienda = snapshot.data;
+                          if (snapshot.hasData) {
+                            if (index < miTienda.body.stores.length) {
+                              return StoreCardWidget(
+                                name: miTienda.body.stores[index].storeName,
+                                handle:
+                                    miTienda.body.stores[index].storeTagName,
+                                category:
+                                    miTienda.body.stores[index].categoryName,
+                                colorHex: miTienda.body.stores[index].hexColor,
+                                image: miTienda.body.stores[index].iconUrl,
+                                description:
+                                    miTienda.body.stores[index].description,
+                                followers: null,
+                                originalStoreName: miTienda
+                                    .body.stores[index].originalStoreName,
+                                provinceName:
+                                    miTienda.body.stores[index].provinceName,
+                              );
+                            } else
+                              return Container();
+                          } else {
+                            return Container();
+                          }
+                        },
+                      );
+                      //return Container(color: getRandomColor(), height: 150.0);
                     },
-                    child: Text(
-                      'Ver Todas',
-                      style: storeOptions,
-                    ),
+                    // Or, uncomment the following line:
                   ),
                 ),
-                Container(
-                  //Category List Row Container
-                  height: 110,
-                  child: _carruselDeCategorias(),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(
-                    //   builder: (context) => SliverStoreFront(),));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    margin: EdgeInsets.only(bottom: 10, top: 16),
-                    child: Text('Sugerencias para ti', style: storeSubtitles),
-                  ),
-                ),
-                Expanded(
-                  child: getTiendasListViewBuilder(),
-                )
               ],
-            ),
-          ),
-        ),
+            )),
       ),
     );
   }
@@ -128,8 +121,10 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       onLoading: _onLoading,
       child: FutureBuilder(
         future: tienditaResponse,
-        builder: (BuildContext context,
-            snapshot,) {
+        builder: (
+          BuildContext context,
+          snapshot,
+        ) {
           if (snapshot.hasData) {
             Tiendita miTienda = snapshot.data;
             return ListView.builder(
@@ -150,7 +145,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                         description: miTienda.body.stores[index].description,
                         followers: null,
                         originalStoreName:
-                        miTienda.body.stores[index].originalStoreName,
+                            miTienda.body.stores[index].originalStoreName,
                         provinceName: miTienda.body.stores[index].provinceName,
                       ),
                       SizedBox(
@@ -168,7 +163,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   description: miTienda.body.stores[index].description,
                   followers: null,
                   originalStoreName:
-                  miTienda.body.stores[index].originalStoreName,
+                      miTienda.body.stores[index].originalStoreName,
                   provinceName: miTienda.body.stores[index].provinceName,
                 );
               },
@@ -212,63 +207,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               ),
             );
         });
-  }
-
-  getCustomAppBar() {
-    return PreferredSize(
-      preferredSize: Size(double.infinity, 100),
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: azulTema,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(35),
-            bottomRight: Radius.circular(35),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 275,
-              decoration: BoxDecoration(
-                color: grisClaroTema,
-                borderRadius: BorderRadius.circular(32),
-              ),
-              child: TextField(
-                onSubmitted: (value) {
-                  if (value.length > 0) {
-                    Navigator.pushNamed(context, 'search_for_store',
-                        arguments: value.toLowerCase());
-                  }
-                },
-                textAlignVertical: TextAlignVertical.center,
-                autofocus: false,
-                enabled: true,
-                cursorColor: azulTema,
-                keyboardType: TextInputType.emailAddress,
-                decoration: new InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                  contentPadding:
-                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Buscar Tienda',
-                  hintStyle: TextStyle(
-                    fontFamily: 'Nunito',
-                    color: Colors.grey,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Future<bool> _onBackPressed(BuildContext context) {
@@ -321,5 +259,120 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     if (mounted) setState(() {});
     _refreshController.loadComplete();
+  }
+
+  getNewCustomAppBar() {
+    return SliverAppBar(
+      expandedHeight: 150.0,
+      automaticallyImplyLeading: false,
+      actions: [
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {},
+        )
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        title: Container(
+          //Category List Row Container
+          height: 110,
+          child: _carruselDeCategorias(),
+        ),
+      ),
+    );
+  }
+
+  getCustomAppBar() {
+    return PreferredSize(
+      preferredSize: Size(double.infinity, 100),
+      child: Container(
+        height: 100,
+        decoration: BoxDecoration(
+          color: azulTema,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(35),
+            bottomRight: Radius.circular(35),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 275,
+              decoration: BoxDecoration(
+                color: grisClaroTema,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: TextField(
+                onSubmitted: (value) {
+                  if (value.length > 0) {
+                    Navigator.pushNamed(context, 'search_for_store',
+                        arguments: value.toLowerCase());
+                  }
+                },
+                textAlignVertical: TextAlignVertical.center,
+                autofocus: false,
+                enabled: true,
+                cursorColor: azulTema,
+                keyboardType: TextInputType.emailAddress,
+                decoration: new InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Buscar Tienda',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Nunito',
+                    color: Colors.grey,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> getTiendasStoreList() {
+    FutureBuilder(
+      future: tienditaResponse,
+      builder: (
+        BuildContext context,
+        snapshot,
+      ) {
+        if (snapshot.hasData) {
+          Tiendita miTienda = snapshot.data;
+          List<StoreCardWidget> newListOfCards;
+          miTienda.body.stores.forEach((tienda) {
+            newListOfCards.add(
+              StoreCardWidget(
+                name: tienda.storeName,
+                handle: tienda.storeTagName,
+                category: tienda.categoryName,
+                colorHex: tienda.hexColor,
+                image: tienda.iconUrl,
+                description: tienda.description,
+                followers: 12,
+                originalStoreName: tienda.originalStoreName,
+                provinceName: tienda.provinceName,
+              ),
+            );
+          });
+          return newListOfCards.first;
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+
+  Color getRandomColor() {
+    return Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+        .withOpacity(1.0);
   }
 }
