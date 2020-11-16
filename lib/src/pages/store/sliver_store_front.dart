@@ -35,7 +35,7 @@ class _SliverStoreFrontState extends State<SliverStoreFront> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    return Container(
+    return Container( 
       color: azulTema,
       child: SafeArea(
         bottom: false,
