@@ -109,7 +109,7 @@ class ProductProvider {
         "final_price": finalPrice,
         "image": itemImage,
         "item_name": itemName,
-        "item_status": "entrega inmediata",
+        "item_status": "active",
         "quantity": quantity,
         "delivery_time": deliveryTime
       }
@@ -144,7 +144,7 @@ class ProductProvider {
         "base_price": basePrice,
         "final_price": finalPrice,
         "item_name": itemName,
-        "item_status": "entrega inmediata",
+        "item_status": "active",
         "quantity": quantity,
         "delivery_time": deliveryTime
       }
