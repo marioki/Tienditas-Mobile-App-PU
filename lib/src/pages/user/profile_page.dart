@@ -99,6 +99,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   UserProfileActionBtn(
+                    text: "Mi Tienda",
+                    imageName: "tienda",
+                    onPressed: () {
+                      if (userInfo.stores.length > 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StoreProfile(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateStore(),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                  UserProfileActionBtn(
                     text: "Mis Ordenes",
                     imageName: "orders",
                     onPressed: () {
@@ -144,44 +165,39 @@ class _ProfilePageState extends State<ProfilePage> {
                         context: context,
                         barrierDismissible: true,
                         builder: (BuildContext context) {
-                          return StatefulBuilder(
-                              builder: (context, setState) {
-                                return AlertDialog(
-                                  elevation: 10,
-                                  title: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        "Ayuda",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: "Nunito"
-                                        ),
-                                      ),
-                                    ],
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              elevation: 10,
+                              title: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Ayuda",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: "Nunito"),
                                   ),
-                                  content: Text(
-                                      "Para soporte escríbanos a ayuda@tienditas.app",
-                                      style: TextStyle(
-                                          color: Color(0xFF191660),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: "Nunito"
-                                      )
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('Cerrar'),
+                                ],
+                              ),
+                              content: Text(
+                                  "Para soporte escríbanos a ayuda@tienditas.app",
+                                  style: TextStyle(
                                       color: Color(0xFF191660),
-                                      onPressed: () async {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              }
-                          );
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      fontFamily: "Nunito")),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Cerrar'),
+                                  color: Color(0xFF191660),
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                         },
                       );
                     },
