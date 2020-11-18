@@ -69,6 +69,8 @@ class _StoreProfileState extends State<StoreProfile> {
                           StoreCard(
                             amount: resultTiendita.body.store.pendingBalance,
                             description: "Saldo Retenido",
+                            toolTipText:
+                                'Este monto corresponde a tus ventas por completar.',
                           ),
                           SizedBox(
                             width: 8,
@@ -76,6 +78,7 @@ class _StoreProfileState extends State<StoreProfile> {
                           StoreCard(
                             amount: resultTiendita.body.store.balance,
                             description: "Saldo Disponible",
+                            toolTipText: 'Este monto corresponde a tus pedidos completados.\n Y puedes Retirarlos.',
                           ),
                         ],
                       ),
@@ -114,8 +117,7 @@ class _StoreProfileState extends State<StoreProfile> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StoreDeliveryOptions(
-                                  store: resultTiendita.body.store
-                                ),
+                                    store: resultTiendita.body.store),
                               ));
                         },
                       ),
@@ -150,46 +152,50 @@ class _StoreProfileState extends State<StoreProfile> {
 }
 
 class StoreCard extends StatelessWidget {
-  StoreCard({this.amount, this.description});
+  StoreCard({this.amount, this.description, this.toolTipText});
 
-  final String amount;
-  final String description;
+  @required final String amount;
+  @required final String description;
+  @required final String toolTipText;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.symmetric(
-          vertical: 8,
-        ),
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
+      child: Tooltip(
+        message: toolTipText,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.symmetric(
+            vertical: 8,
           ),
-          child: Column(children: <Widget>[
-            Text(
-              "\$$amount",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Nunito"),
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          color: Colors.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 10,
             ),
-            Text(
-              "$description",
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: "Nunito"),
-            ),
-          ]),
+            child: Column(children: <Widget>[
+              Text(
+                "\$$amount",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Nunito"),
+              ),
+              Text(
+                "$description",
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: "Nunito"),
+              ),
+            ]),
+          ),
         ),
       ),
     );
@@ -198,9 +204,11 @@ class StoreCard extends StatelessWidget {
 
 class ActionButton extends StatelessWidget {
   ActionButton({this.iconName, this.description, this.onPressed});
+
   final String iconName;
   final String description;
   final Function onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Container(
