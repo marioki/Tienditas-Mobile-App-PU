@@ -99,7 +99,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                   ),
                   UserProfileActionBtn(
-                    text: "Mi Tienda",
+                    text: (userInfo.stores.length > 0)
+                        ? "Mi Tienda"
+                        : 'Crear Tienda',
                     imageName: "tienda",
                     onPressed: () {
                       if (userInfo.stores.length > 0) {
