@@ -1,4 +1,4 @@
-name: Tienditas
+name: app_tiendita
 description: App to sell and buy from local stores.
 
 # The following line prevents the package from being accidentally published to
