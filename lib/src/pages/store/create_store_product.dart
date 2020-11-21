@@ -69,9 +69,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   bool isLoading = false;
   var response;
   String imageUrl = defaultProductImageURL;
-  String basePrice;
   String finalPrice;
   String itemName;
+  String itemDescription;
   String quantity;
   Future<Io.File> imageFile;
   Io.File loadedImg;
@@ -164,6 +164,33 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         height: 15,
                       ),
                       Text(
+                        "Descripción del producto",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"),
+                      ),
+                      TextFormField(
+                        onChanged: (String value) {
+                          itemDescription = value;
+                        },
+                        maxLines: 5,
+                        minLines: 1,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Ingresar descripción del producto';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            hintText: 'breve descripción'),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
                         "Precio de venta",
                         style: TextStyle(
                             color: Colors.black,
@@ -185,31 +212,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: 'precio de venta'),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Costo",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (String value) {
-                          basePrice = value;
-                        },
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Ingresar costo del producto';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            fillColor: Colors.white, hintText: 'costo'),
                       ),
                       SizedBox(
                         height: 15,
@@ -266,9 +268,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                     .createProductWithImage(
                                   quantity: quantity,
                                   storeTagName: widget.storeTagName,
-                                  basePrice: basePrice,
                                   finalPrice: finalPrice,
                                   itemImage: itemImage64,
+                                  description: itemDescription,
                                   itemName: itemName,
                                   deliveryTime: getDeliveryTimeInfo(),
                                   userIdToken: Provider.of<LoginState>(context)
@@ -301,9 +303,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                     await ProductProvider().createProduct(
                                   quantity: quantity,
                                   storeTagName: widget.storeTagName,
-                                  basePrice: basePrice,
                                   finalPrice: finalPrice,
                                   itemName: itemName,
+                                  description: itemDescription,
                                   userIdToken: Provider.of<LoginState>(context)
                                       .currentUserIdToken,
                                 );

@@ -50,6 +50,7 @@ class ProductElement {
     this.storeTagName,
     this.quantity,
     this.itemName,
+    this.itemDescription,
     this.purchaseType,
     this.outstanding,
     this.registeredDate,
@@ -66,6 +67,7 @@ class ProductElement {
   String storeTagName;
   String quantity;
   String itemName;
+  String itemDescription;
   PurchaseType purchaseType;
   Outstanding outstanding;
   String registeredDate;
@@ -86,6 +88,7 @@ class ProductElement {
         storeTagName: json["store_tag_name"],
         quantity: json["quantity"],
         itemName: json["item_name"],
+        itemDescription: json["description"],
         purchaseType: purchaseTypeValues.map[json["purchase_type"]],
         outstanding: outstandingValues.map[json["outstanding"]],
         registeredDate: json["registered_date"],
@@ -101,6 +104,7 @@ class ProductElement {
         "store_tag_name": storeTagName,
         "quantity": quantity,
         "item_name": itemName,
+        "description": itemDescription,
         "purchase_type": purchaseTypeValues.reverse[purchaseType],
         "outstanding": outstandingValues.reverse[outstanding],
         "registered_date": registeredDate,

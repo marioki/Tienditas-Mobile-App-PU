@@ -13,8 +13,8 @@ import 'package:app_tiendita/src/constants/api_constants.dart';
 class StoreProvider {
   int rowCount = 10;
 
-  Future<Tiendita> getTienditasByNameOrTag(
-      BuildContext context, String userInput) async {
+  Future<Tiendita> getTienditasByNameOrTag(BuildContext context,
+      String userInput) async {
     String userSearchParam;
     String formattedUserInput;
     if (userInput.isNotEmpty) {
@@ -30,7 +30,9 @@ class StoreProvider {
     }
     final String url =
         '$baseApiUrl/api/v1/store_name?$userSearchParam=$userInput';
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider
+        .of<LoginState>(context)
+        .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
@@ -44,10 +46,12 @@ class StoreProvider {
     }
   }
 
-  Future<StoreModel.StoreModel> getStoreInfo(
-      BuildContext context, String storeTagName) async {
+  Future<StoreModel.StoreModel> getStoreInfo(BuildContext context,
+      String storeTagName) async {
     String url = '$baseApiUrl/api/v1/store?store_tag_name=$storeTagName';
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider
+        .of<LoginState>(context)
+        .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
@@ -62,23 +66,26 @@ class StoreProvider {
   }
 
   Future<Tiendita> getAllTienditas(BuildContext context) async {
-    String url = '$baseApiUrl/api/v1/store?row_count=$rowCount';
+
+    String url = '$baseApiUrl/api/v1/store?row_count=10';
     final userIdToken =
-        Provider.of<LoginState>(context, listen: false).currentUserIdToken;
+    Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
-      print(response.body);
-      final tiendita = tienditaFromJson(response.body);
-      return tiendita;
+    print(response.body);
+    final tiendita = tienditaFromJson(response.body);
+    return tiendita;
     } else {
-      return Tiendita();
+    return Tiendita();
     }
   }
 
-  Future<Tiendita> getTienditasPorCategoria(
-      String categoryName, BuildContext context) async {
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+  Future<Tiendita> getTienditasPorCategoria(String categoryName,
+      BuildContext context) async {
+    final userIdToken = Provider
+        .of<LoginState>(context)
+        .currentUserIdToken;
     final String url = '$baseApiUrl/api/v1/store?category_name=$categoryName';
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
@@ -91,10 +98,12 @@ class StoreProvider {
     }
   }
 
-  Future<StoreOrdersResult> getStoreOrders(
-      BuildContext context, String storeTagName) async {
+  Future<StoreOrdersResult> getStoreOrders(BuildContext context,
+      String storeTagName) async {
     String url = '$baseApiUrl/api/v1/order?store_tag_name=$storeTagName';
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider
+        .of<LoginState>(context)
+        .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
@@ -129,8 +138,7 @@ class StoreProvider {
     return response;
   }
 
-  Future<http.Response> editDeliveryOption(
-      String userIdToken,
+  Future<http.Response> editDeliveryOption(String userIdToken,
       String storeTagName,
       String id,
       String name,
@@ -183,8 +191,7 @@ class StoreProvider {
     return response;
   }
 
-  Future<http.Response> createStoreWithLogo(
-      String userIdToken,
+  Future<http.Response> createStoreWithLogo(String userIdToken,
       String storeTagName,
       String storeName,
       String provinceName,
@@ -219,16 +226,14 @@ class StoreProvider {
     return response;
   }
 
-  Future<http.Response> createStore(
-    String userIdToken,
-    String storeTagName,
-    String storeName,
-    String provinceName,
-    String categoryName,
-    String description,
-    String phoneNumber,
-    String userEmail,
-  ) async {
+  Future<http.Response> createStore(String userIdToken,
+      String storeTagName,
+      String storeName,
+      String provinceName,
+      String categoryName,
+      String description,
+      String phoneNumber,
+      String userEmail,) async {
     String _url = '$baseApiUrl/api/v1/store';
     var bodyData = {
       "store": {
@@ -254,8 +259,7 @@ class StoreProvider {
     return response;
   }
 
-  Future<http.Response> updateStore(
-      String userIdToken,
+  Future<http.Response> updateStore(String userIdToken,
       String storeTagName,
       String storeName,
       String provinceName,
@@ -288,8 +292,7 @@ class StoreProvider {
 
 
 //Actualizar Store con imagen
-  Future<http.Response> updateStoreWithImage(
-      String userIdToken,
+  Future<http.Response> updateStoreWithImage(String userIdToken,
       String storeTagName,
       String storeName,
       String provinceName,
@@ -321,7 +324,6 @@ class StoreProvider {
     );
     return response;
   }
-
 
 
 }
