@@ -181,7 +181,10 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     hexColor: args.hexColor,
                     imageUrl: finalListProductos[index].imageUrl,
                     parentStoreTag: args.storeTagName,
+                    description: finalListProductos[index].description,
                     deliveryTime: finalListProductos[index].deliveryTime,
+                    discountPrice: finalListProductos[index].discountPrice,
+                    discountPercentage: finalListProductos[index].discountPercentage,
                   );
                 },
               );

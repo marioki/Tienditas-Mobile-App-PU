@@ -50,7 +50,7 @@ class ProductElement {
     this.storeTagName,
     this.quantity,
     this.itemName,
-    this.itemDescription,
+    this.description,
     this.purchaseType,
     this.outstanding,
     this.registeredDate,
@@ -62,12 +62,14 @@ class ProductElement {
     this.hexColor,
     this.parentStoreTag,
     this.deliveryTime,
+    this.discountPercentage,
+    this.discountPrice
   });
 
   String storeTagName;
   String quantity;
   String itemName;
-  String itemDescription;
+  String description;
   PurchaseType purchaseType;
   Outstanding outstanding;
   String registeredDate;
@@ -76,6 +78,8 @@ class ProductElement {
   String basePrice;
   ItemSatus itemStatus;
   String imageUrl;
+  String discountPercentage;
+  String discountPrice;
 
   //===Added Properties for cart page
   int cartItemAmount = 1;
@@ -88,7 +92,7 @@ class ProductElement {
         storeTagName: json["store_tag_name"],
         quantity: json["quantity"],
         itemName: json["item_name"],
-        itemDescription: json["description"],
+        description: json["description"],
         purchaseType: purchaseTypeValues.map[json["purchase_type"]],
         outstanding: outstandingValues.map[json["outstanding"]],
         registeredDate: json["registered_date"],
@@ -98,13 +102,16 @@ class ProductElement {
         itemStatus: itemSatusValues.map[json["item_status"]],
         imageUrl: json["image_url"],
         deliveryTime: json["delivery_time"],
+        discountPercentage: json["discount_percentage"],
+        discountPrice: json["discount_price"],
+
       );
 
   Map<String, dynamic> toJson() => {
         "store_tag_name": storeTagName,
         "quantity": quantity,
         "item_name": itemName,
-        "description": itemDescription,
+        "description": description,
         "purchase_type": purchaseTypeValues.reverse[purchaseType],
         "outstanding": outstandingValues.reverse[outstanding],
         "registered_date": registeredDate,
@@ -113,7 +120,9 @@ class ProductElement {
         "base_price": basePrice,
         "item_status": itemSatusValues.reverse[itemStatus],
         "image_url": imageUrl,
-        "delivery_time": deliveryTime
+        "delivery_time": deliveryTime,
+        "discount_price": discountPrice,
+        "discount_percentage": discountPercentage
       };
 }
 

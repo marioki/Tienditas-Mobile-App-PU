@@ -111,26 +111,18 @@ class ProductDetailsPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  //Todo descripcion del producto
-                  // Expanded(
-                  //   child: Text(
-                  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
-                  //     ', sed do eiusmod tempor incididunt ut labore et dolo'
-                  //     're magna aliqua. Ut enim ad minim veniam, quis nostr'
-                  //     'ud exercitation ullamco laboris nisi ut aliquip ex '
-                  //     'ea commodo consequat. Duis aute irure dolor in repre'
-                  //     'henderit in voluptate velit esse cillum dolore eu f'
-                  //     'ugiat nulla pariatur. Excepteur sint occaecat cupida'
-                  //     'tat non proident, sunt in culpa qui officia deserunt'
-                  //     ' mollit anim id est laborum',
-                  //     maxLines: 4,
-                  //     style: TextStyle(
-                  //       fontSize: 16,
-                  //       color: Colors.black,
-                  //       wordSpacing: 3,
-                  //     ),
-                  //   ),
-                  // ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    '${args.description}',
+                    maxLines: 5,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      wordSpacing: 3,
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Row(
@@ -153,6 +145,9 @@ class ProductDetailsPage extends StatelessWidget {
                                   quantity: args.quantity,
                                   hexColor: args.hexColor,
                                   parentStoreTag: args.parentStoreTag,
+                                  description: args.description,
+                                  discountPrice: args.discountPrice,
+                                  discountPercentage: args.discountPercentage
                                 ),
                               );
                               final snackBar = SnackBar(

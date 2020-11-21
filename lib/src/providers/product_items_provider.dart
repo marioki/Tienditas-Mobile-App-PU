@@ -44,6 +44,8 @@ class ProductProvider {
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
+        "discount_price": productElement.discountPrice,
+        "description": productElement.description
       }
     };
     String _body = jsonEncode(bodyData);
@@ -76,6 +78,8 @@ class ProductProvider {
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
+        "discount_price": productElement.discountPrice,
+        "description": productElement.description
       }
     };
     String _body = jsonEncode(bodyData);
