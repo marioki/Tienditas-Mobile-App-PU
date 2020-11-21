@@ -34,11 +34,16 @@ class _StoreProfileState extends State<StoreProfile> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Su tienda aún no esta activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
+              "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
               style: storeDetailsCardStyle,
             ),
           ),
         ),
+      );
+    } else {
+      return SizedBox(
+        height: 0,
+        width: 0,
       );
     }
   }
