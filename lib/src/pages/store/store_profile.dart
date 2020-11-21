@@ -18,6 +18,36 @@ class StoreProfile extends StatefulWidget {
 }
 
 class _StoreProfileState extends State<StoreProfile> {
+  double opacityLevel = 1.0;
+  void _changeOpacity() {
+    setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
+  }
+
+  Widget _buildStoreStatus(StoreModel tienda) {
+    if (tienda.body.store.storeStatus != "active") {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        color: Colors.redAccent,
+        child: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
+              style: storeDetailsCardStyle,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return SizedBox(
+        height: 0,
+        width: 0,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
@@ -47,10 +77,11 @@ class _StoreProfileState extends State<StoreProfile> {
               resultTiendita = snapshot.data;
               return SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
+                      _buildStoreStatus(resultTiendita),
                       StoreCardWidget(
                         name: resultTiendita.body.store.storeName,
                         handle: resultTiendita.body.store.storeTagName,
@@ -114,8 +145,7 @@ class _StoreProfileState extends State<StoreProfile> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StoreDeliveryOptions(
-                                  store: resultTiendita.body.store
-                                ),
+                                    store: resultTiendita.body.store),
                               ));
                         },
                       ),
