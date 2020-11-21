@@ -18,6 +18,31 @@ class StoreProfile extends StatefulWidget {
 }
 
 class _StoreProfileState extends State<StoreProfile> {
+  double opacityLevel = 1.0;
+  void _changeOpacity() {
+    setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
+  }
+
+  Widget _buildStoreStatus(StoreModel tienda) {
+    if (tienda.body.store.storeStatus != "active") {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        color: Colors.redAccent,
+        child: Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Su tienda aún no esta activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
+              style: storeDetailsCardStyle,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     User userInfo = Provider.of<LoginState>(context).getTienditaUser();
@@ -47,10 +72,11 @@ class _StoreProfileState extends State<StoreProfile> {
               resultTiendita = snapshot.data;
               return SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
+                      _buildStoreStatus(resultTiendita),
                       StoreCardWidget(
                         name: resultTiendita.body.store.storeName,
                         handle: resultTiendita.body.store.storeTagName,
@@ -114,8 +140,7 @@ class _StoreProfileState extends State<StoreProfile> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StoreDeliveryOptions(
-                                  store: resultTiendita.body.store
-                                ),
+                                    store: resultTiendita.body.store),
                               ));
                         },
                       ),
@@ -233,6 +258,32 @@ class ActionButton extends StatelessWidget {
                   fontFamily: "Nunito"),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () => print('Pressed SignUp'),
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Text(
+          'Registrarme',
+          style: TextStyle(
+            color: azulTema,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
         ),
       ),
     );
