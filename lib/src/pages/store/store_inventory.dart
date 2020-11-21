@@ -82,6 +82,7 @@ class _StoreInventoryState extends State<StoreInventory> {
                     price: finalListProductos[index].finalPrice,
                     imageUrl: finalListProductos[index].imageUrl,
                     quantity: finalListProductos[index].quantity,
+                    description: finalListProductos[index].description,
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -118,16 +119,20 @@ class _StoreInventoryState extends State<StoreInventory> {
 
 class ProductItemCard extends StatelessWidget {
   ProductItemCard(
-      {this.itemName,
-      this.price,
-      this.imageUrl,
-      this.onPressed,
-      this.quantity});
+      {
+        this.itemName,
+        this.price,
+        this.imageUrl,
+        this.description,
+        this.onPressed,
+        this.quantity
+      });
 
   final String itemName;
   final String price;
   final String imageUrl;
   final String quantity;
+  final String description;
   final Function onPressed;
 
   @override

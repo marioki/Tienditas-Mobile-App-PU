@@ -263,6 +263,34 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         height: 15,
                       ),
                       Text(
+                        "Descripción del producto",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"),
+                      ),
+                      TextFormField(
+                        initialValue: widget.productElement.description,
+                        onChanged: (String value) {
+                          widget.productElement.description = value;
+                        },
+                        maxLines: 5,
+                        minLines: 1,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Ingresar descripción del producto';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            hintText: 'breve descripción'),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
                         "Precio de venta",
                         style: TextStyle(
                             color: Colors.black,
@@ -290,7 +318,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         height: 15,
                       ),
                       Text(
-                        "Costo",
+                        "Precio con descuento",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
@@ -298,19 +326,20 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                             fontFamily: "Nunito"),
                       ),
                       TextFormField(
-                        initialValue: widget.productElement.basePrice,
+                        initialValue: widget.productElement.discountPrice,
                         keyboardType: TextInputType.number,
                         onChanged: (String value) {
-                          widget.productElement.basePrice = value;
+                          widget.productElement.discountPrice = value;
                         },
                         validator: (value) {
                           if (value.isEmpty) {
-                            return 'Ingresar costo del producto';
+                            return 'Ingresar precio con descuento';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                            fillColor: Colors.white, hintText: 'costo'),
+                            fillColor: Colors.white,
+                            hintText: 'precio con descuento'),
                       ),
                       SizedBox(
                         height: 15,
