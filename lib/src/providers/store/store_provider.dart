@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class StoreProvider {
+  int rowCount = 10;
+
   Future<Tiendita> getTienditasByNameOrTag(
       BuildContext context, String userInput) async {
     String userSearchParam;
@@ -60,7 +62,7 @@ class StoreProvider {
   }
 
   Future<Tiendita> getAllTienditas(BuildContext context) async {
-    String url = '$baseApiUrl/api/v1/store';
+    String url = '$baseApiUrl/api/v1/store?row_count=$rowCount';
     final userIdToken =
         Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     final response = await http
