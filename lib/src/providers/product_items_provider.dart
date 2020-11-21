@@ -39,11 +39,12 @@ class ProductProvider {
       "product": {
         "store_tag_name": productElement.storeTagName,
         "item_id": productElement.itemId,
-        "base_price": productElement.basePrice,
         "final_price": productElement.finalPrice,
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
+        "discount_price": productElement.discountPrice,
+        "description": productElement.description
       }
     };
     String _body = jsonEncode(bodyData);
@@ -70,12 +71,13 @@ class ProductProvider {
       "product": {
         "store_tag_name": productElement.storeTagName,
         "item_id": productElement.itemId,
-        "base_price": productElement.basePrice,
         "final_price": productElement.finalPrice,
         "image": itemImage,
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
+        "discount_price": productElement.discountPrice,
+        "description": productElement.description
       }
     };
     String _body = jsonEncode(bodyData);

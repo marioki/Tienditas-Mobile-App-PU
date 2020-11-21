@@ -71,7 +71,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   String imageUrl = defaultProductImageURL;
   String finalPrice;
   String itemName;
-  String itemDescription;
+  String description;
   String quantity;
   Future<Io.File> imageFile;
   Io.File loadedImg;
@@ -173,7 +173,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       ),
                       TextFormField(
                         onChanged: (String value) {
-                          itemDescription = value;
+                          description = value;
                         },
                         maxLines: 5,
                         minLines: 1,
@@ -270,7 +270,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                   storeTagName: widget.storeTagName,
                                   finalPrice: finalPrice,
                                   itemImage: itemImage64,
-                                  description: itemDescription,
+                                  description: description,
                                   itemName: itemName,
                                   deliveryTime: getDeliveryTimeInfo(),
                                   userIdToken: Provider.of<LoginState>(context)
@@ -305,7 +305,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                   storeTagName: widget.storeTagName,
                                   finalPrice: finalPrice,
                                   itemName: itemName,
-                                  description: itemDescription,
+                                  description: description,
                                   userIdToken: Provider.of<LoginState>(context)
                                       .currentUserIdToken,
                                 );
