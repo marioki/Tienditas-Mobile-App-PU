@@ -1,5 +1,5 @@
 name: app_tiendita
-description: A new Flutter application.
+description: App to sell and buy from local stores.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.14+14
+version: 1.0.15+15
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -43,12 +43,6 @@ dependencies:
   package_info: ^0.4.3
   numberpicker: ^1.2.1
   flutter_swiper: ^1.1.6
-
-
-
-
-
-
 
 dev_dependencies:
   flutter_test:

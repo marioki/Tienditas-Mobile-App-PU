@@ -39,7 +39,6 @@ class ProductProvider {
       "product": {
         "store_tag_name": productElement.storeTagName,
         "item_id": productElement.itemId,
-        "base_price": productElement.basePrice,
         "final_price": productElement.finalPrice,
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
@@ -72,7 +71,6 @@ class ProductProvider {
       "product": {
         "store_tag_name": productElement.storeTagName,
         "item_id": productElement.itemId,
-        "base_price": productElement.basePrice,
         "final_price": productElement.finalPrice,
         "image": itemImage,
         "item_name": productElement.itemName,
