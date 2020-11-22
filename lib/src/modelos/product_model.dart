@@ -58,7 +58,7 @@ class ProductElement {
     this.finalPrice,
     this.basePrice,
     this.itemStatus,
-    this.imageUrl,
+    this.imagesUrlList,
     this.hexColor,
     this.parentStoreTag,
     this.deliveryTime,
@@ -77,7 +77,7 @@ class ProductElement {
   String finalPrice;
   String basePrice;
   ItemSatus itemStatus;
-  String imageUrl;
+  List<String> imagesUrlList;
   String discountPercentage;
   String discountPrice;
 
@@ -100,11 +100,10 @@ class ProductElement {
         finalPrice: json["final_price"],
         basePrice: json["base_price"],
         itemStatus: itemSatusValues.map[json["item_status"]],
-        imageUrl: json["image_url"],
+        imagesUrlList: List<String>.from(json["images_url"].map((x) => x)),
         deliveryTime: json["delivery_time"],
         discountPercentage: json["discount_percentage"],
         discountPrice: json["discount_price"],
-
       );
 
   Map<String, dynamic> toJson() => {
@@ -119,7 +118,7 @@ class ProductElement {
         "final_price": finalPrice,
         "base_price": basePrice,
         "item_status": itemSatusValues.reverse[itemStatus],
-        "image_url": imageUrl,
+    "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,
         "discount_percentage": discountPercentage

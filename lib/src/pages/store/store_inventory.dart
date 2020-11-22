@@ -80,7 +80,7 @@ class _StoreInventoryState extends State<StoreInventory> {
                   return ProductItemCard(
                     itemName: finalListProductos[index].itemName,
                     price: finalListProductos[index].finalPrice,
-                    imageUrl: finalListProductos[index].imageUrl,
+                    imageUrl: finalListProductos[index].imagesUrlList.first,
                     quantity: finalListProductos[index].quantity,
                     description: finalListProductos[index].description,
                     onPressed: () {

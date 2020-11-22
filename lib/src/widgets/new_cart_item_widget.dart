@@ -17,7 +17,7 @@ class NewCartItemWidget extends StatefulWidget {
   final String finalPrice;
 
   //ItemSatus itemSatus; //Todo definir tipo de variable
-  final String imageUrl;
+  final List<String> imagesUrlList;
 
   final String parentStoreTag;
 
@@ -29,7 +29,7 @@ class NewCartItemWidget extends StatefulWidget {
     this.registeredDate,
     this.itemId,
     this.finalPrice,
-    this.imageUrl,
+    this.imagesUrlList,
     this.colorHex,
     this.parentStoreTag,
   }) : super(key: key);
@@ -62,7 +62,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                       height: 100,
                       placeholder:
                           AssetImage('assets/images/tienditas_placeholder.png'),
-                      image: NetworkImage(widget.imageUrl),
+                      image: NetworkImage(widget.imagesUrlList.first),
                     )),
                 Expanded(
                   child: Container(
@@ -121,7 +121,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                   itemId: widget.itemId,
                   itemName: widget.itemName,
                   finalPrice: widget.finalPrice,
-                  imageUrl: widget.imageUrl,
+                  imagesUrlList: widget.imagesUrlList,
                   registeredDate: widget.registeredDate,
                   quantity: widget.quantity,
                   hexColor: widget.colorHex,

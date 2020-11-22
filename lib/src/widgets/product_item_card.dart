@@ -17,7 +17,7 @@ class ProductItemCard extends StatelessWidget {
   final String itemId;
   final String finalPrice;
   final ItemSatus itemSatus;
-  final String imageUrl;
+  final List<String> imagesUrlList;
   final String hexColor;
   final String parentStoreTag;
   final String deliveryTime;
@@ -36,7 +36,7 @@ class ProductItemCard extends StatelessWidget {
     @required this.itemId,
     @required this.finalPrice,
     @required this.itemSatus,
-    @required this.imageUrl,
+    @required this.imagesUrlList,
     @required this.hexColor,
     @required this.parentStoreTag,
     this.image,
@@ -120,7 +120,7 @@ class ProductItemCard extends StatelessWidget {
                     itemId: itemId,
                     itemName: itemName,
                     finalPrice: finalPrice,
-                    imageUrl: imageUrl,
+                    imagesUrlList: imagesUrlList,
                     purchaseType: purchaseType,
                     registeredDate: registeredDate,
                     quantity: quantity,
@@ -164,7 +164,7 @@ class ProductItemCard extends StatelessWidget {
           itemId: this.itemId,
           finalPrice: this.finalPrice,
           itemSatus: this.itemSatus,
-          imageUrl: this.imageUrl,
+          imagesUrlList: this.imagesUrlList,
           hexColor: this.hexColor,
           parentStoreTag: this.parentStoreTag,
           deliveryTime: this.deliveryTime,

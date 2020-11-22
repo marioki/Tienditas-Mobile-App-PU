@@ -135,7 +135,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                 fit: BoxFit.cover,
                                 image: loadedImg == null
                                     ? NetworkImage(
-                                        "${widget.productElement.imageUrl}")
+                                        "${widget.productElement.imagesUrlList}")
                                     : FileImage(loadedImg),
                               ),
                             ),
