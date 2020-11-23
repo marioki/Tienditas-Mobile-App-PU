@@ -60,7 +60,7 @@ class _StoreInventoryState extends State<StoreInventory> {
       ),
       body: FutureBuilder(
         future:
-            ProductProvider().getStoreProducts(widget.storeTagName, context),
+        ProductProvider().getStoreProducts(widget.storeTagName, context),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             Product product = snapshot.data;

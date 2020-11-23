@@ -75,6 +75,7 @@ class ProductElement {
   String itemId;
   String finalPrice;
   String basePrice;
+  String itemStatus;
   ItemSatus itemStatus;
   List<String> imagesUrlList;
   String discountPercentage;
@@ -98,7 +99,7 @@ class ProductElement {
         itemId: json["item_id"],
         finalPrice: json["final_price"],
         basePrice: json["base_price"],
-        itemStatus: itemSatusValues.map[json["item_status"]],
+        itemStatus: json["item_status"],
         imagesUrlList: List<String>.from(json["images_url"].map((x) => x)),
         deliveryTime: json["delivery_time"],
         discountPercentage: json["discount_percentage"],
@@ -116,17 +117,17 @@ class ProductElement {
         "item_id": itemId,
         "final_price": finalPrice,
         "base_price": basePrice,
+<<<<<<< HEAD
         "item_status": itemSatusValues.reverse[itemStatus],
+=======
+        "item_status": itemStatus,
+>>>>>>> 41999580172f37399e4e357e85adaaeece7e42fd
         "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,
         "discount_percentage": discountPercentage
       };
 }
-
-enum ItemSatus { VIGENTE }
-
-final itemSatusValues = EnumValues({"VIGENTE": ItemSatus.VIGENTE});
 
 enum Outstanding { FALSE }
 

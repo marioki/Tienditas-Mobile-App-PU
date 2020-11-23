@@ -16,7 +16,7 @@ class ProductItemCard extends StatelessWidget {
   final String registeredDate;
   final String itemId;
   final String finalPrice;
-  final ItemSatus itemSatus;
+  final String itemSatus;
   final List<String> imagesUrlList;
   final String hexColor;
   final String parentStoreTag;
