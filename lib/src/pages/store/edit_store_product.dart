@@ -146,23 +146,17 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                 pr.show();
                                 if (loadedImg != null) {
                                   //Update product when image is loaded
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('Procesando')));
-                                  response = await ProductProvider()
-                                      .updateProductWithImage(
-                                    userIdToken:
-                                        Provider.of<LoginState>(context)
-                                            .currentUserIdToken,
+                                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
+                                  response = await ProductProvider().updateProductWithImage(
+                                    userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
                                     productElement: widget.productElement,
                                     itemImage: itemImage64,
                                     deliveryTime: getDeliveryTimeInfo(),
                                   );
                                   if (response.statusCode == 200) {
                                     pr.hide();
-                                    ResponseTienditasApi responseTienditasApi =
-                                        responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode ==
-                                        200) {
+                                    ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+                                    if (responseTienditasApi.statusCode == 200) {
                                       print(responseTienditasApi.body.message);
                                       Scaffold.of(context).showSnackBar(
                                         SnackBar(
@@ -171,8 +165,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                         ),
                                       );
                                       //Clear Image Cahe
-                                      PaintingBinding.instance.imageCache
-                                          .clear();
+                                      PaintingBinding.instance.imageCache.clear();
                                       isLoading = false;
                                       Navigator.of(context).pop();
                                     } else {
@@ -366,7 +359,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            hintText: 'cantidad disponible'),
+                            hintText: 'cantidad disponible'
+                        ),
                       ),
                       SizedBox(
                         height: 20,
