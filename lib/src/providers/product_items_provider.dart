@@ -94,16 +94,16 @@ class ProductProvider {
 
   Future<http.Response> createProductWithImage(
       {
-        String userIdToken,
-        itemName,
-        description,
-        finalPrice,
-        quantity,
-        storeTagName,
-        itemImage,
-        String deliveryTime
-      }) async {
+      String userIdToken,
+      itemName,
+      description,
+      finalPrice,
+      quantity,
+      storeTagName,
+      var itemImageUrlList,
+      String deliveryTime}) async {
     print('=========Create Product with image Method============');
+    var images = jsonEncode(itemImageUrlList);
 
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
@@ -111,7 +111,7 @@ class ProductProvider {
         "store_tag_name": storeTagName,
         "final_price": finalPrice,
         'discount_price': "0.00",
-        "image": itemImage,
+        "images":  itemImageUrlList,
         "item_name": itemName,
         "description": description,
         "item_status": "active",

@@ -19,6 +19,7 @@ class StoreProfile extends StatefulWidget {
 
 class _StoreProfileState extends State<StoreProfile> {
   double opacityLevel = 1.0;
+
   void _changeOpacity() {
     setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
   }
@@ -30,13 +31,11 @@ class _StoreProfileState extends State<StoreProfile> {
           borderRadius: BorderRadius.circular(8),
         ),
         color: Colors.redAccent,
-        child: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
-              style: storeDetailsCardStyle,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
+            style: storeDetailsCardStyle,
           ),
         ),
       );
@@ -109,7 +108,8 @@ class _StoreProfileState extends State<StoreProfile> {
                           StoreCard(
                             amount: resultTiendita.body.store.balance,
                             description: "Saldo Disponible",
-                            toolTipText: 'Este monto corresponde a tus pedidos completados.\n Y puedes Retirarlos.',
+                            toolTipText:
+                                'Este monto corresponde a tus pedidos completados.\n Y puedes Retirarlos.',
                           ),
                         ],
                       ),
@@ -185,9 +185,12 @@ class _StoreProfileState extends State<StoreProfile> {
 class StoreCard extends StatelessWidget {
   StoreCard({this.amount, this.description, this.toolTipText});
 
-  @required final String amount;
-  @required final String description;
-  @required final String toolTipText;
+  @required
+  final String amount;
+  @required
+  final String description;
+  @required
+  final String toolTipText;
 
   @override
   Widget build(BuildContext context) {

@@ -46,25 +46,24 @@ class Body {
 }
 
 class ProductElement {
-  ProductElement({
-    this.storeTagName,
-    this.quantity,
-    this.itemName,
-    this.description,
-    this.purchaseType,
-    this.outstanding,
-    this.registeredDate,
-    this.itemId,
-    this.finalPrice,
-    this.basePrice,
-    this.itemStatus,
-    this.imagesUrlList,
-    this.hexColor,
-    this.parentStoreTag,
-    this.deliveryTime,
-    this.discountPercentage,
-    this.discountPrice
-  });
+  ProductElement(
+      {this.storeTagName,
+      this.quantity,
+      this.itemName,
+      this.description,
+      this.purchaseType,
+      this.outstanding,
+      this.registeredDate,
+      this.itemId,
+      this.finalPrice,
+      this.basePrice,
+      this.itemStatus,
+      this.imagesUrlList,
+      this.hexColor,
+      this.parentStoreTag,
+      this.deliveryTime,
+      this.discountPercentage,
+      this.discountPrice});
 
   String storeTagName;
   String quantity;
@@ -118,7 +117,7 @@ class ProductElement {
         "final_price": finalPrice,
         "base_price": basePrice,
         "item_status": itemSatusValues.reverse[itemStatus],
-    "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
+        "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,
         "discount_percentage": discountPercentage

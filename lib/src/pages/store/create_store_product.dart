@@ -77,6 +77,11 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   Io.File loadedImg;
   var itemImage64;
 
+  //Upload Multiple Images
+  final int maxImageAmount = 3;
+  List<Io.File> imageFileList = List();
+  List<String> imageBase64List = List();
+
   //Delivery Time Picker fields
   int deliveryTimeNumber = 1;
   String deliveryRangeValue = 'dias';
@@ -119,19 +124,39 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           GestureDetector(
-                            child: loadedImg == null
-                                ? Icon(
-                                    Icons.add_a_photo,
-                                    size: 50,
-                                  )
-                                : Image(
-                                    image: FileImage(loadedImg),
-                                    width: 50,
-                                    height: 50,
-                                    fit: BoxFit.cover),
+                            child: Icon(
+                              Icons.add_a_photo,
+                              size: 50,
+                            ),
                             onTap: () {
-                              return pickImageFromGallery(ImageSource.gallery);
+                              return _pickImageFromGallery(ImageSource.gallery);
                             },
+                          ),
+                          Expanded(
+                            child: Container(
+                              height: 75,
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                addAutomaticKeepAlives: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: imageFileList.length,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (imageFileList.isNotEmpty) {
+                                    return Container(
+                                      margin: EdgeInsets.all(8),
+                                      child: Image(
+                                          image:
+                                              FileImage(imageFileList[index]),
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.cover),
+                                    );
+                                  } else
+                                    return Container();
+                                },
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -260,16 +285,20 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               pr.show();
-                              if (loadedImg != null) {
+                              generateBase64ImageList();
+                              if (imageFileList.isNotEmpty) {
                                 //Create product when image is loaded
                                 Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('Procesando')));
+                                  SnackBar(
+                                    content: Text('Procesando'),
+                                  ),
+                                );
                                 response = await ProductProvider()
                                     .createProductWithImage(
                                   quantity: quantity,
                                   storeTagName: widget.storeTagName,
                                   finalPrice: finalPrice,
-                                  itemImage: itemImage64,
+                                  itemImageUrlList: imageBase64List,
                                   description: description,
                                   itemName: itemName,
                                   deliveryTime: getDeliveryTimeInfo(),
@@ -291,7 +320,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                     isLoading = false;
                                     Navigator.of(context).pop();
                                   } else {
+                                    //aqui mensaje brujo
                                     print(responseTienditasApi.body.message);
+                                    print(responseTienditasApi.statusCode);
                                     isLoading = false;
                                   }
                                 }
@@ -357,8 +388,23 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   pickImageFromGallery(ImageSource source) async {
     imageFile = ImagePicker.pickImage(source: source);
     loadImageFromGallery(await imageFile);
-
     setState(() {});
+  }
+
+  _pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    imageFileList.add(await imageFile);
+    print(imageFileList.length);
+    setState(() {});
+  }
+
+  void generateBase64ImageList() async {
+    if (imageFileList.isNotEmpty) {
+      imageFileList.forEach((imageFile) {
+        imageBase64List.add(encodeImage(imageFile));
+      });
+    }
+    //setState(() {});
   }
 
   void loadImageFromGallery(Io.File imageFile) async {
@@ -369,10 +415,10 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     setState(() {});
   }
 
-  void encodeImage(Io.File image) async {
+  String encodeImage(Io.File image) {
     final bytes = image.readAsBytesSync();
     itemImage64 = base64Encode(bytes);
-    print(itemImage64);
+    return itemImage64;
   }
 
   String getDeliveryTimeInfo() {
