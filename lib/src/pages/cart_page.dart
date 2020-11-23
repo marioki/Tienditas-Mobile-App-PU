@@ -155,9 +155,9 @@ class _CartPageState extends State<CartPage> {
                             itemName: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .itemName,
-                            imageUrl: Provider.of<UserCartState>(context)
+                            imagesUrlList: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
-                                .imageUrl,
+                                .imagesUrlList,
                             finalPrice: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .finalPrice,
@@ -185,9 +185,9 @@ class _CartPageState extends State<CartPage> {
                       itemName: Provider.of<UserCartState>(context)
                           .cartProductList[index]
                           .itemName,
-                      imageUrl: Provider.of<UserCartState>(context)
+                      imagesUrlList: Provider.of<UserCartState>(context)
                           .cartProductList[index]
-                          .imageUrl,
+                          .imagesUrlList,
                       finalPrice: Provider.of<UserCartState>(context)
                           .cartProductList[index]
                           .finalPrice,
