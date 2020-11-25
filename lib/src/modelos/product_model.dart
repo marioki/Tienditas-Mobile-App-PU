@@ -76,7 +76,6 @@ class ProductElement {
   String finalPrice;
   String basePrice;
   String itemStatus;
-  ItemSatus itemStatus;
   List<String> imagesUrlList;
   String discountPercentage;
   String discountPrice;
@@ -117,7 +116,7 @@ class ProductElement {
         "item_id": itemId,
         "final_price": finalPrice,
         "base_price": basePrice,
-        "item_status": itemSatusValues.reverse[itemStatus],
+        "item_status": itemStatus,
         "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,

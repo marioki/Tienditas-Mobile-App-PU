@@ -3,6 +3,7 @@ import 'package:app_tiendita/src/pages/store/create_store.dart';
 import 'package:app_tiendita/src/pages/store/store_profile.dart';
 import 'package:app_tiendita/src/pages/user/edit_user_profile.dart';
 import 'package:app_tiendita/src/pages/user/user_address_page.dart';
+import 'package:app_tiendita/src/pages/user/user_bank_accounts.dart';
 import 'package:app_tiendita/src/pages/user/user_batch_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -155,6 +156,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => UserPaymentMethod(),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Cuentas Bancarias",
+                    imageName: "cuenta_bancaria",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserBankAccountsPage(),
                         ),
                       );
                     },
