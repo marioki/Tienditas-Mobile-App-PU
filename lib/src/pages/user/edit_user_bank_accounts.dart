@@ -12,16 +12,14 @@ import 'package:provider/provider.dart';
 // ignore: must_be_immutable
 class EditUserBankAccount extends StatefulWidget {
   EditUserBankAccount(
-      {
-        @required this.appBarTitle,
-        @required this.userEmail,
-        this.accountNumber,
-        this.accountType,
-        this.bankName,
-        this.isDefault,
-        this.id,
-        @required this.method
-      });
+      {@required this.appBarTitle,
+      @required this.userEmail,
+      this.accountNumber,
+      this.accountType,
+      this.bankName,
+      this.isDefault,
+      this.id,
+      @required this.method});
 
   final String appBarTitle;
   final String userEmail;
@@ -102,14 +100,14 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                 height: 10,
                               ),
                               FutureBuilder(
-                                future:
-                                BankProvider().getAllBanks(context),
+                                future: BankProvider().getAllBanks(context),
                                 builder: (BuildContext context, snapshot) {
                                   if (snapshot.hasData) {
                                     BanksModel banksResult = snapshot.data;
                                     var banks = banksResult.body.banks;
                                     return DropdownButtonHideUnderline(
                                       child: DropdownButton(
+                                        isExpanded: true,
                                         hint: Text("Seleccionar banco"),
                                         value: widget.bankName,
                                         onChanged: (newValue) {
@@ -152,6 +150,7 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                     fontFamily: "Nunito"),
                               ),
                               TextFormField(
+                                keyboardType: TextInputType.number,
                                 initialValue: widget.accountNumber,
                                 onChanged: (String value) {
                                   widget.accountNumber = value;
@@ -178,15 +177,16 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                     fontFamily: "Nunito"),
                               ),
                               FutureBuilder(
-                                future:
-                                BankProvider().getAllBanks(context),
+                                future: BankProvider().getAllBanks(context),
                                 builder: (BuildContext context, snapshot) {
                                   if (snapshot.hasData) {
                                     BanksModel banksResult = snapshot.data;
-                                    var bankAccountType = banksResult.body.accountType;
+                                    var bankAccountType =
+                                        banksResult.body.accountType;
                                     return DropdownButtonHideUnderline(
                                       child: DropdownButton(
-                                        hint: Text("Seleccionar tipo de cuenta"),
+                                        hint:
+                                            Text("Seleccionar tipo de cuenta"),
                                         value: widget.accountType,
                                         onChanged: (newValue) {
                                           setState(() {
@@ -204,7 +204,8 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                   } else {
                                     return DropdownButtonHideUnderline(
                                       child: DropdownButton(
-                                        hint: Text("Seleccionar tipo de cuenta"),
+                                        hint:
+                                            Text("Seleccionar tipo de cuenta"),
                                         onChanged: (newValue) {
                                           print(newValue);
                                         },
@@ -245,25 +246,31 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                         if (widget.bankName != null) {
                                           if (widget.method == "post") {
                                             pr.show();
-                                            response = await UsuarioTienditasProvider().createBankAccount(
-                                                Provider.of<LoginState>(context).currentUserIdToken,
-                                                widget.userEmail,
-                                                widget.bankName,
-                                                widget.accountNumber,
-                                                widget.accountType
-                                            );
+                                            response =
+                                                await UsuarioTienditasProvider()
+                                                    .createBankAccount(
+                                                        Provider.of<LoginState>(
+                                                                context)
+                                                            .currentUserIdToken,
+                                                        widget.userEmail,
+                                                        widget.bankName,
+                                                        widget.accountNumber,
+                                                        widget.accountType);
                                           }
                                           if (widget.method == "put") {
                                             pr.show();
-                                            response = await UsuarioTienditasProvider().updateBankAccount(
-                                                Provider.of<LoginState>(context).currentUserIdToken,
-                                                widget.userEmail,
-                                                widget.bankName,
-                                                widget.accountNumber,
-                                                widget.id,
-                                                widget.isDefault,
-                                                widget.accountType
-                                            );
+                                            response =
+                                                await UsuarioTienditasProvider()
+                                                    .updateBankAccount(
+                                                        Provider.of<LoginState>(
+                                                                context)
+                                                            .currentUserIdToken,
+                                                        widget.userEmail,
+                                                        widget.bankName,
+                                                        widget.accountNumber,
+                                                        widget.id,
+                                                        widget.isDefault,
+                                                        widget.accountType);
                                           }
                                         } else {
                                           Scaffold.of(context).showSnackBar(
