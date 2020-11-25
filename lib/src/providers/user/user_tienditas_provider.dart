@@ -189,7 +189,7 @@ class UsuarioTienditasProvider {
     };
     print(bodyData);
     String _body = jsonEncode(bodyData);
-    var response = await http.post(
+    var response = await http.put(
       _url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
