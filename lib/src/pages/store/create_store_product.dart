@@ -123,15 +123,18 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          GestureDetector(
-                            child: Icon(
-                              Icons.add_a_photo_outlined,
-                              size: 50,
-                            ),
-                            onTap: () {
-                              return _pickImageFromGallery(ImageSource.gallery);
-                            },
-                          ),
+                          imageFileList.length < maxImageAmount
+                              ? GestureDetector(
+                                  child: Icon(
+                                    Icons.add_a_photo_outlined,
+                                    size: 50,
+                                  ),
+                                  onTap: () {
+                                    return _pickImageFromGallery(
+                                        ImageSource.gallery);
+                                  },
+                                )
+                              : Container(),
                           Expanded(
                             child: Container(
                               height: 75,
