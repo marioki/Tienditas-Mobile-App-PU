@@ -69,12 +69,12 @@ class ProductDetailsPage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return new Image.network(
                       args.imagesUrlList[index],
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitWidth,
                     );
                   },
                   itemCount: args.imagesUrlList.length,
-                  pagination:  SwiperPagination(),
-                  control:  SwiperControl(),
+                  pagination: SwiperPagination(),
+                  control: SwiperControl(),
                 ),
               ),
             ),
