@@ -125,7 +125,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         children: <Widget>[
                           GestureDetector(
                             child: Icon(
-                              Icons.add_a_photo,
+                              Icons.add_a_photo_outlined,
                               size: 50,
                             ),
                             onTap: () {

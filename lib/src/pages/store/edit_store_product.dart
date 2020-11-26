@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -117,115 +118,75 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              return pickImageFromGallery(ImageSource.gallery);
-                            },
-                            child: Container(
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Image(
-                                width: 90,
-                                height: 90,
-                                fit: BoxFit.cover,
-                                image: loadedImg == null
-                                    ? NetworkImage(
-                                        "${widget.productElement.imagesUrlList.first}")
-                                    : FileImage(loadedImg),
-                              ),
-                            ),
+                      Container(
+                          height: 75,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          RaisedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                pr.show();
-                                if (loadedImg != null) {
-                                  //Update product when image is loaded
-                                  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Procesando')));
-                                  response = await ProductProvider().updateProductWithImage(
-                                    userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
-                                    productElement: widget.productElement,
-                                    itemImage: itemImage64,
-                                    deliveryTime: getDeliveryTimeInfo(),
-                                  );
-                                  if (response.statusCode == 200) {
-                                    pr.hide();
-                                    ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode == 200) {
-                                      print(responseTienditasApi.body.message);
-                                      Scaffold.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${responseTienditasApi.body.message}'),
-                                        ),
+                          child: widget.productElement.imagesUrlList.length < 3
+                              ? Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.add_a_photo_outlined,
+                                      ),
+                                      iconSize: 50,
+                                      onPressed: () {
+                                        pickImageFromGallery(
+                                            ImageSource.gallery);
+                                      },
+                                    ),
+                                    ListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: widget
+                                          .productElement.imagesUrlList.length,
+                                      shrinkWrap: true,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        if (widget.productElement.imagesUrlList
+                                            .isNotEmpty) {
+                                          return Container(
+                                            margin: EdgeInsets.all(8),
+                                            child: Image(
+                                                image: NetworkImage(widget
+                                                    .productElement
+                                                    .imagesUrlList[index]),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover),
+                                          );
+                                        } else
+                                          return Container();
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: widget
+                                      .productElement.imagesUrlList.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    if (widget.productElement.imagesUrlList
+                                        .isNotEmpty) {
+                                      return Container(
+                                        margin: EdgeInsets.all(8),
+                                        child: Image(
+                                            image: NetworkImage(widget
+                                                .productElement
+                                                .imagesUrlList[index]),
+                                            width: 50,
+                                            height: 50,
+                                            fit: BoxFit.cover),
                                       );
-                                      //Clear Image Cahe
-                                      PaintingBinding.instance.imageCache.clear();
-                                      isLoading = false;
-                                      Navigator.of(context).pop();
-                                    } else {
-                                      print(responseTienditasApi.body.message);
-                                      isLoading = false;
-                                    }
-                                  }
-                                } else {
-                                  //Update product when image is null
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('Procesando')));
-                                  response =
-                                      await ProductProvider().updateProduct(
-                                    userIdToken:
-                                        Provider.of<LoginState>(context)
-                                            .currentUserIdToken,
-                                    productElement: widget.productElement,
-                                    deliveryTime: getDeliveryTimeInfo(),
-                                  );
-                                  if (response.statusCode == 200) {
-                                    pr.hide();
-                                    ResponseTienditasApi responseTienditasApi =
-                                        responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode ==
-                                        200) {
-                                      print(responseTienditasApi.body.message);
-                                      Scaffold.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${responseTienditasApi.body.message}'),
-                                        ),
-                                      );
-                                      isLoading = false;
-                                      var count = 0;
-                                      Navigator.popUntil(context, (route) {
-                                        return count++ == 2;
-                                      });
-                                    } else {
-                                      print(responseTienditasApi.body.message);
-                                      isLoading = false;
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                            color: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            textColor: Colors.white,
-                            child: Text(
-                              "Guardar",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "Nunito"),
-                            ),
-                          ),
-                        ],
-                      ),
+                                    } else
+                                      return Container();
+                                  },
+                                )),
                       SizedBox(
                         height: 20,
                       ),
@@ -359,13 +320,101 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            hintText: 'cantidad disponible'
-                        ),
+                            hintText: 'cantidad disponible'),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      _buildDeliveryTimeWidget()
+                      _buildDeliveryTimeWidget(),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: RaisedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              pr.show();
+                              if (loadedImg != null) {
+                                //Update product when image is loaded
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('Procesando')));
+                                response = await ProductProvider()
+                                    .updateProductWithImage(
+                                  userIdToken: Provider.of<LoginState>(context)
+                                      .currentUserIdToken,
+                                  productElement: widget.productElement,
+                                  itemImage: itemImage64,
+                                  deliveryTime: getDeliveryTimeInfo(),
+                                );
+                                if (response.statusCode == 200) {
+                                  pr.hide();
+                                  ResponseTienditasApi responseTienditasApi =
+                                      responseFromJson(response.body);
+                                  if (responseTienditasApi.statusCode == 200) {
+                                    print(responseTienditasApi.body.message);
+                                    Scaffold.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            '${responseTienditasApi.body.message}'),
+                                      ),
+                                    );
+                                    //Clear Image Cahe
+                                    PaintingBinding.instance.imageCache.clear();
+                                    isLoading = false;
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    print(responseTienditasApi.body.message);
+                                    isLoading = false;
+                                  }
+                                }
+                              } else {
+                                //Update product when image is null
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('Procesando')));
+                                response =
+                                    await ProductProvider().updateProduct(
+                                  userIdToken: Provider.of<LoginState>(context)
+                                      .currentUserIdToken,
+                                  productElement: widget.productElement,
+                                  deliveryTime: getDeliveryTimeInfo(),
+                                );
+                                if (response.statusCode == 200) {
+                                  pr.hide();
+                                  ResponseTienditasApi responseTienditasApi =
+                                      responseFromJson(response.body);
+                                  if (responseTienditasApi.statusCode == 200) {
+                                    print(responseTienditasApi.body.message);
+                                    Scaffold.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            '${responseTienditasApi.body.message}'),
+                                      ),
+                                    );
+                                    isLoading = false;
+                                    var count = 0;
+                                    Navigator.popUntil(context, (route) {
+                                      return count++ == 2;
+                                    });
+                                  } else {
+                                    print(responseTienditasApi.body.message);
+                                    isLoading = false;
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          color: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          textColor: Colors.white,
+                          child: Text(
+                            "Guardar",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Nunito"),
+                          ),
+                        ),
+                      ),
                     ]),
               ),
             ),
