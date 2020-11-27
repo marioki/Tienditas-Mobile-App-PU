@@ -155,12 +155,12 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
     );
   }
 
-  Future<void> deleteBankAccount(BankAccount creditCard, BuildContext context) async {
+  Future<void> deleteBankAccount(BankAccount bankAccount, BuildContext context) async {
     final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
     final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
     ProgressDialog pr = ProgressDialog(context);
     pr.style(
-        message: 'Cargando...',
+        message: 'Eliminando cuenta',
         progressWidget: Container(
           height: 400,
           child: Center(
@@ -168,12 +168,13 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
           ),
         ));
     await pr.show();
-    var response = await UsuarioTienditasProvider().deleteBankAccount(firebaseUser, userTokenId, creditCard);
+    var response = await UsuarioTienditasProvider().deleteBankAccount(firebaseUser, userTokenId, bankAccount);
     if (response.statusCode == 200) {
       ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
       if (responseTienditasApi.statusCode == 200) {
         pr.hide();
         print(responseTienditasApi.body.message);
+        Navigator.pop(context);
         setState(() {});
       } else {
         print(responseTienditasApi.body.message);
