@@ -67,9 +67,11 @@ class ProductDetailsPage extends StatelessWidget {
                 tag: args.itemId,
                 child: Swiper(
                   itemBuilder: (BuildContext context, int index) {
-                    return new Image.network(
-                      args.imagesUrlList[index],
-                      fit: BoxFit.fitWidth,
+                    return InteractiveViewer(
+                      child: new Image.network(
+                        args.imagesUrlList[index],
+                        fit: BoxFit.fitWidth,
+                      ),
                     );
                   },
                   itemCount: args.imagesUrlList.length,
