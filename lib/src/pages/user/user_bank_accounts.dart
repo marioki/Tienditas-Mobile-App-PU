@@ -53,7 +53,7 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
                 context,
                 index,
                 user.bankAccounts[index],
-                user.email
+                user.userEmail
             );
           } else {
             return FlatButton(
@@ -65,6 +65,7 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
                       appBarTitle: "Agregar Cuenta",
                       userEmail: user.userEmail,
                       method: "post",
+                      isDefault: false,
                     ),
                   ),
                 ).then((value) =>
