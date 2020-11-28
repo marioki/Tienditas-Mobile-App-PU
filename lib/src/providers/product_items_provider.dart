@@ -59,20 +59,24 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> updateProductWithImage({
-    String userIdToken,
-    ProductElement productElement,
-    itemImage,
-    String deliveryTime,
-  }) async {
+  Future<http.Response> updateProductWithImage(
+      {String userIdToken,
+      ProductElement productElement,
+      List<String> itemImageBase64List,
+      String deliveryTime,
+      List<String> imagesUrl}) async {
     print('=========Updatr Product with Image Method============');
+    print(imagesUrl);
+    print('=================================');
+    print(itemImageBase64List);
     String _url = '$baseApiUrl/api/v1/product';
     var bodyData = {
       "product": {
         "store_tag_name": productElement.storeTagName,
         "item_id": productElement.itemId,
         "final_price": productElement.finalPrice,
-        "image": itemImage,
+        "images": itemImageBase64List,
+        "images_url": imagesUrl,
         "item_name": productElement.itemName,
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
@@ -93,8 +97,7 @@ class ProductProvider {
   }
 
   Future<http.Response> createProductWithImage(
-      {
-      String userIdToken,
+      {String userIdToken,
       itemName,
       description,
       finalPrice,
@@ -111,7 +114,7 @@ class ProductProvider {
         "store_tag_name": storeTagName,
         "final_price": finalPrice,
         'discount_price': "0.00",
-        "images":  itemImageUrlList,
+        "images": itemImageUrlList,
         "item_name": itemName,
         "description": description,
         "item_status": "active",

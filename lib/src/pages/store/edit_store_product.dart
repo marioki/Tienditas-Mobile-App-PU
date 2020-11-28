@@ -86,6 +86,14 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   String deliveryRangeValue = 'dias';
   int step = 1;
 
+  //Update Product Images with images array
+  List<String> selectedImagesUrls = List();
+
+  //Upload Multiple Images
+  final int maxImageAmount = 3;
+  List<Io.File> imageFileList = List();
+  List<String> imageBase64List = List();
+
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context,
@@ -119,7 +127,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         height: 10,
                       ),
                       Container(
-                          height: 75,
+                          height: 150,
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -127,16 +135,18 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           child: widget.productElement.imagesUrlList.length < 3
                               ? Row(
                                   children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.add_a_photo_outlined,
-                                      ),
-                                      iconSize: 50,
-                                      onPressed: () {
-                                        pickImageFromGallery(
-                                            ImageSource.gallery);
-                                      },
-                                    ),
+                                    imageFileList.length < maxImageAmount
+                                        ? GestureDetector(
+                                            child: Icon(
+                                              Icons.add_a_photo_outlined,
+                                              size: 50,
+                                            ),
+                                            onTap: () {
+                                              _pickImageFromGallery(
+                                                  ImageSource.gallery);
+                                            },
+                                          )
+                                        : Container(),
                                     ListView.builder(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
@@ -149,17 +159,65 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                             .isNotEmpty) {
                                           return Container(
                                             margin: EdgeInsets.all(8),
-                                            child: Image(
-                                                image: NetworkImage(widget
-                                                    .productElement
-                                                    .imagesUrlList[index]),
-                                                width: 50,
-                                                height: 50,
-                                                fit: BoxFit.cover),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                    image: NetworkImage(widget
+                                                        .productElement
+                                                        .imagesUrlList[index]),
+                                                    width: 50,
+                                                    height: 50,
+                                                    fit: BoxFit.cover),
+                                                IconButton(
+                                                  icon: Icon(
+                                                      Icons.delete_forever),
+                                                  onPressed: () {
+                                                    selectedImagesUrls.add(
+                                                        widget.productElement
+                                                                .imagesUrlList[
+                                                            index]);
+                                                    print(
+                                                        '========================================');
+                                                    print(selectedImagesUrls);
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           );
                                         } else
                                           return Container();
                                       },
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        height: 75,
+                                        child: ListView.builder(
+                                          physics: BouncingScrollPhysics(),
+                                          addAutomaticKeepAlives: true,
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: imageFileList.length,
+                                          shrinkWrap: true,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            if (imageFileList.isNotEmpty) {
+                                              if (imageFileList[index] !=
+                                                  null) {
+                                                return Container(
+                                                  margin: EdgeInsets.all(8),
+                                                  child: Image(
+                                                      image: FileImage(
+                                                          imageFileList[index]),
+                                                      width: 50,
+                                                      height: 50,
+                                                      fit: BoxFit.cover),
+                                                );
+                                              }
+                                              return Container();
+                                            } else
+                                              return Container();
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 )
@@ -332,7 +390,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               pr.show();
-                              if (loadedImg != null) {
+                              generateBase64ImageList();
+                              if (true) {
                                 //Update product when image is loaded
                                 Scaffold.of(context).showSnackBar(
                                     SnackBar(content: Text('Procesando')));
@@ -341,8 +400,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                   userIdToken: Provider.of<LoginState>(context)
                                       .currentUserIdToken,
                                   productElement: widget.productElement,
-                                  itemImage: itemImage64,
+                                  itemImageBase64List: imageBase64List,
                                   deliveryTime: getDeliveryTimeInfo(),
+                                  imagesUrl: selectedImagesUrls,
                                 );
                                 if (response.statusCode == 200) {
                                   pr.hide();
@@ -424,20 +484,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     );
   }
 
-  pickImageFromGallery(ImageSource source) async {
-    imageFile = ImagePicker.pickImage(source: source);
-    loadImageFromGallery(await imageFile);
-    setState(() {});
-  }
-
-  void loadImageFromGallery(Io.File imageFile) async {
-    if (imageFile != null) {
-      loadedImg = imageFile;
-      encodeImage(imageFile);
-    }
-    setState(() {});
-  }
-
   void encodeImage(Io.File image) async {
     final bytes = image.readAsBytesSync();
     itemImage64 = base64Encode(bytes);
@@ -494,5 +540,29 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
         ),
       ],
     );
+  }
+
+  _pickImageFromGallery(ImageSource source) async {
+    imageFile = ImagePicker.pickImage(source: source);
+    if (imageFile != null) {
+      imageFileList.add(await imageFile);
+      print(imageFileList.length);
+      setState(() {});
+    }
+  }
+
+  void generateBase64ImageList() async {
+    if (imageFileList.isNotEmpty) {
+      imageFileList.forEach((imageFile) {
+        imageBase64List.add(_encodeImage(imageFile));
+      });
+    }
+    //setState(() {});
+  }
+
+  String _encodeImage(Io.File image) {
+    final bytes = image.readAsBytesSync();
+    itemImage64 = base64Encode(bytes);
+    return itemImage64;
   }
 }
