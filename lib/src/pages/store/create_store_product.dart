@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/widgets/edit_product_image_element.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -137,7 +138,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                               : Container(),
                           Expanded(
                             child: Container(
-                              height: 75,
+                              height: 100,
                               child: ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 addAutomaticKeepAlives: true,
@@ -145,15 +146,24 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                 itemCount: imageFileList.length,
                                 shrinkWrap: true,
                                 itemBuilder: (BuildContext context, int index) {
-                                  if (imageFileList.isNotEmpty) {
-                                    return Container(
-                                      margin: EdgeInsets.all(8),
-                                      child: Image(
-                                          image:
-                                              FileImage(imageFileList[index]),
-                                          width: 50,
-                                          height: 50,
-                                          fit: BoxFit.cover),
+                                  if (imageFileList.isNotEmpty &&
+                                      imageFileList[index] != null) {
+                                    // return Container(
+                                    //   margin: EdgeInsets.all(8),
+                                    //   child: Image(
+                                    //       image:
+                                    //           FileImage(imageFileList[index]),
+                                    //       width: 50,
+                                    //       height: 50,
+                                    //       fit: BoxFit.cover),
+                                    // );
+                                    return ProductImgEdt(
+                                      productImage:
+                                          FileImage(imageFileList[index]),
+                                      index: index,
+                                      onDelete: () {
+                                        deleteProductFromList(index);
+                                      },
                                     );
                                   } else
                                     return Container();
@@ -399,6 +409,12 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     imageFileList.add(await imageFile);
     print(imageFileList.length);
     setState(() {});
+  }
+
+  deleteProductFromList(int _index) {
+    setState(() {
+      imageFileList.removeAt(_index);
+    });
   }
 
   void generateBase64ImageList() async {
