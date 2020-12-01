@@ -66,12 +66,12 @@ class ProductDetailsPage extends StatelessWidget {
               child: Hero(
                 tag: args.itemId,
                 child: Swiper(
+                  loop: false,
+                  outer: false,
                   itemBuilder: (BuildContext context, int index) {
-                    return InteractiveViewer(
-                      child: new Image.network(
-                        args.imagesUrlList[index],
-                        fit: BoxFit.fitWidth,
-                      ),
+                    return new Image.network(
+                      args.imagesUrlList[index],
+                      fit: BoxFit.fitWidth,
                     );
                   },
                   itemCount: args.imagesUrlList.length,
