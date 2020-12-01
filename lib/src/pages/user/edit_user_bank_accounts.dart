@@ -220,8 +220,26 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                   }
                                 },
                               ),
+                              SizedBox(height: 16),
+                              Text(
+                                "Marcar cuenta como prederteminada",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Nunito"),
+                              ),
                               SizedBox(
-                                height: 15,
+                                height: 16,
+                              ),
+                              Switch(value: widget.isDefault, onChanged: (value){
+                                setState(() {
+                                  widget.isDefault = value;
+                                });
+                              }),
+                              SizedBox(
+                                height: 16,
                               ),
                               SizedBox(
                                 height: 20,
