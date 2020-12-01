@@ -59,7 +59,46 @@ class ProductProvider {
     return response;
   }
 
-  Future<http.Response> updateProductWithImage(
+
+  Future<http.Response> updateProductAdd(
+      {String userIdToken,
+        ProductElement productElement,
+        List<String> itemImageBase64List,
+        String deliveryTime,
+        List<String> imagesUrl}) async {
+    print('=========Updatr Product with Image Method============');
+    print(imagesUrl);
+    print('=================================');
+    print(itemImageBase64List);
+    String _url = '$baseApiUrl/api/v1/product';
+    var bodyData = {
+      "product": {
+        "store_tag_name": productElement.storeTagName,
+        "item_id": productElement.itemId,
+        "final_price": productElement.finalPrice,
+        "images": itemImageBase64List,
+        "item_name": productElement.itemName,
+        "quantity": productElement.quantity,
+        "delivery_time": deliveryTime,
+        "discount_price": productElement.discountPrice,
+        "description": productElement.description
+      }
+    };
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+
+
+  Future<http.Response> updateProductDeleteAndAdd(
       {String userIdToken,
       ProductElement productElement,
       List<String> itemImageBase64List,

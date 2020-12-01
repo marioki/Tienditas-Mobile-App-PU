@@ -21,8 +21,9 @@ class _ProductImgEdtState extends State<ProductImgEdt> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(horizontal: 8),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Image(
             image: widget.productImage,
@@ -31,11 +32,8 @@ class _ProductImgEdtState extends State<ProductImgEdt> {
             fit: BoxFit.cover,
           ),
           IconButton(
-            icon: Icon(Icons.delete_forever_sharp),
-            onPressed: () {
-              widget.onDelete();
-            },
-          )
+              icon: Icon(Icons.delete_forever_sharp),
+              onPressed:widget.onDelete)
         ],
       ),
     );

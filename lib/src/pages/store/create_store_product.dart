@@ -121,24 +121,24 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          imageFileList.length < maxImageAmount
-                              ? GestureDetector(
-                                  child: Icon(
-                                    Icons.add_a_photo_outlined,
-                                    size: 50,
-                                  ),
-                                  onTap: () {
-                                    return _pickImageFromGallery(
-                                        ImageSource.gallery);
-                                  },
-                                )
-                              : Container(),
-                          Expanded(
-                            child: Container(
-                              height: 100,
+                      Container(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            imageFileList.length < maxImageAmount
+                                ? GestureDetector(
+                                    child: Icon(
+                                      Icons.add_a_photo_outlined,
+                                      size: 50,
+                                    ),
+                                    onTap: () {
+                                      return _pickImageFromGallery(
+                                          ImageSource.gallery);
+                                    },
+                                  )
+                                : Container(),
+                            Expanded(
                               child: ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 addAutomaticKeepAlives: true,
@@ -148,15 +148,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                 itemBuilder: (BuildContext context, int index) {
                                   if (imageFileList.isNotEmpty &&
                                       imageFileList[index] != null) {
-                                    // return Container(
-                                    //   margin: EdgeInsets.all(8),
-                                    //   child: Image(
-                                    //       image:
-                                    //           FileImage(imageFileList[index]),
-                                    //       width: 50,
-                                    //       height: 50,
-                                    //       fit: BoxFit.cover),
-                                    // );
                                     return ProductImgEdt(
                                       productImage:
                                           FileImage(imageFileList[index]),
@@ -170,8 +161,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                                 },
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 20,
