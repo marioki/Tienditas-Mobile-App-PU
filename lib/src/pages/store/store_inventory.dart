@@ -1,12 +1,8 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:flutter/material.dart';
-import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'create_store_product.dart';
 import 'edit_store_product.dart';
@@ -26,9 +22,35 @@ class _StoreInventoryState extends State<StoreInventory> {
   List<ProductElement> filteredProducts = [];
   List<ProductElement> finalListProductos;
 
+  bool isExtended = true;
+  ScrollController con;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+          icon: Image.asset(
+            'assets/images/icons/add_product_item.png',
+            fit: BoxFit.cover,
+            height: 30,
+            width: 30,
+          ),
+          elevation: 10,
+          isExtended: isExtended,
+          backgroundColor: azulTema,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CreateStoreProduct(storeTagName: widget.storeTagName),
+                ));
+          },
+          label: Row(
+            children: <Widget>[
+              Text("Crear Producto"),
+            ],
+          )),
       appBar: AppBar(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -73,26 +95,33 @@ class _StoreInventoryState extends State<StoreInventory> {
             }
             if (finalListProductos.length > 0) {
               return ListView.builder(
+                controller: con,
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 shrinkWrap: true,
-                itemCount: finalListProductos.length,
+                itemCount: finalListProductos.length + 1,
                 itemBuilder: (context, index) {
-                  return ProductItemCard(
-                    itemName: finalListProductos[index].itemName,
-                    price: finalListProductos[index].finalPrice,
-                    imageUrl: finalListProductos[index].imageUrl,
-                    quantity: finalListProductos[index].quantity,
-                    description: finalListProductos[index].description,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditStoreInventory(
-                                storeTagName: widget.storeTagName,
-                                productElement: finalListProductos[index]),
-                          ));
-                    },
-                  );
+                  if (index <= finalListProductos.length - 1) {
+                    return ProductItemCard(
+                      itemName: finalListProductos[index].itemName,
+                      price: finalListProductos[index].finalPrice,
+                      imageUrl: finalListProductos[index].imagesUrlList.first,
+                      quantity: finalListProductos[index].quantity,
+                      description: finalListProductos[index].description,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditStoreInventory(
+                                  storeTagName: widget.storeTagName,
+                                  productElement: finalListProductos[index]),
+                            ));
+                      },
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 75,
+                    );
+                  }
                 },
               );
             } else {
@@ -115,18 +144,24 @@ class _StoreInventoryState extends State<StoreInventory> {
       ),
     );
   }
+
+  void _switchActionBar() {
+    setState(
+      () {
+        isExtended = !isExtended;
+      },
+    );
+  }
 }
 
 class ProductItemCard extends StatelessWidget {
   ProductItemCard(
-      {
-        this.itemName,
-        this.price,
-        this.imageUrl,
-        this.description,
-        this.onPressed,
-        this.quantity
-      });
+      {this.itemName,
+      this.price,
+      this.imageUrl,
+      this.description,
+      this.onPressed,
+      this.quantity});
 
   final String itemName;
   final String price;
@@ -162,7 +197,7 @@ class ProductItemCard extends StatelessWidget {
                 child: Image(
                   width: 70,
                   height: 70,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   image: NetworkImage("$imageUrl"),
                 ),
               ),

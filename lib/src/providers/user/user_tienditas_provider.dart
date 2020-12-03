@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/user/user_order_batch.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_tiendita/src/constants/api_constants.dart';
 
@@ -133,6 +134,87 @@ class UsuarioTienditasProvider {
       },
       body: _body,
     );
+    return response;
+  }
+
+  Future<http.Response> createBankAccount(
+      String userIdToken,
+      String userEmail,
+      String bankName,
+      String number,
+      String type) async {
+    String _url = '$baseApiUrl/api/v1/bank_account';
+    var bodyData = {
+      "user": {
+        "email": userEmail,
+        "bank_account": {
+          "bank_name": bankName,
+          "account_number": number,
+          "account_type": type
+        }
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> updateBankAccount(
+      String userIdToken,
+      String userEmail,
+      String bankName,
+      String number,
+      String id,
+      bool isDefault,
+      String type) async {
+    String _url = '$baseApiUrl/api/v1/bank_account';
+    var bodyData = {
+      "user": {
+        "email": userEmail,
+        "bank_account": {
+          "bank_name": bankName,
+          "account_number": number,
+          "account_type": type,
+          "id": id,
+          "is_default": isDefault
+        }
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.put(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+  Future<http.Response> deleteBankAccount(FirebaseUser firebaseUser,
+      String userIdToken, BankAccount bankAccount) async {
+    String userEmail = firebaseUser.email;
+    String bankAccountId = bankAccount.id;
+    String _url =
+        '$baseApiUrl/api/v1/bank_account?id=$bankAccountId&email=$userEmail';
+    var response = await http.delete(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+    );
+
     return response;
   }
 }

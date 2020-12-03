@@ -6,6 +6,7 @@ import 'package:app_tiendita/src/widgets/product_item_card.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 
 class ColoredSafeArea extends StatelessWidget {
@@ -71,21 +72,31 @@ class ProductDetailsPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-            actionsIconTheme: IconThemeData(color: Colors.black),
-            elevation: 0,
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Hero(
-                  tag: args.itemId,
-                  child: Image(
-                    image: NetworkImage(args.imageUrl),
-                  ),
+            ),
+          ],
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Hero(
+                tag: args.itemId,
+                child: Swiper(
+                  loop: false,
+                  outer: false,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new Image.network(
+                      args.imagesUrlList[index],
+                      fit: BoxFit.fitWidth,
+                    );
+                  },
+                  itemCount: args.imagesUrlList.length,
+                  pagination: SwiperPagination(),
+                  control: SwiperControl(),
                 ),
               ),
               Container(
@@ -100,32 +111,34 @@ class ProductDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                args.itemName,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  fontFamily: 'Nunito',
-                                ),
-                              ),
-                              Text((args.deliveryTime != null)
-                                  ? args.deliveryTime
-                                  : '')
-                            ],
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          ),
-                        ),
-                        Text(
-                          '\$${args.finalPrice}',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 24,
-                            fontFamily: 'Nunito',
+                          child: FlatButton(
+                            color: azulTema,
+                            textColor: Colors.white,
+                            child: Text('Al Carrito'),
+                            onPressed: () {
+                              Provider.of<UserCartState>(context)
+                                  .addProductoToCart(
+                                ProductElement(
+                                    itemId: args.itemId,
+                                    itemName: args.itemName,
+                                    finalPrice: args.finalPrice,
+                                    imagesUrlList: args.imagesUrlList,
+                                    purchaseType: args.purchaseType,
+                                    registeredDate: args.registeredDate,
+                                    quantity: args.quantity,
+                                    hexColor: args.hexColor,
+                                    parentStoreTag: args.parentStoreTag,
+                                    description: args.description,
+                                    discountPrice: args.discountPrice,
+                                    discountPercentage:
+                                        args.discountPercentage),
+                              );
+                              final snackBar = SnackBar(
+                                duration: Duration(milliseconds: 300),
+                                content: Text('Al carrito!'),
+                              );
+                              //Scaffold.of(context).showSnackBar(snackBar);
+                            },
                           ),
                         ),
                       ],

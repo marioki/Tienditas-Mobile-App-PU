@@ -51,6 +51,7 @@ class User {
   User({
     this.creditCard,
     this.registeredDate,
+    this.bankAccounts,
     this.name,
     this.stores,
     this.address,
@@ -60,6 +61,7 @@ class User {
   });
 
   List<dynamic> creditCard;
+  List<BankAccount> bankAccounts;
   String registeredDate;
   String name;
   String email;
@@ -73,6 +75,7 @@ class User {
         registeredDate: json["registered_date"],
         name: json["name"],
         stores: List<dynamic>.from(json["stores"].map((x) => x)),
+        bankAccounts: List<BankAccount>.from(json["bank_accounts"].map((x) => BankAccount.fromJson(x))),
         address: List<Address>.from(json["address"].map((x) => Address.fromJson(x))),
         preferences: List<dynamic>.from(json["preferences"].map((x) => x)),
         userEmail: json["email"],
@@ -84,11 +87,44 @@ class User {
         "name": name,
         "#email": email,
         "stores": List<dynamic>.from(stores.map((x) => x)),
+        "bank_accounts": List<dynamic>.from(bankAccounts.map((x) => x.toJson())),
         "address": List<dynamic>.from(address.map((x) => x.toJson())),
         "preferences": List<dynamic>.from(preferences.map((x) => x)),
         "email": userEmail,
         "phone_number": phoneNumber
       };
+}
+
+class BankAccount {
+  BankAccount({
+    this.bankName,
+    this.accountNumber,
+    this.accountType,
+    this.id,
+    this.isDefault,
+  });
+
+  String bankName;
+  String accountNumber;
+  String accountType;
+  String id;
+  bool isDefault;
+
+  factory BankAccount.fromJson(Map<String, dynamic> json) => BankAccount(
+    bankName: json["bank_name"],
+    accountNumber: json["account_number"],
+    accountType: json["account_type"],
+    id: json["id"],
+    isDefault: json["is_default"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "bank_name": bankName,
+    "account_number": accountNumber,
+    "account_type": accountType,
+    "id": id,
+    "is_default": isDefault,
+  };
 }
 
 class Address {
