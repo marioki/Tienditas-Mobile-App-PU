@@ -12,7 +12,7 @@ class ProductProvider {
 
   Future<Product> getStoreProducts(
       String storeTagName, BuildContext context) async {
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
 
     final url = '$baseApiUrl/api/v1/product?store_tag_name=$storeTagName';
 

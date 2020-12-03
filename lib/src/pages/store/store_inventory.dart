@@ -25,6 +25,16 @@ class _StoreInventoryState extends State<StoreInventory> {
   bool isExtended = true;
   ScrollController con;
 
+  Future<Product> inventoryProducts;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      inventoryProducts = fetchInventoryProducts(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +54,7 @@ class _StoreInventoryState extends State<StoreInventory> {
                 MaterialPageRoute(
                   builder: (context) =>
                       CreateStoreProduct(storeTagName: widget.storeTagName),
-                ));
+                )).then((value) => reloadInventoryData());
           },
           label: Row(
             children: <Widget>[
@@ -75,14 +85,13 @@ class _StoreInventoryState extends State<StoreInventory> {
                   MaterialPageRoute(
                     builder: (context) =>
                         CreateStoreProduct(storeTagName: widget.storeTagName),
-                  ));
+                  )).then((value) => reloadInventoryData());
             },
           )
         ],
       ),
       body: FutureBuilder(
-        future:
-            ProductProvider().getStoreProducts(widget.storeTagName, context),
+        future: inventoryProducts,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             Product product = snapshot.data;
@@ -133,11 +142,8 @@ class _StoreInventoryState extends State<StoreInventory> {
               );
             }
           } else {
-            return Container(
-              height: 400,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            return Center(
+              child: CircularProgressIndicator(),
             );
           }
         },
@@ -151,6 +157,16 @@ class _StoreInventoryState extends State<StoreInventory> {
         isExtended = !isExtended;
       },
     );
+  }
+
+  Future<Product> fetchInventoryProducts(BuildContext context) {
+    return ProductProvider().getStoreProducts(widget.storeTagName, context);
+  }
+
+  reloadInventoryData() {
+    setState(() {
+      inventoryProducts = fetchInventoryProducts(context);
+    });
   }
 }
 
