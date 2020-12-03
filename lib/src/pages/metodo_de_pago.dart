@@ -217,7 +217,8 @@ class _MetodoDePagoState extends State<MetodoDePago> {
   }
 
   setCurrentBatchPhoneNumber() {
-    Provider.of<UserCartState>(context).setCurrentBatchPhoneNumber();
+    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
+    Provider.of<UserCartState>(context).setCurrentBatchPhoneNumber(firebaseUser);
   }
 
   Future<List<CreditCard>> fetchCreditCards() {
