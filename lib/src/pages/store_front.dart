@@ -21,7 +21,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   //Pull to refres package
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -34,9 +34,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
+    final screenSize = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () {
         return _onBackPressed(context);
@@ -128,8 +126,10 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       onLoading: _onLoading,
       child: FutureBuilder(
         future: tienditaResponse,
-        builder: (BuildContext context,
-            snapshot,) {
+        builder: (
+          BuildContext context,
+          snapshot,
+        ) {
           if (snapshot.hasData) {
             Tiendita miTienda = snapshot.data;
             return ListView.builder(
@@ -150,7 +150,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                         description: miTienda.body.stores[index].description,
                         followers: null,
                         originalStoreName:
-                        miTienda.body.stores[index].originalStoreName,
+                            miTienda.body.stores[index].originalStoreName,
                         provinceName: miTienda.body.stores[index].provinceName,
                       ),
                       SizedBox(
@@ -168,7 +168,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   description: miTienda.body.stores[index].description,
                   followers: null,
                   originalStoreName:
-                  miTienda.body.stores[index].originalStoreName,
+                      miTienda.body.stores[index].originalStoreName,
                   provinceName: miTienda.body.stores[index].provinceName,
                 );
               },
@@ -255,7 +255,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                   disabledBorder: InputBorder.none,
                   prefixIcon: Icon(Icons.search),
                   contentPadding:
-                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                   hintText: 'Buscar Tienda',
                   hintStyle: TextStyle(
                     fontFamily: 'Nunito',
