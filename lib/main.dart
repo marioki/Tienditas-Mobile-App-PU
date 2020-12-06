@@ -18,8 +18,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   if (kReleaseMode) {
-    //Debug
-    baseApiUrl = productionUrl;
+    //Debug is default
+   baseApiUrl = productionUrl;
   }
 
   runApp(MyApp());

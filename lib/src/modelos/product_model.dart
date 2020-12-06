@@ -46,25 +46,24 @@ class Body {
 }
 
 class ProductElement {
-  ProductElement({
-    this.storeTagName,
-    this.quantity,
-    this.itemName,
-    this.description,
-    this.purchaseType,
-    this.outstanding,
-    this.registeredDate,
-    this.itemId,
-    this.finalPrice,
-    this.basePrice,
-    this.itemStatus,
-    this.imageUrl,
-    this.hexColor,
-    this.parentStoreTag,
-    this.deliveryTime,
-    this.discountPercentage,
-    this.discountPrice
-  });
+  ProductElement(
+      {this.storeTagName,
+      this.quantity,
+      this.itemName,
+      this.description,
+      this.purchaseType,
+      this.outstanding,
+      this.registeredDate,
+      this.itemId,
+      this.finalPrice,
+      this.basePrice,
+      this.itemStatus,
+      this.imagesUrlList,
+      this.hexColor,
+      this.parentStoreTag,
+      this.deliveryTime,
+      this.discountPercentage,
+      this.discountPrice});
 
   String storeTagName;
   String quantity;
@@ -76,8 +75,8 @@ class ProductElement {
   String itemId;
   String finalPrice;
   String basePrice;
-  ItemSatus itemStatus;
-  String imageUrl;
+  String itemStatus;
+  List<String> imagesUrlList;
   String discountPercentage;
   String discountPrice;
 
@@ -99,12 +98,11 @@ class ProductElement {
         itemId: json["item_id"],
         finalPrice: json["final_price"],
         basePrice: json["base_price"],
-        itemStatus: itemSatusValues.map[json["item_status"]],
-        imageUrl: json["image_url"],
+        itemStatus: json["item_status"],
+        imagesUrlList: List<String>.from(json["images_url"].map((x) => x)),
         deliveryTime: json["delivery_time"],
         discountPercentage: json["discount_percentage"],
         discountPrice: json["discount_price"],
-
       );
 
   Map<String, dynamic> toJson() => {
@@ -118,17 +116,13 @@ class ProductElement {
         "item_id": itemId,
         "final_price": finalPrice,
         "base_price": basePrice,
-        "item_status": itemSatusValues.reverse[itemStatus],
-        "image_url": imageUrl,
+        "item_status": itemStatus,
+        "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,
         "discount_percentage": discountPercentage
       };
 }
-
-enum ItemSatus { VIGENTE }
-
-final itemSatusValues = EnumValues({"VIGENTE": ItemSatus.VIGENTE});
 
 enum Outstanding { FALSE }
 

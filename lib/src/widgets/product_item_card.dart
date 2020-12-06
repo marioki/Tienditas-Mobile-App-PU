@@ -16,8 +16,8 @@ class ProductItemCard extends StatelessWidget {
   final String registeredDate;
   final String itemId;
   final String finalPrice;
-  final ItemSatus itemSatus;
-  final String imageUrl;
+  final String itemSatus;
+  final List<String> imagesUrlList;
   final String hexColor;
   final String parentStoreTag;
   final String deliveryTime;
@@ -26,25 +26,25 @@ class ProductItemCard extends StatelessWidget {
   final String discountPercentage;
 
 //todo Esto puede ser reemplazado por un atributo de tipo productElement
-  const ProductItemCard({
-    Key key,
-    @required this.quantity,
-    @required this.itemName,
-    @required this.purchaseType,
-    @required this.outstanding,
-    @required this.registeredDate,
-    @required this.itemId,
-    @required this.finalPrice,
-    @required this.itemSatus,
-    @required this.imageUrl,
-    @required this.hexColor,
-    @required this.parentStoreTag,
-    this.image,
-    @required this.deliveryTime,
-    this.description,
-    this.discountPrice,
-    this.discountPercentage
-  }) : super(key: key);
+  const ProductItemCard(
+      {Key key,
+      @required this.quantity,
+      @required this.itemName,
+      @required this.purchaseType,
+      @required this.outstanding,
+      @required this.registeredDate,
+      @required this.itemId,
+      @required this.finalPrice,
+      @required this.itemSatus,
+      @required this.imagesUrlList,
+      @required this.hexColor,
+      @required this.parentStoreTag,
+      this.image,
+      @required this.deliveryTime,
+      this.description,
+      this.discountPrice,
+      this.discountPercentage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,9 @@ class ProductItemCard extends StatelessWidget {
                   '\$${(double.parse(finalPrice).toStringAsFixed(2))}',
                   style: storeItemPriceStyle,
                 ),
-                Text((deliveryTime != null) ? deliveryTime : ''),
+                Text((deliveryTime != null)
+                    ? 'entrega' + ' ' + deliveryTime
+                    : ''),
               ],
             ),
           ),
@@ -117,19 +119,18 @@ class ProductItemCard extends StatelessWidget {
               onPressed: () {
                 Provider.of<UserCartState>(context).addProductoToCart(
                   ProductElement(
-                    itemId: itemId,
-                    itemName: itemName,
-                    finalPrice: finalPrice,
-                    imageUrl: imageUrl,
-                    purchaseType: purchaseType,
-                    registeredDate: registeredDate,
-                    quantity: quantity,
-                    hexColor: hexColor,
-                    parentStoreTag: parentStoreTag,
-                    discountPrice: discountPrice,
-                    discountPercentage: discountPercentage,
-                    description: description
-                  ),
+                      itemId: itemId,
+                      itemName: itemName,
+                      finalPrice: finalPrice,
+                      imagesUrlList: imagesUrlList,
+                      purchaseType: purchaseType,
+                      registeredDate: registeredDate,
+                      quantity: quantity,
+                      hexColor: hexColor,
+                      parentStoreTag: parentStoreTag,
+                      discountPrice: discountPrice,
+                      discountPercentage: discountPercentage,
+                      description: description),
                 );
                 final snackBar = SnackBar(
                   duration: Duration(milliseconds: 300),
@@ -164,7 +165,7 @@ class ProductItemCard extends StatelessWidget {
           itemId: this.itemId,
           finalPrice: this.finalPrice,
           itemSatus: this.itemSatus,
-          imageUrl: this.imageUrl,
+          imagesUrlList: this.imagesUrlList,
           hexColor: this.hexColor,
           parentStoreTag: this.parentStoreTag,
           deliveryTime: this.deliveryTime,
