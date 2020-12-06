@@ -42,11 +42,15 @@ dependencies:
   badges: ^1.1.4
   package_info: ^0.4.3
   numberpicker: ^1.2.1
+  json_annotation:  #to create code for JSON serialization and deserialization.
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_model:  #used to generate json to model
+  build_runner: ^1.0.0 #concrete way of generating files using Dart code
+  json_serializable: ^2.0.0  #helps provides builder for handling JSON
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
