@@ -248,7 +248,7 @@ class LoginState with ChangeNotifier {
   }
 
   void idTokenRefresher(FirebaseUser user) async {
-    Timer.periodic(Duration(minutes: 55), (timer) async {
+    Timer.periodic(Duration(minutes: 40), (timer) async {
       print(DateTime.now());
       print('+++++++Refreshing user id token++++++++');
       IdTokenResult tokenResult = await user.getIdToken();
