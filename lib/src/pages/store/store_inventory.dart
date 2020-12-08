@@ -113,7 +113,7 @@ class _StoreInventoryState extends State<StoreInventory> {
                     return ProductItemCard(
                       itemName: finalListProductos[index].itemName,
                       price: finalListProductos[index].finalPrice,
-                      imageUrl: finalListProductos[index].imagesUrlList.first,
+                      imageUrl: finalListProductos[index].imagesUrlList.first != null?finalListProductos[index].imagesUrlList.first:'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
                       quantity: finalListProductos[index].quantity,
                       description: finalListProductos[index].description,
                       onPressed: () {

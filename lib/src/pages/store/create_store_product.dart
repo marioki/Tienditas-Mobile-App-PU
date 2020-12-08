@@ -74,7 +74,9 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   String itemName;
   String description;
   String quantity;
-  Future<Io.File> imageFile;
+
+  //Future<Io.File> imageFile;
+  Future<dynamic> imageFile;
   Io.File loadedImg;
   var itemImage64;
 
@@ -390,15 +392,23 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   }
 
   pickImageFromGallery(ImageSource source) async {
-    imageFile = ImagePicker.pickImage(source: source);
+    imageFile = ImagePicker.pickImage(
+      source: source,
+      imageQuality: 30,
+    );
     loadImageFromGallery(await imageFile);
+
     setState(() {});
   }
 
   _pickImageFromGallery(ImageSource source) async {
-    imageFile = ImagePicker.pickImage(source: source);
+    imageFile =
+        ImagePicker.pickImage(source: source, maxHeight: 720, maxWidth: 1280);
     imageFileList.add(await imageFile);
     print(imageFileList.length);
+    var _image = await imageFile;
+    print('++++++++++++++++++++++++++++++++++++++');
+    print(_image.lengthSync());
     setState(() {});
   }
 
@@ -408,10 +418,11 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
     });
   }
 
-  void generateBase64ImageList() async {
+  generateBase64ImageList() {
     if (imageFileList.isNotEmpty) {
       imageFileList.forEach((imageFile) {
-        imageBase64List.add(encodeImage(imageFile));
+        String newImageString = encodeImage(imageFile);
+        imageBase64List.add(newImageString);
       });
     }
     //setState(() {});
@@ -419,8 +430,8 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
 
   void loadImageFromGallery(Io.File imageFile) async {
     if (imageFile != null) {
-      loadedImg = imageFile;
-      encodeImage(imageFile);
+      //loadedImg = imageFile;
+      encodeImage(loadedImg);
     }
     setState(() {});
   }
