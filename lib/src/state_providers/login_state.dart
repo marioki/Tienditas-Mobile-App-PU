@@ -58,6 +58,7 @@ class LoginState with ChangeNotifier {
       print('Objeto Token Anonimo Completo: '
           '${userIdToken.toString()}');
       currentUserIdToken = userIdToken.token;
+      idTokenRefresher(user);
       pr.hide();
       _loggedIn = true;
       _isAnon = true;
@@ -129,6 +130,8 @@ class LoginState with ChangeNotifier {
 
       IdTokenResult tokenResult = await user.getIdToken();
       currentUserIdToken = tokenResult.token;
+
+      idTokenRefresher(user);
       print('signInWithGoogle succeeded; Sign In As: ${user.displayName}');
       _firebaseUser = user;
       _userTienditas = await UsuarioTienditasProvider()
@@ -186,6 +189,7 @@ class LoginState with ChangeNotifier {
         final FirebaseUser user = authResult.user;
         final userIdToken = await user.getIdToken();
         currentUserIdToken = userIdToken.token;
+        idTokenRefresher(user);
         print('signInWithFacebook succeeded; Sign In As: ${user.displayName}');
         _firebaseUser = user;
         _userTienditas = await UsuarioTienditasProvider()
@@ -243,20 +247,12 @@ class LoginState with ChangeNotifier {
     print("User Sign Out");
   }
 
-//======Old Code============
-  Future<FirebaseUser> _handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential)).user;
-    print("signed in " + user.displayName);
-    return user;
+  void idTokenRefresher(FirebaseUser user) async {
+    Timer.periodic(Duration(minutes: 55), (timer) async {
+      print(DateTime.now());
+      print('+++++++Refreshing user id token++++++++');
+      IdTokenResult tokenResult = await user.getIdToken();
+      currentUserIdToken = tokenResult.token;
+    });
   }
 }
