@@ -12,7 +12,7 @@ class InfoProvider{
   Future<List<Question>> getAllQuestions(BuildContext context) async {
     List<Question> listQuestions = [];
 
-    String url = 'http://localhost:8080/info';
+    String url = '$baseApiUrl/api/v1/catalog';
    // final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: "xxx"});
     if(200 == response.statusCode) {
