@@ -41,7 +41,7 @@ class _InfoPageState extends State<InfoPage> {
             ClipPath(
               clipper: MyClipper(),
               child: Container(
-                height: 340,
+                height: 300,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -56,7 +56,7 @@ class _InfoPageState extends State<InfoPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 50),
+                    SizedBox(height: 30),
                     Expanded(child: Stack(
                       children: <Widget>[
                         Image(
@@ -80,6 +80,7 @@ class _InfoPageState extends State<InfoPage> {
               ),
             ),
             Container(
+              height: 500,
               child: FutureBuilder(
                   future: infoResponse,
                   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -87,11 +88,12 @@ class _InfoPageState extends State<InfoPage> {
                       listResponse = snapshot.data;
 
                       return ListView.builder(
-                        shrinkWrap: true,
+                        shrinkWrap: false,
+                        itemCount: listResponse.length,
                         itemBuilder: (context, index) {
                           return Card(
                               child: ExpansionCard(
-                                borderRadius: 20,
+                                borderRadius: 50,
 
                                 title: Container(
                                   child: Column(
@@ -115,7 +117,6 @@ class _InfoPageState extends State<InfoPage> {
                               )
                           );
                         },
-                        itemCount: listResponse.length,
                       );
                     }else {
                       return Container(
