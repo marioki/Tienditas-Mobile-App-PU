@@ -77,7 +77,7 @@ class LoginState with ChangeNotifier {
     notifyListeners();
   }
 
-  //=============Anonimo
+  //=============Anonimo============================================
   Future<FirebaseUser> _handleAnonSignIn() async {
     final AuthResult authResult = await _auth.signInAnonymously();
     final FirebaseUser user = authResult.user;
@@ -89,7 +89,7 @@ class LoginState with ChangeNotifier {
     return idTokenResult;
   }
 
-  //==============Con=Google=Account==============
+  //==============Con=Google=Account==================================
   //Sign in
   signInWithGoogle(BuildContext context) async {
     ProgressDialog pr = ProgressDialog(context, isDismissible: false);
