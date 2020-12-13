@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/providers/info_provider.dart';
 import 'package:app_tiendita/src/modelos/questions.dart';
+import 'package:expansion_card/expansion_card.dart';
 
 
 import 'edit_user_address.dart';
@@ -20,14 +21,14 @@ class _InfoPageState extends State<InfoPage> {
   Future<List<Question>> infoResponse;
   List<Question> listResponse;
   void initState() {
-  _getThingsOnStartup().then((value) {
-  Provider.of<LoginState>(context).reloadUserInfo();
-  });
-  super.initState();
-  setState(() {
-    infoResponse = fetchQuestions(context);
+    _getThingsOnStartup().then((value) {
+      Provider.of<LoginState>(context).reloadUserInfo();
+    });
+    super.initState();
+    setState(() {
+      infoResponse = fetchQuestions(context);
 
-  });
+    });
   }
 
   @override
@@ -36,90 +37,98 @@ class _InfoPageState extends State<InfoPage> {
 
     return Scaffold(
       body: Column(
-        children: <Widget>[
-          ClipPath(
-            clipper: MyClipper(),
-            child: Container(
-              height: 340,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF191660),
-                    Color(0xFF11249F),
-                  ]
-                )
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                 SizedBox(height: 50),
-                  Expanded(child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage('assets/images/help5.png'),
-                        width: 230,
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.topCenter,
-                      ),
-                      Positioned(
-                          top:30,
-                          left: 150,
-                          child: Text (
-                        "Todo lo que\nnecesitas saber.",
-                        style: appBarStyle,
-                      )),
-                      Container(),
-                    ],
-                  ))
-                ],
+          children: <Widget>[
+            ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                height: 340,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF191660),
+                          Color(0xFF11249F),
+                        ]
+                    )
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 50),
+                    Expanded(child: Stack(
+                      children: <Widget>[
+                        Image(
+                          image: AssetImage('assets/images/help5.png'),
+                          width: 230,
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.topCenter,
+                        ),
+                        Positioned(
+                            top:30,
+                            left: 150,
+                            child: Text (
+                              "Todo lo que\nnecesitas saber.",
+                              style: appBarStyle,
+                            )),
+                        Container(),
+                      ],
+                    ))
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            child: FutureBuilder(
-              future: infoResponse,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                listResponse = snapshot.data;
+            Container(
+              child: FutureBuilder(
+                  future: infoResponse,
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      listResponse = snapshot.data;
 
-                return ListView.builder(
-                    shrinkWrap: true,
-                    //itemCount: listResponse.length + 1,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 12.0, bottom: 32.0, left: 16.0, right: 16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              listResponse[index].question,
-                              style: storeSubtitles,),
-                            Text(
-                              listResponse[index].answer,
-                              style: storeItemSubTitleStyle,),
-                          ],
-                        ),
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Card(
+                              child: ExpansionCard(
+                                borderRadius: 20,
+
+                                title: Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                          listResponse[index].question,
+                                          style: cartTotalPriceStyle
+
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 7),
+                                    child: Text( listResponse[index].answer, style: faqsTextContent ,
+                                    ),
+                                  )
+                                ],
+                              )
+                          );
+                        },
+                        itemCount: listResponse.length,
+                      );
+                    }else {
+                      return Container(
+                        height: 400,
+                        child: Center(
+                          child: Text('Nos encontramos haciendo mantenimiento,\npronto volvera a estar disponible esta opcion'),
                         ),
                       );
-                    },
-                    itemCount: listResponse.length,
-                    );
-              }else {
-                return Container(
-                  height: 400,
-                  child: Center(
-                    child: Text('Nos encontramos haciendo mantenimiento,\npronto volvera a estar disponible esta opcion'),
-                  ),
-                );
-              }
-              }
-            ),
-          )
-        ]
+                    }
+                  }
+              ),
+            )
+          ]
       ),
     );
 
