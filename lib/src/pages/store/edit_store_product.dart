@@ -97,21 +97,13 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
 
   int sumImage = 0;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   int _index = 0;
-  //   widget.productElement.imagesUrlList.forEach((element) {
-  //     _index += 1;
-  //     int _fixedIndex = _index - 1;
-  //     imageWidgetList.add(ProductImgEdt(
-  //       productImage: NetworkImage(element),
-  //       index: (_index - 1),
-  //       onDelete: () => deleteNetworkImage(element, _fixedIndex),
-  //     ));
-  //   });
-  // }
-
+  @override
+  void initState() {
+    super.initState();
+    List<String> spliteDeliveryTime = widget.productElement.deliveryTime.split(" ");
+    deliveryTimeNumber = int.parse(spliteDeliveryTime.first);
+    deliveryRangeValue = spliteDeliveryTime.last;
+  }
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context,
@@ -541,7 +533,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   }
 
   _pickImageFromGallery(ImageSource source) async {
-    imageFile = ImagePicker.pickImage(source: source);
+    imageFile = ImagePicker.pickImage(source: source, maxWidth: 1280, maxHeight: 720);
     if (imageFile != null) {
       imageFileList.add(await imageFile);
       print(imageFileList.length);

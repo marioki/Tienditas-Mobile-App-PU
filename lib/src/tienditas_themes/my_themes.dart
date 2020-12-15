@@ -128,6 +128,13 @@ TextStyle storeItemSubTitleStyle = new TextStyle(
   fontSize: 12,
 );
 
+TextStyle faqsTextContent = new TextStyle(
+  fontFamily: 'Nunito',
+  color: grizSubtitulo,
+  fontWeight: FontWeight.normal,
+  fontSize: 16,
+);
+
 TextStyle storeItemPriceStyle = new TextStyle(
   fontFamily: 'Nunito',
   color: azulOscuro,
