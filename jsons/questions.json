@@ -1,0 +1,14 @@
+{
+  "statusCode":200,
+  "body":{
+    "questions":[
+      {
+        "question":"¿Cuál es la diferencia entre precio base y precio final al crear mi producto?",
+        "answer":"math"
+      },
+      {
+        "question":"¿A dónde me llega mi dinero?",
+        "answer":"reading"
+      }   ]
+  }
+}

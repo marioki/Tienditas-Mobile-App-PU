@@ -533,7 +533,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   }
 
   _pickImageFromGallery(ImageSource source) async {
-    imageFile = ImagePicker.pickImage(source: source);
+    imageFile = ImagePicker.pickImage(source: source, maxWidth: 1280, maxHeight: 720);
     if (imageFile != null) {
       imageFileList.add(await imageFile);
       print(imageFileList.length);

@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 void main() {
   if (kReleaseMode) {
     //Debug is default
-   baseApiUrl = productionUrl;
+    baseApiUrl = productionUrl;
   }
 
   runApp(MyApp());
@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
             'search_for_store': (BuildContext context) => SearchForStorePage(),
             'delivery_options': (BuildContext context) => DeliveryOptionsPage(),
             'create_credit_card': (BuildContext context) => CrearNuevaTarjeta(),
-            'product_details_page': (BuildContext context) => ProductDetailsPage(),
+            'product_details_page': (BuildContext context) =>
+                ProductDetailsPage(),
           },
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

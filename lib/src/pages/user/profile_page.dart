@@ -12,6 +12,8 @@ import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'info_page.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -176,44 +178,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: "Ayuda",
                     imageName: "ayuda",
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return StatefulBuilder(builder: (context, setState) {
-                            return AlertDialog(
-                              elevation: 10,
-                              title: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "Ayuda",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                        fontFamily: "Nunito"),
-                                  ),
-                                ],
-                              ),
-                              content: Text(
-                                  "Para soporte escríbanos a ayuda@tienditas.app",
-                                  style: TextStyle(
-                                      color: Color(0xFF191660),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: "Nunito")),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Cerrar'),
-                                  color: Color(0xFF191660),
-                                  onPressed: () async {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                        },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InfoPage(),
+                        ),
                       );
                     },
                   ),
