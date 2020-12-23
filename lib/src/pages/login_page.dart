@@ -1,12 +1,13 @@
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:apple_sign_in/apple_sign_in_button.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:flutter/material.dart' hide ButtonStyle;
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-
 import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -187,12 +188,10 @@ class _LoginPageState extends State<LoginPage> {
                       style: kLabelStyle,
                     ),
                     _buildFacebookBtn(context),
-                    Text(
-                      '- O -',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    AppleSignInButton(
+                      style: ButtonStyle.black,
+                      type: ButtonType.signIn,
+                      onPressed: () => print("signing with apple"),
                     ),
                     _buildGoogleBtn(),
                     _buildAnonymous(),

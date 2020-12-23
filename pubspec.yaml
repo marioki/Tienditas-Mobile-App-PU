@@ -33,6 +33,8 @@ dependencies:
   firebase_auth: ^0.16.1
   google_sign_in: ^4.5.1
   fluttertoast: ^7.0.1
+  apple_sign_in: ^0.1.0
+  firebase_core: ^0.4.4
   flutter_webview_plugin: ^0.3.10+1
   progress_dialog: ^1.2.4
   credit_card: 0.1.6
