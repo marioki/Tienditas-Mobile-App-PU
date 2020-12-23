@@ -67,11 +67,9 @@ class ProductItemCard extends StatelessWidget {
                 width: double.infinity,
                 child: Hero(
                   tag: itemId,
-                  child: FadeInImage(
-                    fit: BoxFit.cover,
+                  child: Image(
                     image: NetworkImage(image),
-                    placeholder:
-                        AssetImage('assets/images/tienditas_placeholder.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

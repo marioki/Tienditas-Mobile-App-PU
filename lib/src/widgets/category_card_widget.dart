@@ -35,14 +35,13 @@ class CategoryCard extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Container(
               child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: FadeInImage(
-                    image: NetworkImage(
-                      image,
-                    ),
-                    placeholder:
-                        AssetImage('assets/images/tienditas_placeholder.png'),
-                  )),
+                padding: EdgeInsets.all(10),
+                child: Image(
+                  image: NetworkImage(
+                    image,
+                  ),
+                ),
+              ),
               width: 75,
               height: 75,
               color: getColorFromHex(color),
