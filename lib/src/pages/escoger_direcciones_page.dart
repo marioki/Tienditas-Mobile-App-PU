@@ -88,7 +88,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                       .getTienditaUser()
                       .address
                       .length) {
-                User user = Provider.of<LoginState>(context).getTienditaUser();
+                UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
                 return _getDireccionCard(
                     context,
                     index,
@@ -97,7 +97,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
               } else {
                 return FlatButton(
                   onPressed: () {
-                    User user =
+                    UserTienditas user =
                         Provider.of<LoginState>(context).getTienditaUser();
                     Navigator.push(
                       context,

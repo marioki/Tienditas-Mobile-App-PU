@@ -255,7 +255,7 @@ class UserCartState with ChangeNotifier {
     currentBatch.userEmail = firebaseUser.email;
   }
 
-  setCurrentBatchPhoneNumber() {
-    currentBatch.phoneNumber = '67868434';
+  setCurrentBatchPhoneNumber(FirebaseUser firebaseUser) {
+    currentBatch.phoneNumber = firebaseUser.phoneNumber;
   }
 }
