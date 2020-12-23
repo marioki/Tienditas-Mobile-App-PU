@@ -8,14 +8,14 @@ import 'package:http/http.dart' as http;
 import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class UsuarioTienditasProvider {
-  Future<User> getUserInfo(String userIdToken, String userEmail) async {
+  Future<UserTienditas> getUserInfo(String userIdToken, String userEmail) async {
     String url = '$baseApiUrl/api/v1/user?email=$userEmail';
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
       ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
       if (responseTienditasApi.statusCode == 200) {
         final userTienditaResult = userTienditaResultFromJson(response.body);
-        User user = userTienditaResult.body.user;
+        UserTienditas user = userTienditaResult.body.user;
         return user;
       } else {
         print('El usuario no existe en Tienditas DB');
@@ -45,7 +45,7 @@ class UsuarioTienditasProvider {
   }
 
   Future<http.Response> updateUser(
-      String userIdToken, User user) async {
+      String userIdToken, UserTienditas user) async {
     String _url = '$baseApiUrl/api/v1/user';
     var bodyData = {
       "user": {

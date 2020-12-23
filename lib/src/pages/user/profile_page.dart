@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    User userInfo = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

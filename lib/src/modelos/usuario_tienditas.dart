@@ -36,10 +36,10 @@ class Body {
     this.user,
   });
 
-  User user;
+  UserTienditas user;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-        user: User.fromJson(json["user"]),
+        user: UserTienditas.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,8 +47,8 @@ class Body {
       };
 }
 
-class User {
-  User({
+class UserTienditas {
+  UserTienditas({
     this.creditCard,
     this.registeredDate,
     this.bankAccounts,
@@ -71,7 +71,7 @@ class User {
   String userEmail;
   String phoneNumber;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserTienditas.fromJson(Map<String, dynamic> json) => UserTienditas(
         registeredDate: json["registered_date"],
         name: json["name"],
         stores: List<dynamic>.from(json["stores"].map((x) => x)),

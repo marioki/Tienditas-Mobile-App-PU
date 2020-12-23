@@ -13,9 +13,9 @@ class LoginState with ChangeNotifier {
   bool _isAnon;
   bool _loading = false;
   String currentUserIdToken;
-  User _userTienditas;
+  UserTienditas _userTienditas;
 
-  FirebaseUser _firebaseUser;
+  User _firebaseUser;
 
   //anonimo
   var anonResult;
@@ -23,9 +23,9 @@ class LoginState with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  FirebaseUser getFireBaseUser() => _firebaseUser;
+  User getFireBaseUser() => _firebaseUser;
 
-  User getTienditaUser() => _userTienditas;
+  UserTienditas getTienditaUser() => _userTienditas;
 
   bool isLoggedIn() => _loggedIn;
 
@@ -78,9 +78,9 @@ class LoginState with ChangeNotifier {
   }
 
   //=============Anonimo============================================
-  Future<FirebaseUser> _handleAnonSignIn() async {
-    final AuthResult authResult = await _auth.signInAnonymously();
-    final FirebaseUser user = authResult.user;
+  Future<User> _handleAnonSignIn() async {
+    final UserCredential authResult = await _auth.signInAnonymously();
+    final User user = authResult.user;
     return user;
   }
 
@@ -113,22 +113,21 @@ class LoginState with ChangeNotifier {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final AuthResult authResult =
+      final UserCredential authResult =
           await _auth.signInWithCredential(credential);
-      final FirebaseUser user = authResult.user;
+      final User user = authResult.user;
 
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
 
-      final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
+      assert(user.uid == user.uid);
 
-      IdTokenResult tokenResult = await user.getIdToken();
+      IdTokenResult tokenResult = await user.getIdTokenResult();
       currentUserIdToken = tokenResult.token;
 
       idTokenRefresher(user);
@@ -182,13 +181,12 @@ class LoginState with ChangeNotifier {
     notifyListeners();
     if (result != null) {
       try {
-        final facebookAuthCred =
-            FacebookAuthProvider.getCredential(accessToken: result);
-        final AuthResult authResult =
+        final facebookAuthCred = FacebookAuthProvider.credential(result);
+        final UserCredential authResult =
             await _auth.signInWithCredential(facebookAuthCred);
-        final FirebaseUser user = authResult.user;
+        final User user = authResult.user;
         final userIdToken = await user.getIdToken();
-        currentUserIdToken = userIdToken.token;
+        currentUserIdToken = userIdToken;
         idTokenRefresher(user);
         print('signInWithFacebook succeeded; Sign In As: ${user.displayName}');
         _firebaseUser = user;
@@ -247,11 +245,11 @@ class LoginState with ChangeNotifier {
     print("User Sign Out");
   }
 
-  void idTokenRefresher(FirebaseUser user) async {
+  void idTokenRefresher(User user) async {
     Timer.periodic(Duration(minutes: 40), (timer) async {
       print(DateTime.now());
       print('+++++++Refreshing user id token++++++++');
-      IdTokenResult tokenResult = await user.getIdToken();
+      IdTokenResult tokenResult = await user.getIdTokenResult();
       currentUserIdToken = tokenResult.token;
     });
   }

@@ -23,7 +23,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
 
     return Scaffold(
       appBar: AppBar(
