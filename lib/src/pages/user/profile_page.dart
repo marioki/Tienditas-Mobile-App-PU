@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     phoneNumber: userInfo.phoneNumber,
                     image: Provider.of<LoginState>(context)
                         .getFireBaseUser()
-                        .photoUrl,
+                        .photoURL,
                     onPressed: () {
                       Navigator.push(
                         context,

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'apple_sign_in_available.dart';
 import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -144,8 +145,22 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      final authService = Provider.of<LoginState>(context, listen: false);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
+      print('uid: ${user.uid}');
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -188,11 +203,12 @@ class _LoginPageState extends State<LoginPage> {
                       style: kLabelStyle,
                     ),
                     _buildFacebookBtn(context),
-                    AppleSignInButton(
-                      style: ButtonStyle.black,
-                      type: ButtonType.signIn,
-                      onPressed: () => print("signing with apple"),
-                    ),
+                    if (appleSignInAvailable.isAvailable)
+                      AppleSignInButton(
+                        style: ButtonStyle.black,
+                        type: ButtonType.signIn,
+                        onPressed: () => _signInWithApple(context),
+                      ),
                     _buildGoogleBtn(),
                     _buildAnonymous(),
                     FutureBuilder(
