@@ -167,7 +167,7 @@ class LoginState with ChangeNotifier {
     }
   }
 
-  Future<User> signInWithApple({List<Scope> scopes = const []}) async {
+  Future<UserTienditas> signInWithApple({List<Scope> scopes = const []}) async {
     //ProgressDialog pr = ProgressDialog(context, isDismissible: false);
 
     // pr.style(
@@ -181,8 +181,9 @@ class LoginState with ChangeNotifier {
     // );
     _loading = true;
     // 1. perform the sign-in request
-    final result = await AppleSignIn.performRequests(
-        [AppleIdRequest(requestedScopes: scopes)]);
+    final AuthorizationResult result = await AppleSignIn.performRequests([
+      AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+    ]);
     // 2. check the result
     switch (result.status) {
       case AuthorizationStatus.authorized:
@@ -193,25 +194,32 @@ class LoginState with ChangeNotifier {
           accessToken:
               String.fromCharCodes(appleIdCredential.authorizationCode),
         );
+        print(result.credential.user);
         final authResult = await _firebaseAuth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
         IdTokenResult tokenResult = await firebaseUser.getIdTokenResult();
         currentUserIdToken = tokenResult.token;
-
         idTokenRefresher(firebaseUser);
         if (scopes.contains(Scope.fullName)) {
           final displayName =
               '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
+          print(displayName);
           await firebaseUser.updateProfile(displayName: displayName);
         }
+        print('================= Actualizando PhotoURL ================');
+        await firebaseUser.updateProfile(
+            photoURL:
+                "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg");
         // pr.show();
+        print(firebaseUser);
         _firebaseUser = firebaseUser;
         _userTienditas = await UsuarioTienditasProvider()
             .getUserInfo(currentUserIdToken, firebaseUser.email);
 
         if (_userTienditas != null) {
           print('=================Detalles de Este Usuario ================');
-          print(_userTienditas.address);
+          print(_userTienditas.name);
+          print(_userTienditas.userEmail);
 
           _loggedIn = true;
           _isAnon = false;
@@ -235,7 +243,7 @@ class LoginState with ChangeNotifier {
             notifyListeners();
           }
         }
-        return firebaseUser;
+        return _userTienditas;
 
       case AuthorizationStatus.error:
         throw PlatformException(

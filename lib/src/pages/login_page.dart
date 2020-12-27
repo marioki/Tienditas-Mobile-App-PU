@@ -150,7 +150,8 @@ class _LoginPageState extends State<LoginPage> {
       final authService = Provider.of<LoginState>(context, listen: false);
       final user = await authService
           .signInWithApple(scopes: [Scope.email, Scope.fullName]);
-      print('uid: ${user.uid}');
+      print('User Tienditas Name: ${user.name}');
+      print('User Tienditas Email: ${user.userEmail}');
     } catch (e) {
       // TODO: Show alert here
       print(e);
@@ -205,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                     _buildFacebookBtn(context),
                     if (appleSignInAvailable.isAvailable)
                       AppleSignInButton(
-                        style: ButtonStyle.black,
+                        style: ButtonStyle.white,
                         type: ButtonType.signIn,
                         onPressed: () => _signInWithApple(context),
                       ),
