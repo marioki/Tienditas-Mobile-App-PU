@@ -1,12 +1,14 @@
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:apple_sign_in/apple_sign_in_button.dart';
+import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:flutter/material.dart' hide ButtonStyle;
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-
+import 'apple_sign_in_available.dart';
 import 'custom_web_view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -143,8 +145,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      final authService = Provider.of<LoginState>(context, listen: false);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
+      print('User Tienditas Name: ${user.name}');
+      print('User Tienditas Email: ${user.userEmail}');
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -187,13 +204,12 @@ class _LoginPageState extends State<LoginPage> {
                       style: kLabelStyle,
                     ),
                     _buildFacebookBtn(context),
-                    Text(
-                      '- O -',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
+                    if (appleSignInAvailable.isAvailable)
+                      AppleSignInButton(
+                        style: ButtonStyle.white,
+                        type: ButtonType.signIn,
+                        onPressed: () => _signInWithApple(context),
                       ),
-                    ),
                     _buildGoogleBtn(),
                     _buildAnonymous(),
                     FutureBuilder(

@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/constants/api_constants.dart';
+import 'package:app_tiendita/src/pages/apple_sign_in_available.dart';
 import 'package:app_tiendita/src/pages/cart_page.dart';
 import 'package:app_tiendita/src/pages/categories_page.dart';
 import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
@@ -25,7 +26,13 @@ void main() async {
     baseApiUrl = productionUrl;
   }
 
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final appleSignInAvailable = await AppleSignInAvailable.check();
+  runApp(Provider<AppleSignInAvailable>.value(
+    value: appleSignInAvailable,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
