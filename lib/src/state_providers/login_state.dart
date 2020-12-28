@@ -167,26 +167,30 @@ class LoginState with ChangeNotifier {
     }
   }
 
-  Future<UserTienditas> signInWithApple({List<Scope> scopes = const []}) async {
-    //ProgressDialog pr = ProgressDialog(context, isDismissible: false);
+  Future<UserTienditas> signInWithApple(BuildContext context) async {
+    ProgressDialog pr = ProgressDialog(context, isDismissible: false);
 
-    // pr.style(
-    //   message: 'Iniciando sesión...',
-    //   progressWidget: Container(
-    //     height: 400,
-    //     child: Center(
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //   ),
-    // );
+    pr.style(
+      message: 'Iniciando sesión...',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
     _loading = true;
     // 1. perform the sign-in request
     final AuthorizationResult result = await AppleSignIn.performRequests([
-      AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+      AppleIdRequest(requestedScopes: [
+        Scope.email,
+        Scope.fullName,
+      ])
     ]);
     // 2. check the result
     switch (result.status) {
       case AuthorizationStatus.authorized:
+        pr.show();
         final appleIdCredential = result.credential;
         final oAuthProvider = OAuthProvider('apple.com');
         final credential = oAuthProvider.credential(
@@ -200,17 +204,17 @@ class LoginState with ChangeNotifier {
         IdTokenResult tokenResult = await firebaseUser.getIdTokenResult();
         currentUserIdToken = tokenResult.token;
         idTokenRefresher(firebaseUser);
-        if (scopes.contains(Scope.fullName)) {
-          final displayName =
-              '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
-          print(displayName);
-          await firebaseUser.updateProfile(displayName: displayName);
-        }
+        // if (scopes.contains(Scope.fullName)) {
+        final displayName =
+            '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
+        print(displayName);
+        await firebaseUser.updateProfile(displayName: displayName);
+        // }
         print('================= Actualizando PhotoURL ================');
         await firebaseUser.updateProfile(
             photoURL:
                 "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg");
-        // pr.show();
+
         print(firebaseUser);
         _firebaseUser = firebaseUser;
         _userTienditas = await UsuarioTienditasProvider()
@@ -223,7 +227,7 @@ class LoginState with ChangeNotifier {
 
           _loggedIn = true;
           _isAnon = false;
-          // pr.hide();
+          pr.hide();
 
           notifyListeners();
         } else {
@@ -239,7 +243,7 @@ class LoginState with ChangeNotifier {
 
             _loggedIn = true;
             _isAnon = false;
-            // pr.hide();
+            pr.hide();
             notifyListeners();
           }
         }
