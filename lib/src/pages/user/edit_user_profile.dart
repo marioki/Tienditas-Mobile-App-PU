@@ -81,6 +81,32 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                   height: 10,
                                 ),
                                 Text(
+                                  "Nombre",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Nunito"),
+                                ),
+                                TextFormField(
+                                  initialValue: widget.user.name,
+                                  onChanged: (String value) {
+                                    widget.user.name = value;
+                                  },
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Ingresar Nombre';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      hintText: 'Jhon Doe'),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
                                   "Número de celular",
                                   style: TextStyle(
                                       color: Colors.black,

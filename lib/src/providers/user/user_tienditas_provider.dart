@@ -49,6 +49,7 @@ class UsuarioTienditasProvider {
     String _url = '$baseApiUrl/api/v1/user';
     var bodyData = {
       "user": {
+        "name": user.name,
         "email": user.userEmail,
         "phone_number": user.phoneNumber,
         "preferences": user.preferences

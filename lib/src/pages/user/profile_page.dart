@@ -90,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   MyProfileWidget(
-                    name: userInfo.name,
+                    name: '${userInfo.name}',
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
                     image: image,
