@@ -1,0 +1,155 @@
+{
+  "project_info": {
+    "project_number": "704134493695",
+    "firebase_url": "https://tienditas-c93ae.firebaseio.com",
+    "project_id": "tienditas-c93ae",
+    "storage_bucket": "tienditas-c93ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704134493695:android:25899c73c47875a708e3ca",
+        "android_client_info": {
+          "package_name": "com.mario.app_tiendita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704134493695-4cbqaregkk3rtid64lh4agv28csv814t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "eeb4e07c0d2bd8d6b90d0376601fbe2b01173d42"
+          }
+        },
+        {
+          "client_id": "704134493695-dim8g9fsvpemo35fqaa4si5bcqg6us8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "569614a651e90d3482c5ba0ef4c90dd8beca8b03"
+          }
+        },
+        {
+          "client_id": "704134493695-dkl1rfbdjmk9kkmdheaq1p6e7e4vm6tj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "98e88ae79699640fe87816a410879b5880d2de91"
+          }
+        },
+        {
+          "client_id": "704134493695-svjec6te7uhgdg0a85a4acvs1f5oqm55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mario.app_tiendita",
+            "certificate_hash": "2f3a0bd373c71729f637faf3e3c2f62062f0a3d7"
+          }
+        },
+        {
+          "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbyqx2zoO6vSDOnNxf6Uq_OoqiAdUzMps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.startupalliance.tienditas"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704134493695:android:827fb3958f93a86e08e3ca",
+        "android_client_info": {
+          "package_name": "com.startupalliance.tienditas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704134493695-7b1qs4ngopt30h9gtv30rb8fcg0aorc5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "7deca2c478475318717d3412ee0916291de0b968"
+          }
+        },
+        {
+          "client_id": "704134493695-ib38khb6eqghie0flr1qqaccqv0itvul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "eeb4e07c0d2bd8d6b90d0376601fbe2b01173d42"
+          }
+        },
+        {
+          "client_id": "704134493695-ipiqlvl7q4kav4l345laruujckfhhg3i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "98e88ae79699640fe87816a410879b5880d2de91"
+          }
+        },
+        {
+          "client_id": "704134493695-o4jih8bbn3m97mtcug7ed6ci6rqor7nl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "df8c95e43e162275aabcee307ba8083aa340371c"
+          }
+        },
+        {
+          "client_id": "704134493695-u53th4vdlnkrnlfhs3lvl2ebeqvbi70h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "569614a651e90d3482c5ba0ef4c90dd8beca8b03"
+          }
+        },
+        {
+          "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbyqx2zoO6vSDOnNxf6Uq_OoqiAdUzMps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704134493695-dcm9lvptbjfl78a85uphm3toghohbu9t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "704134493695-c0qt22s4uhb76ibeqmh33omj7brauq15.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.startupalliance.tienditas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

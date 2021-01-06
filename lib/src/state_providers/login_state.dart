@@ -56,9 +56,8 @@ class LoginState with ChangeNotifier {
 
     if (user != null) {
       var userIdToken = await _getUserIdToken(user);
-      print('Sign in with idToken halal: ${userIdToken.token}');
-      print('Objeto Token Anonimo Completo: '
-          '${userIdToken.toString()}');
+      print('Sign in with idToken: ${userIdToken.token}');
+      print('Objeto Token Anonimo Completo: ${userIdToken.toString()}');
       currentUserIdToken = userIdToken.token;
       idTokenRefresher(user);
       pr.hide();
