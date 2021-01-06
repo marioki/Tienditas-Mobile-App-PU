@@ -152,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
       print('User Tienditas Name: ${user.name}');
       print('User Tienditas Email: ${user.userEmail}');
     } catch (e) {
-      // TODO: Show alert here
       print(e);
     }
   }
@@ -231,7 +230,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-              )
+              ),
+
             ],
           ),
         ),
