@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditUserProfile extends StatefulWidget {
-  EditUserProfile({this.user});
+  EditUserProfile({@required this.user});
 
   UserTienditas user;
 
