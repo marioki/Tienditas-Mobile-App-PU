@@ -33,7 +33,7 @@ dependencies:
   firebase_auth: ^0.18.4+1
   google_sign_in: ^4.5.1
   fluttertoast: ^7.0.1
-  flutter_webview_plugin: ^0.3.10+1
+  flutter_webview_plugin: ^0.3.11
   progress_dialog: ^1.2.4
   credit_card: 0.1.6
   image_picker: ^0.6.7+8
@@ -46,8 +46,9 @@ dependencies:
   flutter_swiper: ^1.1.6
   expansion_card: ^0.1.0
   dio: ^3.0.10
+  apple_sign_in: ^0.1.0
+  #flutter_facebook_auth: 1.0.2+2
   firebase_core: ^0.5.3
-
 
 dev_dependencies:
   flutter_test:

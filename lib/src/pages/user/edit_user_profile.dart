@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditUserProfile extends StatefulWidget {
-  EditUserProfile({this.user});
+  EditUserProfile({@required this.user});
 
   UserTienditas user;
 
@@ -77,6 +77,32 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Nombre",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Nunito"),
+                                ),
+                                TextFormField(
+                                  initialValue: widget.user.name,
+                                  onChanged: (String value) {
+                                    widget.user.name = value;
+                                  },
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Ingresar Nombre';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      hintText: 'Jhon Doe'),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),

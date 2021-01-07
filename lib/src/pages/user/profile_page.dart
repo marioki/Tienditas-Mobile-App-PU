@@ -31,6 +31,12 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+    var image;
+    if (Provider.of<LoginState>(context).getFireBaseUser().photoURL == null) {
+      image = Image.asset('assets/images/icons/tienda.png');
+    } else {
+      image = Provider.of<LoginState>(context).getFireBaseUser().photoURL;
+    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -84,12 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   MyProfileWidget(
-                    name: userInfo.name,
+                    name: (userInfo.name != null) ? userInfo.name : "",
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
-                    image: Provider.of<LoginState>(context)
-                        .getFireBaseUser()
-                        .photoUrl,
+                    image: image,
                     onPressed: () {
                       Navigator.push(
                         context,
