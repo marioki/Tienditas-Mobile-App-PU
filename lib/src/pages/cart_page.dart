@@ -110,26 +110,27 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                   ),
                                 );
-                              }
-
-                              if (!Provider.of<LoginState>(context).isAnon() &&
-                                  (Provider.of<UserCartState>(context)
-                                          .cartProductList
-                                          .length >
-                                      0)) {
-                                print('Stores currently on the cart');
-                                print(Provider.of<UserCartState>(context)
-                                    .allStoreTagsList);
-                                print('Lista de Tiendas Filtradas');
-                                print(Provider.of<UserCartState>(context)
-                                    .filterParentStoreTagList());
-                                Provider.of<UserCartState>(context)
-                                    .clearSelectedDeliveryOptionList();
-                                Navigator.pushNamed(
-                                    context, 'delivery_options');
                               } else {
-                                print(
-                                    'User must not be anon/cart items must be > 0');
+                                if (!Provider.of<LoginState>(context)
+                                        .isAnon() &&
+                                    (Provider.of<UserCartState>(context)
+                                            .cartProductList
+                                            .length >
+                                        0)) {
+                                  print('Stores currently on the cart');
+                                  print(Provider.of<UserCartState>(context)
+                                      .allStoreTagsList);
+                                  print('Lista de Tiendas Filtradas');
+                                  print(Provider.of<UserCartState>(context)
+                                      .filterParentStoreTagList());
+                                  Provider.of<UserCartState>(context)
+                                      .clearSelectedDeliveryOptionList();
+                                  Navigator.pushNamed(
+                                      context, 'delivery_options');
+                                } else {
+                                  print(
+                                      'User must not be anon/cart items must be > 0');
+                                }
                               }
                             },
                           )
