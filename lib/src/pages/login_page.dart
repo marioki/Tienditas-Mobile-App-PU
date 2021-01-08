@@ -148,6 +148,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _signInWithApple(BuildContext context) async {
     try {
       final authService = Provider.of<LoginState>(context, listen: false);
+      print(authService);
       final user = await authService.signInWithApple(context);
       print('User Tienditas Name: ${user.name}');
       print('User Tienditas Email: ${user.userEmail}');

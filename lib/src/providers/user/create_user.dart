@@ -5,11 +5,8 @@ import 'package:app_tiendita/src/constants/api_constants.dart';
 
 class CreateTienditaUser {
   Future<http.Response> createUserTienditas(
-      User firebaseUser, String userIdToken) async {
+      String  userName, String userEmail, String userIdToken) async {
     String _url = '$baseApiUrl/api/v1/user';
-    String userEmail = firebaseUser.email;
-    String userName = firebaseUser.displayName;
-
     var bodyData = {
       "user": {
         "email": userEmail,
