@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class EditUserProfile extends StatefulWidget {
   EditUserProfile({@required this.user});
 
-  UserTienditas user;
+  final UserTienditas user;
 
   @override
   _EditUserProfileState createState() => _EditUserProfileState();

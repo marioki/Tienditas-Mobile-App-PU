@@ -1,6 +1,9 @@
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/user/edit_user_profile.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +18,8 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
+    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -93,28 +98,38 @@ class _CartPageState extends State<CartPage> {
                               style: cartButtonPagarStyle,
                             ),
                             onPressed: () {
-                              if (!Provider.of<LoginState>(context)
-                                  .isAnon()) {
-                                if (Provider.of<UserCartState>(context)
-                                        .cartProductList
-                                        .length >
-                                    0) {
-                                  print('Stores currently on the cart');
-                                  print(Provider.of<UserCartState>(context)
-                                      .allStoreTagsList);
-                                  print('Lista de Tiendas Filtradas');
-                                  print(Provider.of<UserCartState>(context)
-                                      .filterParentStoreTagList());
-                                  Provider.of<UserCartState>(context)
-                                      .clearSelectedDeliveryOptionList();
-                                  Navigator.pushNamed(
-                                      context, 'delivery_options');
-                                } else {
-                                  print('======Carrito_Vacio======');
-                                }
+                              if (Provider.of<LoginState>(context)
+                                      .getTienditaUser()
+                                      .name ==
+                                  null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditUserProfile(
+                                      user: userInfo,
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              if (!Provider.of<LoginState>(context).isAnon() &&
+                                  (Provider.of<UserCartState>(context)
+                                          .cartProductList
+                                          .length >
+                                      0)) {
+                                print('Stores currently on the cart');
+                                print(Provider.of<UserCartState>(context)
+                                    .allStoreTagsList);
+                                print('Lista de Tiendas Filtradas');
+                                print(Provider.of<UserCartState>(context)
+                                    .filterParentStoreTagList());
+                                Provider.of<UserCartState>(context)
+                                    .clearSelectedDeliveryOptionList();
+                                Navigator.pushNamed(
+                                    context, 'delivery_options');
                               } else {
                                 print(
-                                    'User is Anon. Must sign in to access checkout');
+                                    'User must not be anon/cart items must be > 0');
                               }
                             },
                           )
@@ -127,8 +142,8 @@ class _CartPageState extends State<CartPage> {
             ),
             Expanded(
               child: Consumer<UserCartState>(
-                builder: (BuildContext context, UserCartState value,
-                    Widget child) {
+                builder:
+                    (BuildContext context, UserCartState value, Widget child) {
                   if (value.cartProductList.isEmpty) {
                     return ListView();
                   } else {
@@ -164,10 +179,9 @@ class _CartPageState extends State<CartPage> {
                             colorHex: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .hexColor,
-                            parentStoreTag:
-                                Provider.of<UserCartState>(context)
-                                    .cartProductList[index]
-                                    .parentStoreTag,
+                            parentStoreTag: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .parentStoreTag,
                           ),
                           SizedBox(
                             //Todo Change to media query when store card uses media query
