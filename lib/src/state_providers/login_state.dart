@@ -85,8 +85,8 @@ class LoginState with ChangeNotifier {
     return user;
   }
 
-  Future<IdTokenResult> _getUserIdToken(user) async {
-    final IdTokenResult idTokenResult = await user.getIdToken();
+  Future<IdTokenResult> _getUserIdToken(User user) async {
+    final IdTokenResult idTokenResult = await user.getIdTokenResult();
     return idTokenResult;
   }
 
