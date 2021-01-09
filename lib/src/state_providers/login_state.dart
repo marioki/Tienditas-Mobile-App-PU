@@ -147,9 +147,9 @@ class LoginState with ChangeNotifier {
 
         notifyListeners();
       } else {
-        print('Tienes que crear el usuario aqui');
+        print('=== Creando usuario en BD con google sign in ===');
         var userCreateResponse = await CreateTienditaUser()
-            .createUserTienditas(_firebaseUser, currentUserIdToken);
+            .createUserTienditas(_firebaseUser.displayName, _firebaseUser.email, currentUserIdToken);
         print(userCreateResponse.body);
         if (userCreateResponse.statusCode == 200) {
           _userTienditas = await UsuarioTienditasProvider()
@@ -204,17 +204,13 @@ class LoginState with ChangeNotifier {
         currentUserIdToken = tokenResult.token;
         idTokenRefresher(firebaseUser);
         // if (scopes.contains(Scope.fullName)) {
-        final displayName =
-            '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
-        print(displayName);
-        await firebaseUser.updateProfile(displayName: displayName);
+        final appleDisplayName = '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
+        print("Imprimiendo el display name $appleDisplayName");
+        await firebaseUser.updateProfile(displayName: '$appleDisplayName');
         // }
         print('================= Actualizando PhotoURL ================');
         await firebaseUser.updateProfile(
-            photoURL:
-                "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg");
-
-        print(firebaseUser);
+            photoURL: "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg");
         _firebaseUser = firebaseUser;
         _userTienditas = await UsuarioTienditasProvider()
             .getUserInfo(currentUserIdToken, firebaseUser.email);
@@ -223,18 +219,16 @@ class LoginState with ChangeNotifier {
           print('=================Detalles de Este Usuario ================');
           print(_userTienditas.name);
           print(_userTienditas.userEmail);
-
           _loggedIn = true;
           _isAnon = false;
           pr.hide();
-
           notifyListeners();
         } else {
-          print('Creando usuario en DB Tienditas');
+          print('=== Creando usuario en DB Tienditas con apple sign in ===');
           print(_firebaseUser.displayName);
           print(_firebaseUser.email);
           var userCreateResponse = await CreateTienditaUser()
-              .createUserTienditas(_firebaseUser, currentUserIdToken);
+              .createUserTienditas(appleDisplayName, _firebaseUser.email, currentUserIdToken);
           print(userCreateResponse.body);
           if (userCreateResponse.statusCode == 200) {
             _userTienditas = await UsuarioTienditasProvider()
@@ -301,9 +295,9 @@ class LoginState with ChangeNotifier {
 
           notifyListeners();
         } else {
-          print('Tienes que crear el usuario aqui');
+          print('=== Creando usuario en BD con facebook sign in ===');
           var userCreateResponse = await CreateTienditaUser()
-              .createUserTienditas(_firebaseUser, currentUserIdToken);
+              .createUserTienditas(_firebaseUser.displayName, _firebaseUser.email, currentUserIdToken);
           print(userCreateResponse.body);
           if (userCreateResponse.statusCode == 200) {
             _userTienditas = await UsuarioTienditasProvider()
