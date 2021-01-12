@@ -19,6 +19,17 @@ final kLabelStyle = TextStyle(
     fontFamily: 'Nunito',
     fontSize: 18);
 
+final kLabelTitleStyleBlack = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 32);
+final kLabelSubTitleStyleBlack = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 24);
+
 final kBoxDecorationStyle = BoxDecoration(
   color: Color(0xFFa4a1e5),
   borderRadius: BorderRadius.circular(10.0),

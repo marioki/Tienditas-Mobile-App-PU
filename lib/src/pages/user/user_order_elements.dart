@@ -245,16 +245,10 @@ class _UserOrderElementsState extends State<UserOrderElements> {
   }
 
   bool checkUserConfirmation() {
-    if (widget.order.orderStatus == 'Recibida') {
-      if (widget.order.userConfirmation == 'Pendiente') {
-          return true;
-      } else if (widget.order.userConfirmation == 'Confirmado') {
-          return false;
-      }else {
-        return false;
-      }
+    if (widget.order.orderStatus != 'Entregado') {
+      return false;
     } else {
-        return false;
+      return true;
     }
   }
 }
