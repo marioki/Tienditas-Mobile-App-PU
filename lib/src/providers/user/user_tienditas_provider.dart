@@ -202,12 +202,11 @@ class UsuarioTienditasProvider {
     return response;
   }
 
-  Future<http.Response> deleteBankAccount(FirebaseUser firebaseUser,
+  Future<http.Response> deleteBankAccount(String email,
       String userIdToken, BankAccount bankAccount) async {
-    String userEmail = firebaseUser.email;
     String bankAccountId = bankAccount.id;
     String _url =
-        '$baseApiUrl/api/v1/bank_account?id=$bankAccountId&email=$userEmail';
+        '$baseApiUrl/api/v1/bank_account?id=$bankAccountId&email=$email';
     var response = await http.delete(
       _url,
       headers: <String, String>{
