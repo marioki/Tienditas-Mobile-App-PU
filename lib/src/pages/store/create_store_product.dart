@@ -230,7 +230,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                             fontFamily: "Nunito"),
                       ),
                       TextFormField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           finalPrice = value;
                         },

@@ -286,7 +286,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       ),
                       TextFormField(
                         initialValue: widget.productElement.finalPrice,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           widget.productElement.finalPrice = value;
                         },
@@ -313,7 +313,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       ),
                       TextFormField(
                         initialValue: widget.productElement.discountPrice,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           widget.productElement.discountPrice = value;
                         },

@@ -178,7 +178,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                           ),
                           TextFormField(
                             initialValue: fee,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
                             onChanged: (String value) {
                               fee = value;
                             },
