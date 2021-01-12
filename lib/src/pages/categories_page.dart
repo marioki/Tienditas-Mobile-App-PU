@@ -23,7 +23,7 @@ class CategoriesPage extends StatelessWidget {
         title: Column(
           children: [
             Text(
-              'Categoías',
+              'Categorías',
               style: appBarStyle,
             ),
           ],

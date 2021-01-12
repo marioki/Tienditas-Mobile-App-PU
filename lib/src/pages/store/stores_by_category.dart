@@ -81,7 +81,7 @@ class StoresByCategory extends StatelessWidget {
                 Tiendita miTienda = snapshot.data;
                 if (miTienda.body.stores.length < 1) {
                   return Center(
-                    child: Text('Todavia hay tiendas en esta categoria...'),
+                    child: Text('Todavia no hay tiendas en esta categoria...'),
                   );
                 }
                 return ListView.builder(
