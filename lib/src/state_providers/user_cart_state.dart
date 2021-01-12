@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -250,12 +251,12 @@ class UserCartState with ChangeNotifier {
     currentBatch.paymentMethod = "tarjeta de crédito";
   }
 
-  setCurrentBatchUserInfo(FirebaseUser firebaseUser) {
-    currentBatch.userName = firebaseUser.displayName;
-    currentBatch.userEmail = firebaseUser.email;
+  setCurrentBatchUserInfo(UserTienditas userTienditas) {
+    currentBatch.userName = userTienditas.name;
+    currentBatch.userEmail = userTienditas.userEmail;
   }
 
-  setCurrentBatchPhoneNumber(FirebaseUser firebaseUser) {
-    currentBatch.phoneNumber = firebaseUser.phoneNumber;
+  setCurrentBatchPhoneNumber(UserTienditas userTienditas) {
+    currentBatch.phoneNumber = userTienditas.phoneNumber;
   }
 }

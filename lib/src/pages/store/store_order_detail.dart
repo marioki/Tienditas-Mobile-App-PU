@@ -23,8 +23,7 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
   bool isLoading = false;
   var response;
   List<ItemStatusOptions> itemStatusOptions = [
-    ItemStatusOptions(option: "Recibido"),
-    ItemStatusOptions(option: "Procesado"),
+    ItemStatusOptions(option: "En Proceso"),
     ItemStatusOptions(option: "En Camino"),
     ItemStatusOptions(option: "Entregado"),
     ItemStatusOptions(option: "Cancelado"),

@@ -1,4 +1,5 @@
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/crear_tarjeta_page.dart';
 import 'package:app_tiendita/src/pages/resumen_de_compra_page.dart';
 import 'package:app_tiendita/src/providers/user/user_card_provider.dart';
@@ -132,6 +133,8 @@ class _MetodoDePagoState extends State<MetodoDePago> {
                         return ResumenDeCompra();
                       }),
                     );
+                  } else {
+                    print('===== BTN Siguiente Deshabilitado =====');
                   }
                 },
                 color: azulTema,
@@ -212,13 +215,16 @@ class _MetodoDePagoState extends State<MetodoDePago> {
   }
 
   void setCurrentBatchUserInfo() {
-    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
-    Provider.of<UserCartState>(context).setCurrentBatchUserInfo(firebaseUser);
+    UserTienditas userTienditas =
+        Provider.of<LoginState>(context).getTienditaUser();
+    Provider.of<UserCartState>(context).setCurrentBatchUserInfo(userTienditas);
   }
 
   setCurrentBatchPhoneNumber() {
-    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
-    Provider.of<UserCartState>(context).setCurrentBatchPhoneNumber(firebaseUser);
+    UserTienditas userTienditas =
+        Provider.of<LoginState>(context).getTienditaUser();
+    Provider.of<UserCartState>(context)
+        .setCurrentBatchPhoneNumber(userTienditas);
   }
 
   Future<List<CreditCard>> fetchCreditCards() {

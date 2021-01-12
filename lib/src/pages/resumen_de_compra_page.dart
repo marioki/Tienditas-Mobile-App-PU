@@ -1,6 +1,7 @@
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/orden_exitosa_page.dart';
 import 'package:app_tiendita/src/providers/send_order.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -138,7 +139,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                      'Envios',
+                      'Envíos',
                       style: TextStyle(
                           color: azulTema,
                           fontSize: 18,
@@ -257,14 +258,14 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                 onPressed: () async {
                   await pr.show();
 
-                  final firebaseUser =
-                      Provider.of<LoginState>(context).getFireBaseUser();
+                  UserTienditas userTienditas =
+                      Provider.of<LoginState>(context).getTienditaUser();
                   final userTokenId =
                       Provider.of<LoginState>(context).currentUserIdToken;
                   final _batch =
                       Provider.of<UserCartState>(context).currentBatch;
                   var response = await SendBatchOfOrders()
-                      .sendBatchOfOrders(firebaseUser, userTokenId, _batch);
+                      .sendBatchOfOrders(userTienditas, userTokenId, _batch);
                   final responseTienditasApi = responseFromJson(response.body);
                   //Comprueba que la respuesta fue exitosa
                   if (response.statusCode == 200) {
