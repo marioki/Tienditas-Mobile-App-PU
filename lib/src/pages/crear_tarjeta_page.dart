@@ -149,10 +149,10 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
 
     //print(newCard.number);
 
-    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
+    final tienditasUser = Provider.of<LoginState>(context).getTienditaUser();
     final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
     var response = await CreateNewCreditCard()
-        .sendNewCreditCard(firebaseUser, userTokenId, newCard);
+        .sendNewCreditCard(tienditasUser, userTokenId, newCard);
     if (response.statusCode == 200) {
       ResponseTienditasApi responseTienditasApi =
           responseFromJson(response.body);

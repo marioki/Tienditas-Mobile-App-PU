@@ -140,7 +140,7 @@ class UserPaymentMethodState extends State<UserPaymentMethod> {
 
   Future<void> deleteCreditCard(
       CreditCard creditCard, BuildContext context) async {
-    final firebaseUser = Provider.of<LoginState>(context).getFireBaseUser();
+    final tienditasUser = Provider.of<LoginState>(context).getTienditaUser();
     final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
     ProgressDialog pr = ProgressDialog(context);
     pr.style(
@@ -153,7 +153,7 @@ class UserPaymentMethodState extends State<UserPaymentMethod> {
         ));
     await pr.show();
     var response = await DeleteCreditCard()
-        .deleteCreditCard(firebaseUser, userTokenId, creditCard);
+        .deleteCreditCard(tienditasUser, userTokenId, creditCard);
     if (response.statusCode == 200) {
       ResponseTienditasApi responseTienditasApi =
           responseFromJson(response.body);

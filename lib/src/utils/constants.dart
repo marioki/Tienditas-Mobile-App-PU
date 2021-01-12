@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
 // Colors that we use in our app
@@ -18,6 +19,17 @@ final kLabelStyle = TextStyle(
     fontWeight: FontWeight.bold,
     fontFamily: 'Nunito',
     fontSize: 18);
+
+final kLabelTitleStyle = TextStyle(
+    color: azulTema,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 32);
+final kLabelSubTitleStyle = TextStyle(
+    color: azulTema,
+    fontWeight: FontWeight.normal,
+    fontFamily: 'Nunito',
+    fontSize: 20);
 
 final kBoxDecorationStyle = BoxDecoration(
   color: Color(0xFFa4a1e5),

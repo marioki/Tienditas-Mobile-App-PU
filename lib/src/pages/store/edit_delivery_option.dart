@@ -133,7 +133,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
-                                hintText: 'nombre'
+                                hintText: 'Recoger en local'
                             ),
                           ),
                           SizedBox(
@@ -161,7 +161,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                                 fillColor: Colors.white,
-                                hintText: 'método'
+                                hintText: 'Recoger en local'
                             ),
                           ),
                           SizedBox(
@@ -190,7 +190,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                               fillColor: Colors.white,
-                              hintText: 'costo'
+                              hintText: '0.00'
                           ),
                         ),
                         SizedBox(

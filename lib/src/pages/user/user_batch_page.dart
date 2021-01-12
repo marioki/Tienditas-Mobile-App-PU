@@ -30,7 +30,7 @@ class UserBatchPageState extends State<UserBatchPage> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          'Mis Ordenes',
+          'Mis Órdenes',
           style: appBarStyle,
         ),
       ),

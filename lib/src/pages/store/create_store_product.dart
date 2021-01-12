@@ -189,7 +189,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            hintText: 'nombre del producto'),
+                            hintText: 'Nombre'),
                       ),
                       SizedBox(
                         height: 15,
@@ -242,7 +242,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            hintText: 'precio de venta'),
+                            hintText: '1.00'),
                       ),
                       SizedBox(
                         height: 15,
@@ -268,7 +268,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
-                            hintText: 'cantidad disponible'),
+                            hintText: '4'),
                       ),
                       SizedBox(
                         height: 20,
