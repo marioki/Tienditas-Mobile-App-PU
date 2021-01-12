@@ -35,22 +35,57 @@ class OrdenExitosaPage extends StatelessWidget {
                 padding: EdgeInsets.all(32),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       '¡Gracias Por Tu Compra!',
-                      style: kLabelTitleStyleBlack,
+                      style: kLabelTitleStyle,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'Con esta compra estás apoyando al empredimiento local',
+                      style: kLabelSubTitleStyle,
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(
                       height: 16,
                     ),
-                    Text(
-                      'Con esta compra estas apoyando a empredimiento local',
-                      style: kLabelSubTitleStyleBlack,
-                      textAlign: TextAlign.center,
-                    ),
                     Image(
                       image: AssetImage('assets/images/confirm_purchase.png'),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    RaisedButton(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      elevation: 5.0,
+                      onPressed: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return HomePage();
+                        }));
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'CONTINUAR',
+                            style: TextStyle(
+                              color: azulTema,
+                              letterSpacing: 1.5,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Nunito',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
