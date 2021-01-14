@@ -331,6 +331,7 @@ class _CreateStoreState extends State<CreateStore> {
                                       fontFamily: "Nunito"),
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.phone,
                                   onChanged: (String value) {
                                     phoneNumber = value;
                                   },
