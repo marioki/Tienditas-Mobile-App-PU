@@ -157,12 +157,14 @@ class _StoreProfileState extends State<StoreProfile> {
                         description: "Editar Tienda",
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditStore(
-                                  store: resultTiendita.body.store,
-                                ),
-                              ));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditStore(
+                                      store: resultTiendita.body.store,
+                                    ),
+                                  ))
+                              .then((value) => Provider.of<LoginState>(context)
+                                  .reloadUserInfo());
                         },
                       ),
                     ],
