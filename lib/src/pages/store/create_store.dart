@@ -258,7 +258,7 @@ class _CreateStoreState extends State<CreateStore> {
                                   decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       hintText:
-                                          'una breve descripción y puede incluir emojies'),
+                                          'puedes incluir emojies'),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -331,6 +331,7 @@ class _CreateStoreState extends State<CreateStore> {
                                       fontFamily: "Nunito"),
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.phone,
                                   onChanged: (String value) {
                                     phoneNumber = value;
                                   },
