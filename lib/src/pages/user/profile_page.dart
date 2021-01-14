@@ -94,12 +94,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
                     image: (Provider.of<LoginState>(context)
-                        .getFireBaseUser()
-                        .photoUrl != null) ? 
-                            Provider.of<LoginState>(context)
                                 .getFireBaseUser()
-                                .photoUrl : 
-                                    "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg",
+                                .photoUrl !=
+                            null)
+                        ? Provider.of<LoginState>(context)
+                            .getFireBaseUser()
+                            .photoUrl
+                        : "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg",
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -130,7 +131,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           MaterialPageRoute(
                             builder: (context) => CreateStore(),
                           ),
-                        );
+                        ).then((value) =>
+                            Provider.of<LoginState>(context).reloadUserInfo());
                       }
                     },
                   ),
