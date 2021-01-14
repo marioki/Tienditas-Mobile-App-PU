@@ -330,6 +330,7 @@ class _CreateStoreState extends State<CreateStore> {
                                   onChanged: (String value) {
                                     phoneNumber = value;
                                   },
+                                  keyboardType: TextInputType.phone,
                                   validator: (value) {
                                     if (value.isEmpty) {
                                       return 'Ingresar teléfono';
@@ -417,6 +418,7 @@ class _CreateStoreState extends State<CreateStore> {
                                             isLoading = false;
                                           }
                                         } else {
+                                          isLoading = false;
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(
