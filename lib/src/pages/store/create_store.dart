@@ -11,6 +11,7 @@ import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' as Io;
 
@@ -42,6 +43,9 @@ class _CreateStoreState extends State<CreateStore> {
 
   @override
   Widget build(BuildContext context) {
+    final ProgressDialog pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
+    pr.style(message: 'Guardando...');
     UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
@@ -254,7 +258,7 @@ class _CreateStoreState extends State<CreateStore> {
                                   decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       hintText:
-                                          'una breve descripción y puede incluir emojies'),
+                                          'puedes incluir emojies'),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -327,6 +331,7 @@ class _CreateStoreState extends State<CreateStore> {
                                       fontFamily: "Nunito"),
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.phone,
                                   onChanged: (String value) {
                                     phoneNumber = value;
                                   },
@@ -348,6 +353,7 @@ class _CreateStoreState extends State<CreateStore> {
                                   alignment: Alignment(0.0, 0.0),
                                   child: RaisedButton(
                                     onPressed: () async {
+                                      pr.show();
                                       if (_formKey.currentState.validate()) {
                                         if ((_selectedCategory != null &&
                                                 _selectedLocation != null) &&
@@ -417,6 +423,7 @@ class _CreateStoreState extends State<CreateStore> {
                                                 .body.message);
                                             isLoading = false;
                                           }
+                                          pr.hide();
                                         } else {
                                           isLoading = false;
                                           Scaffold.of(context).showSnackBar(
@@ -425,6 +432,7 @@ class _CreateStoreState extends State<CreateStore> {
                                                   'Hubo problemas al crear la tienda, \nfavor revisar su conexión a internet'),
                                             ),
                                           );
+                                          pr.hide();
                                         }
                                       }
                                     },
