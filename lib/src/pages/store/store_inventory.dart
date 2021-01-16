@@ -1,9 +1,13 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
+import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/state_providers/login_state.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'create_store_product.dart';
 import 'edit_store_product.dart';
 
@@ -110,21 +114,18 @@ class _StoreInventoryState extends State<StoreInventory> {
                 itemCount: finalListProductos.length + 1,
                 itemBuilder: (context, index) {
                   if (index <= finalListProductos.length - 1) {
-                    return ProductItemCard(
-                      itemName: finalListProductos[index].itemName,
-                      price: finalListProductos[index].finalPrice,
-                      imageUrl: finalListProductos[index].imagesUrlList.first != null?finalListProductos[index].imagesUrlList.first:'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-                      quantity: finalListProductos[index].quantity,
-                      description: finalListProductos[index].description,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditStoreInventory(
-                                  storeTagName: widget.storeTagName,
-                                  productElement: finalListProductos[index]),
-                            ));
-                      },
+                    return _productItem(
+                        context,
+                        finalListProductos[index],
+                        () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditStoreInventory(
+                                    storeTagName: widget.storeTagName,
+                                    productElement: finalListProductos[index]),
+                              ));
+                        }
                     );
                   } else {
                     return SizedBox(
@@ -151,12 +152,101 @@ class _StoreInventoryState extends State<StoreInventory> {
     );
   }
 
-  void _switchActionBar() {
-    setState(
-      () {
-        isExtended = !isExtended;
-      },
+  Widget _simplePopup(ProductElement productElement) => PopupMenuButton<int>(
+    onSelected: (int value) {
+      print(value);
+      if (value == 1) {
+        deleteProduct(productElement.itemId, context);
+      }
+    },
+    itemBuilder: (context) => [
+      PopupMenuItem(
+        value: 1,
+        child: Text("Eliminar"),
+      ),
+    ],
+  );
+
+  Widget _productItem(BuildContext context, ProductElement productElement, Function onPressed) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: FlatButton(
+        onPressed: onPressed,
+        child: ListTile(
+          title: Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 8),
+                    Text(
+                        "${productElement.itemName}",
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Precio: \$${double.parse(productElement.finalPrice).toStringAsFixed(2)}",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      Text(
+                        "Cantidad disponible: ${productElement.quantity}",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: "Nunito"),
+                      ),
+                      SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          trailing: _simplePopup(productElement),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+        ),
+      ),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
     );
+  }
+
+  Future<void> deleteProduct(String itemId, BuildContext context) async {
+    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    ProgressDialog pr = ProgressDialog(context);
+    pr.style(
+      message: 'Eliminando producto',
+      progressWidget: Container(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+    await pr.show();
+    var response = await StoreProvider().deleteProduct(userTokenId, widget.storeTagName, itemId);
+    if (response.statusCode == 200) {
+      ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+      if (responseTienditasApi.statusCode == 200) {
+        pr.hide();
+        print(responseTienditasApi.body.message);
+        setState(() {
+          inventoryProducts = fetchInventoryProducts(context);
+        });
+      } else {
+        print(responseTienditasApi.body.message);
+        pr.hide();
+      }
+    }
   }
 
   Future<Product> fetchInventoryProducts(BuildContext context) {
@@ -167,95 +257,5 @@ class _StoreInventoryState extends State<StoreInventory> {
     setState(() {
       inventoryProducts = fetchInventoryProducts(context);
     });
-  }
-}
-
-class ProductItemCard extends StatelessWidget {
-  ProductItemCard(
-      {this.itemName,
-      this.price,
-      this.imageUrl,
-      this.description,
-      this.onPressed,
-      this.quantity});
-
-  final String itemName;
-  final String price;
-  final String imageUrl;
-  final String quantity;
-  final String description;
-  final Function onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        margin: EdgeInsets.symmetric(
-          vertical: 8,
-        ),
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        color: Colors.white,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Image(
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.cover,
-                  image: NetworkImage("$imageUrl"),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "$itemName",
-                        maxLines: 2,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"),
-                      ),
-                      Text(
-                        "Precio: \$${double.parse(price).toStringAsFixed(2)}",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"),
-                      ),
-                      Text(
-                        "Cantidad disponible: $quantity",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: "Nunito"),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                    ]),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

@@ -7,8 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-
-import 'edit_user_address.dart';
 import 'edit_user_bank_accounts.dart';
 
 class UserBankAccountsPage extends StatefulWidget {

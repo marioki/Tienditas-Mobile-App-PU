@@ -325,5 +325,19 @@ class StoreProvider {
     return response;
   }
 
+  
+  Future<http.Response> deleteProduct(String userIdToken,
+      String storeTagName,
+      String itemId) async {
+    String _url = '$baseApiUrl/api/v1/product?store_tag_name=$storeTagName&item_id=$itemId';
+    var response = await http.delete(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      }
+    );
+    return response;
+  }
 
 }
