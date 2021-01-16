@@ -1,13 +1,17 @@
+import 'package:app_tiendita/src/modelos/banner_model.dart';
 import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
+import 'package:app_tiendita/src/providers/banner_provider.dart';
 import 'package:app_tiendita/src/providers/category_provider.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/category_card_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreFrontPage extends StatefulWidget {
   @override
@@ -17,7 +21,7 @@ class StoreFrontPage extends StatefulWidget {
 class _StoreFrontPageState extends State<StoreFrontPage> {
   Future<CategoryResponseModel> categoryResponse;
   Future<Tiendita> tienditaResponse;
-
+  Future<BannerResponseModel> bannerResponse;
   //Pull to refres package
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -28,12 +32,14 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     setState(() {
       tienditaResponse = fetchTienditas(context);
       categoryResponse = fetchCategories(context);
+      bannerResponse = fetchBanners(context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
     return WillPopScope(
       onWillPop: () {
         return _onBackPressed(context);
@@ -50,6 +56,8 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
               children: <Widget>[
                 //Lista componentes desde aqui
                 //Custom App Bar ==========
+                //Contenedor de Banners
+                getBanners(),
                 //Contenedor de Categorias
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -90,6 +98,94 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         ),
       ),
     );
+  }
+
+  Widget getBanners() {
+    return FutureBuilder(
+        future: bannerResponse,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            BannerResponseModel banner = snapshot.data;
+            final List<Widget> imageSliders = banner.body.bannerList
+                .map((item) => Container(
+                      child: Container(
+                        margin: EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (item.link != null) {
+                                  _launchURL(item.link);
+                                }
+                              },
+                              child: Stack(
+                                children: <Widget>[
+                                  Image.network(item.imageUrl,
+                                      fit: BoxFit.cover, width: 1000.0),
+                                  Positioned(
+                                    bottom: 0.0,
+                                    left: 0.0,
+                                    right: 0.0,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromARGB(200, 0, 0, 0),
+                                            Color.fromARGB(0, 0, 0, 0)
+                                          ],
+                                          begin: Alignment.bottomCenter,
+                                          end: Alignment.topCenter,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 20.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            '${item.title}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${item.description}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ),
+                    ))
+                .toList();
+            return _carouselBanner(imageSliders);
+          } else
+            return Container(
+              height: 400,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+        });
+  }
+
+  _launchURL(String linkUrl) async {
+    var url = linkUrl;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Widget getTiendasListViewBuilder() {
@@ -213,6 +309,18 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
         });
   }
 
+  Widget _carouselBanner(List<Widget> banners) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        aspectRatio: 2.0,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+        autoPlay: true,
+      ),
+      items: banners,
+    );
+  }
+
   getCustomAppBar() {
     return PreferredSize(
       preferredSize: Size(double.infinity, 100),
@@ -298,6 +406,10 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
 
   Future<CategoryResponseModel> fetchCategories(BuildContext context) {
     return CategoriesProvider().getAllCategories(context);
+  }
+
+  Future<BannerResponseModel> fetchBanners(BuildContext context) {
+    return BannersProvider().getAllBanners(context);
   }
 
   Future<Tiendita> fetchTienditas(BuildContext context) {
