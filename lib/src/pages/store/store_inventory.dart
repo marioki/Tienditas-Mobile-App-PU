@@ -119,12 +119,13 @@ class _StoreInventoryState extends State<StoreInventory> {
                         finalListProductos[index],
                         () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditStoreInventory(
-                                    storeTagName: widget.storeTagName,
-                                    productElement: finalListProductos[index]),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditStoreInventory(
+                                  storeTagName: widget.storeTagName,
+                                  productElement: finalListProductos[index]),
+                            ),
+                          );
                         }
                     );
                   } else {

@@ -3,6 +3,7 @@ import 'dart:io' as Io;
 
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/pages/store/product_variant_page.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -47,7 +48,7 @@ class _EditStoreInventoryState extends State<EditStoreInventory> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: EditDeliveryOptionCard(
+        child: EditStoreInventoryCard(
           storeTagName: widget.storeTagName,
           productElement: widget.productElement,
         ),
@@ -57,23 +58,22 @@ class _EditStoreInventoryState extends State<EditStoreInventory> {
 }
 
 // ignore: must_be_immutable
-class EditDeliveryOptionCard extends StatefulWidget {
-  EditDeliveryOptionCard({@required this.storeTagName, this.productElement});
+class EditStoreInventoryCard extends StatefulWidget {
+  EditStoreInventoryCard({@required this.storeTagName, this.productElement});
 
   final String storeTagName;
   final ProductElement productElement;
 
   @override
-  _EditDeliveryOptionCardState createState() => _EditDeliveryOptionCardState();
+  _EditStoreInventoryCardState createState() => _EditStoreInventoryCardState();
 }
 
-class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
+class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
   final _formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
 
   var response;
-
   Future<Io.File> imageFile;
 
   Io.File loadedImg;
@@ -145,7 +145,6 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                           child: Row(
                             children: [
                               getAddImageButton(),
-
                               Flexible(
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -360,109 +359,125 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                       _buildDeliveryTimeWidget(),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: RaisedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              pr.show();
-                              if (selectedImagesUrls.isNotEmpty) {
-                                generateBase64ImageList();
-                                if (widget.productElement.imagesUrlList
-                                        .isNotEmpty ||
-                                    imageFileList.isNotEmpty) {
-                                  //Update product when image is loaded
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('Procesando')));
-                                  response = await ProductProvider()
-                                      .updateProductDeleteAndAdd(
-                                    userIdToken:
-                                        Provider.of<LoginState>(context)
-                                            .currentUserIdToken,
-                                    productElement: widget.productElement,
-                                    itemImageBase64List: imageBase64List,
-                                    deliveryTime: getDeliveryTimeInfo(),
-                                    imagesUrl: selectedImagesUrls,
-                                  );
-                                  if (response.statusCode == 200) {
-                                    pr.hide();
-                                    ResponseTienditasApi responseTienditasApi =
-                                        responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode ==
-                                        200) {
-                                      print(responseTienditasApi.body.message);
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            RaisedButton(
+                              onPressed: () {
+                                goToVariantScreen(
+                                  context
+                                );
+                              },
+                              color: Color(0xFF191660),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              textColor: Colors.white,
+                              child: Text(
+                                "Agregar Variantes",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "Nunito"),
+                              ),
+                            ),
+                            RaisedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  pr.show();
+                                  if (widget.productElement.variants == null) {
+                                    widget.productElement.variants = [];
+                                  }
+                                  if (selectedImagesUrls.isNotEmpty) {
+                                    generateBase64ImageList();
+                                    if (widget.productElement.imagesUrlList.isNotEmpty || imageFileList.isNotEmpty) {
+                                      //Update product when image is loaded
                                       Scaffold.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${responseTienditasApi.body.message}'),
-                                        ),
+                                          SnackBar(content: Text('Procesando')));
+                                      response = await ProductProvider().updateProductDeleteAndAdd(
+                                        userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                        productElement: widget.productElement,
+                                        itemImageBase64List: imageBase64List,
+                                        deliveryTime: getDeliveryTimeInfo(),
+                                        imagesUrl: selectedImagesUrls,
                                       );
-                                      //Clear Image Cahe
-                                      PaintingBinding.instance.imageCache
-                                          .clear();
-                                      isLoading = false;
-                                      Navigator.of(context).pop();
-                                    } else {
-                                      print(responseTienditasApi.body.message);
-                                      isLoading = false;
+                                      if (response.statusCode == 200) {
+                                        pr.hide();
+                                        ResponseTienditasApi responseTienditasApi =
+                                            responseFromJson(response.body);
+                                        if (responseTienditasApi.statusCode ==
+                                            200) {
+                                          print(responseTienditasApi.body.message);
+                                          Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  '${responseTienditasApi.body.message}'),
+                                            ),
+                                          );
+                                          //Clear Image Cahe
+                                          PaintingBinding.instance.imageCache
+                                              .clear();
+                                          isLoading = false;
+                                          Navigator.of(context).pop();
+                                        } else {
+                                          print(responseTienditasApi.body.message);
+                                          isLoading = false;
+                                        }
+                                      }
+                                    }
+                                  } else {
+                                    generateBase64ImageList();
+                                    if (widget.productElement.imagesUrlList.isNotEmpty || imageFileList.isNotEmpty) {
+                                      //Update product when image is loaded
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text('Procesando')));
+                                      response =
+                                          await ProductProvider().updateProductAdd(
+                                        userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                        productElement: widget.productElement,
+                                        itemImageBase64List: imageBase64List,
+                                        deliveryTime: getDeliveryTimeInfo(),
+                                        imagesUrl: selectedImagesUrls,
+                                      );
+                                      if (response.statusCode == 200) {
+                                        pr.hide();
+                                        ResponseTienditasApi responseTienditasApi = responseFromJson(response.body);
+                                        if (responseTienditasApi.statusCode == 200) {
+                                          print(responseTienditasApi.body.message);
+                                          Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  '${responseTienditasApi.body.message}'),
+                                            ),
+                                          );
+                                          //Clear Image Cahe
+                                          PaintingBinding.instance.imageCache
+                                              .clear();
+                                          isLoading = false;
+                                          Navigator.of(context).pop();
+                                        } else {
+                                          print(responseTienditasApi.body.message);
+                                          isLoading = false;
+                                        }
+                                      }
                                     }
                                   }
                                 }
-                              } else {
-                                generateBase64ImageList();
-                                if (widget.productElement.imagesUrlList
-                                        .isNotEmpty ||
-                                    imageFileList.isNotEmpty) {
-                                  //Update product when image is loaded
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('Procesando')));
-                                  response =
-                                      await ProductProvider().updateProductAdd(
-                                    userIdToken:
-                                        Provider.of<LoginState>(context)
-                                            .currentUserIdToken,
-                                    productElement: widget.productElement,
-                                    itemImageBase64List: imageBase64List,
-                                    deliveryTime: getDeliveryTimeInfo(),
-                                    imagesUrl: selectedImagesUrls,
-                                  );
-                                  if (response.statusCode == 200) {
-                                    pr.hide();
-                                    ResponseTienditasApi responseTienditasApi =
-                                        responseFromJson(response.body);
-                                    if (responseTienditasApi.statusCode ==
-                                        200) {
-                                      print(responseTienditasApi.body.message);
-                                      Scaffold.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              '${responseTienditasApi.body.message}'),
-                                        ),
-                                      );
-                                      //Clear Image Cahe
-                                      PaintingBinding.instance.imageCache
-                                          .clear();
-                                      isLoading = false;
-                                      Navigator.of(context).pop();
-                                    } else {
-                                      print(responseTienditasApi.body.message);
-                                      isLoading = false;
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          },
-                          color: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          textColor: Colors.white,
-                          child: Text(
-                            "Guardar",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                fontFamily: "Nunito"),
-                          ),
+                              },
+                              color: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              textColor: Colors.white,
+                              child: Text(
+                                "Guardar",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "Nunito"),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ]),
@@ -598,6 +613,27 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
           widget.productElement.imagesUrlList.length + imageFileList.length;
       print(imageCount.toString() + '===============');
       return Container();
+    }
+  }
+
+  Future<void> goToVariantScreen(BuildContext context) async {
+    bool saveButtonIsVisible = false;
+    if (widget.productElement.variants != null && widget.productElement.variants.length > 0) {
+      saveButtonIsVisible = true;
+    }
+    final variantResult = await Navigator.push(
+     context,
+     MaterialPageRoute(
+       builder: (context) => ProductVariant(
+         variants: widget.productElement.variants,
+         saveButtonIsVisible: saveButtonIsVisible,
+       ),
+     ),
+    );
+    if (variantResult != null) {
+      setState(() {
+        widget.productElement.variants = variantResult;
+      });
     }
   }
 }
