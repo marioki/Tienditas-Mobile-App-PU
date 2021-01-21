@@ -24,8 +24,9 @@ class ProductItemCard extends StatelessWidget {
   final String description;
   final String discountPrice;
   final String discountPercentage;
+  final List<Variant> variants;
 
-//todo Esto puede ser reemplazado por un atributo de tipo productElement
+  //todo Esto puede ser reemplazado por un atributo de tipo productElement
   const ProductItemCard(
       {Key key,
       @required this.quantity,
@@ -43,7 +44,8 @@ class ProductItemCard extends StatelessWidget {
       @required this.deliveryTime,
       this.description,
       this.discountPrice,
-      this.discountPercentage})
+      this.discountPercentage,
+      this.variants})
       : super(key: key);
 
   @override
@@ -68,7 +70,7 @@ class ProductItemCard extends StatelessWidget {
                 child: Hero(
                   tag: itemId,
                   child: Image(
-                    image: NetworkImage(image),
+                    image: NetworkImage(imagesUrlList[0]),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -128,7 +130,8 @@ class ProductItemCard extends StatelessWidget {
                       parentStoreTag: parentStoreTag,
                       discountPrice: discountPrice,
                       discountPercentage: discountPercentage,
-                      description: description),
+                      description: description
+                  ),
                 );
                 final snackBar = SnackBar(
                   duration: Duration(milliseconds: 300),
@@ -151,7 +154,6 @@ class ProductItemCard extends StatelessWidget {
       ),
     );
   }
-
   goToProductDetails(BuildContext context) {
     return Navigator.pushNamed(context, 'product_details_page',
         arguments: ProductItemCard(
@@ -171,6 +173,7 @@ class ProductItemCard extends StatelessWidget {
           description: this.description,
           discountPrice: this.discountPrice,
           discountPercentage: this.discountPercentage,
+          variants: this.variants,
         ));
   }
 }
