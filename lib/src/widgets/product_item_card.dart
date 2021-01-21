@@ -52,6 +52,10 @@ class ProductItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     //double _finalPrice = double.parse(source);
     //Todo: Fix la cantidad de texto cambian el tamaño de la imagen del producto
+    bool variantSelected = false;
+    String variantName = "";
+    String variantPrice = "";
+    String variantQuantity = "";
     return Card(
 //      elevation: 10,
       clipBehavior: Clip.antiAlias,
@@ -117,27 +121,137 @@ class ProductItemCard extends StatelessWidget {
               ),
               color: getColorFromHex(hexColor),
               onPressed: () {
-                Provider.of<UserCartState>(context).addProductoToCart(
-                  ProductElement(
-                      itemId: itemId,
-                      itemName: itemName,
-                      finalPrice: finalPrice,
-                      imagesUrlList: imagesUrlList,
-                      purchaseType: purchaseType,
-                      registeredDate: registeredDate,
-                      quantity: quantity,
-                      hexColor: hexColor,
-                      parentStoreTag: parentStoreTag,
-                      discountPrice: discountPrice,
-                      discountPercentage: discountPercentage,
-                      description: description
-                  ),
-                );
-                final snackBar = SnackBar(
-                  duration: Duration(milliseconds: 300),
-                  content: Text('Al carrito!'),
-                );
-                Scaffold.of(context).showSnackBar(snackBar);
+                if (variants != null && variants.length > 0) {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, setState) {
+                          return AlertDialog(
+                            elevation: 10,
+                            title: Text(
+                              "Selecciona una variante",
+                              style: TextStyle(
+                                  color: Color(0xFF191660),
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: "Nunito"),
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    hint: Text("Seleccionar variante"),
+                                    //value: _value,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        variantName = newValue.name;
+                                        variantPrice = newValue.price;
+                                        variantQuantity = newValue.quantity;
+                                        variantSelected = true;
+                                      });
+                                    },
+                                    items: variants.map((value) {
+                                      return new DropdownMenuItem(
+                                        child: new Text(
+                                          "${value.name} a \$${value.price}"
+                                        ),
+                                        value: value,
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "${itemName}",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal,
+                                      fontFamily: "Nunito"),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  (() {
+                                  if (variantSelected) {
+                                    return("$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
+                                  } else {
+                                    return "";
+                                  }
+                                  }()),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      fontFamily: "Nunito"),
+                                ),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Agregar al carrito'),
+                                color: Color(0xFF191660),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                onPressed: () {
+                                  if (variantSelected) {
+                                    Provider.of<UserCartState>(context).addProductoToCart(
+                                      ProductElement(
+                                        itemId: itemId,
+                                        itemName: "$itemName - $variantName",
+                                        finalPrice: variantPrice,
+                                        imagesUrlList: imagesUrlList,
+                                        purchaseType: purchaseType,
+                                        registeredDate: registeredDate,
+                                        quantity: quantity,
+                                        hexColor: hexColor,
+                                        parentStoreTag: parentStoreTag,
+                                        description: description,
+                                        discountPrice: discountPrice,
+                                        discountPercentage: discountPercentage
+                                      ),
+                                    );
+                                    Navigator.pop(context);
+                                  } else {
+                                    print("Awe, escoge una variante");
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                      },
+                    );
+                } else {
+                  Provider.of<UserCartState>(context).addProductoToCart(
+                    ProductElement(
+                        itemId: itemId,
+                        itemName: itemName,
+                        finalPrice: finalPrice,
+                        imagesUrlList: imagesUrlList,
+                        purchaseType: purchaseType,
+                        registeredDate: registeredDate,
+                        quantity: quantity,
+                        hexColor: hexColor,
+                        parentStoreTag: parentStoreTag,
+                        discountPrice: discountPrice,
+                        discountPercentage: discountPercentage,
+                        description: description
+                    ),
+                  );
+                  final snackBar = SnackBar(
+                    duration: Duration(milliseconds: 300),
+                    content: Text('Al carrito!'),
+                  );
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
               },
               child: Container(
                 width: double.infinity,

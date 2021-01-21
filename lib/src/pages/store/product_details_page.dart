@@ -149,10 +149,8 @@ class ProductDetailsPage extends StatelessWidget {
                             textColor: Colors.white,
                             child: Text('Al Carrito'),
                             onPressed: () {
-                              print("===============================");
-                              print(args.variants);
                               if (args.variants != null && args.variants.length > 0) {
-                                  showDialog(
+                                showDialog(
                                   context: context,
                                   barrierDismissible: true,
                                   builder: (BuildContext context) {
