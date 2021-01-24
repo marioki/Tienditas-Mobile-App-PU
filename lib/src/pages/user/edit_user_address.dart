@@ -231,6 +231,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               SizedBox(
                                 height: 20,
                               ),
+                              Text('Mapa aqui'),
                               Container(
                                   alignment: Alignment(0.0, 0.0),
                                   child: RaisedButton(
