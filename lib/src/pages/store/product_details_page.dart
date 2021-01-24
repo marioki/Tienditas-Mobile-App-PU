@@ -208,7 +208,7 @@ class ProductDetailsPage extends StatelessWidget {
                                             Text(
                                               (() {
                                               if (variantSelected) {
-                                                return("$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
+                                                return("Variante Seleccionada\n$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
                                               } else {
                                                 return "";
                                               }
