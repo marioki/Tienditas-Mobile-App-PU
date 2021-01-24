@@ -215,7 +215,7 @@ class ProductDetailsPage extends StatelessWidget {
                                               }()),
                                               style: TextStyle(
                                                   color: Colors.black,
-                                                  fontSize: 15,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.normal,
                                                   fontFamily: "Nunito"),
                                             ),
