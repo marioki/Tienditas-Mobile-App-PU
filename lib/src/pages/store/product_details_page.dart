@@ -10,7 +10,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     bool variantSelected = false;
@@ -149,12 +148,14 @@ class ProductDetailsPage extends StatelessWidget {
                             textColor: Colors.white,
                             child: Text('Al Carrito'),
                             onPressed: () {
-                              if (args.variants != null && args.variants.length > 0) {
+                              if (args.variants != null &&
+                                  args.variants.length > 0) {
                                 showDialog(
                                   context: context,
                                   barrierDismissible: true,
                                   builder: (BuildContext context) {
-                                    return StatefulBuilder(builder: (context, setState) {
+                                    return StatefulBuilder(
+                                        builder: (context, setState) {
                                       return AlertDialog(
                                         elevation: 10,
                                         title: Text(
@@ -167,25 +168,29 @@ class ProductDetailsPage extends StatelessWidget {
                                         ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: <Widget>[
                                             DropdownButtonHideUnderline(
                                               child: DropdownButton(
-                                                hint: Text("Seleccionar variante"),
+                                                hint: Text(
+                                                    "Seleccionar variante"),
                                                 //value: _value,
                                                 onChanged: (newValue) {
                                                   setState(() {
                                                     variantName = newValue.name;
-                                                    variantPrice = newValue.price;
-                                                    variantQuantity = newValue.quantity;
+                                                    variantPrice =
+                                                        newValue.price;
+                                                    variantQuantity =
+                                                        newValue.quantity;
                                                     variantSelected = true;
                                                   });
                                                 },
-                                                items: args.variants.map((value) {
+                                                items:
+                                                    args.variants.map((value) {
                                                   return new DropdownMenuItem(
                                                     child: new Text(
-                                                      "${value.name} a \$${value.price}"
-                                                    ),
+                                                        "${value.name} a \$${value.price}"),
                                                     value: value,
                                                   );
                                                 }).toList(),
@@ -205,20 +210,41 @@ class ProductDetailsPage extends StatelessWidget {
                                             SizedBox(
                                               height: 15,
                                             ),
-                                            Text(
-                                              (() {
-                                              if (variantSelected) {
-                                                return("$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
-                                              } else {
-                                                return "";
-                                              }
-                                              }()),
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontFamily: "Nunito"),
-                                            ),
+                                            variantSelected
+                                                ? RichText(
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontFamily:
+                                                                "Nunito"),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                              text:
+                                                                  "$variantName a "),
+                                                          TextSpan(
+                                                            text:
+                                                                "\$$variantPrice",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    "Nunito"),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                "\nCantidad disponible: $variantQuantity",
+                                                          ),
+                                                        ]),
+                                                  )
+                                                : Text('')
                                           ],
                                         ),
                                         actions: <Widget>[
@@ -226,30 +252,40 @@ class ProductDetailsPage extends StatelessWidget {
                                             child: Text('Agregar al carrito'),
                                             color: Color(0xFF191660),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             onPressed: () {
                                               if (variantSelected) {
-                                                Provider.of<UserCartState>(context).addProductoToCart(
+                                                Provider.of<UserCartState>(
+                                                        context)
+                                                    .addProductoToCart(
                                                   ProductElement(
-                                                    itemId: args.itemId,
-                                                    itemName: "${args.itemName} - $variantName",
-                                                    finalPrice: variantPrice,
-                                                    imagesUrlList: args.imagesUrlList,
-                                                    purchaseType: args.purchaseType,
-                                                    registeredDate: args.registeredDate,
-                                                    quantity: args.quantity,
-                                                    hexColor: args.hexColor,
-                                                    parentStoreTag: args.parentStoreTag,
-                                                    description: args.description,
-                                                    discountPrice: args.discountPrice,
-                                                    discountPercentage:
-                                                    args.discountPercentage
-                                                  ),
+                                                      itemId: args.itemId,
+                                                      itemName:
+                                                          "${args.itemName} - $variantName",
+                                                      finalPrice: variantPrice,
+                                                      imagesUrlList:
+                                                          args.imagesUrlList,
+                                                      purchaseType:
+                                                          args.purchaseType,
+                                                      registeredDate:
+                                                          args.registeredDate,
+                                                      quantity: args.quantity,
+                                                      hexColor: args.hexColor,
+                                                      parentStoreTag:
+                                                          args.parentStoreTag,
+                                                      description:
+                                                          args.description,
+                                                      discountPrice:
+                                                          args.discountPrice,
+                                                      discountPercentage: args
+                                                          .discountPercentage),
                                                 );
                                                 Navigator.pop(context);
                                               } else {
-                                                print("Awe, escoge una variante");
+                                                print(
+                                                    "Awe, escoge una variante");
                                               }
                                             },
                                           ),
@@ -259,22 +295,22 @@ class ProductDetailsPage extends StatelessWidget {
                                   },
                                 );
                               } else {
-                                Provider.of<UserCartState>(context).addProductoToCart(
+                                Provider.of<UserCartState>(context)
+                                    .addProductoToCart(
                                   ProductElement(
-                                    itemId: args.itemId,
-                                    itemName: args.itemName,
-                                    finalPrice: args.finalPrice,
-                                    imagesUrlList: args.imagesUrlList,
-                                    purchaseType: args.purchaseType,
-                                    registeredDate: args.registeredDate,
-                                    quantity: args.quantity,
-                                    hexColor: args.hexColor,
-                                    parentStoreTag: args.parentStoreTag,
-                                    description: args.description,
-                                    discountPrice: args.discountPrice,
-                                    discountPercentage:
-                                    args.discountPercentage
-                                  ),
+                                      itemId: args.itemId,
+                                      itemName: args.itemName,
+                                      finalPrice: args.finalPrice,
+                                      imagesUrlList: args.imagesUrlList,
+                                      purchaseType: args.purchaseType,
+                                      registeredDate: args.registeredDate,
+                                      quantity: args.quantity,
+                                      hexColor: args.hexColor,
+                                      parentStoreTag: args.parentStoreTag,
+                                      description: args.description,
+                                      discountPrice: args.discountPrice,
+                                      discountPercentage:
+                                          args.discountPercentage),
                                 );
                               }
                               final snackBar = SnackBar(
