@@ -210,6 +210,7 @@ class ProductDetailsPage extends StatelessWidget {
                                             SizedBox(
                                               height: 15,
                                             ),
+
                                             variantSelected
                                                 ? RichText(
                                                     text: TextSpan(
@@ -245,6 +246,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                         ]),
                                                   )
                                                 : Text('')
+
                                           ],
                                         ),
                                         actions: <Widget>[

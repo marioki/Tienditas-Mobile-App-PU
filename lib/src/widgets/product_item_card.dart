@@ -180,14 +180,14 @@ class ProductItemCard extends StatelessWidget {
                                 Text(
                                   (() {
                                   if (variantSelected) {
-                                    return("$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
+                                    return("Variante Seleccionada\n$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
                                   } else {
                                     return "";
                                   }
                                   }()),
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.normal,
                                       fontFamily: "Nunito"),
                                 ),
