@@ -177,20 +177,44 @@ class ProductItemCard extends StatelessWidget {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                Text(
-                                  (() {
-                                  if (variantSelected) {
-                                    return("Variante Seleccionada\n$variantName a \$$variantPrice \nCantidad disponible: $variantQuantity");
-                                  } else {
-                                    return "";
-                                  }
-                                  }()),
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: "Nunito"),
-                                ),
+                                variantSelected
+                                                ? RichText(
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontFamily:
+                                                                "Nunito"),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                              text:
+                                                                  "Variante Seleccionada\n"),
+                                                          TextSpan(
+                                                              text:
+                                                                  "$variantName a "),
+                                                          TextSpan(
+                                                            text:
+                                                                "\$$variantPrice",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    "Nunito"),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                "\nCantidad disponible: $variantQuantity",
+                                                          ),
+                                                        ]),
+                                                  )
+                                                : Text('')
                               ],
                             ),
                             actions: <Widget>[

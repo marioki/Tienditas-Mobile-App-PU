@@ -210,7 +210,6 @@ class ProductDetailsPage extends StatelessWidget {
                                             SizedBox(
                                               height: 15,
                                             ),
-
                                             variantSelected
                                                 ? RichText(
                                                     text: TextSpan(
@@ -225,6 +224,9 @@ class ProductDetailsPage extends StatelessWidget {
                                                         children: <TextSpan>[
                                                           TextSpan(
                                                               text:
+                                                                  "Variante Seleccionada\n"),
+                                                          TextSpan(
+                                                              text:
                                                                   "$variantName a "),
                                                           TextSpan(
                                                             text:
@@ -232,7 +234,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
-                                                                fontSize: 15,
+                                                                fontSize: 16,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
