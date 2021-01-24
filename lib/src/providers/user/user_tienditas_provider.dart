@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/user/user_order_batch.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_tiendita/src/constants/api_constants.dart';
 
@@ -217,4 +216,30 @@ class UsuarioTienditasProvider {
 
     return response;
   }
+
+  Future<http.Response> sendSuggestion(
+      String userIdToken,
+      String userEmail,
+      String suggestion) async {
+    String _url = '$baseApiUrl/api/v1/suggestion';
+    var bodyData = {
+      "suggestion": {
+        "email": userEmail,
+        "suggestion": suggestion
+      }
+    };
+    print(bodyData);
+    String _body = jsonEncode(bodyData);
+    var response = await http.post(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      },
+      body: _body,
+    );
+    return response;
+  }
+
+
 }
