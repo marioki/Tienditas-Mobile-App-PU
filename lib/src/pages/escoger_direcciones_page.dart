@@ -77,7 +77,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
       body: Container(
           margin: EdgeInsets.all(16),
           child: ListView.builder(
-            itemCount: Provider.of<LoginState>(context,listen: false)
+            itemCount: Provider.of<LoginState>(context,listen: true)
                     .getTienditaUser()
                     .address
                     .length +

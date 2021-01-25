@@ -77,7 +77,7 @@ class _CartPageState extends State<CartPage> {
                               GestureDetector(
                                 onLongPressUp: showEasterSnackBar,
                                 child: Text(
-                                  '\$${Provider.of<UserCartState>(context,listen: false).totalPriceOfItems.toStringAsFixed(2)}',
+                                  '\$${Provider.of<UserCartState>(context,listen: true).totalPriceOfItems.toStringAsFixed(2)}',
                                   style: cartTotalPriceStyle,
                                 ),
                               ),
@@ -158,7 +158,7 @@ class _CartPageState extends State<CartPage> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     if (index ==
-                        Provider.of<UserCartState>(context,listen: false)
+                        Provider.of<UserCartState>(context,listen: true)
                                 .cartItemsIds
                                 .length -
                             1) {

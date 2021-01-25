@@ -167,7 +167,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      Provider.of<UserCartState>(context,listen: false)
+                      Provider.of<UserCartState>(context,listen: true)
                           .getItemAmountInCart(widget.itemId)
                           .toString(),
                     ),
