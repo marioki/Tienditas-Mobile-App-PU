@@ -116,7 +116,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
           GestureDetector(
             child: Icon(Icons.delete_outline),
             onTap: () {
-              Provider.of<UserCartState>(context).deleteProductFromCart(
+              Provider.of<UserCartState>(context, listen:false).deleteProductFromCart(
                 ProductElement(
                   itemId: widget.itemId,
                   itemName: widget.itemName,
@@ -161,13 +161,13 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                         color: Colors.grey,
                       ),
                       onTap: () {
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context, listen:false)
                             .subtractProductItemQuantity(widget.itemId);
                       },
                     ),
                     SizedBox(width: 10),
                     Text(
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context,listen: false)
                           .getItemAmountInCart(widget.itemId)
                           .toString(),
                     ),
@@ -179,7 +179,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
                         color: Colors.grey,
                       ),
                       onTap: () {
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context, listen:false)
                             .addProductItemQuantity(widget.itemId);
                       },
                     ),
@@ -210,7 +210,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 //--
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .subtractProductItemQuantity(itemId);
               },
               child: Icon(
@@ -224,7 +224,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
             child: Center(
               child: Text(
                 // if our item is less  then 10 then  it shows 01 02 like that
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .getItemAmountInCart(itemId)
                     .toString(),
                 style: cartItemCounter,
@@ -237,7 +237,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 //++
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .addProductItemQuantity(itemId);
               },
               child: Icon(

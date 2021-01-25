@@ -40,38 +40,42 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Todo Update Provider package
-    return ChangeNotifierProvider<LoginState>(
-      builder: (BuildContext context) => LoginState(),
-      child: ChangeNotifierProvider(
-        builder: (BuildContext context) => UserCartState(),
-        child: MaterialApp(
-          initialRoute: '/',
-          routes: {
-            '/': (BuildContext context) {
-              var state = Provider.of<LoginState>(context);
-              if (state.isLoggedIn()) {
-                return HomePage();
-              } else {
-                return LoginPage();
-              }
-            },
-            'cart': (BuildContext context) => CartPage(),
-            'profile': (BuildContext context) => ProfilePage(),
-            'store_items_page': (BuildContext context) => StoreItemsPage(),
-            'categories_page': (BuildContext context) => CategoriesPage(),
-            'login_page': (BuildContext context) => LoginPage(),
-            'stores_by_category': (BuildContext context) => StoresByCategory(),
-            'search_for_store': (BuildContext context) => SearchForStorePage(),
-            'delivery_options': (BuildContext context) => DeliveryOptionsPage(),
-            'create_credit_card': (BuildContext context) => CrearNuevaTarjeta(),
-            'product_details_page': (BuildContext context) =>
-                ProductDetailsPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LoginState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserCartState(),
+        )
+      ],
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (BuildContext context) {
+            var state = Provider.of<LoginState>(context, listen: true);
+            if (state.isLoggedIn()) {
+              return HomePage();
+            } else {
+              return LoginPage();
+            }
           },
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          'cart': (BuildContext context) => CartPage(),
+          'profile': (BuildContext context) => ProfilePage(),
+          'store_items_page': (BuildContext context) => StoreItemsPage(),
+          'categories_page': (BuildContext context) => CategoriesPage(),
+          'login_page': (BuildContext context) => LoginPage(),
+          'stores_by_category': (BuildContext context) => StoresByCategory(),
+          'search_for_store': (BuildContext context) => SearchForStorePage(),
+          'delivery_options': (BuildContext context) => DeliveryOptionsPage(),
+          'create_credit_card': (BuildContext context) => CrearNuevaTarjeta(),
+          'product_details_page': (BuildContext context) =>
+              ProductDetailsPage(),
+        },
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
       ),
     );

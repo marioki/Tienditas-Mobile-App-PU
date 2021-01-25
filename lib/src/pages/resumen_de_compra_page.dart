@@ -26,8 +26,8 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
     pr.style(message: 'Finalizando Compra...');
 
     List<DeliveryOption> deliveryOptionList =
-        Provider.of<UserCartState>(context).getListOfDeliveryInfo();
-    Batch batch = Provider.of<UserCartState>(context).currentBatch;
+        Provider.of<UserCartState>(context,listen: false).getListOfDeliveryInfo();
+    Batch batch = Provider.of<UserCartState>(context,listen: false).currentBatch;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -198,7 +198,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          '\$${Provider.of<UserCartState>(context).impuesto.toStringAsFixed(2)}',
+                          '\$${Provider.of<UserCartState>(context,listen: false).impuesto.toStringAsFixed(2)}',
                           style: TextStyle(fontFamily: 'Nunito'),
                         ),
                       )
@@ -234,7 +234,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     ),
                   ),
                   Text(
-                    '\$${Provider.of<UserCartState>(context).totalAmountOfBatch.toStringAsFixed(2)}',
+                    '\$${Provider.of<UserCartState>(context,listen: false).totalAmountOfBatch.toStringAsFixed(2)}',
                     style: TextStyle(
                         color: azulTema,
                         fontSize: 16,
@@ -259,11 +259,14 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                   await pr.show();
 
                   UserTienditas userTienditas =
-                      Provider.of<LoginState>(context).getTienditaUser();
+                      Provider.of<LoginState>(context, listen: false)
+                          .getTienditaUser();
                   final userTokenId =
-                      Provider.of<LoginState>(context).currentUserIdToken;
+                      Provider.of<LoginState>(context, listen: false)
+                          .currentUserIdToken;
                   final _batch =
-                      Provider.of<UserCartState>(context).currentBatch;
+                      Provider.of<UserCartState>(context, listen: false)
+                          .currentBatch;
                   var response = await SendBatchOfOrders()
                       .sendBatchOfOrders(userTienditas, userTokenId, _batch);
                   final responseTienditasApi = responseFromJson(response.body);
@@ -275,8 +278,9 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       //La compra fue exitosa
                       print(responseTienditasApi.body.message);
                       //Limpiar el Carrito
-                      Provider.of<UserCartState>(context).deleteAllCartItems();
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context, listen: false)
+                          .deleteAllCartItems();
+                      Provider.of<UserCartState>(context, listen: false)
                           .calculateTotalPriceOfCart();
                       Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(builder: (BuildContext context) {

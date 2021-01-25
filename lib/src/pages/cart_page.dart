@@ -18,7 +18,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
-    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas userInfo = Provider.of<LoginState>(context, listen:false).getTienditaUser();
 
     return Scaffold(
       backgroundColor: grisClaroTema,
@@ -77,7 +77,7 @@ class _CartPageState extends State<CartPage> {
                               GestureDetector(
                                 onLongPressUp: showEasterSnackBar,
                                 child: Text(
-                                  '\$${Provider.of<UserCartState>(context).totalPriceOfItems.toStringAsFixed(2)}',
+                                  '\$${Provider.of<UserCartState>(context,listen: false).totalPriceOfItems.toStringAsFixed(2)}',
                                   style: cartTotalPriceStyle,
                                 ),
                               ),
@@ -98,7 +98,7 @@ class _CartPageState extends State<CartPage> {
                               style: cartButtonPagarStyle,
                             ),
                             onPressed: () {
-                              if (Provider.of<LoginState>(context)
+                              if (Provider.of<LoginState>(context, listen:false)
                                       .getTienditaUser()
                                       .name ==
                                   null) {
@@ -111,19 +111,19 @@ class _CartPageState extends State<CartPage> {
                                   ),
                                 );
                               } else {
-                                if (!Provider.of<LoginState>(context)
+                                if (!Provider.of<LoginState>(context, listen:false)
                                         .isAnon() &&
-                                    (Provider.of<UserCartState>(context)
+                                    (Provider.of<UserCartState>(context, listen:false)
                                             .cartProductList
                                             .length >
                                         0)) {
                                   print('Stores currently on the cart');
-                                  print(Provider.of<UserCartState>(context)
+                                  print(Provider.of<UserCartState>(context, listen:false)
                                       .allStoreTagsList);
                                   print('Lista de Tiendas Filtradas');
-                                  print(Provider.of<UserCartState>(context)
+                                  print(Provider.of<UserCartState>(context, listen:false)
                                       .filterParentStoreTagList());
-                                  Provider.of<UserCartState>(context)
+                                  Provider.of<UserCartState>(context, listen:false)
                                       .clearSelectedDeliveryOptionList();
                                   Navigator.pushNamed(
                                       context, 'delivery_options');
@@ -154,33 +154,33 @@ class _CartPageState extends State<CartPage> {
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   itemCount:
-                      Provider.of<UserCartState>(context).cartItemsIds.length,
+                      Provider.of<UserCartState>(context,listen: false).cartItemsIds.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     if (index ==
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context,listen: false)
                                 .cartItemsIds
                                 .length -
                             1) {
                       return Column(
                         children: <Widget>[
                           NewCartItemWidget(
-                            itemId: Provider.of<UserCartState>(context)
+                            itemId: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .itemId,
-                            itemName: Provider.of<UserCartState>(context)
+                            itemName: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .itemName,
-                            imagesUrlList: Provider.of<UserCartState>(context)
+                            imagesUrlList: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .imagesUrlList,
-                            finalPrice: Provider.of<UserCartState>(context)
+                            finalPrice: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .finalPrice,
-                            colorHex: Provider.of<UserCartState>(context)
+                            colorHex: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .hexColor,
-                            parentStoreTag: Provider.of<UserCartState>(context)
+                            parentStoreTag: Provider.of<UserCartState>(context,listen: false)
                                 .cartProductList[index]
                                 .parentStoreTag,
                           ),
@@ -194,22 +194,22 @@ class _CartPageState extends State<CartPage> {
 
                     print(index);
                     return NewCartItemWidget(
-                      itemId: Provider.of<UserCartState>(context)
+                      itemId: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .itemId,
-                      itemName: Provider.of<UserCartState>(context)
+                      itemName: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .itemName,
-                      imagesUrlList: Provider.of<UserCartState>(context)
+                      imagesUrlList: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .imagesUrlList,
-                      finalPrice: Provider.of<UserCartState>(context)
+                      finalPrice: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .finalPrice,
-                      colorHex: Provider.of<UserCartState>(context)
+                      colorHex: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .hexColor,
-                      parentStoreTag: Provider.of<UserCartState>(context)
+                      parentStoreTag: Provider.of<UserCartState>(context,listen: false)
                           .cartProductList[index]
                           .parentStoreTag,
                     );

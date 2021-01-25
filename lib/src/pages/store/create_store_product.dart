@@ -335,7 +335,7 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
                                       description: description,
                                       itemName: itemName,
                                       deliveryTime: getDeliveryTimeInfo(),
-                                      userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                      userIdToken: Provider.of<LoginState>(context,listen: false).currentUserIdToken,
                                       variants: variants
                                     );
                                     if (response.statusCode == 200) {
@@ -368,7 +368,7 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
                                       finalPrice: finalPrice,
                                       itemName: itemName,
                                       description: description,
-                                      userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                      userIdToken: Provider.of<LoginState>(context,listen: false).currentUserIdToken,
                                       variants: variants
                                     );
                                     if (response.statusCode == 200) {

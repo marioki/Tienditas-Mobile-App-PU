@@ -264,10 +264,11 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                               await UsuarioTienditasProvider()
                                                   .updateUser(
                                                       Provider.of<LoginState>(
-                                                              context)
+                                                              context,
+                                                              listen: false)
                                                           .currentUserIdToken,
                                                       widget.user);
-                                          Provider.of<LoginState>(context)
+                                          Provider.of<LoginState>(context, listen: false)
                                               .reloadUserInfo();
                                         } else {
                                           Scaffold.of(context).showSnackBar(

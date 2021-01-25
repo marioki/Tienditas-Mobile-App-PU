@@ -257,7 +257,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                                 await UsuarioTienditasProvider()
                                                     .createAddress(
                                                         Provider.of<LoginState>(
-                                                                context)
+                                                                context, listen: false)
                                                             .currentUserIdToken,
                                                         widget.userEmail,
                                                         widget.name,
@@ -272,7 +272,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                                 await UsuarioTienditasProvider()
                                                     .updateAddress(
                                                         Provider.of<LoginState>(
-                                                                context)
+                                                                context, listen: false)
                                                             .currentUserIdToken,
                                                         widget.id,
                                                         widget.userEmail,

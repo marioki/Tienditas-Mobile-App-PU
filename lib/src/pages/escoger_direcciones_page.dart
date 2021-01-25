@@ -77,18 +77,18 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
       body: Container(
           margin: EdgeInsets.all(16),
           child: ListView.builder(
-            itemCount: Provider.of<LoginState>(context)
+            itemCount: Provider.of<LoginState>(context,listen: false)
                     .getTienditaUser()
                     .address
                     .length +
                 1,
             itemBuilder: (context, index) {
               if (index <
-                  Provider.of<LoginState>(context)
+                  Provider.of<LoginState>(context,listen: false)
                       .getTienditaUser()
                       .address
                       .length) {
-                UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
+                UserTienditas user = Provider.of<LoginState>(context,listen: false).getTienditaUser();
                 return _getDireccionCard(
                     context,
                     index,
@@ -98,7 +98,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                 return FlatButton(
                   onPressed: () {
                     UserTienditas user =
-                        Provider.of<LoginState>(context).getTienditaUser();
+                        Provider.of<LoginState>(context, listen:false).getTienditaUser();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -111,7 +111,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                         },
                       ),
                     ).then((value) =>
-                        Provider.of<LoginState>(context).reloadUserInfo());
+                        Provider.of<LoginState>(context, listen:false).reloadUserInfo());
                   },
                   child: Text('+ Agregar Dirección'),
                 );
@@ -175,7 +175,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
 
   void setUserAddres() {
     Address address =
-        Provider.of<LoginState>(context).getTienditaUser().address[groupRadio];
+        Provider.of<LoginState>(context, listen:false).getTienditaUser().address[groupRadio];
 
     UserAddress userAddress = UserAddress(
         addressLine1: address.addressLine1,
@@ -184,6 +184,6 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         province: address.province,
         referencePoint: address.referencePoint);
 
-    Provider.of<UserCartState>(context).setUserAddressToOrders(userAddress);
+    Provider.of<UserCartState>(context, listen:false).setUserAddressToOrders(userAddress);
   }
 }

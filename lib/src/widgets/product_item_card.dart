@@ -1,6 +1,4 @@
-import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/pages/store/product_details_page.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
@@ -202,7 +200,7 @@ class ProductItemCard extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   if (variantSelected) {
-                                    Provider.of<UserCartState>(context).addProductoToCart(
+                                    Provider.of<UserCartState>(context, listen:false).addProductoToCart(
                                       ProductElement(
                                         itemId: itemId,
                                         itemName: "$itemName - $variantName",
@@ -230,7 +228,7 @@ class ProductItemCard extends StatelessWidget {
                       },
                     );
                 } else {
-                  Provider.of<UserCartState>(context).addProductoToCart(
+                  Provider.of<UserCartState>(context, listen:false).addProductoToCart(
                     ProductElement(
                         itemId: itemId,
                         itemName: itemName,

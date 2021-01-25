@@ -395,7 +395,7 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                                       Scaffold.of(context).showSnackBar(
                                           SnackBar(content: Text('Procesando')));
                                       response = await ProductProvider().updateProductDeleteAndAdd(
-                                        userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                        userIdToken: Provider.of<LoginState>(context,listen: false).currentUserIdToken,
                                         productElement: widget.productElement,
                                         itemImageBase64List: imageBase64List,
                                         deliveryTime: getDeliveryTimeInfo(),
@@ -433,7 +433,7 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                                           SnackBar(content: Text('Procesando')));
                                       response =
                                           await ProductProvider().updateProductAdd(
-                                        userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                        userIdToken: Provider.of<LoginState>(context, listen: false).currentUserIdToken,
                                         productElement: widget.productElement,
                                         itemImageBase64List: imageBase64List,
                                         deliveryTime: getDeliveryTimeInfo(),

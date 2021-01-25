@@ -18,14 +18,14 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
   @override
   void initState() {
     _getThingsOnStartup().then((value) {
-      Provider.of<LoginState>(context).reloadUserInfo();
+      Provider.of<LoginState>(context, listen: false).reloadUserInfo();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas user = Provider.of<LoginState>(context,listen: false).getTienditaUser();
 
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +67,7 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
                     ),
                   ),
                 ).then((value) =>
-                    Provider.of<LoginState>(context).reloadUserInfo());
+                    Provider.of<LoginState>(context, listen: false).reloadUserInfo());
               },
               child: Text('+ Agregar Cuenta'),
             );
@@ -155,8 +155,8 @@ class _UserBankAccountsPageState extends State<UserBankAccountsPage> {
   }
 
   Future<void> deleteBankAccount(BankAccount bankAccount, BuildContext context) async {
-    UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
-    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    UserTienditas user = Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    final userTokenId = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     ProgressDialog pr = ProgressDialog(context);
     pr.style(
         message: 'Eliminando cuenta',

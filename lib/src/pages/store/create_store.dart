@@ -46,7 +46,7 @@ class _CreateStoreState extends State<CreateStore> {
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
     pr.style(message: 'Guardando...');
-    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas userInfo = Provider.of<LoginState>(context,listen: false).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -380,7 +380,7 @@ class _CreateStoreState extends State<CreateStore> {
                                               //Crear tienda sin logo
                                               response = await StoreProvider()
                                                   .createStore(
-                                                Provider.of<LoginState>(context)
+                                                Provider.of<LoginState>(context,listen: false)
                                                     .currentUserIdToken,
                                                 storeTagName,
                                                 storeName,

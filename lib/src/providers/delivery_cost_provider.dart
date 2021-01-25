@@ -12,7 +12,7 @@ class TotalDeliveryFee {
 
   Future<double> getTotalFee(
       BuildContext context, List<String> storeTagList) async {
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider.of<LoginState>(context,listen: false).currentUserIdToken;
 
     for (int i = 0; i < storeTagList.length; i++) {
       String storeTag = storeTagList[i];

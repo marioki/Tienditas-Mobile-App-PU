@@ -43,12 +43,12 @@ class ProductDetailsPage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     badgeContent: Text(
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context,listen: false)
                           .getCartItemsQuantity()
                           .toString(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    showBadge: (Provider.of<UserCartState>(context)
+                    showBadge: (Provider.of<UserCartState>(context,listen: false)
                                 .getCartItemsQuantity() >
                             0)
                         ? true
@@ -210,7 +210,6 @@ class ProductDetailsPage extends StatelessWidget {
                                             SizedBox(
                                               height: 15,
                                             ),
-
                                             variantSelected
                                                 ? RichText(
                                                     text: TextSpan(
@@ -246,7 +245,6 @@ class ProductDetailsPage extends StatelessWidget {
                                                         ]),
                                                   )
                                                 : Text('')
-
                                           ],
                                         ),
                                         actions: <Widget>[
@@ -260,7 +258,8 @@ class ProductDetailsPage extends StatelessWidget {
                                             onPressed: () {
                                               if (variantSelected) {
                                                 Provider.of<UserCartState>(
-                                                        context)
+                                                        context,
+                                                        listen: false)
                                                     .addProductoToCart(
                                                   ProductElement(
                                                       itemId: args.itemId,
@@ -297,7 +296,7 @@ class ProductDetailsPage extends StatelessWidget {
                                   },
                                 );
                               } else {
-                                Provider.of<UserCartState>(context)
+                                Provider.of<UserCartState>(context, listen: false)
                                     .addProductoToCart(
                                   ProductElement(
                                       itemId: args.itemId,

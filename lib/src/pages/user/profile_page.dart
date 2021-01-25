@@ -24,20 +24,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     _getThingsOnStartup().then((value) {
-      Provider.of<LoginState>(context).reloadUserInfo();
+      Provider.of<LoginState>(context, listen: false).reloadUserInfo();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
-    var image;
-    if (Provider.of<LoginState>(context).getFireBaseUser().photoURL == null) {
-      image = Image.asset('assets/images/icons/tienda.png');
-    } else {
-      image = Provider.of<LoginState>(context).getFireBaseUser().photoURL;
-    }
+    UserTienditas userInfo =
+        Provider.of<LoginState>(context, listen: false).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -94,13 +89,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     name: (userInfo.name != null) ? userInfo.name : "",
                     email: userInfo.userEmail,
                     phoneNumber: userInfo.phoneNumber,
-                    image: (Provider.of<LoginState>(context)
+                    image: (Provider.of<LoginState>(context,listen: false)
                                 .getFireBaseUser()
-                                .photoUrl !=
+                                .photoURL !=
                             null)
-                        ? Provider.of<LoginState>(context)
+                        ? Provider.of<LoginState>(context,listen: false)
                             .getFireBaseUser()
-                            .photoUrl
+                            .photoURL
                         : "https://tienditas-dev-images.s3.amazonaws.com/tiendas/iconos/tienditas_default.jpg",
                     onPressed: () {
                       Navigator.push(
@@ -133,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             builder: (context) => CreateStore(),
                           ),
                         ).then((value) =>
-                            Provider.of<LoginState>(context).reloadUserInfo());
+                            Provider.of<LoginState>(context,listen: false).reloadUserInfo());
                       }
                     },
                   ),
@@ -217,7 +212,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: "Cerrar Sesión",
                     imageName: "logout",
                     onPressed: () {
-                      Provider.of<LoginState>(context).logout();
+                      Provider.of<LoginState>(context, listen: false).logout();
                       print("Logout");
                     },
                   ),

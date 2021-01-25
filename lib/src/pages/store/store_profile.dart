@@ -49,7 +49,7 @@ class _StoreProfileState extends State<StoreProfile> {
 
   @override
   Widget build(BuildContext context) {
-    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas userInfo = Provider.of<LoginState>(context,listen: false).getTienditaUser();
     StoreModel resultTiendita;
     return Scaffold(
       appBar: AppBar(
@@ -163,7 +163,7 @@ class _StoreProfileState extends State<StoreProfile> {
                                       store: resultTiendita.body.store,
                                     ),
                                   ))
-                              .then((value) => Provider.of<LoginState>(context)
+                              .then((value) => Provider.of<LoginState>(context, listen: false)
                                   .reloadUserInfo());
                         },
                       ),

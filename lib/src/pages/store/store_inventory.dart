@@ -222,7 +222,7 @@ class _StoreInventoryState extends State<StoreInventory> {
   }
 
   Future<void> deleteProduct(String itemId, BuildContext context) async {
-    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    final userTokenId = Provider.of<LoginState>(context,listen: false).currentUserIdToken;
     ProgressDialog pr = ProgressDialog(context);
     pr.style(
       message: 'Eliminando producto',

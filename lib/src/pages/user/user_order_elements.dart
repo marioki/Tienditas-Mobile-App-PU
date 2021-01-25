@@ -213,7 +213,7 @@ class _UserOrderElementsState extends State<UserOrderElements> {
         ));
     pr.show();
 
-    String userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    String userIdToken = Provider.of<LoginState>(context,listen: false).currentUserIdToken;
     var response = await OrderConfirmationByUser().confirmOrder(
       storeTagName: widget.order.storeTagName,
       orderId: widget.order.orderId,
