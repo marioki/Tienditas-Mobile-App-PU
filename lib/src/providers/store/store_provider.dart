@@ -67,7 +67,7 @@ class StoreProvider {
 
   Future<Tiendita> getAllTienditas(BuildContext context) async {
 
-    String url = '$baseApiUrl/api/v1/store?row_count=10';
+    String url = '$baseApiUrl/api/v1/store?rowcount=100';
     final userIdToken =
     Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     final response = await http
@@ -325,5 +325,19 @@ class StoreProvider {
     return response;
   }
 
+  
+  Future<http.Response> deleteProduct(String userIdToken,
+      String storeTagName,
+      String itemId) async {
+    String _url = '$baseApiUrl/api/v1/product?store_tag_name=$storeTagName&item_id=$itemId';
+    var response = await http.delete(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      }
+    );
+    return response;
+  }
 
 }

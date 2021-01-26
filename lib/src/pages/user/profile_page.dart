@@ -6,6 +6,7 @@ import 'package:app_tiendita/src/pages/user/user_address_page.dart';
 import 'package:app_tiendita/src/pages/user/user_bank_accounts.dart';
 import 'package:app_tiendita/src/pages/user/user_batch_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
+import 'package:app_tiendita/src/pages/user/user_suggestions_page.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
@@ -194,6 +195,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => InfoPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  UserProfileActionBtn(
+                    text: "Sugerencias",
+                    imageName: "idea",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SuggestionPage(
+                            email: userInfo.userEmail,
+                          ),
                         ),
                       );
                     },

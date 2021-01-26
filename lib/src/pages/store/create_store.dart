@@ -424,6 +424,7 @@ class _CreateStoreState extends State<CreateStore> {
                                           }
                                           pr.hide();
                                         } else {
+                                          isLoading = false;
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(

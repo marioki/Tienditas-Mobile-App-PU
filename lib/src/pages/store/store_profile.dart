@@ -94,7 +94,7 @@ class _StoreProfileState extends State<StoreProfile> {
                             resultTiendita.body.store.originalStoreName,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           StoreCard(
                             amount: resultTiendita.body.store.pendingBalance,

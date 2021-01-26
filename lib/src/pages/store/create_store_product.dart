@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io' as Io;
-
 import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/pages/store/product_variant_page.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
@@ -48,23 +48,23 @@ class _CreateStoreProductState extends State<CreateStoreProduct> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: EditDeliveryOptionCard(storeTagName: widget.storeTagName),
+        child: CreateStoreProductCard(storeTagName: widget.storeTagName),
       ),
     );
   }
 }
 
 // ignore: must_be_immutable
-class EditDeliveryOptionCard extends StatefulWidget {
-  EditDeliveryOptionCard({@required this.storeTagName});
+class CreateStoreProductCard extends StatefulWidget {
+  CreateStoreProductCard({@required this.storeTagName});
 
   final String storeTagName;
 
   @override
-  _EditDeliveryOptionCardState createState() => _EditDeliveryOptionCardState();
+  _CreateStoreProductCardState createState() => _CreateStoreProductCardState();
 }
 
-class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
+class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
   ProductElement productElement;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -74,6 +74,7 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
   String itemName;
   String description;
   String quantity;
+  List<Variant> variants = [];
 
   //Future<Io.File> imageFile;
   Future<dynamic> imageFile;
@@ -279,107 +280,133 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"),
+                            fontFamily: "Nunito"
+                        ),
                       ),
                       _buildDeliveryTimeWidget(),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Divider(
                         color: Colors.black,
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: RaisedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              pr.show();
-                              generateBase64ImageList();
-                              if (imageFileList.isNotEmpty) {
-                                //Create product when image is loaded
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Procesando'),
-                                  ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            RaisedButton(
+                              onPressed: () {
+                                goToVariantScreen(
+                                  context
                                 );
-                                response = await ProductProvider()
-                                    .createProductWithImage(
-                                  quantity: quantity,
-                                  storeTagName: widget.storeTagName,
-                                  finalPrice: finalPrice,
-                                  itemImageUrlList: imageBase64List,
-                                  description: description,
-                                  itemName: itemName,
-                                  deliveryTime: getDeliveryTimeInfo(),
-                                  userIdToken: Provider.of<LoginState>(context)
-                                      .currentUserIdToken,
-                                );
-                                if (response.statusCode == 200) {
-                                  pr.hide();
-                                  ResponseTienditasApi responseTienditasApi =
-                                      responseFromJson(response.body);
-                                  if (responseTienditasApi.statusCode == 200) {
-                                    print(responseTienditasApi.body.message);
+                              },
+                              color: Color(0xFF191660),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              textColor: Colors.white,
+                              child: Text(
+                                "Agregar Variantes",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "Nunito"),
+                              ),
+                            ),
+                            RaisedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  pr.show();
+                                  generateBase64ImageList();
+                                  if (imageFileList.isNotEmpty) {
+                                    //Create product when image is loaded
                                     Scaffold.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text(
-                                            '${responseTienditasApi.body.message}'),
+                                        content: Text('Procesando'),
                                       ),
                                     );
-                                    isLoading = false;
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    //aqui mensaje brujo
-                                    print(responseTienditasApi.body.message);
-                                    print(responseTienditasApi.statusCode);
-                                    isLoading = false;
-                                  }
-                                }
-                              } else {
-                                //Create product when img is null
-                                Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('Procesando')));
-                                response =
-                                    await ProductProvider().createProduct(
-                                  quantity: quantity,
-                                  storeTagName: widget.storeTagName,
-                                  finalPrice: finalPrice,
-                                  itemName: itemName,
-                                  description: description,
-                                  userIdToken: Provider.of<LoginState>(context)
-                                      .currentUserIdToken,
-                                );
-                                if (response.statusCode == 200) {
-                                  pr.hide();
-                                  ResponseTienditasApi responseTienditasApi =
-                                      responseFromJson(response.body);
-                                  if (responseTienditasApi.statusCode == 200) {
-                                    print(responseTienditasApi.body.message);
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            '${responseTienditasApi.body.message}'),
-                                      ),
+                                    response = await ProductProvider()
+                                        .createProductWithImage(
+                                      quantity: quantity,
+                                      storeTagName: widget.storeTagName,
+                                      finalPrice: finalPrice,
+                                      itemImageUrlList: imageBase64List,
+                                      description: description,
+                                      itemName: itemName,
+                                      deliveryTime: getDeliveryTimeInfo(),
+                                      userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                      variants: variants
                                     );
-                                    isLoading = false;
-                                    Navigator.of(context).pop();
+                                    if (response.statusCode == 200) {
+                                      pr.hide();
+                                      ResponseTienditasApi responseTienditasApi =
+                                          responseFromJson(response.body);
+                                      if (responseTienditasApi.statusCode == 200) {
+                                        print(responseTienditasApi.body.message);
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                '${responseTienditasApi.body.message}'),
+                                          ),
+                                        );
+                                        isLoading = false;
+                                        Navigator.of(context).pop();
+                                      } else {
+                                        //aqui mensaje brujo
+                                        print(responseTienditasApi.body.message);
+                                        print(responseTienditasApi.statusCode);
+                                        isLoading = false;
+                                      }
+                                    }
                                   } else {
-                                    print(responseTienditasApi.body.message);
-                                    isLoading = false;
+                                    //Create product when img is null
+                                    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Imagen del producto es requerido')));
+                                    response = await ProductProvider().createProduct(
+                                      quantity: quantity,
+                                      storeTagName: widget.storeTagName,
+                                      finalPrice: finalPrice,
+                                      itemName: itemName,
+                                      description: description,
+                                      userIdToken: Provider.of<LoginState>(context).currentUserIdToken,
+                                      variants: variants
+                                    );
+                                    if (response.statusCode == 200) {
+                                      pr.hide();
+                                      ResponseTienditasApi responseTienditasApi =
+                                          responseFromJson(response.body);
+                                      if (responseTienditasApi.statusCode == 200) {
+                                        print(responseTienditasApi.body.message);
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                '${responseTienditasApi.body.message}'),
+                                          ),
+                                        );
+                                        isLoading = false;
+                                        Navigator.of(context).pop();
+                                      } else {
+                                        print(responseTienditasApi.body.message);
+                                        isLoading = false;
+                                      }
+                                    }
                                   }
                                 }
-                              }
-                            }
-                          },
-                          color: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          textColor: Colors.white,
-                          child: Text(
-                            "Guardar",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                fontFamily: "Nunito"),
-                          ),
+                              },
+                              color: Colors.green,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              textColor: Colors.white,
+                              child: Text(
+                                "Guardar",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "Nunito"),
+                              ),
+                            ),
+                          ]
                         ),
                       ),
                     ]),
@@ -491,5 +518,26 @@ class _EditDeliveryOptionCardState extends State<EditDeliveryOptionCard> {
         ),
       ],
     );
+  }
+
+  Future<void> goToVariantScreen(BuildContext context) async {
+    bool saveButtonIsVisible = false;
+    if (variants.length > 0) {
+      saveButtonIsVisible = true;
+    }
+    final variantResult = await Navigator.push(
+     context,
+     MaterialPageRoute(
+       builder: (context) => ProductVariant(
+         variants: variants,
+         saveButtonIsVisible: saveButtonIsVisible,
+       ),
+     ),
+    );
+    if (variantResult != null) {
+      setState(() {
+        variants = variantResult;
+      });
+    }
   }
 }

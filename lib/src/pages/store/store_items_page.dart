@@ -185,6 +185,7 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                     deliveryTime: finalListProductos[index].deliveryTime,
                     discountPrice: finalListProductos[index].discountPrice,
                     discountPercentage: finalListProductos[index].discountPercentage,
+                    variants: finalListProductos[index].variants,
                   );
                 },
               );

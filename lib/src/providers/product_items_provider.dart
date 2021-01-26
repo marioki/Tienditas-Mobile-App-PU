@@ -81,7 +81,8 @@ class ProductProvider {
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
         "discount_price": productElement.discountPrice,
-        "description": productElement.description
+        "description": productElement.description,
+        "variants": productElement.variants
       }
     };
     String _body = jsonEncode(bodyData);
@@ -120,7 +121,8 @@ class ProductProvider {
         "quantity": productElement.quantity,
         "delivery_time": deliveryTime,
         "discount_price": productElement.discountPrice,
-        "description": productElement.description
+        "description": productElement.description,
+        "variants": productElement.variants
       }
     };
     String _body = jsonEncode(bodyData);
@@ -143,7 +145,8 @@ class ProductProvider {
       quantity,
       storeTagName,
       var itemImageUrlList,
-      String deliveryTime}) async {
+      String deliveryTime,
+      variants}) async {
     print('=========Create Product with image Method============');
     var images = jsonEncode(itemImageUrlList);
 
@@ -158,7 +161,8 @@ class ProductProvider {
         "description": description,
         "item_status": "active",
         "quantity": quantity,
-        "delivery_time": deliveryTime
+        "delivery_time": deliveryTime,
+        "variants": variants
       }
     };
     String _body = jsonEncode(bodyData);
@@ -181,6 +185,7 @@ class ProductProvider {
     quantity,
     storeTagName,
     String deliveryTime,
+    variants
   }) async {
     print('=========Create Product Method============');
 
@@ -194,7 +199,8 @@ class ProductProvider {
         "description": description,
         "item_status": "active",
         "quantity": quantity,
-        "delivery_time": deliveryTime
+        "delivery_time": deliveryTime,
+        "variants": variants
       }
     };
     String _body = jsonEncode(bodyData);

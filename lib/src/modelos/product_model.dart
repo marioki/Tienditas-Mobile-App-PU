@@ -63,7 +63,8 @@ class ProductElement {
       this.parentStoreTag,
       this.deliveryTime,
       this.discountPercentage,
-      this.discountPrice});
+      this.discountPrice,
+      this.variants});
 
   String storeTagName;
   String quantity;
@@ -79,12 +80,13 @@ class ProductElement {
   List<String> imagesUrlList;
   String discountPercentage;
   String discountPrice;
+  List<Variant> variants;
+
 
   //===Added Properties for cart page
   int cartItemAmount = 1;
   String parentStoreTag;
   String hexColor;
-
   String deliveryTime;
 
   factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
@@ -103,6 +105,7 @@ class ProductElement {
         deliveryTime: json["delivery_time"],
         discountPercentage: json["discount_percentage"],
         discountPrice: json["discount_price"],
+        variants: json["variants"] == null ? null : List<Variant>.from(json["variants"].map((x) => Variant.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,8 +123,57 @@ class ProductElement {
         "images_url": List<dynamic>.from(imagesUrlList.map((x) => x)),
         "delivery_time": deliveryTime,
         "discount_price": discountPrice,
-        "discount_percentage": discountPercentage
+        "discount_percentage": discountPercentage,
+        "variants": variants == null ? null : List<dynamic>.from(variants.map((x) => x.toJson())),
       };
+}
+
+class Variant {
+    String name;
+    String quantity;
+    String price;
+
+    String get variantName {
+      return this.name;
+    }
+
+    set variantName(String name) {
+      this.name = name;
+    }
+
+    String get variantQuantity {
+      return this.name;
+    }
+
+    set variantQuantity(String quantity) {
+      this.quantity = quantity;
+    }
+
+    String get variantPrice {
+      return this.name;
+    }
+
+    set variantPrice(String price) {
+      this.price = price;
+    }
+
+    Variant({
+        this.name,
+        this.quantity,
+        this.price,
+    });
+
+    factory Variant.fromJson(Map<String, dynamic> json) => Variant(
+        name: json["name"],
+        quantity: json["quantity"],
+        price: json["price"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "quantity": quantity,
+        "price": price,
+    };
 }
 
 enum Outstanding { FALSE }
