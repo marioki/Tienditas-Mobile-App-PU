@@ -174,9 +174,9 @@ class _StoreProfileState extends State<StoreProfile> {
               if(tienda.body.store.deliveryOptions.length == 0) {
                 return "Debe agregar métodos de envío para que podamos activar su tienda";
               } else if (tienda.body.store.phoneNumber.length == 0) {
-                return "Debe agregar un  número telefónico para que podamos activar su tienda";
+                return "Debe agregar un número telefónico para que podamos activar su tienda";
               } else if (tienda.body.store.description.length == 0) {
-                return "Debe agregar una  descripción para que podamos activar su tienda";
+                return "Debe agregar una descripción para que podamos activar su tienda";
               } else {
                 return "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.";
               }
