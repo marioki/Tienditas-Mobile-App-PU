@@ -108,6 +108,9 @@ class ProductDetailsPage extends StatelessWidget {
                                 fontFamily: 'Nunito',
                               ),
                             ),
+                            Text(
+                              "Disponible: ${args.quantity}"
+                            ),
                             Text((args.deliveryTime != null)
                                 ? 'Tiempo de entrega ${args.deliveryTime}'
                                 : '')
