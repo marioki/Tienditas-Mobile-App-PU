@@ -1,5 +1,6 @@
 import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/pages/location_map_page.dart';
 import 'package:app_tiendita/src/providers/province_provider.dart';
 import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
@@ -231,7 +232,14 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               SizedBox(
                                 height: 20,
                               ),
-                              Text('Mapa aqui'),
+                              GestureDetector(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LocationMapPage(),
+                                    )),
+                                child: Text('Mapa aqui'),
+                              ),
                               Container(
                                   alignment: Alignment(0.0, 0.0),
                                   child: RaisedButton(
@@ -257,7 +265,8 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                                 await UsuarioTienditasProvider()
                                                     .createAddress(
                                                         Provider.of<LoginState>(
-                                                                context, listen: false)
+                                                                context,
+                                                                listen: false)
                                                             .currentUserIdToken,
                                                         widget.userEmail,
                                                         widget.name,
@@ -272,7 +281,8 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                                 await UsuarioTienditasProvider()
                                                     .updateAddress(
                                                         Provider.of<LoginState>(
-                                                                context, listen: false)
+                                                                context,
+                                                                listen: false)
                                                             .currentUserIdToken,
                                                         widget.id,
                                                         widget.userEmail,

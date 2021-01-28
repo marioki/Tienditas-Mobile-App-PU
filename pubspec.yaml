@@ -50,6 +50,8 @@ dependencies:
   #flutter_facebook_auth: 1.0.2+2
   firebase_core: ^0.7.0
   google_maps_flutter: ^1.1.1
+  location: ^3.2.4
+
 
 
 
