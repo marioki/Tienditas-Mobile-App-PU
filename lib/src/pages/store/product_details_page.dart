@@ -270,7 +270,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                   ProductElement(
                                                       itemId: args.itemId,
                                                       itemName:
-                                                          "${args.itemName} - $variantName",
+                                                          "${args.itemName} variante $variantName",
                                                       finalPrice: variantPrice,
                                                       imagesUrlList:
                                                           args.imagesUrlList,

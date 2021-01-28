@@ -233,7 +233,7 @@ class ProductItemCard extends StatelessWidget {
                                       Provider.of<UserCartState>(context).addProductoToCart(
                                         ProductElement(
                                           itemId: itemId,
-                                          itemName: "$itemName - $variantName",
+                                          itemName: "$itemName variante $variantName",
                                           finalPrice: variantPrice,
                                           imagesUrlList: imagesUrlList,
                                           purchaseType: purchaseType,
