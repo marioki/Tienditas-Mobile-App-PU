@@ -49,6 +49,8 @@ dependencies:
   apple_sign_in: ^0.1.0
   #flutter_facebook_auth: 1.0.2+2
   firebase_core: ^0.5.3
+  carousel_slider: ^2.3.1
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
