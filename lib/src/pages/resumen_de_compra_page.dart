@@ -365,7 +365,6 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
       children: <Widget>[
         Text(
             "No hay suficientes unidades para el producto ${available.itemName}",
-            maxLines: 2,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
