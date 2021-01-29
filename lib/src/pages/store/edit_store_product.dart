@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/pages/store/product_variant_page.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/decimal_text_input_formatter.dart';
 import 'package:app_tiendita/src/widgets/edit_product_image_element.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -62,7 +63,7 @@ class EditStoreInventoryCard extends StatefulWidget {
   EditStoreInventoryCard({@required this.storeTagName, this.productElement});
 
   final String storeTagName;
-  final ProductElement productElement;
+  ProductElement productElement;
 
   @override
   _EditStoreInventoryCardState createState() => _EditStoreInventoryCardState();
@@ -96,6 +97,7 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
   List<String> imageBase64List = List();
 
   int sumImage = 0;
+  bool hasVariant = false;
 
   @override
   void initState() {
@@ -104,8 +106,17 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
     deliveryTimeNumber = int.parse(spliteDeliveryTime.first);
     deliveryRangeValue = spliteDeliveryTime.last;
   }
+
+  void reloadValues(bool variant) {
+    setState(() {
+      hasVariant = variant;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    if (widget.productElement.variants != null && widget.productElement.variants.length > 0) {
+      hasVariant = true;
+    }
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
     pr.style(message: 'Guardando...');
@@ -285,6 +296,7 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                       ),
                       TextFormField(
                         initialValue: widget.productElement.finalPrice,
+                        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           widget.productElement.finalPrice = value;
@@ -303,33 +315,6 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                         height: 15,
                       ),
                       Text(
-                        "Precio con descuento",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Nunito"),
-                      ),
-                      TextFormField(
-                        initialValue: widget.productElement.discountPrice,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
-                        onChanged: (String value) {
-                          widget.productElement.discountPrice = value;
-                        },
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Ingresar precio con descuento';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            hintText: 'precio con descuento'),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
                         "Cantidad disponible",
                         style: TextStyle(
                             color: Colors.black,
@@ -338,6 +323,7 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                             fontFamily: "Nunito"),
                       ),
                       TextFormField(
+                        readOnly: hasVariant,
                         initialValue: widget.productElement.quantity,
                         keyboardType: TextInputType.number,
                         onChanged: (String value) {
@@ -352,6 +338,17 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: 'cantidad disponible'),
+                      ),
+                      Visibility(
+                        visible: hasVariant,
+                        child: Text(
+                          "Al ingresar variantes se toman las cantidades disponibles de las mismas",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "Nunito"),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -630,10 +627,22 @@ class _EditStoreInventoryCardState extends State<EditStoreInventoryCard> {
        ),
      ),
     );
-    if (variantResult != null) {
+    if (variantResult != null && variantResult.length > 0) {
+      var variantQuantity = 0;
+      for (var variant in variantResult) {
+        variantQuantity += int.parse(variant.quantity);
+      }
+      reloadValues(
+        true
+      );
       setState(() {
+        widget.productElement.quantity = variantQuantity.toString();
         widget.productElement.variants = variantResult;
       });
+    } else {
+      reloadValues(
+        false
+      );
     }
   }
 }
