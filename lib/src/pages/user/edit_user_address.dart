@@ -6,6 +6,7 @@ import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,8 @@ class _EditUserAddressState extends State<EditUserAddress> {
   List<String> _provinces = [
     'Hubo problemas de conexión, \nfavor revisar su conexión a internet'
   ];
+
+  LatLng userPickedLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -232,13 +235,20 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               SizedBox(
                                 height: 20,
                               ),
-                              GestureDetector(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LocationMapPage(),
-                                    )),
-                                child: Text('Mapa aqui'),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    FlatButton(
+                                      onPressed: () => goToMapSelectionPage(),
+                                      child: Icon(Icons.map_outlined),
+                                    ),
+                                    Text('Seleccionar en Mapa'),
+                                    showPickedLocation(),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
                               ),
                               Container(
                                   alignment: Alignment(0.0, 0.0),
@@ -343,5 +353,31 @@ class _EditUserAddressState extends State<EditUserAddress> {
         );
       }),
     );
+  }
+
+  Widget showPickedLocation() {
+    if (userPickedLocation != null) {
+      return Column(
+        children: [
+          Text(
+            userPickedLocation.latitude.toString(),
+          ),
+          Text(
+            userPickedLocation.longitude.toString(),
+          ),
+        ],
+      );
+    } else
+      return Container();
+  }
+
+  goToMapSelectionPage() async {
+    userPickedLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LocationMapPage(),
+      ),
+    );
+    setState(() {});
   }
 }

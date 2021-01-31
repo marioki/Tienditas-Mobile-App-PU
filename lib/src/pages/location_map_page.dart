@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 class LocationMapPage extends StatefulWidget {
   @override
@@ -21,6 +23,7 @@ class _LocationMapPageState extends State<LocationMapPage> {
   GoogleMapController _mapController;
 
   Location location = new Location();
+  LatLng tappedLocation;
 
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -40,14 +43,38 @@ class _LocationMapPageState extends State<LocationMapPage> {
           future: getUserCurrentLocation(),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
-              return GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _panamaCiudad,
-                onMapCreated: _onMapCreated,
-                markers: _markers,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                compassEnabled: true,
+              return Stack(
+                children: [
+                  GoogleMap(
+                    onTap: (_tappedLocation) =>
+                        markTappedLocation(_tappedLocation),
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          _locationData.latitude, _locationData.longitude),
+                      zoom: 14.4746,
+                    ),
+                    onMapCreated: _onMapCreated,
+                    markers: _markers,
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    compassEnabled: true,
+                  ),
+                  Container(
+                    child: Align(
+                      child: RaisedButton(
+                        onPressed: () => savePickedLocation(),
+                        child: Text(
+                          'CONFIRMAR',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.green,
+                      ),
+                      alignment: Alignment.bottomCenter,
+                    ),
+                    margin: EdgeInsets.only(bottom: 16),
+                  ),
+                ],
               );
             } else {
               return Center(child: CircularProgressIndicator());
@@ -59,7 +86,6 @@ class _LocationMapPageState extends State<LocationMapPage> {
   }
 
   Future<LocationData> getUserCurrentLocation() async {
-
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -96,5 +122,29 @@ class _LocationMapPageState extends State<LocationMapPage> {
         ),
       );
     });
+  }
+
+  markTappedLocation(LatLng _tappedLocation) {
+    tappedLocation = _tappedLocation;
+    setState(() {
+      _markers.removeWhere((element) => element.markerId.value == '0');
+      _markers.add(
+        Marker(
+          markerId: MarkerId('0'),
+          position: LatLng(tappedLocation.latitude, tappedLocation.longitude),
+          infoWindow: InfoWindow(
+            title: 'Ciudad De Panamá',
+            snippet: 'Juega Vivo Pelao',
+          ),
+        ),
+      );
+    });
+
+    print(tappedLocation.latitude);
+    print(tappedLocation.longitude);
+  }
+
+  savePickedLocation() {
+    Navigator.pop(context, tappedLocation);
   }
 }
