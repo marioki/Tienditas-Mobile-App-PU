@@ -5,6 +5,7 @@ import 'package:app_tiendita/src/modelos/store/store_model.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/decimal_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -178,6 +179,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                           ),
                           TextFormField(
                             initialValue: fee,
+                            inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
                             keyboardType: TextInputType.numberWithOptions(decimal: true),
                             onChanged: (String value) {
                               fee = value;
