@@ -1,6 +1,9 @@
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
+import 'package:app_tiendita/src/pages/user/edit_user_profile.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,27 +13,27 @@ class CartPage extends StatefulWidget {
   _CartPageState createState() => _CartPageState();
 }
 
-//Todo Crear provider global en el primer elemnto del arbol para guardar la lista de items
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
+    UserTienditas userInfo = Provider.of<LoginState>(context).getTienditaUser();
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * .25),
-        child: AppBar(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35),
-                  bottomRight: Radius.circular(35))),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Mi Carrito',
-            style: appBarStyle,
-          ),
+      backgroundColor: grisClaroTema,
+      appBar: AppBar(
+        toolbarHeight: 100,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        backgroundColor: azulTema,
+        title: Text(
+          'Mi Carrito',
+          style: appBarStyle,
         ),
       ),
       body: SafeArea(
@@ -71,9 +74,12 @@ class _CartPageState extends State<CartPage> {
                                 'TOTAL',
                                 style: cartTotalStyle,
                               ),
-                              Text(
-                                '\$${Provider.of<UserCartState>(context).totalPrice.toStringAsFixed(2)}',
-                                style: cartTotalPriceStyle,
+                              GestureDetector(
+                                onLongPressUp: showEasterSnackBar,
+                                child: Text(
+                                  '\$${Provider.of<UserCartState>(context).totalPriceOfItems.toStringAsFixed(2)}',
+                                  style: cartTotalPriceStyle,
+                                ),
                               ),
                             ],
                           ),
@@ -91,7 +97,42 @@ class _CartPageState extends State<CartPage> {
                               'PAGAR',
                               style: cartButtonPagarStyle,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (Provider.of<LoginState>(context)
+                                      .getTienditaUser()
+                                      .name ==
+                                  null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditUserProfile(
+                                      user: userInfo,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                if (!Provider.of<LoginState>(context)
+                                        .isAnon() &&
+                                    (Provider.of<UserCartState>(context)
+                                            .cartProductList
+                                            .length >
+                                        0)) {
+                                  print('Stores currently on the cart');
+                                  print(Provider.of<UserCartState>(context)
+                                      .allStoreTagsList);
+                                  print('Lista de Tiendas Filtradas');
+                                  print(Provider.of<UserCartState>(context)
+                                      .filterParentStoreTagList());
+                                  Provider.of<UserCartState>(context)
+                                      .clearSelectedDeliveryOptionList();
+                                  Navigator.pushNamed(
+                                      context, 'delivery_options');
+                                } else {
+                                  print(
+                                      'User must not be anon/cart items must be > 0');
+                                }
+                              }
+                            },
                           )
                         ],
                       ),
@@ -116,7 +157,11 @@ class _CartPageState extends State<CartPage> {
                       Provider.of<UserCartState>(context).cartItemsIds.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    if(index == Provider.of<UserCartState>(context).cartItemsIds.length -1){
+                    if (index ==
+                        Provider.of<UserCartState>(context)
+                                .cartItemsIds
+                                .length -
+                            1) {
                       return Column(
                         children: <Widget>[
                           NewCartItemWidget(
@@ -126,15 +171,18 @@ class _CartPageState extends State<CartPage> {
                             itemName: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .itemName,
-                            imageUrl: Provider.of<UserCartState>(context)
+                            imagesUrlList: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
-                                .imageUrl,
+                                .imagesUrlList,
                             finalPrice: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .finalPrice,
                             colorHex: Provider.of<UserCartState>(context)
                                 .cartProductList[index]
                                 .hexColor,
+                            parentStoreTag: Provider.of<UserCartState>(context)
+                                .cartProductList[index]
+                                .parentStoreTag,
                           ),
                           SizedBox(
                             //Todo Change to media query when store card uses media query
@@ -144,7 +192,6 @@ class _CartPageState extends State<CartPage> {
                       );
                     }
 
-
                     print(index);
                     return NewCartItemWidget(
                       itemId: Provider.of<UserCartState>(context)
@@ -153,15 +200,18 @@ class _CartPageState extends State<CartPage> {
                       itemName: Provider.of<UserCartState>(context)
                           .cartProductList[index]
                           .itemName,
-                      imageUrl: Provider.of<UserCartState>(context)
+                      imagesUrlList: Provider.of<UserCartState>(context)
                           .cartProductList[index]
-                          .imageUrl,
+                          .imagesUrlList,
                       finalPrice: Provider.of<UserCartState>(context)
                           .cartProductList[index]
                           .finalPrice,
                       colorHex: Provider.of<UserCartState>(context)
                           .cartProductList[index]
                           .hexColor,
+                      parentStoreTag: Provider.of<UserCartState>(context)
+                          .cartProductList[index]
+                          .parentStoreTag,
                     );
                   },
                 ),
@@ -171,5 +221,39 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
+  }
+
+  Future<bool> _onBackPressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('¿Cerrar la aplicacion??'),
+          content: Text('Perderas los articulos en tu carrito...'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('No'),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text('Sí'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  showEasterSnackBar() {
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: 100),
+      content: Text('...marioki'),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 }

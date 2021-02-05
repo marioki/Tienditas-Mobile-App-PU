@@ -1,16 +1,74 @@
+import 'package:app_tiendita/src/modelos/batch_model.dart';
+import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserCartState with ChangeNotifier {
-  double totalPrice = 0;
+  int _cartItemsQuantity = 0;
+  double totalPriceOfItems = 0;
+  double _deliveryTotalCost = 0;
+  double totalAmountOfBatch;
+  double impuesto = 0;
+  List<DeliveryOption> _listOfDeliveryOptions;
+
   List<ProductElement> cartProductList = [];
   List<String> cartItemsIds = [];
+  List<String> allStoreTagsList = [];
+  List<String> storeTagsListFiltered = [];
+
+  List<Order> _orderList = List<Order>();
+  Batch currentBatch = Batch();
+
+  List<DeliveryOption> selectedDeliveryOptions = List();
+
+  int getCartItemsQuantity() => _cartItemsQuantity;
+
+  addSelectedDeliveryOption(DeliveryOption newOption) {
+    bool modified = false;
+    if (selectedDeliveryOptions.isNotEmpty) {
+      for (int index = 0; index < selectedDeliveryOptions.length; index++) {
+        if (selectedDeliveryOptions[index].selectedIndex ==
+            newOption.selectedIndex) {
+          selectedDeliveryOptions[index] = newOption;
+          modified = true;
+          notifyListeners();
+          break;
+        }
+      }
+      if (!modified) {
+        selectedDeliveryOptions.add(newOption);
+        notifyListeners();
+      }
+    } else {
+      selectedDeliveryOptions.add(newOption);
+      notifyListeners();
+    }
+
+    // if (selectedDeliveryOptions.isNotEmpty) {
+    //   selectedDeliveryOptions.forEach((element) {
+    //     if (newOption.selectedIndex == element.selectedIndex) {
+    //       element = newOption;
+    //     } else {
+    //       selectedDeliveryOptions.add(newOption);
+    //       return;
+    //     }
+    //   });
+    // } else
+    //   selectedDeliveryOptions.add(newOption);
+  }
+
+  clearSelectedDeliveryOptionList() => selectedDeliveryOptions.clear();
+
+  List<DeliveryOption> getListOfDeliveryInfo() => _listOfDeliveryOptions;
 
   void addProductoToCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
       print('El producto ya esta en la canasta! awe');
       return;
     } else {
+      _cartItemsQuantity++;
+      allStoreTagsList.add(productElement.parentStoreTag);
       cartProductList.add(productElement);
       cartItemsIds.add(productElement.itemId);
       calculateTotalPriceOfCart();
@@ -20,8 +78,10 @@ class UserCartState with ChangeNotifier {
 
   void deleteProductFromCart(ProductElement productElement) {
     if (cartItemsIds.contains(productElement.itemId)) {
-      cartProductList.removeWhere(
-          (element) => element.itemId == productElement.itemId);
+      _cartItemsQuantity--;
+      allStoreTagsList.remove(productElement.parentStoreTag);
+      cartProductList
+          .removeWhere((element) => element.itemId == productElement.itemId);
       cartItemsIds.remove(productElement.itemId);
       calculateTotalPriceOfCart();
       notifyListeners();
@@ -60,14 +120,12 @@ class UserCartState with ChangeNotifier {
   }
 
   calculateTotalPriceOfCart() {
-    //Todo Money format
     double _totalPrice = 0;
     cartProductList.forEach((element) {
-      _totalPrice += double.parse(element.finalPrice) *
-          element.cartItemAmount;
+      _totalPrice += double.parse(element.finalPrice) * element.cartItemAmount;
     });
-    totalPrice = _totalPrice;
-    print(totalPrice.toStringAsFixed(2));
+    totalPriceOfItems = _totalPrice;
+    print(totalPriceOfItems.toStringAsFixed(2));
     notifyListeners();
   }
 
@@ -75,5 +133,129 @@ class UserCartState with ChangeNotifier {
     //Todo Borrar todos los productos del carrito
     cartProductList.clear();
     cartItemsIds.clear();
+    storeTagsListFiltered.clear();
+    allStoreTagsList.clear();
+    _cartItemsQuantity = 0;
+  }
+
+  List<String> filterParentStoreTagList() {
+    storeTagsListFiltered.clear();
+    allStoreTagsList.forEach((storeTag) {
+      if (!storeTagsListFiltered.contains(storeTag)) {
+        storeTagsListFiltered.add(storeTag);
+      }
+    });
+    return storeTagsListFiltered;
+  }
+
+  //Limpiar el Batch
+  clearCurrentBatch() {
+    currentBatch = Batch();
+  }
+
+  calculateTotalAmountOfBatch() {
+    totalAmountOfBatch = totalPriceOfItems + _deliveryTotalCost;
+    impuesto = totalPriceOfItems * 0.07;
+    print(impuesto);
+    print('Total Amount of Batch: $totalAmountOfBatch');
+    totalAmountOfBatch += impuesto;
+    print('$totalPriceOfItems + $_deliveryTotalCost');
+  }
+
+  setDeliveryTotalCost(double deliveryAmount) {
+    _deliveryTotalCost = deliveryAmount;
+  }
+
+  generateOrderList() {
+    _orderList.clear();
+//    double orderAmountCounter = 0;
+
+    for (int orderIndex = 0;
+        orderIndex < storeTagsListFiltered.length;
+        orderIndex++) {
+      double orderAmountCounter = 0;
+      _orderList.add(
+        Order(
+          storeTagName: storeTagsListFiltered[orderIndex],
+          elements: List<ProductItem>(),
+          amount: '',
+        ),
+      );
+      var deliveryInfo = _listOfDeliveryOptions[orderIndex];
+      _orderList[orderIndex].deliveryOption = BatchOrderDeliveryOption(
+          fee: deliveryInfo.fee,
+          method: deliveryInfo.method,
+          name: deliveryInfo.name);
+
+      for (int itemIndex = 0; itemIndex < cartProductList.length; itemIndex++) {
+        if (cartProductList[itemIndex].parentStoreTag ==
+            _orderList[orderIndex].storeTagName) {
+          _orderList[orderIndex].elements.add(
+                ProductItem(
+                  itemId: cartProductList[itemIndex].itemId,
+                  quantity:
+                      cartProductList[itemIndex].cartItemAmount.toString(),
+                  productName: cartProductList[itemIndex].itemName,
+                  itemPrice:
+                      double.parse(cartProductList[itemIndex].finalPrice),
+                ),
+              );
+        }
+      }
+      _orderList[orderIndex].elements.forEach((productItem) {
+        orderAmountCounter +=
+            productItem.itemPrice * int.parse(productItem.quantity);
+
+        orderAmountCounter += double.parse(deliveryInfo.fee);
+
+        _orderList[orderIndex].amount = orderAmountCounter.toStringAsFixed(2);
+      });
+    }
+    currentBatch.orders = _orderList;
+
+    print('====Lista de Ordenes Creada====');
+    _orderList.forEach((order) {
+      print(order.storeTagName);
+      print(order.elements.length);
+      print('item id:  ${order.elements[0].itemId}');
+//      print('item quantity: ${order.elements[0].quantity}');
+    });
+  }
+
+  setUserAddressToOrders(UserAddress address) {
+    _orderList.forEach((order) {
+      order.userAddress = address;
+    });
+
+    _orderList.forEach((order) {
+      print(order.userAddress.referencePoint);
+    });
+  }
+
+  addUserCreditCardToBatch(creditCardId) {
+    currentBatch.creditCardId = creditCardId;
+    print('User selected: ${currentBatch.creditCardId}');
+  }
+
+//aqui le debo pasar la lista de delivary options (la opcion en si)
+  setDeliveryInfoList() {
+    _listOfDeliveryOptions = selectedDeliveryOptions;
+  }
+
+  setCurrentBatchTotalAmount() {
+    currentBatch.totalAmount = totalAmountOfBatch.toStringAsFixed(2);
+  }
+
+  setCurrentBatchPaymentMethod() {
+    currentBatch.paymentMethod = "tarjeta de crédito";
+  }
+
+  setCurrentBatchUserInfo(UserTienditas userTienditas) {
+    currentBatch.userName = userTienditas.name;
+    currentBatch.userEmail = userTienditas.userEmail;
+  }
+
+  setCurrentBatchPhoneNumber(UserTienditas userTienditas) {
+    currentBatch.phoneNumber = userTienditas.phoneNumber;
   }
 }

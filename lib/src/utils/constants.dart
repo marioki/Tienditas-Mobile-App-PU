@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/material.dart';
 
 // Colors that we use in our app
@@ -7,3 +8,37 @@ const kBackgroundColor = Color(0xFFF9F8FD);
 
 const double kDefaultPadding = 20.0;
 const double defaultSeparation = 16;
+
+final kHintTextStyle = TextStyle(
+  color: Colors.white54,
+  fontFamily: 'Nunito',
+);
+
+final kLabelStyle = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 18);
+
+final kLabelTitleStyle = TextStyle(
+    color: azulTema,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Nunito',
+    fontSize: 32);
+final kLabelSubTitleStyle = TextStyle(
+    color: azulTema,
+    fontWeight: FontWeight.normal,
+    fontFamily: 'Nunito',
+    fontSize: 20);
+
+final kBoxDecorationStyle = BoxDecoration(
+  color: Color(0xFFa4a1e5),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);

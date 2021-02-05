@@ -7,25 +7,26 @@ import 'package:flutter/material.dart';
 class CategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final CategoryModel args = ModalRoute.of(context).settings.arguments;
+    final CategoryResponseModel args = ModalRoute.of(context).settings.arguments;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight * .25),
-        child: AppBar(
-          shape: RoundedRectangleBorder(
+      appBar: AppBar(
+        toolbarHeight: 100,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(35),
-              bottomRight: Radius.circular(35),
+                bottomLeft: Radius.circular(35),
+                bottomRight: Radius.circular(35))),
+        centerTitle: true,
+        backgroundColor: azulTema,
+        title: Column(
+          children: [
+            Text(
+              'Categorías',
+              style: appBarStyle,
             ),
-          ),
-          centerTitle: true,
-          backgroundColor: azulTema,
-          title: Text(
-            'Categorías',
-            style: appBarStyle,
-          ),
+          ],
         ),
       ),
       body: SafeArea(
@@ -36,7 +37,7 @@ class CategoriesPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: GridView.builder(
-                  itemCount: args.body.category.length,
+                  itemCount: args.body.categoryList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 0,
@@ -45,9 +46,9 @@ class CategoriesPage extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) {
                     return CategoryCard(
-                      name: args.body.category[index].categoryName,
-                      color: args.body.category[index].hexColor,
-                      image: args.body.category[index].iconUrl,
+                      name: args.body.categoryList[index].categoryName,
+                      color: args.body.categoryList[index].hexColor,
+                      image: args.body.categoryList[index].iconUrl,
                     );
                   },
                 ),

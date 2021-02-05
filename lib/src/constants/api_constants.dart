@@ -1,5 +1,16 @@
-const String apiBaseUrl =
-    'https://aua4psji8k.execute-api.us-east-1.amazonaws.com/dev';
+import 'package:flutter/foundation.dart' as Foundation;
 
-const String constantDebugUserTokenId =
-    'eyJhbGciOiJSUzI1NiIsImtpZCI6IjZjZmMyMzViZDYxMGZhY2FlYzVlYjBhZGU5NTg5ZGE5NTI4MmRlY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGV2LXRpZW5kaXRhcyIsImF1ZCI6ImRldi10aWVuZGl0YXMiLCJhdXRoX3RpbWUiOjE1OTUyMDQ1MjQsInVzZXJfaWQiOiJxSDZZVE5tREtRZE9nQjdEMDZXeVAzeHVRR3cyIiwic3ViIjoicUg2WVRObURLUWRPZ0I3RDA2V3lQM3h1UUd3MiIsImlhdCI6MTU5NTIwNDUyNCwiZXhwIjoxNTk1MjA4MTI0LCJlbWFpbCI6Im1hcmlva2lydmVuLm1rQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJtYXJpb2tpcnZlbi5ta0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.jOAMCDob9fM19wgeBNiP-UpQ9zOQ7gqodyXMK0aUkh6Wq5xcUO6QmkEUOEeWofy3TEDiMPcgRDKETAGncmQcDrna9O3dfZNecLQfUOtcHF5Rs-CRqmaj8XiLGQfK4au0uqb1dG7j5J3CrSk_xl3XyH6Ljl80rjgjLcMKa81SBA7I9MY3p2qQrrEwzao84Sgl1P8yy_IoSAmSR-SQRt_MMyHU_mVh0NdYgSFQCK2kvmmzYqWtvaj_FRoEOcbNS7pFQ4xmqHj3EIxplljt_Gi_zqXfK7qBYjxItz6sNWA2dQoMydRA6X1hQdhNuUHlYTbmPY477kZMlsqrMCkh2orMQg';
+const String productionUrl =
+    'https://lnw0tmrts2.execute-api.us-east-1.amazonaws.com/prod';
+const String developUrl =
+//'https://lnw0tmrts2.execute-api.us-east-1.amazonaws.com/prod';
+    'https://8s27xrnoq8.execute-api.us-east-1.amazonaws.com/dev';
+
+//URL Base Para todas las operaciones. Se cambia dependiando del build mode en el main
+String baseApiUrl =
+//  'https://lnw0tmrts2.execute-api.us-east-1.amazonaws.com/prod';
+    'https://8s27xrnoq8.execute-api.us-east-1.amazonaws.com/dev';
+
+//URL Imagen Por defecto Cuando se crea un producto nuevo
+String defaultProductImageURL =
+    "https://tienditas-prod-images.s3.amazonaws.com/products/inventory/default_producto.jpg";
