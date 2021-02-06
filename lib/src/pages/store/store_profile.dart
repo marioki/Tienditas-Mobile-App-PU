@@ -24,29 +24,6 @@ class _StoreProfileState extends State<StoreProfile> {
     setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
   }
 
-  Widget _buildStoreStatus(StoreModel tienda) {
-    if (tienda.body.store.storeStatus != "active") {
-      return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        color: Colors.redAccent,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.",
-            style: storeDetailsCardStyle,
-          ),
-        ),
-      );
-    } else {
-      return SizedBox(
-        height: 0,
-        width: 0,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     UserTienditas userInfo = Provider.of<LoginState>(context,listen: false).getTienditaUser();
@@ -181,6 +158,39 @@ class _StoreProfileState extends State<StoreProfile> {
             }
           }),
     );
+  }
+
+  Widget _buildStoreStatus(StoreModel tienda) {
+    if (tienda.body.store.storeStatus != "active") {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        color: Colors.redAccent,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            (() {
+              if(tienda.body.store.deliveryOptions.length == 0) {
+                return "Debe agregar métodos de envío para que podamos activar su tienda";
+              } else if (tienda.body.store.phoneNumber.length == 0) {
+                return "Debe agregar un número telefónico para que podamos activar su tienda";
+              } else if (tienda.body.store.description.length == 0) {
+                return "Debe agregar una descripción para que podamos activar su tienda";
+              } else {
+                return "Su tienda aún no está activa, tranquilo pronto lo estará.\nNos comunicaremos contigo si hay algún problema.";
+              }
+            }()),
+            style: storeDetailsCardStyle,
+          ),
+        ),
+      );
+    } else {
+      return SizedBox(
+        height: 0,
+        width: 0,
+      );
+    }
   }
 }
 

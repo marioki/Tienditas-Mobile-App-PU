@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/pages/store/product_variant_page.dart';
 import 'package:app_tiendita/src/providers/product_items_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:app_tiendita/src/utils/decimal_text_input_formatter.dart';
 import 'package:app_tiendita/src/widgets/edit_product_image_element.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -90,6 +91,13 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
   int deliveryTimeNumber = 1;
   String deliveryRangeValue = 'dias';
   int step = 1;
+  bool hasVariant = false;
+
+  void reloadValues(bool variant) {
+    setState(() {
+      hasVariant = variant;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,6 +239,7 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
                             fontFamily: "Nunito"),
                       ),
                       TextFormField(
+                        inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           finalPrice = value;
@@ -257,19 +266,33 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
                             fontFamily: "Nunito"),
                       ),
                       TextFormField(
+                        readOnly: hasVariant,
                         keyboardType: TextInputType.number,
                         onChanged: (String value) {
                           quantity = value;
                         },
                         validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Ingresar cantidad disponible';
+                          if (!hasVariant) {
+                            if (value.isEmpty) {
+                              return 'Ingresar cantidad disponible';
+                            }
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             hintText: '4'),
+                      ),
+                      Visibility(
+                        visible: hasVariant,
+                        child: Text(
+                          "Al ingresar variantes se toman las cantidades disponibles de las mismas",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: "Nunito"),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -534,10 +557,22 @@ class _CreateStoreProductCardState extends State<CreateStoreProductCard> {
        ),
      ),
     );
-    if (variantResult != null) {
+    if (variantResult != null && variantResult.length > 0) {
+      var variantQuantity = 0;
+      for (var variant in variantResult) {
+        variantQuantity += int.parse(variant.quantity);
+      }
+      reloadValues(
+        true
+      );
       setState(() {
+        quantity = variantQuantity.toString();
         variants = variantResult;
       });
+    } else {
+      reloadValues(
+        false
+      );
     }
   }
 }

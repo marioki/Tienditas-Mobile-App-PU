@@ -108,6 +108,9 @@ class ProductDetailsPage extends StatelessWidget {
                                 fontFamily: 'Nunito',
                               ),
                             ),
+                            Text(
+                              "Disponible: ${args.quantity}"
+                            ),
                             Text((args.deliveryTime != null)
                                 ? 'Tiempo de entrega ${args.deliveryTime}'
                                 : '')
@@ -224,6 +227,9 @@ class ProductDetailsPage extends StatelessWidget {
                                                         children: <TextSpan>[
                                                           TextSpan(
                                                               text:
+                                                                  "Variante Seleccionada\n"),
+                                                          TextSpan(
+                                                              text:
                                                                   "$variantName a "),
                                                           TextSpan(
                                                             text:
@@ -231,7 +237,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
-                                                                fontSize: 15,
+                                                                fontSize: 16,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -264,7 +270,7 @@ class ProductDetailsPage extends StatelessWidget {
                                                   ProductElement(
                                                       itemId: args.itemId,
                                                       itemName:
-                                                          "${args.itemName} - $variantName",
+                                                          "${args.itemName} variante $variantName",
                                                       finalPrice: variantPrice,
                                                       imagesUrlList:
                                                           args.imagesUrlList,

@@ -1,3 +1,4 @@
+import 'package:app_tiendita/src/modelos/availability_model.dart';
 import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/delivery_options_response.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
@@ -23,11 +24,12 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
 //For showing progress percentage
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
-    pr.style(message: 'Finalizando Compra...');
 
     List<DeliveryOption> deliveryOptionList =
-        Provider.of<UserCartState>(context,listen: false).getListOfDeliveryInfo();
-    Batch batch = Provider.of<UserCartState>(context,listen: false).currentBatch;
+        Provider.of<UserCartState>(context, listen: false)
+            .getListOfDeliveryInfo();
+    Batch batch =
+        Provider.of<UserCartState>(context, listen: false).currentBatch;
     return Scaffold(
       backgroundColor: grisClaroTema,
       appBar: AppBar(
@@ -198,7 +200,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          '\$${Provider.of<UserCartState>(context,listen: false).impuesto.toStringAsFixed(2)}',
+                          '\$${Provider.of<UserCartState>(context, listen: false).impuesto.toStringAsFixed(2)}',
                           style: TextStyle(fontFamily: 'Nunito'),
                         ),
                       )
@@ -234,7 +236,7 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                     ),
                   ),
                   Text(
-                    '\$${Provider.of<UserCartState>(context,listen: false).totalAmountOfBatch.toStringAsFixed(2)}',
+                    '\$${Provider.of<UserCartState>(context, listen: false).totalAmountOfBatch.toStringAsFixed(2)}',
                     style: TextStyle(
                         color: azulTema,
                         fontSize: 16,
@@ -256,45 +258,105 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () async {
+                  pr.style(message: 'Validando Disponibilidad');
                   await pr.show();
-
                   UserTienditas userTienditas =
-                      Provider.of<LoginState>(context, listen: false)
-                          .getTienditaUser();
+                      Provider.of<LoginState>(context).getTienditaUser();
                   final userTokenId =
-                      Provider.of<LoginState>(context, listen: false)
-                          .currentUserIdToken;
+                      Provider.of<LoginState>(context).currentUserIdToken;
                   final _batch =
-                      Provider.of<UserCartState>(context, listen: false)
-                          .currentBatch;
-                  var response = await SendBatchOfOrders()
-                      .sendBatchOfOrders(userTienditas, userTokenId, _batch);
-                  final responseTienditasApi = responseFromJson(response.body);
-                  //Comprueba que la respuesta fue exitosa
-                  if (response.statusCode == 200) {
-                    await pr.hide();
-                    //Aqui comprobar que la compra fue exitosa
-                    if (responseTienditasApi.statusCode == 200) {
-                      //La compra fue exitosa
-                      print(responseTienditasApi.body.message);
-                      //Limpiar el Carrito
-                      Provider.of<UserCartState>(context, listen: false)
-                          .deleteAllCartItems();
-                      Provider.of<UserCartState>(context, listen: false)
-                          .calculateTotalPriceOfCart();
-                      Navigator.pushAndRemoveUntil(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return OrdenExitosaPage();
-                      }), (route) => false);
+                      Provider.of<UserCartState>(context).currentBatch;
+                  // Validar que existan suficientes unidades ordenadas
+                  AvailabilityResponse availabilityResponse =
+                      await SendBatchOfOrders().checkInventoryAvailability(
+                          userTienditas, userTokenId, _batch);
+                  await pr.hide();
+                  if (200 == availabilityResponse.statusCode) {
+                    pr.style(message: 'Finalizando Compra...');
+                    await pr.show();
+                    var response = await SendBatchOfOrders()
+                        .sendBatchOfOrders(userTienditas, userTokenId, _batch);
+                    final responseTienditasApi =
+                        responseFromJson(response.body);
+                    //Comprueba que la respuesta fue exitosa
+                    if (response.statusCode == 200) {
+                      await pr.hide();
+                      //Aqui comprobar que la compra fue exitosa
+                      if (responseTienditasApi.statusCode == 200) {
+                        //La compra fue exitosa
+                        print(responseTienditasApi.body.message);
+                        //Limpiar el Carrito
+                        Provider.of<UserCartState>(context)
+                            .deleteAllCartItems();
+                        Provider.of<UserCartState>(context)
+                            .calculateTotalPriceOfCart();
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return OrdenExitosaPage();
+                        }), (route) => false);
+                      } else {
+                        // Orden Fallida
+                        print(
+                            'orden fallo con codigo ${responseTienditasApi.body.message}');
+                        _showDialog(
+                            context, 'Intenta con otro metodo de pago.');
+                      }
                     } else {
-                      // Orden Fallida
-                      print(
-                          'orden fallo con codigo ${responseTienditasApi.body.message}');
-                      _showDialog(context, 'Intenta con otro metodo de pago.');
+                      //Error de conexion
+                      print('Error de conexión ${response.statusCode}');
                     }
+                  } else if (400 == availabilityResponse.statusCode) {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                                elevation: 10,
+                                title: Center(
+                                  child: Text(
+                                    "Validando Inventario",
+                                    style: TextStyle(
+                                        color: Color(0xFF191660),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: "Nunito"),
+                                  ),
+                                ),
+                                content: Container(
+                                  height:
+                                      200.0, // Change as per your requirement
+                                  width: 300.0,
+                                  child: ListView.separated(
+                                      shrinkWrap: true,
+                                      separatorBuilder: (context, index) =>
+                                          Divider(),
+                                      itemCount: availabilityResponse
+                                          .body.notAvailable.length,
+                                      itemBuilder: (context, index) {
+                                        return _notAvailableItem(
+                                          context,
+                                          availabilityResponse
+                                              .body.notAvailable[index],
+                                        );
+                                      }),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Cerrar'),
+                                    color: Color(0xFF191660),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ]);
+                          });
+                        });
                   } else {
-                    //Error de conexion
-                    print('Error de conexión ${response.statusCode}');
+                    print("ORDEN FALLIDA");
                   }
                 },
                 color: azulTema,
@@ -306,6 +368,39 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _notAvailableItem(BuildContext context, Available available) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "No hay suficientes unidades para el producto ${available.itemName}",
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.normal,
+              fontFamily: "Nunito"),
+        ),
+        Text(
+          "Unidades solicitadas: ${available.requested}",
+          style: TextStyle(
+              color: Colors.black54,
+              fontSize: 15,
+              fontWeight: FontWeight.normal,
+              fontFamily: "Nunito"),
+        ),
+        Text(
+          "Unidades disponible: ${available.available}",
+          style: TextStyle(
+              color: Colors.black54,
+              fontSize: 15,
+              fontWeight: FontWeight.normal,
+              fontFamily: "Nunito"),
+        ),
+        SizedBox(height: 8),
+      ],
     );
   }
 

@@ -84,48 +84,50 @@ class StoresByCategory extends StatelessWidget {
                     child: Text('Todavia no hay tiendas en esta categoria...'),
                   );
                 }
-                return ListView.builder(
-                  itemCount: miTienda.body.stores.length,
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == miTienda.body.stores.length - 1) {
-                      return Column(
-                        children: <Widget>[
-                          StoreCardWidget(
-                            name: miTienda.body.stores[index].storeName,
-                            handle: miTienda.body.stores[index].storeTagName,
-                            category: miTienda.body.stores[index].categoryName,
-                            colorHex: miTienda.body.stores[index].hexColor,
-                            image: miTienda.body.stores[index].iconUrl,
-                            followers: null,
-                            provinceName:
-                                miTienda.body.stores[index].provinceName,
-                            originalStoreName:
-                                miTienda.body.stores[index].originalStoreName,
-                            description:
-                                miTienda.body.stores[index].description,
-                          ),
-                          SizedBox(
-                            //Todo Change to media query when store card uses media query
-                            height: 100,
-                          ),
-                        ],
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: miTienda.body.stores.length,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == miTienda.body.stores.length - 1) {
+                        return Column(
+                          children: <Widget>[
+                            StoreCardWidget(
+                              name: miTienda.body.stores[index].storeName,
+                              handle: miTienda.body.stores[index].storeTagName,
+                              category: miTienda.body.stores[index].categoryName,
+                              colorHex: miTienda.body.stores[index].hexColor,
+                              image: miTienda.body.stores[index].iconUrl,
+                              followers: null,
+                              provinceName:
+                                  miTienda.body.stores[index].provinceName,
+                              originalStoreName:
+                                  miTienda.body.stores[index].originalStoreName,
+                              description:
+                                  miTienda.body.stores[index].description,
+                            ),
+                            SizedBox(
+                              //Todo Change to media query when store card uses media query
+                              height: 100,
+                            ),
+                          ],
+                        );
+                      }
+                      return StoreCardWidget(
+                        name: miTienda.body.stores[index].storeName,
+                        handle: miTienda.body.stores[index].storeTagName,
+                        category: miTienda.body.stores[index].categoryName,
+                        colorHex: miTienda.body.stores[index].hexColor,
+                        image: miTienda.body.stores[index].iconUrl,
+                        followers: null,
+                        provinceName: miTienda.body.stores[index].provinceName,
+                        originalStoreName:
+                            miTienda.body.stores[index].originalStoreName,
+                        description: miTienda.body.stores[index].description,
                       );
-                    }
-                    return StoreCardWidget(
-                      name: miTienda.body.stores[index].storeName,
-                      handle: miTienda.body.stores[index].storeTagName,
-                      category: miTienda.body.stores[index].categoryName,
-                      colorHex: miTienda.body.stores[index].hexColor,
-                      image: miTienda.body.stores[index].iconUrl,
-                      followers: null,
-                      provinceName: miTienda.body.stores[index].provinceName,
-                      originalStoreName:
-                          miTienda.body.stores[index].originalStoreName,
-                      description: miTienda.body.stores[index].description,
-                    );
-                  },
+                    },
+                  ),
                 );
               } else {
                 if (snapshot.hasError) {
