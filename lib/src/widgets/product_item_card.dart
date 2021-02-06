@@ -217,7 +217,8 @@ class ProductItemCard extends StatelessWidget {
                               onPressed: () {
                                 if (int.parse(variantQuantity) > 0) {
                                   if (variantSelected) {
-                                    Provider.of<UserCartState>(context)
+
+                                    Provider.of<UserCartState>(context, listen: false)
                                         .addProductoToCart(
                                       ProductElement(
                                           itemId: itemId,
@@ -251,7 +252,7 @@ class ProductItemCard extends StatelessWidget {
                   );
                 } else {
                   if (int.parse(quantity) > 0) {
-                    Provider.of<UserCartState>(context).addProductoToCart(
+                    Provider.of<UserCartState>(context, listen: false).addProductoToCart(
                       ProductElement(
                           itemId: itemId,
                           itemName: itemName,
