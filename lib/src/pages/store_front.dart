@@ -53,9 +53,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    //Lista componentes desde aqui
-                    //Custom App Bar ==========
-                    //Contenedor de Categorias
+                    getBanners(),
                     ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 16),
                       leading: Text('Categorías', style: storeSubtitles),
@@ -186,39 +184,68 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     }
   }
 
-  // Widget getTiendasListViewBuilder() {
-  //   return SmartRefresher(
-  //     physics: BouncingScrollPhysics(),
-  //     enablePullDown: true,
-  //     enablePullUp: true,
-  //     header: WaterDropHeader(
-  //       complete: Text('¡Actualizado!'),
-  //     ),
-  //     footer: CustomFooter(
-  //       builder: (BuildContext context, LoadStatus mode) {
-  //         Widget body;
-  //         if (mode == LoadStatus.idle) {
-  //           //body = Text("pull up load");
-  //         } else if (mode == LoadStatus.loading) {
-  //           body = CupertinoActivityIndicator();
-  //         } else if (mode == LoadStatus.failed) {
-  //           body = Text("Error de conexión...");
-  //         } else if (mode == LoadStatus.canLoading) {
-  //           // body = Text("release to load more");
-  //         } else {
-  //           //body = Text("No more Data");
-  //         }
-  //         return Container(
-  //           height: 55.0,
-  //           child: Center(child: body),
-  //         );
-  //       },
-  //     ),
-  //     controller: _refreshController,
-  //     onRefresh: _onRefresh,
-  //     onLoading: _onLoading,
-  //   );
-  // }
+  Widget getTiendasListViewBuilder() {
+    return FutureBuilder(
+      future: tienditaResponse,
+      builder: (
+          BuildContext context,
+          snapshot,
+          ) {
+        if (snapshot.hasData) {
+          Tiendita miTienda = snapshot.data;
+          return ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: miTienda.body.stores.length,
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == miTienda.body.stores.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    StoreCardWidget(
+                      name: miTienda.body.stores[index].storeName,
+                      handle: miTienda.body.stores[index].storeTagName,
+                      category: miTienda.body.stores[index].categoryName,
+                      colorHex: miTienda.body.stores[index].hexColor,
+                      image: miTienda.body.stores[index].iconUrl,
+                      description: miTienda.body.stores[index].description,
+                      followers: null,
+                      originalStoreName:
+                      miTienda.body.stores[index].originalStoreName,
+                      provinceName: miTienda.body.stores[index].provinceName,
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                  ],
+                );
+              }
+              return StoreCardWidget(
+                name: miTienda.body.stores[index].storeName,
+                handle: miTienda.body.stores[index].storeTagName,
+                category: miTienda.body.stores[index].categoryName,
+                colorHex: miTienda.body.stores[index].hexColor,
+                image: miTienda.body.stores[index].iconUrl,
+                description: miTienda.body.stores[index].description,
+                followers: null,
+                originalStoreName:
+                miTienda.body.stores[index].originalStoreName,
+                provinceName: miTienda.body.stores[index].provinceName,
+              );
+            },
+          );
+        } else {
+          return Container(
+            height: 400,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
