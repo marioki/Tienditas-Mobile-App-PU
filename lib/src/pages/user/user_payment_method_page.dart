@@ -42,7 +42,7 @@ class UserPaymentMethodState extends State<UserPaymentMethod> {
         padding: EdgeInsets.all(16),
         child: FutureBuilder(
             future: UserCreditCardProvider().getUserCreditCards(context,
-                Provider.of<LoginState>(context).getFireBaseUser().email),
+                Provider.of<LoginState>(context,listen: false).getFireBaseUser().email),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 listCreditCard = snapshot.data;
@@ -140,8 +140,9 @@ class UserPaymentMethodState extends State<UserPaymentMethod> {
 
   Future<void> deleteCreditCard(
       CreditCard creditCard, BuildContext context) async {
-    final tienditasUser = Provider.of<LoginState>(context).getTienditaUser();
-    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    final tienditasUser =
+        Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    final userTokenId = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     ProgressDialog pr = ProgressDialog(context);
     pr.style(
         message: 'Cargando...',

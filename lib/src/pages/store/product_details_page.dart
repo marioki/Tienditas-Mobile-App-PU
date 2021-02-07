@@ -48,7 +48,7 @@ class ProductDetailsPage extends StatelessWidget {
                           .toString(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    showBadge: (Provider.of<UserCartState>(context)
+                    showBadge: (Provider.of<UserCartState>(context,listen: false)
                                 .getCartItemsQuantity() >
                             0)
                         ? true
@@ -251,7 +251,6 @@ class ProductDetailsPage extends StatelessWidget {
                                                         ]),
                                                   )
                                                 : Text('')
-
                                           ],
                                         ),
                                         actions: <Widget>[
@@ -265,7 +264,8 @@ class ProductDetailsPage extends StatelessWidget {
                                             onPressed: () {
                                               if (variantSelected) {
                                                 Provider.of<UserCartState>(
-                                                        context)
+                                                        context,
+                                                        listen: false)
                                                     .addProductoToCart(
                                                   ProductElement(
                                                       itemId: args.itemId,
@@ -302,7 +302,7 @@ class ProductDetailsPage extends StatelessWidget {
                                   },
                                 );
                               } else {
-                                Provider.of<UserCartState>(context)
+                                Provider.of<UserCartState>(context, listen: false)
                                     .addProductoToCart(
                                   ProductElement(
                                       itemId: args.itemId,

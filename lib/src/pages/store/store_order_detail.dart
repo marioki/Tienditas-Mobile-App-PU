@@ -122,7 +122,7 @@ class _StoreOrderDetailState extends State<StoreOrderDetail> {
                             if (selectedOption != null) {
                               response = await StoreProvider()
                                   .updateOrderStatus(
-                                      Provider.of<LoginState>(context)
+                                      Provider.of<LoginState>(context, listen: false)
                                           .currentUserIdToken,
                                       widget.order.storeTagName,
                                       widget.order.orderId,

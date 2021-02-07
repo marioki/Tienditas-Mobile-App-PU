@@ -1,6 +1,4 @@
-import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/product_model.dart';
-import 'package:app_tiendita/src/pages/store/product_details_page.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
@@ -126,114 +124,106 @@ class ProductItemCard extends StatelessWidget {
               onPressed: () {
                 if (variants != null && variants.length > 0) {
                   showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(builder: (context, setState) {
-                          return AlertDialog(
-                            elevation: 10,
-                            title: Text(
-                              "Selecciona una variante",
-                              style: TextStyle(
-                                  color: Color(0xFF191660),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "Nunito"),
-                            ),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                DropdownButtonHideUnderline(
-                                  child: DropdownButton(
-                                    hint: Text("Seleccionar variante"),
-                                    //value: _value,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        variantName = newValue.name;
-                                        variantPrice = newValue.price;
-                                        variantQuantity = newValue.quantity;
-                                        variantSelected = true;
-                                      });
-                                    },
-                                    items: variants.map((value) {
-                                      return new DropdownMenuItem(
-                                        child: new Text(
-                                          "${value.name} a \$${value.price}\nDisponible ${value.quantity}"
-                                        ),
-                                        value: value,
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "${itemName}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal,
-                                      fontFamily: "Nunito"),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                variantSelected
-                                                ? RichText(
-                                                    text: TextSpan(
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            fontFamily:
-                                                                "Nunito"),
-                                                        children: <TextSpan>[
-                                                          TextSpan(
-                                                              text:
-                                                                  "Variante Seleccionada\n"),
-                                                          TextSpan(
-                                                              text:
-                                                                  "$variantName a "),
-                                                          TextSpan(
-                                                            text:
-                                                                "\$$variantPrice",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    "Nunito"),
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                "\nCantidad disponible: $variantQuantity",
-                                                          ),
-                                                        ]),
-                                                  )
-                                                : Text('')
-                              ],
-                            ),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Agregar al carrito'),
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return StatefulBuilder(builder: (context, setState) {
+                        return AlertDialog(
+                          elevation: 10,
+                          title: Text(
+                            "Selecciona una variante",
+                            style: TextStyle(
                                 color: Color(0xFF191660),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                fontSize: 25,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: "Nunito"),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  hint: Text("Seleccionar variante"),
+                                  //value: _value,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      variantName = newValue.name;
+                                      variantPrice = newValue.price;
+                                      variantQuantity = newValue.quantity;
+                                      variantSelected = true;
+                                    });
+                                  },
+                                  items: variants.map((value) {
+                                    return new DropdownMenuItem(
+                                      child: new Text(
+                                          "${value.name} a \$${value.price}\nDisponible ${value.quantity}"),
+                                      value: value,
+                                    );
+                                  }).toList(),
                                 ),
-                                onPressed: () {
-                                  if (int.parse(variantQuantity) > 0) {
-                                    if (variantSelected) {
-                                      Provider.of<UserCartState>(context).addProductoToCart(
-                                        ProductElement(
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                "${itemName}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: "Nunito"),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              variantSelected
+                                  ? RichText(
+                                      text: TextSpan(
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: "Nunito"),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text:
+                                                    "Variante Seleccionada\n"),
+                                            TextSpan(text: "$variantName a "),
+                                            TextSpan(
+                                              text: "\$$variantPrice",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Nunito"),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  "\nCantidad disponible: $variantQuantity",
+                                            ),
+                                          ]),
+                                    )
+                                  : Text('')
+                            ],
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Agregar al carrito'),
+                              color: Color(0xFF191660),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              onPressed: () {
+                                if (int.parse(variantQuantity) > 0) {
+                                  if (variantSelected) {
+
+                                    Provider.of<UserCartState>(context, listen: false)
+                                        .addProductoToCart(
+                                      ProductElement(
                                           itemId: itemId,
-                                          itemName: "$itemName variante $variantName",
+                                          itemName:
+                                              "$itemName variante $variantName",
                                           finalPrice: variantPrice,
                                           imagesUrlList: imagesUrlList,
                                           purchaseType: purchaseType,
@@ -243,26 +233,26 @@ class ProductItemCard extends StatelessWidget {
                                           parentStoreTag: parentStoreTag,
                                           description: description,
                                           discountPrice: discountPrice,
-                                          discountPercentage: discountPercentage
-                                        ),
-                                      );
-                                      Navigator.pop(context);
-                                    } else {
-                                      print("Awe, escoge una variante");
-                                    }
+                                          discountPercentage:
+                                              discountPercentage),
+                                    );
+                                    Navigator.pop(context);
                                   } else {
-                                    print("No hay stock");
+                                    print("Awe, escoge una variante");
                                   }
-                                },
-                              ),
-                            ],
-                          );
-                        });
-                      },
-                    );
+                                } else {
+                                  print("No hay stock");
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                    },
+                  );
                 } else {
                   if (int.parse(quantity) > 0) {
-                    Provider.of<UserCartState>(context).addProductoToCart(
+                    Provider.of<UserCartState>(context, listen: false).addProductoToCart(
                       ProductElement(
                           itemId: itemId,
                           itemName: itemName,
@@ -275,8 +265,7 @@ class ProductItemCard extends StatelessWidget {
                           parentStoreTag: parentStoreTag,
                           discountPrice: discountPrice,
                           discountPercentage: discountPercentage,
-                          description: description
-                      ),
+                          description: description),
                     );
                     final snackBar = SnackBar(
                       duration: Duration(milliseconds: 300),
@@ -307,6 +296,7 @@ class ProductItemCard extends StatelessWidget {
       ),
     );
   }
+
   goToProductDetails(BuildContext context) {
     return Navigator.pushNamed(context, 'product_details_page',
         arguments: ProductItemCard(

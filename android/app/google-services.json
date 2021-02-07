@@ -83,6 +83,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "704134493695-57ovjs8lmhbntpbp3s6fqsl379lnv9g4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "5c1d9e94772b8f799e5b1f84f9bf3a306eb1f725"
+          }
+        },
+        {
           "client_id": "704134493695-7b1qs4ngopt30h9gtv30rb8fcg0aorc5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -104,6 +112,14 @@
           "android_info": {
             "package_name": "com.startupalliance.tienditas",
             "certificate_hash": "98e88ae79699640fe87816a410879b5880d2de91"
+          }
+        },
+        {
+          "client_id": "704134493695-o4jih8bbn3m97mtcug7ed6ci6rqor7nl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.startupalliance.tienditas",
+            "certificate_hash": "df8c95e43e162275aabcee307ba8083aa340371c"
           }
         },
         {

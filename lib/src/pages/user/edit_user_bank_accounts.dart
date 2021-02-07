@@ -268,7 +268,7 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                                 await UsuarioTienditasProvider()
                                                     .createBankAccount(
                                                         Provider.of<LoginState>(
-                                                                context)
+                                                                context, listen: false)
                                                             .currentUserIdToken,
                                                         widget.userEmail,
                                                         widget.bankName,
@@ -294,7 +294,7 @@ class _EditUserBankAccountState extends State<EditUserBankAccount> {
                                           Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                  'Debe seleccionar provincia'),
+                                                  'Debe seleccionar su banco'),
                                             ),
                                           );
                                         }

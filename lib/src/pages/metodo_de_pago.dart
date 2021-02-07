@@ -202,37 +202,41 @@ class _MetodoDePagoState extends State<MetodoDePago> {
 
   void setUserCreditCard() {
     String selectedCardId = currentCardList[groupRadio].id;
-    Provider.of<UserCartState>(context)
+    Provider.of<UserCartState>(context, listen: false)
         .addUserCreditCardToBatch(selectedCardId);
   }
 
   void setCurrentBatchTotalAmount() {
-    Provider.of<UserCartState>(context).setCurrentBatchTotalAmount();
+    Provider.of<UserCartState>(context, listen: false)
+        .setCurrentBatchTotalAmount();
   }
 
   void setCurrentBatchPaymentMethod() {
-    Provider.of<UserCartState>(context).setCurrentBatchPaymentMethod();
+    Provider.of<UserCartState>(context, listen: false)
+        .setCurrentBatchPaymentMethod();
   }
 
   void setCurrentBatchUserInfo() {
     UserTienditas userTienditas =
-        Provider.of<LoginState>(context).getTienditaUser();
-    Provider.of<UserCartState>(context).setCurrentBatchUserInfo(userTienditas);
+        Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    Provider.of<UserCartState>(context, listen: false)
+        .setCurrentBatchUserInfo(userTienditas);
   }
 
   setCurrentBatchPhoneNumber() {
     UserTienditas userTienditas =
-        Provider.of<LoginState>(context).getTienditaUser();
-    Provider.of<UserCartState>(context)
+        Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    Provider.of<UserCartState>(context, listen: false)
         .setCurrentBatchPhoneNumber(userTienditas);
   }
 
   Future<List<CreditCard>> fetchCreditCards() {
     return UserCreditCardProvider().getUserCreditCards(
         context,
-        Provider.of<LoginState>(context, listen: false)
-            .getFireBaseUser()
-            .email);
+        Provider.of<LoginState>(
+          context,
+          listen: false,
+        ).getFireBaseUser().email);
   }
 
   reloadCardList() async {

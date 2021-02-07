@@ -7,6 +7,7 @@ import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -16,6 +17,8 @@ class LoginState with ChangeNotifier {
   bool _loading = false;
   String currentUserIdToken;
   UserTienditas _userTienditas;
+
+  LatLng currentUserPickedLocation;
 
   User _firebaseUser;
   final _firebaseAuth = FirebaseAuth.instance;

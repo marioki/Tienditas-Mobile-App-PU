@@ -10,6 +10,7 @@ import 'package:app_tiendita/src/providers/province_provider.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -309,6 +310,7 @@ class _EditStoreState extends State<EditStore> {
                                       fontFamily: "Nunito"),
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.phone,
                                   initialValue: widget.store.phoneNumber,
                                   onChanged: (String value) {
                                     widget.store.phoneNumber = value;
@@ -337,7 +339,7 @@ class _EditStoreState extends State<EditStore> {
                                           if (itemImage64 != null) {
                                             response = await StoreProvider()
                                                 .updateStoreWithImage(
-                                              Provider.of<LoginState>(context)
+                                              Provider.of<LoginState>(context,listen: false)
                                                   .currentUserIdToken,
                                               widget.store.storeTagName,
                                               widget.store.storeName,
@@ -351,7 +353,7 @@ class _EditStoreState extends State<EditStore> {
                                             response = await StoreProvider()
                                                 .updateStore(
                                                     Provider.of<LoginState>(
-                                                            context)
+                                                        context, listen: false)
                                                         .currentUserIdToken,
                                                     widget.store.storeTagName,
                                                     widget.store.storeName,

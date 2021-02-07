@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class BankProvider {
   Future<BanksModel> getAllBanks(BuildContext context) async {
     String url = '$baseApiUrl/api/v1/bank';
-    final userIdToken = Provider.of<LoginState>(context).currentUserIdToken;
+    final userIdToken = Provider.of<LoginState>(context,listen: false).currentUserIdToken;
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
     if (200 == response.statusCode) {
       print(response.body);

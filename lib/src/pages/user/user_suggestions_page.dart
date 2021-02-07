@@ -1,10 +1,9 @@
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -113,7 +112,7 @@ class _SuggestionPageState extends State<SuggestionPage> {
                                     );
                                     await pr.show();
                                     response = await UsuarioTienditasProvider().sendSuggestion(
-                                        Provider.of<LoginState>(context).currentUserIdToken,
+                                        Provider.of<LoginState>(context, listen: false).currentUserIdToken,
                                         widget.email,
                                         suggestion
                                     );

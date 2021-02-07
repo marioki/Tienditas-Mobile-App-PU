@@ -124,21 +124,21 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                 ),
                 onPressed: () {
                   if (nextButtonIsEnabled) {
-                    if (Provider.of<UserCartState>(context)
+                    if (Provider.of<UserCartState>(context, listen:false)
                             .selectedDeliveryOptions
                             .length ==
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context, listen:false)
                             .filterParentStoreTagList()
                             .length) {
-                      Provider.of<UserCartState>(context).setDeliveryInfoList();
+                      Provider.of<UserCartState>(context, listen:false).setDeliveryInfoList();
 
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context, listen:false)
                           .setDeliveryTotalCost(getTotalDeliveryFee());
 
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context, listen:false)
                           .calculateTotalAmountOfBatch();
 
-                      Provider.of<UserCartState>(context).generateOrderList();
+                      Provider.of<UserCartState>(context, listen:false).generateOrderList();
 
                       Navigator.push(
                         context,
@@ -223,7 +223,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
   double getTotalDeliveryFee() {
     double totalFee = 0;
     List<DeliveryOption> selectedOptions =
-        Provider.of<UserCartState>(context).selectedDeliveryOptions;
+        Provider.of<UserCartState>(context, listen:false).selectedDeliveryOptions;
     if (selectedOptions.isNotEmpty) {
       selectedOptions.forEach((element) {
         totalFee += double.parse(element.fee);
