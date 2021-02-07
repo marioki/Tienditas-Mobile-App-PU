@@ -47,6 +47,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
 
   LatLng userPickedLocation;
   Set<Marker> _markers = HashSet<Marker>();
+  GoogleMapController _mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -348,12 +349,6 @@ class _EditUserAddressState extends State<EditUserAddress> {
     LatLng cameraLocation = LatLng(8.986129, -79.524499);
     LatLng newLocation = userPickedLocation;
 
-    print('Showing Map with Selected Local');
-    if (Provider.of<LoginState>(context, listen: false).currentUserPickedLocation != null) {
-
-        cameraLocation = Provider.of<LoginState>(context, listen: false).currentUserPickedLocation;
-
-    }
     return Container(
       height: 200,
       width: double.infinity,
@@ -362,6 +357,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
           target: cameraLocation,
           zoom: 14.4746,
         ),
+        onMapCreated: (controller) => setMapController(controller),
         markers: _markers,
         mapToolbarEnabled: false,
         onTap: (argument) => goToMapSelectionPage(),
@@ -375,7 +371,22 @@ class _EditUserAddressState extends State<EditUserAddress> {
       MaterialPageRoute(
         builder: (context) => LocationMapPage(),
       ),
-    );
+    ).whenComplete(() => reloadMap());
     setState(() {});
+  }
+
+  void reloadMap() {
+    print('Showing Map with Selected Local');
+    if (userPickedLocation != null) {
+      CameraUpdate cameraUpdate = CameraUpdate.newLatLng(userPickedLocation);
+      setState(() {
+        print("dentro de setState");
+        _mapController.moveCamera(cameraUpdate);
+      });
+    }
+  }
+
+  setMapController(GoogleMapController _controller) {
+    _mapController = _controller;
   }
 }
