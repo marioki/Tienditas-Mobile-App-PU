@@ -43,7 +43,7 @@ class ProductDetailsPage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     badgeContent: Text(
-                      Provider.of<UserCartState>(context,listen: false)
+                      Provider.of<UserCartState>(context)
                           .getCartItemsQuantity()
                           .toString(),
                       style: TextStyle(color: Colors.white),

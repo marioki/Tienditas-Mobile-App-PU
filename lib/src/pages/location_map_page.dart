@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
@@ -115,13 +116,13 @@ class _LocationMapPageState extends State<LocationMapPage> {
         Marker(
           markerId: MarkerId('0'),
           position: LatLng(_locationData.latitude, _locationData.longitude),
-          infoWindow: InfoWindow(
-            title: 'Ciudad De Panamá',
-            snippet: 'Juega Vivo Pelao',
-          ),
+          infoWindow: InfoWindow(),
         ),
       );
     });
+    markTappedLocation(
+      LatLng(_locationData.latitude, _locationData.longitude),
+    );
   }
 
   markTappedLocation(LatLng _tappedLocation) {
@@ -145,6 +146,8 @@ class _LocationMapPageState extends State<LocationMapPage> {
   }
 
   savePickedLocation() {
+    Provider.of<LoginState>(context, listen: false).currentUserPickedLocation =
+        tappedLocation;
     Navigator.pop(context, tappedLocation);
   }
 }
