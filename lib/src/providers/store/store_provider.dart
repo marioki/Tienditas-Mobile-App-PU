@@ -67,7 +67,7 @@ class StoreProvider {
 
   Future<Tiendita> getAllTienditas(BuildContext context) async {
 
-    String url = '$baseApiUrl/api/v1/store?rowcount=5';
+    String url = '$baseApiUrl/api/v1/store?rowcount=30';
     final userIdToken =
     Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     final response = await http
