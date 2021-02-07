@@ -84,6 +84,11 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                         ),
                         Text(
                           args.description,
+                          maxLines: 3,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          "Provincia: ${args.provinceName}",
                           maxLines: 2,
                           style: TextStyle(fontSize: 12),
                         ),

@@ -105,9 +105,15 @@ class StoreCardWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 0),
                       Text(handle, style: storeDetailsCardStyle),
-                      SizedBox(height: 10),
+                      SizedBox(height: 8),
                       Text(
                         description,
+                        maxLines: 3,
+                        style: storeDescriptionCardStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "Provincia: $provinceName",
                         maxLines: 2,
                         style: storeDescriptionCardStyle,
                         overflow: TextOverflow.ellipsis,

@@ -225,6 +225,7 @@ class _EditStoreState extends State<EditStore> {
                                       fontFamily: "Nunito"),
                                 ),
                                 TextFormField(
+                                  maxLines: 3,
                                   initialValue: widget.store.description,
                                   onChanged: (String value) {
                                     widget.store.description = value;
