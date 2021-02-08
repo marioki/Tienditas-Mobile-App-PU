@@ -12,6 +12,7 @@ class CategoriesPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        brightness: Brightness.dark,
         toolbarHeight: 100,
         elevation: 0,
         shape: RoundedRectangleBorder(

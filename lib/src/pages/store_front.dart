@@ -188,9 +188,9 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     return FutureBuilder(
       future: tienditaResponse,
       builder: (
-          BuildContext context,
-          snapshot,
-          ) {
+        BuildContext context,
+        snapshot,
+      ) {
         if (snapshot.hasData) {
           Tiendita miTienda = snapshot.data;
           return ListView.builder(
@@ -211,7 +211,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                       description: miTienda.body.stores[index].description,
                       followers: null,
                       originalStoreName:
-                      miTienda.body.stores[index].originalStoreName,
+                          miTienda.body.stores[index].originalStoreName,
                       provinceName: miTienda.body.stores[index].provinceName,
                     ),
                     SizedBox(
@@ -229,7 +229,7 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
                 description: miTienda.body.stores[index].description,
                 followers: null,
                 originalStoreName:
-                miTienda.body.stores[index].originalStoreName,
+                    miTienda.body.stores[index].originalStoreName,
                 provinceName: miTienda.body.stores[index].provinceName,
               );
             },
@@ -245,7 +245,6 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
       },
     );
   }
-
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(

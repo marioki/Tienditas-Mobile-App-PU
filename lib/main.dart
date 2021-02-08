@@ -29,10 +29,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final appleSignInAvailable = await AppleSignInAvailable.check();
-  runApp(Provider<AppleSignInAvailable>.value(
-    value: appleSignInAvailable,
-    child: MyApp(),
-  ));
+  runApp(
+    Provider<AppleSignInAvailable>.value(
+      value: appleSignInAvailable,
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -76,6 +78,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme: AppBarTheme(
+            brightness: Brightness.dark,
+          ),
         ),
       ),
     );
