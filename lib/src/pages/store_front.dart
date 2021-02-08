@@ -48,112 +48,46 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
             appBar: getCustomAppBar(),
             resizeToAvoidBottomInset: false,
             body: RefreshIndicator(
-              onRefresh:() => _onRefresh(),
-              child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
-                children: <Widget>[
-                  //Lista componentes desde aqui
-                  //Custom App Bar ==========
-                  //Contenedor de Banners
-                  getBanners(),
-                  //Contenedor de Categorias
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                    leading: Text('Categorías', style: storeSubtitles),
-                    trailing: FlatButton(
-                      onPressed: () async {
-                        Navigator.pushNamed(context, 'categories_page',
-                            arguments: await categoryResponse);
-                      },
-                      child: Text(
-                        'Ver Todas',
-                        style: storeOptions,
+              onRefresh: () => _onRefresh(),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    getBanners(),
+                    ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      leading: Text('Categorías', style: storeSubtitles),
+                      trailing: FlatButton(
+                        onPressed: () async {
+                          Navigator.pushNamed(context, 'categories_page',
+                              arguments: await categoryResponse);
+                        },
+                        child: Text(
+                          'Ver Todas',
+                          style: storeOptions,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 150,
-                    child: _carruselDeCategorias(),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => SliverStoreFront(),));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      margin: EdgeInsets.only(bottom: 10, top: 16),
-                      child: Text('Sugerencias para ti', style: storeSubtitles),
+                    Container(
+                      //Category List Row Container
+                      height: 110,
+                      child: _carruselDeCategorias(),
                     ),
-                  ),
-                  FutureBuilder(
-                    future: tienditaResponse,
-                    builder: (
-                      BuildContext context,
-                      snapshot,
-                    ) {
-                      if (snapshot.hasData) {
-                        Tiendita miTienda = snapshot.data;
-                        return ListView.builder(
-                          primary: false,
-                          itemCount: miTienda.body.stores.length,
-                          padding: EdgeInsets.symmetric(horizontal: 24),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == miTienda.body.stores.length - 1) {
-                              return Column(
-                                children: <Widget>[
-                                  StoreCardWidget(
-                                    name: miTienda.body.stores[index].storeName,
-                                    handle: miTienda
-                                        .body.stores[index].storeTagName,
-                                    category: miTienda
-                                        .body.stores[index].categoryName,
-                                    colorHex:
-                                        miTienda.body.stores[index].hexColor,
-                                    image: miTienda.body.stores[index].iconUrl,
-                                    description:
-                                        miTienda.body.stores[index].description,
-                                    followers: null,
-                                    originalStoreName: miTienda
-                                        .body.stores[index].originalStoreName,
-                                    provinceName: miTienda
-                                        .body.stores[index].provinceName,
-                                  ),
-                                  SizedBox(
-                                    height: 100,
-                                  ),
-                                ],
-                              );
-                            }
-                            return StoreCardWidget(
-                              name: miTienda.body.stores[index].storeName,
-                              handle: miTienda.body.stores[index].storeTagName,
-                              category:
-                                  miTienda.body.stores[index].categoryName,
-                              colorHex: miTienda.body.stores[index].hexColor,
-                              image: miTienda.body.stores[index].iconUrl,
-                              description:
-                                  miTienda.body.stores[index].description,
-                              followers: null,
-                              originalStoreName:
-                                  miTienda.body.stores[index].originalStoreName,
-                              provinceName:
-                                  miTienda.body.stores[index].provinceName,
-                            );
-                          },
-                        );
-                      } else {
-                        return Container(
-                          height: 400,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                    },
-                  )
-                ],
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) => SliverStoreFront(),));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        margin: EdgeInsets.only(bottom: 10, top: 16),
+                        child:
+                            Text('Sugerencias para ti', style: storeSubtitles),
+                      ),
+                    ),
+                    getTiendasListViewBuilder()
+                  ],
+                ),
               ),
             ),
           ),
@@ -250,39 +184,68 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     }
   }
 
-  // Widget getTiendasListViewBuilder() {
-  //   return SmartRefresher(
-  //     physics: BouncingScrollPhysics(),
-  //     enablePullDown: true,
-  //     enablePullUp: true,
-  //     header: WaterDropHeader(
-  //       complete: Text('¡Actualizado!'),
-  //     ),
-  //     footer: CustomFooter(
-  //       builder: (BuildContext context, LoadStatus mode) {
-  //         Widget body;
-  //         if (mode == LoadStatus.idle) {
-  //           //body = Text("pull up load");
-  //         } else if (mode == LoadStatus.loading) {
-  //           body = CupertinoActivityIndicator();
-  //         } else if (mode == LoadStatus.failed) {
-  //           body = Text("Error de conexión...");
-  //         } else if (mode == LoadStatus.canLoading) {
-  //           // body = Text("release to load more");
-  //         } else {
-  //           //body = Text("No more Data");
-  //         }
-  //         return Container(
-  //           height: 55.0,
-  //           child: Center(child: body),
-  //         );
-  //       },
-  //     ),
-  //     controller: _refreshController,
-  //     onRefresh: _onRefresh,
-  //     onLoading: _onLoading,
-  //   );
-  // }
+  Widget getTiendasListViewBuilder() {
+    return FutureBuilder(
+      future: tienditaResponse,
+      builder: (
+          BuildContext context,
+          snapshot,
+          ) {
+        if (snapshot.hasData) {
+          Tiendita miTienda = snapshot.data;
+          return ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: miTienda.body.stores.length,
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == miTienda.body.stores.length - 1) {
+                return Column(
+                  children: <Widget>[
+                    StoreCardWidget(
+                      name: miTienda.body.stores[index].storeName,
+                      handle: miTienda.body.stores[index].storeTagName,
+                      category: miTienda.body.stores[index].categoryName,
+                      colorHex: miTienda.body.stores[index].hexColor,
+                      image: miTienda.body.stores[index].iconUrl,
+                      description: miTienda.body.stores[index].description,
+                      followers: null,
+                      originalStoreName:
+                      miTienda.body.stores[index].originalStoreName,
+                      provinceName: miTienda.body.stores[index].provinceName,
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                  ],
+                );
+              }
+              return StoreCardWidget(
+                name: miTienda.body.stores[index].storeName,
+                handle: miTienda.body.stores[index].storeTagName,
+                category: miTienda.body.stores[index].categoryName,
+                colorHex: miTienda.body.stores[index].hexColor,
+                image: miTienda.body.stores[index].iconUrl,
+                description: miTienda.body.stores[index].description,
+                followers: null,
+                originalStoreName:
+                miTienda.body.stores[index].originalStoreName,
+                provinceName: miTienda.body.stores[index].provinceName,
+              );
+            },
+          );
+        } else {
+          return Container(
+            height: 400,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
 
   Widget _carruselDeCategorias() {
     return FutureBuilder(
@@ -425,14 +388,5 @@ class _StoreFrontPageState extends State<StoreFrontPage> {
     setState(() {
       tienditaResponse = fetchTienditas(context);
     });
-
-    // if failed,use refreshFailed()
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    //todo Shimer animation. while is loading
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() {});
   }
 }

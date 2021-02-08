@@ -31,7 +31,7 @@ class StoreProvider {
     final String url =
         '$baseApiUrl/api/v1/store_name?$userSearchParam=$userInput';
     final userIdToken = Provider
-        .of<LoginState>(context)
+        .of<LoginState>(context,listen: false)
         .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
@@ -50,7 +50,7 @@ class StoreProvider {
       String storeTagName) async {
     String url = '$baseApiUrl/api/v1/store?store_tag_name=$storeTagName';
     final userIdToken = Provider
-        .of<LoginState>(context)
+        .of<LoginState>(context,listen: false)
         .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});
@@ -67,7 +67,7 @@ class StoreProvider {
 
   Future<Tiendita> getAllTienditas(BuildContext context) async {
 
-    String url = '$baseApiUrl/api/v1/store?rowcount=5';
+    String url = '$baseApiUrl/api/v1/store?rowcount=30';
     final userIdToken =
     Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     final response = await http
@@ -84,7 +84,7 @@ class StoreProvider {
   Future<Tiendita> getTienditasPorCategoria(String categoryName,
       BuildContext context) async {
     final userIdToken = Provider
-        .of<LoginState>(context)
+        .of<LoginState>(context,listen: false)
         .currentUserIdToken;
     final String url = '$baseApiUrl/api/v1/store?category_name=$categoryName';
     final response = await http
@@ -102,7 +102,7 @@ class StoreProvider {
       String storeTagName) async {
     String url = '$baseApiUrl/api/v1/order?store_tag_name=$storeTagName';
     final userIdToken = Provider
-        .of<LoginState>(context)
+        .of<LoginState>(context,listen: false)
         .currentUserIdToken;
     final response = await http
         .get(url, headers: {HttpHeaders.authorizationHeader: userIdToken});

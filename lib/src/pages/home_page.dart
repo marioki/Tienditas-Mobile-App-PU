@@ -56,12 +56,12 @@ class _HomePageState extends State<HomePage> {
                 icon: Badge(
                   child: Icon(Icons.shopping_cart_outlined),
                   badgeContent: Text(
-                    Provider.of<UserCartState>(context)
+                    Provider.of<UserCartState>(context,listen: true)
                         .getCartItemsQuantity()
                         .toString(),
                     style: TextStyle(color: Colors.white),
                   ),
-                  showBadge: (Provider.of<UserCartState>(context)
+                  showBadge: (Provider.of<UserCartState>(context,listen: true)
                       .getCartItemsQuantity() > 0)? true : false,
                 ),
               ),
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return CartPage();
       case 2:
-        if (Provider.of<LoginState>(context).isAnon()) {
+        if (Provider.of<LoginState>(context,listen: true).isAnon()) {
           return LoginPage();
         }
         return ProfilePage();

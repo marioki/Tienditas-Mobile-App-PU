@@ -207,7 +207,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                                 // editDeliveryOption
                                 if(id != null) {
                                   response = await StoreProvider().editDeliveryOption(
-                                      Provider.of<LoginState>(context).currentUserIdToken,
+                                      Provider.of<LoginState>(context, listen: false).currentUserIdToken,
                                       storeTagName,
                                       id,
                                       name,
@@ -216,7 +216,7 @@ class EditDeliveryOptionCard extends StatelessWidget {
                                   );
                                 } else {
                                   response = await StoreProvider().newDeliveryOption(
-                                      Provider.of<LoginState>(context).currentUserIdToken,
+                                      Provider.of<LoginState>(context, listen: false).currentUserIdToken,
                                       storeTagName,
                                       name,
                                       method,

@@ -110,12 +110,12 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                       color: Colors.white,
                     ),
                     badgeContent: Text(
-                      Provider.of<UserCartState>(context)
+                      Provider.of<UserCartState>(context,listen: true)
                           .getCartItemsQuantity()
                           .toString(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    showBadge: (Provider.of<UserCartState>(context)
+                    showBadge: (Provider.of<UserCartState>(context,listen: true)
                                 .getCartItemsQuantity() >
                             0)
                         ? true

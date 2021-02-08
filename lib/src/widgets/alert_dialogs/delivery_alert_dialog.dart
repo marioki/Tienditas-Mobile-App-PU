@@ -124,7 +124,7 @@ class _DeliveryAlertDialogWidgetState extends State<DeliveryAlertDialogWidget> {
               selectedOption.selectedIndex = widget.index;
               print(selectedOption.selectedIndex);
 
-              Provider.of<UserCartState>(context)
+              Provider.of<UserCartState>(context, listen:false)
                   .addSelectedDeliveryOption(selectedOption);
 
               Navigator.pop(context, selectedOption.name);

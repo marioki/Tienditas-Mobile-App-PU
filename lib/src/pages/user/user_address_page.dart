@@ -16,14 +16,14 @@ class _UserAddressPageState extends State<UserAddressPage> {
   @override
   void initState() {
     _getThingsOnStartup().then((value) {
-      Provider.of<LoginState>(context).reloadUserInfo();
+      Provider.of<LoginState>(context, listen: false).reloadUserInfo();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    UserTienditas user = Provider.of<LoginState>(context).getTienditaUser();
+    UserTienditas user = Provider.of<LoginState>(context,listen: false).getTienditaUser();
 
     return Scaffold(
       appBar: AppBar(
@@ -93,7 +93,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
                     ),
                   ),
                 ).then((value) =>
-                    Provider.of<LoginState>(context).reloadUserInfo());
+                    Provider.of<LoginState>(context, listen: false).reloadUserInfo());
               },
               child: Text('+ Agregar Dirección'),
             );

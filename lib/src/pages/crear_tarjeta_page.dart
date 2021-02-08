@@ -149,8 +149,8 @@ class _CrearNuevaTarjetaState extends State<CrearNuevaTarjeta> {
 
     //print(newCard.number);
 
-    final tienditasUser = Provider.of<LoginState>(context).getTienditaUser();
-    final userTokenId = Provider.of<LoginState>(context).currentUserIdToken;
+    final tienditasUser = Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    final userTokenId = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
     var response = await CreateNewCreditCard()
         .sendNewCreditCard(tienditasUser, userTokenId, newCard);
     if (response.statusCode == 200) {
