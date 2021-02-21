@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
+import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/location_map_page.dart';
 import 'package:app_tiendita/src/providers/province_provider.dart';
 import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
@@ -18,20 +19,24 @@ class EditUserAddress extends StatefulWidget {
       {@required this.appBarTitle,
       @required this.userEmail,
       this.name,
-      this.provinceName,
+      this.province,
       this.addressLine,
       this.referencePoint,
       @required this.method,
-      this.id});
+      this.id,
+      this.latitude,
+      this.longitude});
 
   final String appBarTitle;
   final String userEmail;
-  String provinceName;
+  String province;
   String name;
   String addressLine;
   String referencePoint;
   final String method;
   String id;
+  String latitude;
+  String longitude;
 
   @override
   _EditUserAddressState createState() => _EditUserAddressState();
@@ -46,14 +51,49 @@ class _EditUserAddressState extends State<EditUserAddress> {
   ];
 
   LatLng userPickedLocation;
+  LatLng cameraLocation = LatLng(8.986129, -79.524499);
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
+
+  void reloadMap(LatLng pickedLocation) {
+    setState(() {
+      widget.latitude = pickedLocation.latitude.toString();
+      widget.longitude = pickedLocation.longitude.toString();
+      updateMarker(pickedLocation);
+      CameraUpdate cameraUpdate = CameraUpdate.newLatLng(pickedLocation);
+      _mapController.moveCamera(cameraUpdate);
+    });
+  }
+
+  void updateMarker(LatLng location) {
+    setState(() {
+      _markers.removeWhere((element) => element.markerId.value == '0');
+      _markers.add(
+        Marker(
+          markerId: MarkerId('0'),
+          position: LatLng(location.latitude, location.longitude)
+        ),
+      );
+    });
+  }
+
+  void initMap(LatLng addressLocation) {
+    setState(() {
+      cameraLocation = addressLocation;
+      widget.latitude = addressLocation.latitude.toString();
+      widget.longitude = addressLocation.longitude.toString();
+      updateMarker(addressLocation);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
     pr.style(message: 'Guardando...');
+    if (widget.latitude != null && widget.longitude != null) {
+      initMap(LatLng(double.parse(widget.latitude), double.parse(widget.longitude)));
+    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -190,10 +230,10 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               return DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   hint: Text("Seleccionar ubicación"),
-                                  value: widget.provinceName,
+                                  value: widget.province,
                                   onChanged: (newValue) {
                                     setState(() {
-                                      widget.provinceName = newValue;
+                                      widget.province = newValue;
                                     });
                                   },
                                   items: provinces.map((value) {
@@ -225,24 +265,18 @@ class _EditUserAddressState extends State<EditUserAddress> {
                         SizedBox(
                           height: 20,
                         ),
-                        Center(
-                          child: Column(
-                            children: [
-                              FlatButton(
-                                onPressed: () => goToMapSelectionPage(),
-                                child: Icon(Icons.map_outlined),
-                              ),
-                              Text('Seleccionar en Mapa'),
-                              Text(userPickedLocation != null
-                                  ? userPickedLocation.latitude.toString()
-                                  : 'nada'),
-                              Text(userPickedLocation != null
-                                  ? userPickedLocation.longitude.toString()
-                                  : 'nada'),
-                              showPickedLocation(),
-                            ],
-                          ),
+                        Text(
+                          "Escoger dirección en mapa",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Nunito"),
                         ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        showPickedLocation(),
                         SizedBox(
                           height: 20,
                         ),
@@ -263,40 +297,52 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
-                                  if (widget.provinceName != null) {
-                                    if (widget.method == "post") {
-                                      pr.show();
-
-                                      response =
-                                          await UsuarioTienditasProvider()
-                                              .createAddress(
-                                                  Provider.of<LoginState>(
-                                                          context,
-                                                          listen: false)
-                                                      .currentUserIdToken,
+                                  if (widget.province != null) {
+                                    if(widget.latitude != null && widget.longitude != null) {
+                                      if (widget.method == "post") {
+                                        pr.show();
+                                        response =
+                                            await UsuarioTienditasProvider()
+                                                .createAddress(
+                                                    Provider.of<LoginState>(
+                                                            context,
+                                                            listen: false)
+                                                        .currentUserIdToken,
+                                                    widget.userEmail,
+                                                  widget.name,
+                                                  widget.addressLine,
+                                                  widget.referencePoint,
+                                                  "Panamá",
+                                                  widget.province,
+                                                  widget.latitude,
+                                                  widget.longitude);
+                                      }
+                                      if (widget.method == "put") {
+                                        pr.show();
+                                        response =
+                                            await UsuarioTienditasProvider()
+                                                .updateAddress(
+                                                    Provider.of<LoginState>(
+                                                            context,
+                                                            listen: false)
+                                                        .currentUserIdToken,
+                                                    widget.id,
                                                   widget.userEmail,
                                                   widget.name,
                                                   widget.addressLine,
                                                   widget.referencePoint,
                                                   "Panamá",
-                                                  widget.provinceName);
-                                    }
-                                    if (widget.method == "put") {
-                                      pr.show();
-                                      response =
-                                          await UsuarioTienditasProvider()
-                                              .updateAddress(
-                                                  Provider.of<LoginState>(
-                                                          context,
-                                                          listen: false)
-                                                      .currentUserIdToken,
-                                                  widget.id,
-                                                  widget.userEmail,
-                                                  widget.name,
-                                                  widget.addressLine,
-                                                  widget.referencePoint,
-                                                  "Panamá",
-                                                  widget.provinceName);
+                                                  widget.province,
+                                                  widget.latitude,
+                                                  widget.longitude);
+                                      }
+                                    } else {
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              Text('Debe seleccionar su ubicación en el mapa'),
+                                        ),
+                                      );
                                     }
                                   } else {
                                     Scaffold.of(context).showSnackBar(
@@ -346,20 +392,16 @@ class _EditUserAddressState extends State<EditUserAddress> {
   }
 
   Widget showPickedLocation() {
-    LatLng cameraLocation = LatLng(8.986129, -79.524499);
-    LatLng newLocation = userPickedLocation;
-
     return Container(
       height: 200,
       width: double.infinity,
       child: GoogleMap(
         initialCameraPosition: CameraPosition(
           target: cameraLocation,
-          zoom: 14.4746,
+          zoom: 15,
         ),
         onMapCreated: (controller) => setMapController(controller),
         markers: _markers,
-        mapToolbarEnabled: false,
         onTap: (argument) => goToMapSelectionPage(),
       ),
     );
@@ -371,18 +413,9 @@ class _EditUserAddressState extends State<EditUserAddress> {
       MaterialPageRoute(
         builder: (context) => LocationMapPage(),
       ),
-    ).whenComplete(() => reloadMap());
-    setState(() {});
-  }
-
-  void reloadMap() {
-    print('Showing Map with Selected Local');
+    );
     if (userPickedLocation != null) {
-      CameraUpdate cameraUpdate = CameraUpdate.newLatLng(userPickedLocation);
-      setState(() {
-        print("dentro de setState");
-        _mapController.moveCamera(cameraUpdate);
-      });
+      reloadMap(userPickedLocation);
     }
   }
 

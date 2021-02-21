@@ -65,14 +65,16 @@ class _UserAddressPageState extends State<UserAddressPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditUserAddress(
-                        appBarTitle: "Agregar Dirección",
+                        appBarTitle: "Editar Dirección",
                         userEmail: user.userEmail,
                         method: "put",
                         id: user.address[index].id,
                         name: user.address[index].name,
                         addressLine: user.address[index].addressLine1,
                         referencePoint: user.address[index].referencePoint,
-                        provinceName: user.address[index].province,
+                        province: user.address[index].province,
+                        latitude: user.address[index].latitude,
+                        longitude: user.address[index].longitude
                       ),
                     ),
                   );

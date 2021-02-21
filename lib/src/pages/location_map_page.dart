@@ -16,7 +16,7 @@ class LocationMapPage extends StatefulWidget {
 class _LocationMapPageState extends State<LocationMapPage> {
   static final CameraPosition _panamaCiudad = CameraPosition(
     target: LatLng(9.001035, -79.522508),
-    zoom: 14.4746,
+    zoom: 15.0,
   );
 
   Set<Marker> _markers = HashSet<Marker>();
@@ -52,8 +52,8 @@ class _LocationMapPageState extends State<LocationMapPage> {
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                       target: LatLng(
-                          _locationData.latitude, _locationData.longitude),
-                      zoom: 14.4746,
+                        _locationData.latitude, _locationData.longitude),
+                        zoom: 15.0,
                     ),
                     onMapCreated: _onMapCreated,
                     markers: _markers,
@@ -116,7 +116,6 @@ class _LocationMapPageState extends State<LocationMapPage> {
         Marker(
           markerId: MarkerId('0'),
           position: LatLng(_locationData.latitude, _locationData.longitude),
-          infoWindow: InfoWindow(),
         ),
       );
     });
@@ -133,16 +132,9 @@ class _LocationMapPageState extends State<LocationMapPage> {
         Marker(
           markerId: MarkerId('0'),
           position: LatLng(tappedLocation.latitude, tappedLocation.longitude),
-          infoWindow: InfoWindow(
-            title: 'Ciudad De Panamá',
-            snippet: 'Juega Vivo Pelao',
-          ),
         ),
       );
     });
-
-    print(tappedLocation.latitude);
-    print(tappedLocation.longitude);
   }
 
   savePickedLocation() {
