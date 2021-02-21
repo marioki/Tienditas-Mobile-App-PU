@@ -48,6 +48,7 @@ class _StoreOrdersState extends State<StoreOrders> {
                     amount: storeOrder.body.orders[index].amount,
                     userName: storeOrder.body.orders[index].userName,
                     orderDate: storeOrder.body.orders[index].orderDate,
+                    orderId: storeOrder.body.orders[index].orderId,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -78,11 +79,12 @@ class _StoreOrdersState extends State<StoreOrders> {
 }
 
 class OrderItemCard extends StatelessWidget {
-  OrderItemCard({this.amount, this.userName, this.orderDate, this.onPressed});
+  OrderItemCard({this.amount, this.userName, this.orderDate, this.orderId, this.onPressed});
 
   final String amount;
   final String userName;
   final String orderDate;
+  final String orderId;
   final Function onPressed;
 
   @override
@@ -114,6 +116,17 @@ class OrderItemCard extends StatelessWidget {
                 ),
                 Text(
                   "Hora del pedido: $orderDate",
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: "Nunito"),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "ID: ${orderId.substring(0,23)}",
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: 15,

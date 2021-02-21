@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
@@ -67,20 +66,6 @@ class _EditUserAddressState extends State<EditUserAddress> {
       widget.address.latitude = addressLocation.latitude.toString();
       widget.address.longitude = addressLocation.longitude.toString();
       updateMarker(addressLocation);
-    });
-  }
-
-  void setValues(String name, String addressLine1, String referencePoint, String country,
-  String province, String latitude, String longitude) {
-    setState(() {
-      Address address = new Address();
-      address.name = name;
-      address.country = country;
-      address.addressLine1 = addressLine1;
-      address.referencePoint = referencePoint;
-      address.province = province;
-      address.latitude = latitude;
-      address.longitude = longitude;
     });
   }
 
@@ -339,16 +324,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                       pr.hide();
                                       print(responseTienditasApi.body.message);
                                       isLoading = false;
-                                      /*setValues(
-                                        widget.address.name,
-                                        widget.address.addressLine1,
-                                        widget.address.referencePoint,
-                                        "Panamá",
-                                        widget.address.province,
-                                        widget.address.latitude,
-                                        widget.address.longitude
-                                      );*/
-                                      Navigator.of(context).pop();
+                                      Navigator.pop(context, widget.address);
                                     } else {
                                       //Error en guardar o editar La  direccion
                                       pr.hide();

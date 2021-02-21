@@ -71,9 +71,14 @@ class _UserAddressPageState extends State<UserAddressPage> {
                       ),
                     ),
                   );
-                  /*setState(() {
-                    user.address[index] = addressResult;
-                  });*/
+                  setState(() {
+                    user.address[index].name = addressResult.name;
+                    user.address[index].addressLine1 = addressResult.addressLine1;
+                    user.address[index].referencePoint = addressResult.referencePoint;
+                    user.address[index].province = addressResult.province;
+                    user.address[index].latitude = addressResult.latitude;
+                    user.address[index].longitude = addressResult.longitude;
+                  });
                 },
                 child: Text('Editar'),
               ),

@@ -128,6 +128,19 @@ class BankAccount {
 }
 
 class Address {
+  Address({
+    this.id,
+    this.country,
+    this.referencePoint,
+    this.province,
+    this.name,
+    this.addressLine1,
+    this.phoneNumber,
+    this.isDefault,
+    this.latitude,
+    this.longitude
+  });
+
   String id;
   String country;
   String referencePoint;
@@ -218,19 +231,6 @@ class Address {
   set locationLongitude(String longitude) {
     this.longitude = longitude;
   }
-
-  Address({
-    this.id,
-    this.country,
-    this.referencePoint,
-    this.province,
-    this.name,
-    this.addressLine1,
-    this.phoneNumber,
-    this.isDefault,
-    this.latitude,
-    this.longitude
-  });
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         id: json["id"],
