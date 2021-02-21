@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
@@ -14,19 +13,17 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class EditUserAddress extends StatefulWidget {
-  EditUserAddress(
-      {@required this.userEmail,
-      @required this.address});
+class CreateUserAddress extends StatefulWidget {
+  CreateUserAddress(
+      {@required this.userEmail});
 
   final String userEmail;
-  Address address;
 
   @override
-  _EditUserAddressState createState() => _EditUserAddressState();
+  _CreateUserAddressState createState() => _CreateUserAddressState();
 }
 
-class _EditUserAddressState extends State<EditUserAddress> {
+class _CreateUserAddressState extends State<CreateUserAddress> {
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   var response;
@@ -39,10 +36,18 @@ class _EditUserAddressState extends State<EditUserAddress> {
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
 
+  String name;
+  String country;
+  String addressLine1;
+  String referencePoint;
+  String province;
+  String latitude;
+  String longitude;
+
   void reloadMap(LatLng pickedLocation) {
     setState(() {
-      widget.address.latitude = pickedLocation.latitude.toString();
-      widget.address.longitude = pickedLocation.longitude.toString();
+      latitude = pickedLocation.latitude.toString();
+      longitude = pickedLocation.longitude.toString();
       updateMarker(pickedLocation);
       CameraUpdate cameraUpdate = CameraUpdate.newLatLng(pickedLocation);
       _mapController.moveCamera(cameraUpdate);
@@ -58,15 +63,6 @@ class _EditUserAddressState extends State<EditUserAddress> {
           position: LatLng(location.latitude, location.longitude)
         ),
       );
-    });
-  }
-
-  void initMap(LatLng addressLocation) {
-    setState(() {
-      cameraLocation = addressLocation;
-      widget.address.latitude = addressLocation.latitude.toString();
-      widget.address.longitude = addressLocation.longitude.toString();
-      updateMarker(addressLocation);
     });
   }
 
@@ -89,9 +85,6 @@ class _EditUserAddressState extends State<EditUserAddress> {
     final ProgressDialog pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: true);
     pr.style(message: 'Guardando...');
-    if (widget.address.latitude != null && widget.address.longitude != null) {
-      initMap(LatLng(double.parse(widget.address.latitude), double.parse(widget.address.longitude)));
-    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -104,7 +97,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          'Editar Dirección',
+          'Agregar Dirección',
           style: appBarStyle,
         ),
       ),
@@ -143,9 +136,9 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               fontFamily: "Nunito"),
                         ),
                         TextFormField(
-                          initialValue: widget.address.name,
+                          initialValue: name,
                           onChanged: (String value) {
-                            widget.address.name = value;
+                            name = value;
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -168,9 +161,9 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               fontFamily: "Nunito"),
                         ),
                         TextFormField(
-                          initialValue: widget.address.addressLine1,
+                          initialValue: addressLine1,
                           onChanged: (String value) {
-                            widget.address.addressLine1 = value;
+                            addressLine1 = value;
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -193,9 +186,9 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               fontFamily: "Nunito"),
                         ),
                         TextFormField(
-                          initialValue: widget.address.referencePoint,
+                          initialValue: referencePoint,
                           onChanged: (String value) {
-                            widget.address.referencePoint = value;
+                            referencePoint = value;
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -228,10 +221,10 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               return DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   hint: Text("Seleccionar ubicación"),
-                                  value: widget.address.province,
+                                  value: province,
                                   onChanged: (newValue) {
                                     setState(() {
-                                      widget.address.province = newValue;
+                                      province = newValue;
                                     });
                                   },
                                   items: provinces.map((value) {
@@ -295,25 +288,24 @@ class _EditUserAddressState extends State<EditUserAddress> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
-                                  if (widget.address.province != null) {
-                                    if(widget.address.latitude != null && widget.address.longitude != null) {
-                                        pr.show();
-                                        response =
-                                            await UsuarioTienditasProvider()
-                                                .updateAddress(
-                                                    Provider.of<LoginState>(
-                                                            context,
-                                                            listen: false)
-                                                        .currentUserIdToken,
-                                                  widget.address.id,
-                                                  widget.userEmail,
-                                                  widget.address.name,
-                                                  widget.address.addressLine1,
-                                                  widget.address.referencePoint,
-                                                  "Panamá",
-                                                  widget.address.province,
-                                                  widget.address.latitude,
-                                                  widget.address.longitude);
+                                  if (province != null) {
+                                    if(latitude != null && longitude != null) {
+                                      pr.show();
+                                      response =
+                                          await UsuarioTienditasProvider()
+                                              .createAddress(
+                                                  Provider.of<LoginState>(
+                                                          context,
+                                                          listen: false)
+                                                      .currentUserIdToken,
+                                                widget.userEmail,
+                                                name,
+                                                addressLine1,
+                                                referencePoint,
+                                                "Panamá",
+                                                province,
+                                                latitude,
+                                                longitude);
                                     } else {
                                       Scaffold.of(context).showSnackBar(
                                         SnackBar(
@@ -339,15 +331,6 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                       pr.hide();
                                       print(responseTienditasApi.body.message);
                                       isLoading = false;
-                                      /*setValues(
-                                        widget.address.name,
-                                        widget.address.addressLine1,
-                                        widget.address.referencePoint,
-                                        "Panamá",
-                                        widget.address.province,
-                                        widget.address.latitude,
-                                        widget.address.longitude
-                                      );*/
                                       Navigator.of(context).pop();
                                     } else {
                                       //Error en guardar o editar La  direccion
