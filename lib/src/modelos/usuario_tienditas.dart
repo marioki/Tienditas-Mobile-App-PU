@@ -137,6 +137,8 @@ class Address {
     this.addressLine1,
     this.phoneNumber,
     this.isDefault,
+    this.latitude,
+    this.longitude
   });
 
   String id;
@@ -147,6 +149,88 @@ class Address {
   String addressLine1;
   String phoneNumber;
   String isDefault;
+  String latitude;
+  String longitude;
+
+  String get locationId {
+    return this.id;
+  }
+
+  set locationId(String id) {
+    this.id = id;
+  }
+
+  String get locationCountry {
+    return this.country;
+  }
+
+  set locationCountry(String country) {
+    this.country = country;
+  }
+
+  String get locationReferencePoint {
+    return this.referencePoint;
+  }
+
+  set locationReferencePoint(String referencePoint) {
+    this.referencePoint = referencePoint;
+  }
+
+  String get locationProvince {
+    return this.province;
+  }
+
+  set locationProvince(String province) {
+    this.province = province;
+  }
+
+  String get locationName {
+    return this.name;
+  }
+
+  set locationName(String name) {
+    this.name = name;
+  }
+
+  String get locationAddressLine1 {
+    return this.addressLine1;
+  }
+
+  set locationAddressLine1(String addressLine1) {
+    this.addressLine1 = addressLine1;
+  }
+
+  String get locationPhoneNumber {
+    return this.phoneNumber;
+  }
+
+  set locationPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  String get locationIsDefault {
+    return this.isDefault;
+  }
+
+  set locationIsDefault(String isDefault) {
+    this.isDefault = isDefault;
+  }
+
+  String get locationLatitude {
+    return this.latitude;
+  }
+
+  set locationLatitude(String latitude) {
+    this.latitude = latitude;
+  }
+
+  String get locationLongitude {
+    return this.longitude;
+  }
+
+  set locationLongitude(String longitude) {
+    this.longitude = longitude;
+  }
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         id: json["id"],
@@ -157,6 +241,8 @@ class Address {
         addressLine1: json["address_line_1"],
         phoneNumber: json["phone_number"],
         isDefault: json["is_default"],
+        latitude: json["latitude"] == null ? null : json["latitude"],
+        longitude: json["longitude"] == null ? null : json["longitude"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -168,5 +254,7 @@ class Address {
         "address_line_1": addressLine1,
         "phone_number": phoneNumber,
         "is_default": isDefault,
+        "latitude": latitude == null ? null : latitude,
+        "longitude": longitude == null ? null : longitude,
       };
 }

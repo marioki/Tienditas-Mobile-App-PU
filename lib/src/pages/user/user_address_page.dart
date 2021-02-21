@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'create_user_address.dart';
 import 'edit_user_address.dart';
 
 class UserAddressPage extends StatefulWidget {
@@ -60,36 +61,36 @@ class _UserAddressPageState extends State<UserAddressPage> {
                 ],
               ),
               trailing: FlatButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  final addressResult = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditUserAddress(
-                        appBarTitle: "Agregar Dirección",
                         userEmail: user.userEmail,
-                        method: "put",
-                        id: user.address[index].id,
-                        name: user.address[index].name,
-                        addressLine: user.address[index].addressLine1,
-                        referencePoint: user.address[index].referencePoint,
-                        provinceName: user.address[index].province,
+                        address: user.address[index]
                       ),
                     ),
                   );
+                  setState(() {
+                    user.address[index].name = addressResult.name;
+                    user.address[index].addressLine1 = addressResult.addressLine1;
+                    user.address[index].referencePoint = addressResult.referencePoint;
+                    user.address[index].province = addressResult.province;
+                    user.address[index].latitude = addressResult.latitude;
+                    user.address[index].longitude = addressResult.longitude;
+                  });
                 },
                 child: Text('Editar'),
               ),
             );
           } else {
             return FlatButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final addressResult = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditUserAddress(
-                      appBarTitle: "Agregar Dirección",
-                      userEmail: user.userEmail,
-                      method: "post",
+                    builder: (context) => CreateUserAddress(
+                      userEmail: user.userEmail
                     ),
                   ),
                 ).then((value) =>

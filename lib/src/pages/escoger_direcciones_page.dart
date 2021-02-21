@@ -2,6 +2,7 @@ import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/crear_nueva_direccion_page.dart';
 import 'package:app_tiendita/src/pages/metodo_de_pago.dart';
+import 'package:app_tiendita/src/pages/user/create_user_address.dart';
 import 'package:app_tiendita/src/pages/user/edit_user_address.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
@@ -103,9 +104,7 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return EditUserAddress(
-                            method: 'post',
-                            appBarTitle: 'Agregar Dirección',
+                          return CreateUserAddress(
                             userEmail: user.userEmail,
                           );
                         },

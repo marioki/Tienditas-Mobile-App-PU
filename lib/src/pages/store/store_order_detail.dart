@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:ui';
 import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/store/order_model.dart';
@@ -7,7 +8,9 @@ import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreOrderDetail extends StatefulWidget {
   StoreOrderDetail({@required this.order});
@@ -164,9 +167,24 @@ class UserOrderInfo extends StatelessWidget {
   UserOrderInfo({this.order});
 
   final Order order;
+  LatLng userPickedLocation;
+  LatLng cameraLocation = LatLng(8.986129, -79.524499);
+  Set<Marker> _markers = HashSet<Marker>();
+  GoogleMapController _mapController;
+  bool hasCoordinates = false;
 
   @override
   Widget build(BuildContext context) {
+    if (order.userAddress.latitude != null && order.userAddress.longitude != null) {
+      cameraLocation = LatLng(double.parse(order.userAddress.latitude), double.parse(order.userAddress.longitude));
+      _markers.add(
+        Marker(
+          markerId: MarkerId('0'),
+          position: cameraLocation
+        ),
+      );
+      hasCoordinates = true;
+    }
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
@@ -228,6 +246,25 @@ class UserOrderInfo extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                           fontFamily: "Nunito"),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Visibility(
+                      visible: hasCoordinates,
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        child: GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: cameraLocation,
+                            zoom: 15,
+                          ),
+                          onMapCreated: (controller) => setMapController(controller),
+                          markers: _markers,
+                          onTap: (argument) => goToMapSelectionPage(order.userAddress.latitude, order.userAddress.longitude),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -325,6 +362,19 @@ class UserOrderInfo extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  goToMapSelectionPage(String latitude, String longitude) async {
+    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+
+  setMapController(GoogleMapController _controller) {
+    _mapController = _controller;
   }
 }
 
