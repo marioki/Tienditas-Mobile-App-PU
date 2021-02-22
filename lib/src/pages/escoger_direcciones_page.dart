@@ -179,7 +179,9 @@ class _EscogerDireccionesState extends State<EscogerDirecciones> {
         country: address.country,
         phoneNumber: address.phoneNumber,
         province: address.province,
-        referencePoint: address.referencePoint);
+        referencePoint: address.referencePoint,
+        latitude: address.latitude,
+        longitude: address.longitude);
 
     Provider.of<UserCartState>(context, listen:false).setUserAddressToOrders(userAddress);
   }

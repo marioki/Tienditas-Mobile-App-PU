@@ -78,6 +78,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
                     user.address[index].province = addressResult.province;
                     user.address[index].latitude = addressResult.latitude;
                     user.address[index].longitude = addressResult.longitude;
+                    user.address[index].phoneNumber = addressResult.phoneNumber;
                   });
                 },
                 child: Text('Editar'),
@@ -85,8 +86,8 @@ class _UserAddressPageState extends State<UserAddressPage> {
             );
           } else {
             return FlatButton(
-              onPressed: () async {
-                final addressResult = await Navigator.push(
+              onPressed: () {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => CreateUserAddress(

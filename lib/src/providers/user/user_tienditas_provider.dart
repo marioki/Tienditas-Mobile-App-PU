@@ -76,7 +76,8 @@ class UsuarioTienditasProvider {
       String country,
       String province,
       String latitude,
-      String longitude) async {
+      String longitude,
+      String phoneNumber) async {
     String _url = '$baseApiUrl/api/v1/address';
     var bodyData = {
       "user": {
@@ -88,7 +89,8 @@ class UsuarioTienditasProvider {
           "country": country,
           "province": province,
           "latitude": latitude,
-          "longitude": longitude
+          "longitude": longitude,
+          "phone_number": phoneNumber
         }
       }
     };
@@ -115,7 +117,8 @@ class UsuarioTienditasProvider {
       String country,
       String province,
       String latitude,
-      String longitude) async {
+      String longitude,
+      String phoneNumber) async {
     String _url = '$baseApiUrl/api/v1/address';
     var bodyData = {
       "user": {
@@ -128,7 +131,8 @@ class UsuarioTienditasProvider {
           "country": country,
           "province": province,
           "latitude": latitude,
-          "longitude": longitude
+          "longitude": longitude,
+          "phone_number": phoneNumber
         }
       }
     };

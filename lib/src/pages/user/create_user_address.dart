@@ -43,6 +43,7 @@ class _CreateUserAddressState extends State<CreateUserAddress> {
   String province;
   String latitude;
   String longitude;
+  String phoneNumber;
 
   void reloadMap(LatLng pickedLocation) {
     setState(() {
@@ -63,20 +64,6 @@ class _CreateUserAddressState extends State<CreateUserAddress> {
           position: LatLng(location.latitude, location.longitude)
         ),
       );
-    });
-  }
-
-  void setValues(String name, String addressLine1, String referencePoint, String country,
-  String province, String latitude, String longitude) {
-    setState(() {
-      Address address = new Address();
-      address.name = name;
-      address.country = country;
-      address.addressLine1 = addressLine1;
-      address.referencePoint = referencePoint;
-      address.province = province;
-      address.latitude = latitude;
-      address.longitude = longitude;
     });
   }
 
@@ -204,6 +191,33 @@ class _CreateUserAddressState extends State<CreateUserAddress> {
                           height: 15,
                         ),
                         Text(
+                          "Número telefónico",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Nunito"),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          initialValue: phoneNumber,
+                          onChanged: (String value) {
+                            phoneNumber = value;
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Ingresar número de teléfono';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              hintText: '6123-5678'),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
                           "Provincia",
                           style: TextStyle(
                               color: Colors.black,
@@ -305,7 +319,8 @@ class _CreateUserAddressState extends State<CreateUserAddress> {
                                                 "Panamá",
                                                 province,
                                                 latitude,
-                                                longitude);
+                                                longitude,
+                                                phoneNumber);
                                     } else {
                                       Scaffold.of(context).showSnackBar(
                                         SnackBar(

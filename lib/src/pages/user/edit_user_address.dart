@@ -196,6 +196,33 @@ class _EditUserAddressState extends State<EditUserAddress> {
                           height: 15,
                         ),
                         Text(
+                          "Número telefónico",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Nunito"),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          initialValue: widget.address.phoneNumber,
+                          onChanged: (String value) {
+                            widget.address.phoneNumber = value;
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Ingresar número de teléfono';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              hintText: '6123-5678'),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
                           "Provincia",
                           style: TextStyle(
                               color: Colors.black,
@@ -298,7 +325,8 @@ class _EditUserAddressState extends State<EditUserAddress> {
                                                   "Panamá",
                                                   widget.address.province,
                                                   widget.address.latitude,
-                                                  widget.address.longitude);
+                                                  widget.address.longitude,
+                                                  widget.address.phoneNumber);
                                     } else {
                                       Scaffold.of(context).showSnackBar(
                                         SnackBar(
