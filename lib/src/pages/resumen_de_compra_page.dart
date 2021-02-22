@@ -261,11 +261,11 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                   pr.style(message: 'Validando Disponibilidad');
                   await pr.show();
                   UserTienditas userTienditas =
-                      Provider.of<LoginState>(context).getTienditaUser();
+                      Provider.of<LoginState>(context, listen: false).getTienditaUser();
                   final userTokenId =
-                      Provider.of<LoginState>(context).currentUserIdToken;
+                      Provider.of<LoginState>(context, listen: false).currentUserIdToken;
                   final _batch =
-                      Provider.of<UserCartState>(context).currentBatch;
+                      Provider.of<UserCartState>(context, listen: false).currentBatch;
                   // Validar que existan suficientes unidades ordenadas
                   AvailabilityResponse availabilityResponse =
                       await SendBatchOfOrders().checkInventoryAvailability(
@@ -286,9 +286,9 @@ class _ResumenDeCompraState extends State<ResumenDeCompra> {
                         //La compra fue exitosa
                         print(responseTienditasApi.body.message);
                         //Limpiar el Carrito
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context, listen: false)
                             .deleteAllCartItems();
-                        Provider.of<UserCartState>(context)
+                        Provider.of<UserCartState>(context, listen: false)
                             .calculateTotalPriceOfCart();
                         Navigator.pushAndRemoveUntil(context,
                             MaterialPageRoute(builder: (BuildContext context) {
