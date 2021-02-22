@@ -87,6 +87,8 @@ class Order {
     this.userAddress,
     this.deliveryOption,
     this.userConfirmation,
+    this.userName,
+    this.phoneNumber,
   });
 
   String storeTagName;
@@ -99,6 +101,8 @@ class Order {
   String userConfirmation;
   UserAddress userAddress;
   DeliveryOption deliveryOption;
+  String phoneNumber;
+  String userName;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         storeTagName: json["store_tag_name"],
@@ -112,6 +116,8 @@ class Order {
         userConfirmation: json["user_confirmation"],
         userAddress: UserAddress.fromJson(json["user_address"]),
         deliveryOption: DeliveryOption.fromJson(json["delivery_option"]),
+        phoneNumber: json["phone_number"] == null ? null : json["phone_number"],
+        userName: json["user_name"] == null ? null : json["user_name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -125,6 +131,8 @@ class Order {
         "order_id": orderId,
         "user_address": userAddress.toJson(),
         "delivery_option": deliveryOption.toJson(),
+        "user_name": userName == null ? null : userName,
+        "phone_number": phoneNumber == null ? null : phoneNumber,
       };
 }
 
@@ -170,22 +178,22 @@ class OrderElement {
 
 class UserAddress {
   UserAddress({
-    this.addressLine1,
     this.country,
     this.referencePoint,
     this.province,
+    this.latitude,
+    this.addressLine1,
     this.phoneNumber,
     this.longitude,
-    this.latitude
   });
 
-  String addressLine1;
   String country;
   String referencePoint;
   String province;
+  String latitude;
+  String addressLine1;
   String phoneNumber;
   String longitude;
-  String latitude;
 
   factory UserAddress.fromJson(Map<String, dynamic> json) => UserAddress(
       addressLine1: json["address_line_1"],
@@ -194,7 +202,8 @@ class UserAddress {
       province: json["province"],
       phoneNumber: json["phone_number"] == null ? null : json["phone_number"],
       latitude: json["latitude"] == null ? null : json["latitude"],
-      longitude: json["longitude"] == null ? null : json["longitude"],);
+      longitude: json["longitude"] == null ? null : json["longitude"],
+      );
 
   Map<String, dynamic> toJson() => {
         "address_line_1": addressLine1,
