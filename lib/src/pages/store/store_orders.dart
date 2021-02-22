@@ -1,4 +1,3 @@
-import 'package:app_tiendita/src/modelos/batch_model.dart';
 import 'package:app_tiendita/src/modelos/store/order_model.dart';
 import 'package:app_tiendita/src/pages/store/store_order_detail.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';

@@ -170,7 +170,6 @@ class UserOrderInfo extends StatelessWidget {
   LatLng userPickedLocation;
   LatLng cameraLocation = LatLng(8.986129, -79.524499);
   Set<Marker> _markers = HashSet<Marker>();
-  GoogleMapController _mapController;
   bool hasCoordinates = false;
 
   @override
@@ -260,7 +259,6 @@ class UserOrderInfo extends StatelessWidget {
                             target: cameraLocation,
                             zoom: 15,
                           ),
-                          onMapCreated: (controller) => setMapController(controller),
                           markers: _markers,
                           onTap: (argument) => goToMapSelectionPage(order.userAddress.latitude, order.userAddress.longitude),
                         ),
@@ -371,10 +369,6 @@ class UserOrderInfo extends StatelessWidget {
     } else {
       throw 'Could not open the map.';
     }
-  }
-
-  setMapController(GoogleMapController _controller) {
-    _mapController = _controller;
   }
 }
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:app_tiendita/src/modelos/credit_card_result.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_tiendita/src/constants/api_constants.dart';
 

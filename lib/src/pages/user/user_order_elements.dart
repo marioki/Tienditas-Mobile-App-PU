@@ -260,7 +260,6 @@ class OrderElementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.only(top: 8, bottom: 8, left: 16),
       child: Column(

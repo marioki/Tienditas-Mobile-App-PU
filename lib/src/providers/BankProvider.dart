@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:app_tiendita/src/constants/api_constants.dart';
 import 'package:app_tiendita/src/modelos/banks_model.dart';
-import 'package:app_tiendita/src/modelos/province_model.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

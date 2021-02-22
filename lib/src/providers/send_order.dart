@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:app_tiendita/src/modelos/availability_model.dart';
 import 'package:app_tiendita/src/modelos/batch_model.dart';
-import 'package:app_tiendita/src/modelos/response_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_tiendita/src/constants/api_constants.dart';
