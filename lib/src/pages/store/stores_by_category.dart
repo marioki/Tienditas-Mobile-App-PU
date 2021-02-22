@@ -3,7 +3,6 @@ import 'package:app_tiendita/src/modelos/categoria_model.dart';
 import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/providers/store/store_provider.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/utils/capitalize.dart';
 import 'package:app_tiendita/src/widgets/search_bar_widget.dart';
 import 'package:app_tiendita/src/widgets/store_card_widget.dart';
 import 'package:flutter/material.dart';

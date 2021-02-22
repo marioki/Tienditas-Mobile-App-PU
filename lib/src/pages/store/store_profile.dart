@@ -1,5 +1,4 @@
 import 'package:app_tiendita/src/modelos/store/store_model.dart';
-import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/modelos/usuario_tienditas.dart';
 import 'package:app_tiendita/src/pages/store/edit_store.dart';
 import 'package:app_tiendita/src/pages/store/store_delivery_options.dart';

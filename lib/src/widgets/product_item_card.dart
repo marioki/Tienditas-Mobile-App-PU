@@ -209,8 +209,16 @@ class ProductItemCard extends StatelessWidget {
                           ),
                           actions: <Widget>[
                             FlatButton(
-                              child: Text('Agregar al carrito'),
-                              color: Color(0xFF191660),
+                              child: Text(
+                                'Agregar al carrito',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              color: azulTema,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),

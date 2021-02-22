@@ -3,7 +3,6 @@ import 'package:app_tiendita/src/pages/user/edit_user_profile.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
 import 'package:app_tiendita/src/widgets/new_cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

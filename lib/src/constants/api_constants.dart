@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' as Foundation;
 
 const String productionUrl =
     'https://lnw0tmrts2.execute-api.us-east-1.amazonaws.com/prod';

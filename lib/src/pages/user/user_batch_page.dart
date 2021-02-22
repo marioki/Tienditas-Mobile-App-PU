@@ -102,7 +102,7 @@ class UserOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Orden #${batch.batchId.substring(1, 8)}",
+                    "Orden #${batch.batchId.substring(1,8)}",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 17,

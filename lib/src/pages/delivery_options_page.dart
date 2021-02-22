@@ -133,7 +133,7 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
                       Provider.of<UserCartState>(context, listen:false).setDeliveryInfoList();
 
                       Provider.of<UserCartState>(context, listen:false)
-                          .setDeliveryTotalCost(getTotalDeliveryFee());
+                          .setDeliveryTotalCost(calculateTotalDeliveryFee());
 
                       Provider.of<UserCartState>(context, listen:false)
                           .calculateTotalAmountOfBatch();
@@ -223,7 +223,20 @@ class _DeliveryOptionsPageState extends State<DeliveryOptionsPage> {
   double getTotalDeliveryFee() {
     double totalFee = 0;
     List<DeliveryOption> selectedOptions =
-        Provider.of<UserCartState>(context, listen:false).selectedDeliveryOptions;
+        Provider.of<UserCartState>(context).selectedDeliveryOptions;
+    if (selectedOptions.isNotEmpty) {
+      selectedOptions.forEach((element) {
+        totalFee += double.parse(element.fee);
+      });
+    }
+
+    return totalFee;
+  }
+
+  double calculateTotalDeliveryFee() {
+    double totalFee = 0;
+    List<DeliveryOption> selectedOptions =
+        Provider.of<UserCartState>(context, listen: false).selectedDeliveryOptions;
     if (selectedOptions.isNotEmpty) {
       selectedOptions.forEach((element) {
         totalFee += double.parse(element.fee);

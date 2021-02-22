@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 Batch batchFromJson(String str) => Batch.fromJson(json.decode(str));
 
 String batchToJson(Batch data) => json.encode(data.toJson());
@@ -174,6 +172,8 @@ class UserAddress {
     this.country,
     this.province,
     this.phoneNumber,
+    this.longitude,
+    this.latitude
   });
 
   String addressLine1;
@@ -181,13 +181,17 @@ class UserAddress {
   String country;
   String province;
   String phoneNumber;
+  String longitude;
+  String latitude;
 
   factory UserAddress.fromJson(Map<String, dynamic> json) => UserAddress(
     addressLine1: json["address_line_1"],
     referencePoint: json["reference_point"],
     country: json["country"],
     province: json["province"],
-    phoneNumber: json["phone_number"],
+    phoneNumber: json["phone_number"] == null ? null : json["phone_number"],
+    latitude: json["latitude"] == null ? null : json["latitude"],
+    longitude: json["longitude"] == null ? null : json["longitude"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -195,6 +199,8 @@ class UserAddress {
     "reference_point": referencePoint,
     "country": country,
     "province": province,
-    "phone_number": phoneNumber,
+    "phone_number": phoneNumber == null ? null : phoneNumber,
+    "latitude": latitude == null ? null : latitude,
+    "longitude": longitude == null ? null : longitude,
   };
 }

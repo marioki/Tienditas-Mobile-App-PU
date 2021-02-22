@@ -24,7 +24,7 @@ class _UserOrderDetailState extends State<UserOrderDetail> {
         toolbarHeight: 100,
         backgroundColor: azulTema,
         title: Text(
-          'Order #${widget.batch.batchId.substring(1, 8)}',
+          'Order #${widget.batch.batchId.substring(1,8)}',
           style: appBarStyle,
         ),
       ),
