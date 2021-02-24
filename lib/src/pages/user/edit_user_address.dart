@@ -164,7 +164,7 @@ class _EditUserAddressState extends State<EditUserAddress> {
                             return null;
                           },
                           decoration: InputDecoration(
-                              fillColor: Colors.white, hintText: 'dirección'),
+                              fillColor: Colors.white, hintText: 'Edificio, piso, calle, corregimiento , provincia'),
                         ),
                         SizedBox(
                           height: 15,

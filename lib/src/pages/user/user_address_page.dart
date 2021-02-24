@@ -79,6 +79,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
                     user.address[index].latitude = addressResult.latitude;
                     user.address[index].longitude = addressResult.longitude;
                     user.address[index].phoneNumber = addressResult.phoneNumber;
+                    Provider.of<LoginState>(context, listen: false).reloadUserInfo();
                   });
                 },
                 child: Text('Editar'),
@@ -94,8 +95,10 @@ class _UserAddressPageState extends State<UserAddressPage> {
                       userEmail: user.userEmail
                     ),
                   ),
-                ).then((value) =>
-                    Provider.of<LoginState>(context, listen: false).reloadUserInfo());
+                );
+                setState(() {
+                  Provider.of<LoginState>(context, listen: false).reloadUserInfo();
+                });
               },
               child: Text('+ Agregar Dirección'),
             );
