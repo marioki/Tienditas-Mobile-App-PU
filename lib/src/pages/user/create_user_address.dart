@@ -359,7 +359,7 @@ class _CreateUserAddressState extends State<CreateUserAddress> {
                                     Scaffold.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                            'Hubo problemas al editar la tienda, \nfavor revisar su conexión a internet'),
+                                            'Hubo problemas al crear la dirección, \nfavor revisar su conexión a internet'),
                                       ),
                                     );
                                   }

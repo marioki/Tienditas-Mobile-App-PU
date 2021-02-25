@@ -108,7 +108,7 @@ class StoreCardWidget extends StatelessWidget {
                       SizedBox(height: 8),
                       Text(
                         description,
-                        maxLines: 3,
+                        maxLines: 4,
                         style: storeDescriptionCardStyle,
                         overflow: TextOverflow.ellipsis,
                       ),

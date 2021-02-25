@@ -7,6 +7,7 @@ import 'package:app_tiendita/src/pages/user/user_bank_accounts.dart';
 import 'package:app_tiendita/src/pages/user/user_batch_page.dart';
 import 'package:app_tiendita/src/pages/user/user_payment_method_page.dart';
 import 'package:app_tiendita/src/pages/user/user_suggestions_page.dart';
+import 'package:app_tiendita/src/providers/user/user_tienditas_provider.dart';
 import 'package:app_tiendita/src/state_providers/login_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/widgets/my_profile_card_widget.dart';
@@ -31,8 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    UserTienditas userInfo =
-        Provider.of<LoginState>(context, listen: false).getTienditaUser();
+    UserTienditas userInfo = Provider.of<LoginState>(context, listen: false).getTienditaUser();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -149,13 +149,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   UserProfileActionBtn(
                     text: "Mis Direcciones",
                     imageName: "navegador",
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => UserAddressPage(),
+                          builder: (context) => UserAddressPage(
+                            address: userInfo.address,
+                            email: userInfo.userEmail,
+                          ),
                         ),
                       );
+                      // llamar al servidor para refrescar la lista de direcciones
+                      final userTokenId = Provider.of<LoginState>(context, listen: false).currentUserIdToken;
+                      var _userTienditas = await UsuarioTienditasProvider().getUserInfo(userTokenId, userInfo.userEmail);
+                      setState(() {
+                        print("userInfo.address.length ${userInfo.address.length}");
+                        print("_userTienditas.address.length ${_userTienditas.address.length}");
+                        userInfo.address = _userTienditas.address;
+                        print("userInfo.address.length ${userInfo.address.length}");
+                      });
                     },
                   ),
                   UserProfileActionBtn(
