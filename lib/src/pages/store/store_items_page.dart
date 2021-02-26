@@ -9,6 +9,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreItemsPage extends StatefulWidget {
   @override
@@ -71,28 +72,40 @@ class _StoreItemsPageState extends State<StoreItemsPage> {
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          args.storeName,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          args.storeTagName,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        Text(
-                          args.description,
-                          maxLines: 3,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        Text(
-                          "Provincia: ${args.provinceName}",
-                          maxLines: 2,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
+                    child: GestureDetector(
+                      onTap: () async {
+                        String url = 'https://www.instagram.com/${args.storeTagName.substring(1,)}/';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not open the map.';
+                        }
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            args.storeName,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Text(
+                            args.storeTagName,
+                            style: TextStyle(
+                              fontSize: 18
+                            ),
+                          ),
+                          Text(
+                            args.description,
+                            maxLines: 3,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            "Provincia: ${args.provinceName}",
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
