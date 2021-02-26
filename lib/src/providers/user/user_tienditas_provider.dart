@@ -149,6 +149,21 @@ class UsuarioTienditasProvider {
     return response;
   }
 
+  Future<http.Response> deleteAddress(
+      String userIdToken,
+      String id,
+      String userEmail) async {
+    String _url = '$baseApiUrl/api/v1/address?email=$userEmail&id=$id';
+    var response = await http.delete(
+      _url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': userIdToken
+      }
+    );
+    return response;
+  }
+
   Future<http.Response> createBankAccount(
       String userIdToken,
       String userEmail,
