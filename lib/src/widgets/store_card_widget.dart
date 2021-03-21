@@ -1,4 +1,4 @@
-import 'package:app_tiendita/src/modelos/tiendita_model.dart';
+import 'package:app_tiendita/src/modelos/store/tiendita_model.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
 import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +10,23 @@ class StoreCardWidget extends StatelessWidget {
   final String image;
   final String category;
   final String colorHex;
+  final String description;
+  final String originalStoreName;
 
-  const StoreCardWidget(
-      {Key key,
-      @required this.name,
-      @required this.handle,
-      this.followers,
-      this.image,
-      this.category,
-      this.colorHex})
-      : super(key: key);
+  final String provinceName;
+
+  const StoreCardWidget({
+    Key key,
+    @required this.name,
+    @required this.handle,
+    @required this.followers,
+    @required this.image,
+    @required this.category,
+    @required this.colorHex,
+    @required this.description,
+    @required this.originalStoreName,
+    @required this.provinceName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +43,15 @@ class StoreCardWidget extends StatelessWidget {
               categoryName: category,
               hexColor: colorHex,
               storeTagName: handle,
-              iconUrl: image),
+              iconUrl: image,
+              description: description,
+              originalStoreName: originalStoreName,
+              provinceName: provinceName),
         );
       },
       //Todo: Cambiar el tamaño del widget usando MediaQuery
       child: Card(
+        clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.symmetric(
           vertical: 8,
         ),
@@ -57,6 +68,7 @@ class StoreCardWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              //Circle avatar
               Container(
                 margin: EdgeInsets.only(right: 10),
                 child: CircleAvatar(
@@ -71,24 +83,43 @@ class StoreCardWidget extends StatelessWidget {
                           child: FadeInImage(
                             fit: BoxFit.contain,
                             image: NetworkImage(image),
-                            placeholder:
-                                AssetImage('assets/images/placeholder.png'),
+                            placeholder: AssetImage(
+                                'assets/images/tienditas_placeholder.png'),
                           )),
                     ),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(name, style: storeTitleCardStyle),
-                    SizedBox(height: 10),
-                    Text(handle, style: storeDetailsCardStyle),
-                    Text('Seguidores: ' + followers.toString(),
-                        style: storeDetailsCardStyle),
-                  ],
+              //Store Details Column
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        originalStoreName,
+                        maxLines: 1,
+                        style: storeTitleCardStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 0),
+                      Text(handle, style: storeDetailsCardStyle),
+                      SizedBox(height: 8),
+                      Text(
+                        description,
+                        maxLines: 4,
+                        style: storeDescriptionCardStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "Provincia: $provinceName",
+                        maxLines: 2,
+                        style: storeDescriptionCardStyle,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

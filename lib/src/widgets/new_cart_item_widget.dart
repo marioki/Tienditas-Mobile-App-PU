@@ -1,7 +1,6 @@
 import 'package:app_tiendita/src/modelos/product_model.dart';
 import 'package:app_tiendita/src/state_providers/user_cart_state.dart';
 import 'package:app_tiendita/src/tienditas_themes/my_themes.dart';
-import 'package:app_tiendita/src/utils/color_from_hex.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,19 +16,22 @@ class NewCartItemWidget extends StatefulWidget {
   final String finalPrice;
 
   //ItemSatus itemSatus; //Todo definir tipo de variable
-  final String imageUrl;
+  final List<String> imagesUrlList;
 
-  const NewCartItemWidget(
-      {Key key,
-      this.quantity,
-      this.itemName,
-      this.purchaseType,
-      this.registeredDate,
-      this.itemId,
-      this.finalPrice,
-      this.imageUrl,
-      this.colorHex})
-      : super(key: key);
+  final String parentStoreTag;
+
+  const NewCartItemWidget({
+    Key key,
+    this.quantity,
+    this.itemName,
+    this.purchaseType,
+    this.registeredDate,
+    this.itemId,
+    this.finalPrice,
+    this.imagesUrlList,
+    this.colorHex,
+    this.parentStoreTag,
+  }) : super(key: key);
 
   @override
   _NewCartItemWidgetState createState() => _NewCartItemWidgetState();
@@ -39,85 +41,153 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Card(
-      margin: EdgeInsets.symmetric(
-        vertical: 8,
-      ),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(35),
-      ),
-      color: getColorFromHex(widget.colorHex),
-      //getColorFromHex(colorHex)
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 25,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: size.height * .051,
-                child: ClipOval(
-                  child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FadeInImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage('https://picsum.photos/200/300'),
-                        placeholder:
-                            AssetImage('assets/images/placeholder.png'),
-                      ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
+                      placeholder:
+                          AssetImage('assets/images/tienditas_placeholder.png'),
+                      image: NetworkImage(widget.imagesUrlList.first),
+                    )),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          widget.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: azulTema,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          widget.parentStoreTag,
+                          style: TextStyle(
+                            color: azulTema,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        //Todo  Tipo de Compra
+                        // Text(
+                        //   widget.purchaseType.toString(),
+                        //   style: TextStyle(
+                        //     color: azulTema,
+                        //     fontSize: 12,
+                        //     fontWeight: FontWeight.normal,
+                        //     fontFamily: 'Nunito',
+                        //   ),
+                        // )
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              width: 100,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.itemName,
-                    style: storeTitleCardStyle,
-                    overflow: TextOverflow.clip,
-                  ),
-                  SizedBox(height: 0),
-                  Text('', style: storeDetailsCardStyle),
-                  Text('Entrega Inmediata', style: storeDetailsCardStyle),
-                ],
-              ),
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  '\$${widget.finalPrice}',
-                  style: cartItemPrice,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                createCartCounter(widget.itemId),
-                FlatButton(
-                  child: Icon(Icons.delete_forever),
-                  onPressed: () {
-                    Provider.of<UserCartState>(context).deleteProductFromCart(
-                        ProductElement(itemId: widget.itemId));
-                  },
-                )
               ],
             ),
-          ],
-        ),
+          ),
+          GestureDetector(
+            child: Icon(Icons.delete_outline),
+            onTap: () {
+              Provider.of<UserCartState>(context, listen:false).deleteProductFromCart(
+                ProductElement(
+                  itemId: widget.itemId,
+                  itemName: widget.itemName,
+                  finalPrice: widget.finalPrice,
+                  imagesUrlList: widget.imagesUrlList,
+                  registeredDate: widget.registeredDate,
+                  quantity: widget.quantity,
+                  hexColor: widget.colorHex,
+                  parentStoreTag: widget.parentStoreTag,
+                ),
+              );
+            },
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '\$${widget.finalPrice}',
+                style: TextStyle(
+                  color: azulTema,
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 4,
+                  horizontal: 8,
+                ),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Icon(
+                        Icons.remove,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      onTap: () {
+                        Provider.of<UserCartState>(context, listen:false)
+                            .subtractProductItemQuantity(widget.itemId);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      Provider.of<UserCartState>(context,listen: true)
+                          .getItemAmountInCart(widget.itemId)
+                          .toString(),
+                    ),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      child: Icon(
+                        Icons.add,
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      onTap: () {
+                        Provider.of<UserCartState>(context, listen:false)
+                            .addProductItemQuantity(widget.itemId);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -139,7 +209,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 //--
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .subtractProductItemQuantity(itemId);
               },
               child: Icon(
@@ -153,7 +223,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
             child: Center(
               child: Text(
                 // if our item is less  then 10 then  it shows 01 02 like that
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .getItemAmountInCart(itemId)
                     .toString(),
                 style: cartItemCounter,
@@ -166,7 +236,7 @@ class _NewCartItemWidgetState extends State<NewCartItemWidget> {
               padding: EdgeInsets.all(0),
               onPressed: () {
                 //++
-                Provider.of<UserCartState>(context)
+                Provider.of<UserCartState>(context,listen: false)
                     .addProductItemQuantity(itemId);
               },
               child: Icon(

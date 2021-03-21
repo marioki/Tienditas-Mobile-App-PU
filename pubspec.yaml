@@ -1,9 +1,9 @@
 name: app_tiendita
-description: A new Flutter application.
+description: App to sell and buy from local stores.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.15+26
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -24,20 +24,34 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.3
-  http: ^0.12.1
-  provider: ^2.0.1
-  firebase_auth: ^0.16.1
-  google_sign_in: ^4.5.1
-  fluttertoast: ^7.0.1
 
-
-
-
-
+  cupertino_icons: ^1.0.0
+  http: ^0.12.2
+  provider: ^4.3.3
+  firebase_auth: ^0.20.0+1
+  google_sign_in: ^4.5.9
+  fluttertoast: ^7.1.6
+  flutter_webview_plugin: ^0.3.11
+  progress_dialog: ^1.2.4
+  credit_card: ^0.1.8
+  image_picker: ^0.6.7+21
+  flutter_cache_manager: ^2.1.1
+  badges: ^1.1.6
+  package_info: ^0.4.3+2
+  numberpicker: ^1.3.0
+  json_annotation: #to create code for JSON serialization and deserialization.
+  flutter_swiper: ^1.1.6
+  expansion_card: ^0.1.0
+  dio: ^3.0.10
+  apple_sign_in: ^0.1.0
+  #flutter_facebook_auth: 1.0.2+2
+  firebase_core: ^0.7.0
+  google_maps_flutter: ^1.1.1
+  location: ^3.2.4
+  carousel_slider: ^2.3.1
+  url_launcher: ^5.7.10
 
 
 
@@ -47,12 +61,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -61,6 +75,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/logos/
+    - assets/images/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -77,8 +93,6 @@ flutter:
     - family: Nunito
       fonts:
         - asset: lib/src/fonts/Nunito-Regular.ttf
-
-
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

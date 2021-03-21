@@ -1,15 +1,11 @@
-// To parse this JSON data, do
-//
-//     final category = categoryFromJson(jsonString);
-
 import 'dart:convert';
 
-CategoryModel categoryFromJson(String str) => CategoryModel.fromJson(json.decode(str));
+CategoryResponseModel categoryFromJson(String str) => CategoryResponseModel.fromJson(json.decode(str));
 
-String categoryToJson(CategoryModel data) => json.encode(data.toJson());
+String categoryToJson(CategoryResponseModel data) => json.encode(data.toJson());
 
-class CategoryModel {
-  CategoryModel({
+class CategoryResponseModel {
+  CategoryResponseModel({
     this.statusCode,
     this.body,
   });
@@ -17,7 +13,7 @@ class CategoryModel {
   int statusCode;
   Body body;
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+  factory CategoryResponseModel.fromJson(Map<String, dynamic> json) => CategoryResponseModel(
     statusCode: json["statusCode"],
     body: Body.fromJson(json["body"]),
   );
@@ -30,17 +26,17 @@ class CategoryModel {
 
 class Body {
   Body({
-    this.category,
+    this.categoryList,
   });
 
-  List<CategoryElement> category;
+  List<CategoryElement> categoryList;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-    category: List<CategoryElement>.from(json["category"].map((x) => CategoryElement.fromJson(x))),
+    categoryList: List<CategoryElement>.from(json["category"].map((x) => CategoryElement.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "category": List<dynamic>.from(category.map((x) => x.toJson())),
+    "category": List<dynamic>.from(categoryList.map((x) => x.toJson())),
   };
 }
 

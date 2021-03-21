@@ -9,9 +9,11 @@ Color grizItem = Color(0xFFF3F6FB);
 Color azulOptions = Color(0xFF0B46C5);
 Color grizSubtitulo = Color(0xFF919BAC);
 Color azulTema = Color(0xFF191660);
+//Color azulTema = Color(0xFF5f58a1);
 Color rosadoBlur = Color(0xFFFC9BAF);
 Color azulTemaOpaco = Color(0xFFF3F6FB);
 Color grisClaroTema = Color(0xFFF3F6FB);
+Color lavender = Color(0xFFFE6E6FA);
 
 Color rojoSpring = Color(0xFFfe4a49);
 Color celesteSpring = Color(0xFF2ab7ca);
@@ -57,13 +59,37 @@ TextStyle storeTitleCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: 20);
+    fontSize: 18);
+
+TextStyle userProfileNameCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: azulTema,
+    fontWeight: FontWeight.bold,
+    fontSize: 18);
+
+TextStyle userProfileEmailCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Color(0xFF919BAC),
+    fontWeight: FontWeight.bold,
+    fontSize: 11);
+
+TextStyle userProfilePhoneNumberCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Color(0xFF919BAC),
+    fontWeight: FontWeight.bold,
+    fontSize: 11);
 
 TextStyle storeDetailsCardStyle = new TextStyle(
     fontFamily: 'Nunito',
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 14);
+
+TextStyle storeDescriptionCardStyle = new TextStyle(
+    fontFamily: 'Nunito',
+    color: Colors.white,
+    fontWeight: FontWeight.normal,
+    fontSize: 12);
 
 TextStyle storeCategoryStyle = new TextStyle(
     fontFamily: 'Nunito',
@@ -101,6 +127,13 @@ TextStyle storeItemSubTitleStyle = new TextStyle(
   color: grizSubtitulo,
   fontWeight: FontWeight.normal,
   fontSize: 12,
+);
+
+TextStyle faqsTextContent = new TextStyle(
+  fontFamily: 'Nunito',
+  color: grizSubtitulo,
+  fontWeight: FontWeight.normal,
+  fontSize: 16,
 );
 
 TextStyle storeItemPriceStyle = new TextStyle(
@@ -157,6 +190,13 @@ TextStyle cartButtonPagarStyle = new TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
   fontSize: 14,
+);
+
+TextStyle userProfileButtonEdit = new TextStyle(
+  fontFamily: 'Nunito',
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 8,
 );
 
 TextStyle cartTotalStyle = new TextStyle(
